@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+    <head>
+        <title>Login</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" th:href="@{../css/login.css}" />
+    </head>
+    <body>
+        <div class="bg-login pt-5" layout:fragment="content">
+            <section class="ftco-section">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="text-center">
+                            <h1 class="heading-section">Đăng nhập</h1>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="login-wrap p-0">
+                                <h3 class="mb-4 text-center">Have an account?</h3>
+                                <form class="login" name='f' th:action="@{/j_spring_security_check}" method="POST">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control rounded-pill" placeholder="Username" name="username" required>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <input id="password-field" name="password" type="password"
+                                            class="form-control rounded-pill" placeholder="Password" required> <span
+                                            toggle="#password-field"
+                                            class="fa fa-fw fa-eye field-icon toggle-password"> </span>
+                                    </div>
+                                    <div class="form-group d-grid gap-2 mt-3">
+                                        <button type="submit" name="submit" class="btn btn-login rounded-pill text-light">Sign In</button>
+                                    </div>
+                                    <div class="text-center text-danger mt-2" th:if="${#request.getParameter('error') == 'true'}">
+                                        <strong>Login Failed!!!</strong>
+                                        <span  th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}" th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">Static summary</span>
+                                    </div>
+                                    <div class="form-group d-flex justify-content-between mt-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="rememberMe" id="remember-me">
+                                            <label class="form-check-label" for="remember-me">Remember Me</label>
+                                        </div>
+                                        <a href="#" style="color: #fff; text-decoration: none">Forgot Password</a>
+                                    </div>
+                                </form>
+                                <h6 class="text-center text-light mt-3">&mdash;&mdash; Or Sign In With &mdash;&mdash;</h6>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <a th:href="@{/oauth2/authorization/google}" class="btn btn-light btn-google rounded-pill"> 
+                                       <span style="font-size: large;" class="log-in-google"><i class="far fa-envelope"></i> GMAIL</span>
+                                    </a>
+                                </div>
+                                <h4 class="text-center text-light mt-4"><marquee  class="test" scrollamount="200" scrolldelay="3000" style="width: 200px;"><span style="color: white; font-size: 20px;">- Register now -</span></marquee></h4>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <a th:href="@{/register}" class="btn btn-light btn-register rounded-pill"> 
+                                       <span style="font-size: large;" class="log-in-google"><i class="fas fa-paper-plane"></i> REGISTER</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

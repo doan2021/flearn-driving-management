@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Learn</title>
+        <link rel="stylesheet" th:href="@{../css/create-question.css}">
+    </head>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="container-xxl py-5" id="create-question-app">
+                <div class="row">
+                   <div class="col-12">
+                       <h5><i class="fas fa-question"></i> Create question</h5>
+                   </div>
+                </div>
+                <form class="row p-0 mb-3" th:action="@{/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+                    <div class="col-7 border p-3 bg-white shadow rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select" th:field="*{chapterId}">
+                                    <option value="" selected>---- Select chapter ----</option>
+                                    <option th:each="chapter : ${listChapter}" th:value="${chapter.chapterId}" th:text="|ChÆ°Æ¡ng ${chapter.name}: ${chapter.content}|">One</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="numberQuestion" placeholder="Index question" th:field="*{number}"></input>
+                            </div>
+                            <div class="col-9 mt-3">
+                                <textarea class="form-control" id="contentQuestion" rows="3" th:field="*{content}" placeholder="Content question"></textarea>
+                            </div>
+                            <input class="form-control d-none" type="file" id="upload" th:field="*{images}" @change="readURL" multiple>
+                            <div class="col-3 mt-3" v-if="images != [] && images.length != 0">
+                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload">
+                                    <img v-bind:src="img" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <div class="col-3 mt-3" v-else>
+                                <label class="image-area d-block" for="upload" style="height:150px">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5 p-3 border bg-white shadow rounded">
+                        <div class="col-12" v-for="n in numberAnswer" :key="n">
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text" class="form-control" :placeholder="'Answer ' + n" :name="'listAnswers['+ (n-1) +'].content'">
+                                </div>
+                                <div class="col-3 d-flex align-items-center justify-content-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" :name="'listAnswers['+ (n-1) +'].true'" value="1" :id="'answer'+ n">
+                                        <label class="form-check-label" :for="'answer'+ n">True</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-danger rounded-pill" v-if="numberAnswer > 2" @click="deleteAnswer"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-success rounded-pill" @click="addNewAnswer"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+	                <div class="col-12 mt-3 text-center">
+	                    <button type="submit" class="btn btn-primary rounded-pill w-25">Tạo câu hỏi</button>
+	                </div>
+                </form>
+            </div>
+            <script th:src="@{../js/create-question.js}"></script>
+        </th:block>
+    </body>
+</html>

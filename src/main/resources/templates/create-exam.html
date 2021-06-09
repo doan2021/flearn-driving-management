@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+    <head>
+        <title>Learn</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <div class="container-xxl" layout:fragment="content">
+            <div class="row mt-5">
+                <div class="col-12">
+                    
+                </div>
+            </div>
+            <form th:action="@{/save-exam}" th:object="${examForm}" method="post">
+                <div class="row">
+	                <div class="col-12">
+	                    <label for="nameExam" class="form-label">Name exam</label>
+	                    <input type="text" class="form-control" id="nameExam" th:field="*{name}"></input>
+	                </div>
+	                <div class="col-12 mt-3">
+	                    <input type="text" class="form-control" placeholder="Search question" />
+	                </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Select question</h4>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <table class="table table-border">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Number</th>
+                                <th>Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="question, stat : ${listQuestions}">
+                                <td><input class="form-check-input" type="checkbox" th:value="${question.questionId}" th:field="*{listQuestionId[__${stat.index}__]}"></td>
+                                <td th:text="|Câu ${question.number}|"></td>
+                                <td th:text="${question.content}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
