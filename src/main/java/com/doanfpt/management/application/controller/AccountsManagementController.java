@@ -24,6 +24,11 @@ public class AccountsManagementController {
 
     @Autowired
     RoleServices roleServices;
+    
+    @GetMapping(value = { "/account" })
+    public String visitAccountPage(Model model) {
+        return "account-management";
+    }
 
     @PostMapping(value = { "/create-account" })
     public String createUser(@ModelAttribute("appUserForm") @Validated AccountForm appUserForm, BindingResult result,

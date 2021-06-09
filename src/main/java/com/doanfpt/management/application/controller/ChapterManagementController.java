@@ -19,7 +19,7 @@ public class ChapterManagementController {
     ChapterServices chapterServices;
 
     @GetMapping(value = { "/chapter" })
-    public String selectChapter(Model model) {
+    public String visitChapterPage(Model model) {
         return "chapter-management";
     }
     

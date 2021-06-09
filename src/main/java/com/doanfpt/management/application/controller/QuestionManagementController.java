@@ -30,6 +30,11 @@ public class QuestionManagementController {
     @Autowired
     LearnServices learnServices;
     
+    @GetMapping(value = {"/question"})
+    public String visitQuestionPage(Model model) {
+        return "question-management";
+    }
+    
     @GetMapping(value = {"/create-question"})
     public String createQuestion(Model model) {
         QuestionForm questionForm = new QuestionForm();
