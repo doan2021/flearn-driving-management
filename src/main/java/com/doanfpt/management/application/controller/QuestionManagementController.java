@@ -49,18 +49,4 @@ public class QuestionManagementController {
         model.addAttribute(questionForm);
         return "create-question";
     }
-    
-    @GetMapping(value = {"/create-exam"})
-    public String createNewExam(Model model) {
-        ExamForm examForm = new ExamForm();
-        List<Question> listQuestions = questionServices.getAllQuestions();
-        model.addAttribute("listQuestions", listQuestions);
-        model.addAttribute("examForm", examForm);
-        return "create-exam";
-    }
-    
-    @PostMapping(value = {"/save-exam"})
-    public String createNewExam(@ModelAttribute ExamForm form, Model model) {
-        return "redirect:/create-exam";
-    }
 }

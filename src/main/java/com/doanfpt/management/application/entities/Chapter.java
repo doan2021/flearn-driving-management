@@ -41,6 +41,12 @@ public class Chapter implements Serializable {
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
 
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
     @Column(name = "update_by")
     private String updateBy;
 
@@ -117,6 +123,22 @@ public class Chapter implements Serializable {
 
     public static long getSerialversionuid() {
         return serialVersionUID;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
 }

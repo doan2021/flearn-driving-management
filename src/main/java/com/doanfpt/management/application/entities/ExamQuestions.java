@@ -1,5 +1,7 @@
 package com.doanfpt.management.application.entities;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,11 +24,23 @@ public class ExamQuestions {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "list_id_question")
     private String listIdQuestion;
+    
+    @Column(name = "is_delete", columnDefinition = "boolean default false")
+    private boolean isDelete;
+    
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     public Long getExamQuestionsId() {
         return examQuestionsId;

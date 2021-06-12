@@ -26,14 +26,29 @@ public class Exam {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "is_delete")
-    public boolean isDelete;
-
     @Column(name = "is_trial")
     public boolean isTrial;
 
     @Column(name = "date_exam")
     private Date date_exam;
+    
+    @Column(name = "description")
+    private String description;
+    
+    @Column(name = "is_delete", columnDefinition = "boolean default false")
+    private boolean isDelete;
+    
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)

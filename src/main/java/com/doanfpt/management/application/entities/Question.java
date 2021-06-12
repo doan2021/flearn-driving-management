@@ -1,5 +1,6 @@
 package com.doanfpt.management.application.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,6 +38,18 @@ public class Question {
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
+
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
@@ -125,6 +138,38 @@ public class Question {
 
     public void setListStatusLearn(List<StatusLearn> listStatusLearn) {
         this.listStatusLearn = listStatusLearn;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
 }

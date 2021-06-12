@@ -1,5 +1,7 @@
 package com.doanfpt.management.application.entities;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,14 +31,26 @@ public class Image {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "is_delete")
-    private String isDelete;
+    @Column(name = "is_delete", columnDefinition = "boolean default false")
+    private boolean isDelete;
+
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
-    
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -74,14 +88,6 @@ public class Image {
         this.description = description;
     }
 
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
-
     public Question getQuestion() {
         return question;
     }
@@ -89,5 +95,53 @@ public class Image {
     public void setQuestion(Question question) {
         this.question = question;
     }
-    
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
 }
