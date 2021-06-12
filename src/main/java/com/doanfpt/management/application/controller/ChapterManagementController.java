@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.doanfpt.management.application.common.Constant;
+import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.services.ChapterServices;
 
@@ -19,7 +21,18 @@ public class ChapterManagementController {
     ChapterServices chapterServices;
 
     @GetMapping(value = { "/chapter" })
-    public String visitChapterPage(Model model) {
+    public String visitChapterPage(Integer pageNumber, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, chapterServices.getAllChapter(pageNumber));
+        model.addAttribute("formSearchChapter", new FormSearchChapter());
+        model.addAttribute("isSearch", false);
+        return "chapter-management";
+    }
+    
+    @PostMapping(value = { "/search-chapter" })
+    public String searchChapter(FormSearchChapter formSearchChapter, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, chapterServices.searchChapter(formSearchChapter));
+        model.addAttribute("formSearchChapter", formSearchChapter);
+        model.addAttribute("isSearch", true);
         return "chapter-management";
     }
     

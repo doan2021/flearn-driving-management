@@ -45,12 +45,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{../management/question}">
-                                    <i class="fas fa-question-circle text-danger mr-2" style="font-size: 20px"></i>
-                                    <span class="nav-link-text">Quản lý Câu hỏi</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" th:href="@{../management/exam}">
                                     <i class="fas fa-diagnoses text-warning mr-2" style="font-size: 20px"></i>
                                     <span class="nav-link-text">Quản lý thi cử</span>
@@ -87,20 +81,6 @@
             <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
               <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <!-- Search form -->
-                  <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-                    <div class="form-group mb-0">
-                      <div class="input-group input-group-alternative input-group-merge">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input class="form-control" placeholder="Search" type="text">
-                      </div>
-                    </div>
-                    <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </form>
                   <!-- Navbar links -->
                   <ul class="navbar-nav align-items-center ml-md-auto">
                     <li class="nav-item d-xl-none">
@@ -223,6 +203,7 @@
             <th:block layout:fragment="content"></th:block>
         </div>
         <script th:src="@{../assets/vendor/jquery/dist/jquery.min.js}"></script>
+        <script th:src="@{../assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
         <script th:src="@{../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
         <script th:src="@{../assets/vendor/js-cookie/js.cookie.js}"></script>
         <script th:src="@{../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js}"></script>

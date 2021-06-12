@@ -15,6 +15,10 @@ public class Constant {
     public static final String ROLE_USER = "ROLE_USER";
     
     public static final String GOOGLE_PROVIDER = "GOOGLE";
+    
+    public static final String PAGE_CONTENT_NAME = "pageContent";
+    
+    public static final int RECORD_PER_PAGE   = 10;
 }
 
 

@@ -1,6 +1,7 @@
 package com.doanfpt.management.application.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "chapter")
-public class Chapter implements Serializable{
+public class Chapter implements Serializable {
 
     /**
      * 
@@ -39,6 +40,12 @@ public class Chapter implements Serializable{
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
@@ -90,6 +97,26 @@ public class Chapter implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
 }

@@ -59,22 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         // Các trang không yêu cầu login
-        http.authorizeRequests()
-        .antMatchers("/oauth2/**").permitAll()
-        .antMatchers("/", "/index", "/login").permitAll();
+        http.authorizeRequests().antMatchers("/login").permitAll();
         // Trang yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
-        // Nếu chưa login, nó sẽ redirect tới trang /login.
-        http.authorizeRequests()
-        .antMatchers(
-                "/list-data"
-                , "/submit-answer"
-                , "/learn/{chapterId}")
-        .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        // Trang chỉ dành cho ADMIN
-        http.authorizeRequests().antMatchers("/create-question").access("hasRole('ROLE_ADMIN')");
-        // Khi người dùng đã login, với vai trò XX.
-        // Nhưng truy cập vào trang yêu cầu vai trò YY,
-        // Ngoại lệ AccessDeniedException sẽ ném ra.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()

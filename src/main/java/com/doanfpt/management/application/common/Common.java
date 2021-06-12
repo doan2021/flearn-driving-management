@@ -1,5 +1,8 @@
 package com.doanfpt.management.application.common;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Common {
 
     public static float percentQuestion(int correctNumber, int incorrectNumber) {
@@ -28,5 +31,16 @@ public class Common {
             }
         }
         return lastName;
+    }
+    
+    public static Date stringToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date dateReturn = new Date();
+        try {
+            dateReturn = dateFormat.parse(dateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateReturn;
     }
 }

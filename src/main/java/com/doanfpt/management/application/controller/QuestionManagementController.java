@@ -38,7 +38,6 @@ public class QuestionManagementController {
     @GetMapping(value = {"/create-question"})
     public String createQuestion(Model model) {
         QuestionForm questionForm = new QuestionForm();
-        model.addAttribute("listChapter", chapterServices.getAllChapter());
         model.addAttribute(questionForm);
         return "create-question";
     }
@@ -47,7 +46,6 @@ public class QuestionManagementController {
     public String createNewQuestion(@ModelAttribute QuestionForm form, Model model) {
         questionServices.createNewQuestion(form);
         QuestionForm questionForm = new QuestionForm();
-        model.addAttribute("listChapter", chapterServices.getAllChapter());
         model.addAttribute(questionForm);
         return "create-question";
     }
