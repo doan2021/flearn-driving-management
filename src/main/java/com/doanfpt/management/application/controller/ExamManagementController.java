@@ -43,14 +43,9 @@ public class ExamManagementController {
     	return "create-exam";
     }
     
-    @RequestMapping("/edit_exam/{examId}")
-    public ModelAndView showEditExamForm(@PathVariable(name = "examId") Long examId) {
-    	ModelAndView mav = new ModelAndView("edit_exam");
-    	
-    	Exam exam = examService.get(examId);
-    	mav.addObject("exam", exam);
-    	
-    	return mav;
-    	
+    @RequestMapping("/edit-exam")
+    public String showEditExamForm(Long examId, Model model) {
+    	model.addAttribute("examForm", examService.getObjectUpdate(examId));
+    	return "edit-exam";
     }
 }

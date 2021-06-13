@@ -85,11 +85,7 @@
 														style="background-color: blue; text-decoration: none">
 														<a style="color: white" href="#">Xóa</a>
 													</button>
-													<button
-														style="background-color: white; text-decoration: none">
-														<a style="color: blue"
-															th:href="@{'/management/edit_exam/' + ${exam.examId}}">Sửa</a>
-													</button>
+													<a class="btn btn-info" th:href="@{${'/management/edit-exam?examId='} + ${exam.examId}}">Sửa</a>
 												</td>
 											</tr>
 										</tbody>
