@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.entities.Account;
-import com.doanfpt.management.application.entities.AuthenticationProvider;
 import com.doanfpt.management.application.entities.Role;
 import com.doanfpt.management.application.model.AccountPrincipal;
 import com.doanfpt.management.application.responsitories.AccountsRespository;
@@ -27,11 +26,6 @@ public class AccountServices {
     
     @Autowired
     private RoleRespository roleRespository;
-    
-    public Account getAccountByUserName(String userName) {
-        return accountsRespository.findByUserName(userName);
-    }
-    
 
     public List<Account> findAllAccount() {
         List<Account> listUser = accountsRespository.findAll();
@@ -64,27 +58,6 @@ public class AccountServices {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         AccountPrincipal loginedUser = (AccountPrincipal) auth.getPrincipal();
         return accountsRespository.findByEmail(loginedUser.getEmail());
-    }
-
-    @Transactional
-    public void createAccountAfterOAuthLoginSuccess(String email, String firstName, String lastName, String authenticationProvider) {
-        Account account = new Account();
-        account.setUserName(email);
-        account.setEmail(email);
-        account.setFirstName(firstName);
-        account.setLastName(lastName);
-        account.setDelete(false);
-        account.setAuthProvider(AuthenticationProvider.GOOGLE.toString());
-        account.setEncrytedPassword("");
-        Role role = roleRespository.getOne(new Long(2));
-        account.setRole(role);
-        accountsRespository.save(account);
-    }
-
-    @Transactional
-    public void updateAccountAfterOAuthLoginSuccess(Account account, String authenticationProvider) {
-        account.setAuthProvider(AuthenticationProvider.GOOGLE.toString());
-        accountsRespository.save(account);
     }
 
 }
