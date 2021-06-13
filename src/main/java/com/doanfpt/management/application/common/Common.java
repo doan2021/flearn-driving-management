@@ -1,6 +1,7 @@
 package com.doanfpt.management.application.common;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Common {
@@ -42,5 +43,12 @@ public class Common {
             e.printStackTrace();
         }
         return dateReturn;
+    }
+    
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }
