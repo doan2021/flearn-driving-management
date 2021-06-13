@@ -16,25 +16,63 @@
                       <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                           <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Quản lý chương</li>
+                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Danh sách kỳ thi</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Tạo kỳ thi</li>
                         </ol>
                       </nav>
-                    </div>
-                    <div class="col-lg-6 col-5 text-right">
-                      <a href="#" class="btn btn-sm btn-neutral"><i class="fas fa-plus"></i> Thêm chương mới</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="container-fluid mt--6">
+			<div class="container-fluid mt--6">
                 <div class="row justify-content-center">
                     <div class=" col">
                         <div class="card">
                             <div class="card-header bg-transparent">
-                                <h3 class="mb-0">Toàn bộ chương</h3>
+                                <h3 class="mb-0">Tạo kỳ thi</h3>
                             </div>
                             <div class="card-body">
+                            	<form th:action="@{/management/create-exam}" th:object="${examForm}" method="POST">
+	                            	<div class="row">
+	                                    <div class="col-12">
+	                                        <input type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}"  maxlength="255"/>
+	                                    </div>
+	                            	</div>
+	                            	<div class="row mt-3">
+	                            		<div class="col-12">
+	                                    	<textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}"  maxlength="4000"></textarea>
+	                                    </div>
+	                            	</div>
+									<div class="input-daterange datepicker row align-items-center mt-3">
+									    <div class="col-6">
+									        <div class="form-group">
+									            <div class="input-group">
+									                <div class="input-group-prepend">
+									                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+									                </div>
+									                <input class="form-control" placeholder="Ngày bắt đầu đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamStart}" maxlength="10">
+									            </div>
+									        </div>
+									    </div>
+									    <div class="col-6">
+									        <div class="form-group">
+									            <div class="input-group">
+									                <div class="input-group-prepend">
+									                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+									                </div>
+									                <input class="form-control" placeholder="Ngày kết thúc đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamEnd}" maxlength="10">
+									            </div>
+									        </div>
+									    </div>
+									</div>
+									<div class="row mt-3">
+	                                    <div class="col-12 mt-3 text-center">
+	                                        <input type="submit" value="Tạo kỳ thi" class="btn btn-primary"/>
+	                                        <a th:href="@{/management/create-exam}" class="btn btn-secondary">Làm mới</a>
+	                                    </div>
+									</div>
+                                </form>
                             </div>
                         </div>
                     </div>

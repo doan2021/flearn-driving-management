@@ -22,5 +22,7 @@ public class Constant {
     
     public static final long ROLE_ID_ADMIN = 1L;
     public static final boolean IS_NOT_DELETE = false;
+    
+    public static final String FORMAT_DATE = "MM/dd/yyyy";
 
 }
