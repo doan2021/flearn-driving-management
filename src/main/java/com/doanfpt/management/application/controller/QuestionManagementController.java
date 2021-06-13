@@ -1,7 +1,5 @@
 package com.doanfpt.management.application.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.doanfpt.management.application.dto.ExamForm;
 import com.doanfpt.management.application.dto.QuestionForm;
-import com.doanfpt.management.application.entities.Question;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.LearnServices;
 import com.doanfpt.management.application.services.QuestionServices;
@@ -30,15 +26,11 @@ public class QuestionManagementController {
     @Autowired
     LearnServices learnServices;
     
-    @GetMapping(value = {"/question"})
-    public String visitQuestionPage(Model model) {
-        return "question-management";
-    }
-    
     @GetMapping(value = {"/create-question"})
-    public String createQuestion(Model model) {
+    public String createQuestion(Long chapterId, Model model) {
         QuestionForm questionForm = new QuestionForm();
-        model.addAttribute(questionForm);
+        model.addAttribute("questionForm", questionForm);
+        model.addAttribute("chapter", chapterServices.getChapterDetail(chapterId));
         return "create-question";
     }
     

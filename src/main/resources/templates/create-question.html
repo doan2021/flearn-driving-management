@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/layout}">
+    layout:decorate="~{layout/layout-management}">
     <head>
         <meta charset="utf-8"/>
         <title>Learn</title>
@@ -8,64 +8,113 @@
     </head>
     <body>
         <th:block layout:fragment="content">
-            <div class="container-xxl py-5" id="create-question-app">
-                <div class="row">
-                   <div class="col-12">
-                       <h5><i class="fas fa-question"></i> Create question</h5>
-                   </div>
-                </div>
-                <form class="row p-0 mb-3" th:action="@{/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
-                    <div class="col-7 border p-3 bg-white shadow rounded">
-                        <div class="row">
-                            <div class="col-6">
-                                <select class="form-select" th:field="*{chapterId}">
-                                    <option value="" selected>---- Select chapter ----</option>
-                                    <option th:each="chapter : ${listChapter}" th:value="${chapter.chapterId}" th:text="|ChÆ°Æ¡ng ${chapter.name}: ${chapter.content}|">One</option>
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" class="form-control" id="numberQuestion" placeholder="Index question" th:field="*{number}"></input>
-                            </div>
-                            <div class="col-9 mt-3">
-                                <textarea class="form-control" id="contentQuestion" rows="3" th:field="*{content}" placeholder="Content question"></textarea>
-                            </div>
-                            <input class="form-control d-none" type="file" id="upload" th:field="*{images}" @change="readURL" multiple>
-                            <div class="col-3 mt-3" v-if="images != [] && images.length != 0">
-                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload">
-                                    <img v-bind:src="img" alt="" class="img-fluid">
-                                </label>
-                            </div>
-                            <div class="col-3 mt-3" v-else>
-                                <label class="image-area d-block" for="upload" style="height:150px">
-                                </label>
-                            </div>
+            <div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+                <!-- Mask -->
+                <span class="mask bg-gradient-default opacity-8"></span>
+                <!-- Header container -->
+                <div class="container-fluid d-flex align-items-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="display-2 text-white" th:text="|Chương ${chapter.chapterId}|"></h1>
+                            <p class="text-white mt-0 mb-5" th:text="${chapter.content}"></p>
                         </div>
                     </div>
-                    <div class="col-5 p-3 border bg-white shadow rounded">
-                        <div class="col-12" v-for="n in numberAnswer" :key="n">
-                            <div class="row">
-                                <div class="col-9">
-                                    <input type="text" class="form-control" :placeholder="'Answer ' + n" :name="'listAnswers['+ (n-1) +'].content'">
-                                </div>
-                                <div class="col-3 d-flex align-items-center justify-content-center">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" :name="'listAnswers['+ (n-1) +'].true'" value="1" :id="'answer'+ n">
-                                        <label class="form-check-label" :for="'answer'+ n">True</label>
+                </div>
+            </div>
+            <div class="container-fluid mt--6">
+                <form class="row p-0 mb-3" th:action="@{/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+                    <div class="col-7">
+                        <div class="card">
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3 class="mb-0">Tạo câu hỏi</h3>
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-danger rounded-pill" v-if="numberAnswer > 2" @click="deleteAnswer"><i class="fas fa-trash-alt"></i></button>
-                                <button type="button" class="btn btn-success rounded-pill" @click="addNewAnswer"><i class="fas fa-plus"></i></button>
+                            <div class="card-body">
+                                <h6 class="heading-small text-muted mb-4">Thông tin câu hỏi</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="numberQuestion">Số thứ tự</label>
+                                                        <input type="text" class="form-control" id="numberQuestion" placeholder="Số thứ tự" th:field="*{number}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="contentQuestion">Nội dung câu hỏi</label>
+                                                        <textarea class="form-control" id="contentQuestion" rows="3" th:field="*{content}" placeholder="Nội dung câu hỏi"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="numberQuestion">Upload ảnh</label>
+	                                            <input class="form-control d-none" type="file" id="upload" th:field="*{images}" @change="readURL" multiple>
+	                                            <div class="col-3 mt-3" v-if="images != [] && images.length != 0">
+	                                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload">
+	                                                    <img v-bind:src="img" alt="" class="img-fluid">
+	                                                </label>
+	                                            </div>
+	                                            <div class="col-3 mt-3" v-else>
+	                                                <label class="image-area d-block" for="upload" style="height:150px">
+	                                                </label>
+	                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-3 text-center">
+                                            <button type="submit" class="btn btn-primary">Tạo</button>
+                                            <button type="submit" class="btn btn-info">Làm mới</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-	                <div class="col-12 mt-3 text-center">
-	                    <button type="submit" class="btn btn-primary rounded-pill w-25">Tạo câu hỏi</button>
-	                </div>
+                    <div class="col-5">
+                        <div class="card">
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3 class="mb-0">Câu trả lời</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row p-0 mb-3">
+                                    <div class="col-12 p-3">
+                                        <div class="col-12" v-for="n in numberAnswer" :key="n">
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control" :placeholder="'Answer ' + n" :name="'listAnswers['+ (n-1) +'].content'">
+                                                </div>
+                                                <div class="col-3 d-flex align-items-center justify-content-center">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" :name="'listAnswers['+ (n-1) +'].true'" value="1" :id="'answer'+ n">
+                                                        <label class="form-check-label" :for="'answer'+ n">True</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-grid gap-2">
+                                                <button type="button" class="btn btn-danger rounded-pill" v-if="numberAnswer > 2" @click="deleteAnswer"><i class="fas fa-trash-alt"></i></button>
+                                                <button type="button" class="btn btn-success rounded-pill" @click="addNewAnswer"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <script th:src="@{../js/create-question.js}"></script>
