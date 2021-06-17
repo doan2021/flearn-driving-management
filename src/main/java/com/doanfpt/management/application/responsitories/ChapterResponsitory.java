@@ -9,5 +9,5 @@ import com.doanfpt.management.application.entities.Chapter;
 
 @Repository
 public interface ChapterResponsitory  extends JpaRepository<Chapter, Long>, PagingAndSortingRepository<Chapter, Long>, JpaSpecificationExecutor<Chapter> {
-
+	
 }
