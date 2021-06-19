@@ -25,10 +25,9 @@ public class ChapterManagementController {
     QuestionServices questionServices;
 
     @GetMapping(value = { "/chapter" })
-    public String visitChapterPage(Integer pageNumber, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME, chapterServices.getAllChapter(pageNumber));
+    public String visitChapterPage(FormSearchChapter formSearchChapter, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, chapterServices.searchChapter(formSearchChapter));
         model.addAttribute("formSearchChapter", new FormSearchChapter());
-        model.addAttribute("isSearch", false);
         return "chapter-management";
     }
     
@@ -36,7 +35,6 @@ public class ChapterManagementController {
     public String searchChapter(FormSearchChapter formSearchChapter, Model model) {
         model.addAttribute(Constant.PAGE_CONTENT_NAME, chapterServices.searchChapter(formSearchChapter));
         model.addAttribute("formSearchChapter", formSearchChapter);
-        model.addAttribute("isSearch", true);
         return "chapter-management";
     }
     
@@ -44,6 +42,7 @@ public class ChapterManagementController {
     public String visitChapterDetailPage(Long chapterId, Integer pageNumber, Model model) {
         model.addAttribute("chapter", chapterServices.getChapterDetail(chapterId));
         model.addAttribute(Constant.PAGE_CONTENT_NAME, questionServices.getQuestionInChapter(chapterId, pageNumber));
+        model.addAttribute("isSearch", false);
         return "chapter-detail";
     }
     
