@@ -32,29 +32,13 @@ public class AccountsManagementController {
         model.addAttribute("formSearchAccount", new FormSearchAccount());
         return "account-management";
     }
-    
-    @GetMapping(value = { "/create-account" })
-    public String visitCreateAccountPage(Model model) {
-        return "create-account";
-    }
-  
-    @PostMapping(value = {"/search-account"})
-    public String searchAccount(FormSearchAccount formSearchAccount,Model model) {
-		model.addAttribute("listAccount", accountsServices.searchAccount(formSearchAccount));
+
+    @PostMapping(value = { "/search-account" })
+    public String searchAccount(FormSearchAccount formSearchAccount, Model model) {
+        model.addAttribute("listAccount", accountsServices.searchAccount(formSearchAccount));
         model.addAttribute("formSearchAccount", formSearchAccount);
         model.addAttribute("isSearch", true);
         return "account-management";
-    }
-
-    @PostMapping(value = { "/create-account" })
-    public String createUser(@ModelAttribute("appUserForm") @Validated AccountForm appUserForm, BindingResult result,
-            final RedirectAttributes redirectAttributes, Model model) {
-        // Validate result
-        if (result.hasErrors()) {
-            return "register";
-        }
-        accountsServices.createAccount(appUserForm);
-        return "login";
     }
 
     @GetMapping(value = { "/view-profile" })
