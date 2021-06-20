@@ -88,8 +88,8 @@ public class Exam {
 		return dateRegisExamStart;
 	}
 
-	public void setDateRegisExamStart(Date dateRegisExamStart) {
-		this.dateRegisExamStart = dateRegisExamStart;
+	public void setDateRegisExamStart(Date date) {
+		this.dateRegisExamStart = date;
 	}
 
 	public Date getDateRegisExamEnd() {
