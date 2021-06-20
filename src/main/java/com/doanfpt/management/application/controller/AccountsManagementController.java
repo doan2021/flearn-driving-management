@@ -6,6 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.doanfpt.management.application.common.Constant;
+import com.doanfpt.management.application.dto.AccountForm;
+import com.doanfpt.management.application.dto.FormSearchAccount;
+import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.services.AccountServices;
 import com.doanfpt.management.application.services.RoleServices;
 
@@ -21,6 +25,8 @@ public class AccountsManagementController {
     
     @GetMapping(value = { "/account" })
     public String visitAccountPage(Model model) {
+    	model.addAttribute("listAccount", accountsServices.findAllAccount());
+    	model.addAttribute("formSearchAccount", new FormSearchAccount());
         return "account-management";
     }
     
@@ -28,10 +34,37 @@ public class AccountsManagementController {
     public String visitCreateAccountPage(Model model) {
         return "create-account";
     }
+  
+    @PostMapping(value = {"/search-account"})
+    public String searchAccount(FormSearchAccount formSearchAccount,Model model) {
+		model.addAttribute("listAccount", accountsServices.searchAccount(formSearchAccount));
+        model.addAttribute("formSearchAccount", formSearchAccount);
+        model.addAttribute("isSearch", true);
+    	return "account-management";
+    }
+    
+    @PostMapping(value = { "/create-account" })
+    public String createUser(@ModelAttribute("appUserForm") @Validated AccountForm appUserForm, BindingResult result,
+            final RedirectAttributes redirectAttributes, Model model) {
+        // Validate result
+        if (result.hasErrors()) {
+            return "register";
+        }
+        accountsServices.createAccount(appUserForm);
+        return "login";
+    }
     
     @GetMapping(value = { "/view-profile" })
     public String viewProfile(Model model) {
         model.addAttribute("account", accountsServices.getAccountLogin());
         return "view-profile";
+    }
+    
+    @GetMapping(value = { "/delete-account" })
+    public String viewProfile(Long accountId, Model model) {
+        accountsServices.deleteAccount(accountId);
+    	model.addAttribute("listAccount", accountsServices.findAllAccount());
+    	model.addAttribute("formSearchAccount", new FormSearchAccount());
+        return "account-management";
     }
 }

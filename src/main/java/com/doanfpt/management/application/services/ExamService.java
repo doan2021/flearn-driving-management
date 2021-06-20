@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
@@ -25,6 +26,10 @@ public class ExamService {
 	@Autowired
 	private ExamRepository examRepository;
 
+	public List<Exam> listAll() {
+		return examRepository.findByIsDeleteAndIsTrial(false, false);
+	}
+
 	public void saveExam(ExamForm examForm) {
 		Exam exam = new Exam();
 		if (examForm.getIsUpdate()) {
@@ -36,14 +41,12 @@ public class ExamService {
 		exam.setDateRegisExamEnd(Common.stringToDate(examForm.getDateRegisExamEnd()));
 		Date dateExam = Common.addDays(Common.stringToDate(examForm.getDateRegisExamEnd()), 15);
 		exam.setDateExam(dateExam);
-//		if (!examForm.getIsUpdate()) {
-//			exam.setCreateBy(Common.getUsernameLogin());
-//			exam.setCreateAt(Common.getSystemDate());
-//		}
+		if (!examForm.getIsUpdate()) {
+			exam.setCreateBy(Common.getUsernameLogin());
+			exam.setCreateAt(Common.getSystemDate());
+		}
 		exam.setUpdateBy(Common.getUsernameLogin());
 		exam.setUpdateAt(Common.getSystemDate());
-		exam.setCreateBy(Common.getUsernameLogin());
-		exam.setCreateAt(Common.getSystemDate());
 		examRepository.save(exam);
 	}
 
@@ -64,6 +67,16 @@ public class ExamService {
 
 	}
 
+	public Page<Exam> getAllExam(Integer pageNumber) {
+		if (pageNumber == null) {
+			pageNumber = 0;
+		}
+		Specification<Exam> conditions = Specification.where(ExamSpecification.isDelete(false));
+		PageRequest pageable = PageRequest.of(pageNumber, Constant.RECORD_PER_PAGE);
+		Page<Exam> listExam = examRepository.findAll(conditions, pageable);
+		return listExam;
+	}
+
 	public Page<Exam> searchExam(FormSearchExam formSearchExam) {
 		if (formSearchExam.getPageNumber() == null) {
 			formSearchExam.setPageNumber(0);
@@ -73,9 +86,6 @@ public class ExamService {
 		if (formSearchExam != null) {
 			if (StringUtils.isNotBlank(formSearchExam.getName())) {
 				conditions = conditions.and(ExamSpecification.hasName(formSearchExam.getName()));
-			}
-			if (StringUtils.isNotBlank(formSearchExam.getDescription())) {
-				conditions = conditions.and(ExamSpecification.likeContent(formSearchExam.getDescription()));
 			}
 			if (StringUtils.isNotBlank(formSearchExam.getDateRegisExamStartFrom())) {
 				conditions = conditions.and(ExamSpecification.hasDateRegisExamStartFrom(formSearchExam.getDateRegisExamStartFrom()));
@@ -94,6 +104,9 @@ public class ExamService {
 			}
 			if (StringUtils.isNotBlank(formSearchExam.getUpdateAtTo())) {
 				conditions = conditions.and(ExamSpecification.hasUpdateTo(formSearchExam.getUpdateAtTo()));
+
+			if (StringUtils.isEmptyOrWhitespace(formSearchExam.getDescription())) {
+				conditions = conditions.and(ExamSpecification.hasDescription(formSearchExam.getDescription()));
 			}
 		}
 

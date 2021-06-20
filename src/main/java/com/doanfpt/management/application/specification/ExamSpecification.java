@@ -7,7 +7,6 @@ import com.doanfpt.management.application.entities.Exam;
 import com.doanfpt.management.application.entities.Exam_;
 
 public class ExamSpecification {
-
 	public static Specification<Exam> hasName(String name) {
 		return (root, query, cb) -> cb.equal(root.get(Exam_.NAME), name);
 	}
@@ -47,4 +46,7 @@ public class ExamSpecification {
 		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.UPDATE_AT), Common.stringToDate(updateAtTo));
 	}
 
+	public static Specification<Exam> hasDescription(String description) {
+        return (root, query, cb) -> cb.like(root.get(Exam_.DESCRIPTION), "%" + description + "%");
+	}
 }

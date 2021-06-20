@@ -28,208 +28,219 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "account", uniqueConstraints = { @UniqueConstraint(name = "ACCOUNTS_UK", columnNames = "username") })
 public class Account {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
-    private Long accountId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "account_id")
+	private Long accountId;
 
-    @Column(name = "username", length = 36)
-    private String userName;
+	@Column(name = "username", length = 36)
+	private String userName;
 
-    @Column(name = "encryted_password", length = 128, nullable = false)
-    private String encrytedPassword;
+	@Column(name = "encryted_password", length = 128, nullable = false)
+	private String encrytedPassword;
 
-    @Column(name = "first_name")
-    private String firstName;
+	@Column(name = "first_name")
+	private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+	@Column(name = "last_name")
+	private String lastName;
 
-    @Column(name = "gender")
-    private Integer gender;
+	@Column(name = "gender")
+	private Integer gender;
 
-    @Column(name = "email")
-    private String email;
+	@Column(name = "email")
+	private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+	@Column(name = "number_phone", length = 10)
+	private String numberPhone;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
+	@ManyToOne
+	@JoinColumn(name = "role_id", nullable = false)
+	private Role role;
 
-    @Column(name = "create_by")
-    private String createBy;
+	@Column(name = "is_delete", columnDefinition = "boolean default false")
+	private boolean isDelete;
 
-    @Column(name = "create_at")
-    private Date createAt;
+	@Column(name = "create_by")
+	private String createBy;
 
-    @Column(name = "update_by")
-    private String updateBy;
+	@Column(name = "create_at")
+	private Date createAt;
 
-    @Column(name = "update_at")
-    private Date updateAt;
+	@Column(name = "update_by")
+	private String updateBy;
 
-    @Column(name = "is_nable", columnDefinition = "boolean default false")
-    private boolean isEnable;
+	@Column(name = "update_at")
+	private Date updateAt;
 
-    @Column(name = "auth_provider", length = 15)
-    private String authProvider;
+	@Column(name = "is_nable", columnDefinition = "boolean default false")
+	private boolean isEnable;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<HistoryAnswer> listHistoryAnswer;
+	@Column(name = "auth_provider", length = 15)
+	private String authProvider;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<StatusLearn> listStatusLearn;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	private List<HistoryAnswer> listHistoryAnswer;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Image> listImages;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	private List<StatusLearn> listStatusLearn;
 
-    public Long getAccountId() {
-        return accountId;
-    }
+	@JsonManagedReference
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	private List<Image> listImages;
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
+	public Long getAccountId() {
+		return accountId;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getEncrytedPassword() {
-        return encrytedPassword;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setEncrytedPassword(String encrytedPassword) {
-        this.encrytedPassword = encrytedPassword;
-    }
+	public String getEncrytedPassword() {
+		return encrytedPassword;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setEncrytedPassword(String encrytedPassword) {
+		this.encrytedPassword = encrytedPassword;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public Integer getGender() {
-        return gender;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
+	public Integer getGender() {
+		return gender;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+	public Role getRole() {
+		return role;
+	}
 
-    public boolean isDelete() {
-        return isDelete;
-    }
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
-    }
+	public boolean isDelete() {
+		return isDelete;
+	}
 
-    public List<HistoryAnswer> getListHistoryAnswer() {
-        return listHistoryAnswer;
-    }
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
 
-    public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
-        this.listHistoryAnswer = listHistoryAnswer;
-    }
+	public List<HistoryAnswer> getListHistoryAnswer() {
+		return listHistoryAnswer;
+	}
 
-    public List<StatusLearn> getListStatusLearn() {
-        return listStatusLearn;
-    }
+	public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
+		this.listHistoryAnswer = listHistoryAnswer;
+	}
 
-    public void setListStatusLearn(List<StatusLearn> listStatusLearn) {
-        this.listStatusLearn = listStatusLearn;
-    }
+	public List<StatusLearn> getListStatusLearn() {
+		return listStatusLearn;
+	}
 
-    public List<Image> getListImages() {
-        return listImages;
-    }
+	public void setListStatusLearn(List<StatusLearn> listStatusLearn) {
+		this.listStatusLearn = listStatusLearn;
+	}
 
-    public void setListImages(List<Image> listImages) {
-        this.listImages = listImages;
-    }
+	public List<Image> getListImages() {
+		return listImages;
+	}
 
-    public boolean isEnable() {
-        return isEnable;
-    }
+	public void setListImages(List<Image> listImages) {
+		this.listImages = listImages;
+	}
 
-    public void setEnable(boolean isEnable) {
-        this.isEnable = isEnable;
-    }
+	public boolean isEnable() {
+		return isEnable;
+	}
 
-    public String getAuthProvider() {
-        return authProvider;
-    }
+	public void setEnable(boolean isEnable) {
+		this.isEnable = isEnable;
+	}
 
-    public void setAuthProvider(String authProvider) {
-        this.authProvider = authProvider;
-    }
+	public String getAuthProvider() {
+		return authProvider;
+	}
 
-    public String getCreateBy() {
-        return createBy;
-    }
+	public void setAuthProvider(String authProvider) {
+		this.authProvider = authProvider;
+	}
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
+	public String getCreateBy() {
+		return createBy;
+	}
 
-    public Date getCreateAt() {
-        return createAt;
-    }
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
+	public Date getCreateAt() {
+		return createAt;
+	}
 
-    public String getUpdateBy() {
-        return updateBy;
-    }
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
+	public String getUpdateBy() {
+		return updateBy;
+	}
 
-    public Date getUpdateAt() {
-        return updateAt;
-    }
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
+	public Date getUpdateAt() {
+		return updateAt;
+	}
+
+	public void setUpdateAt(Date updateAt) {
+		this.updateAt = updateAt;
+	}
+
+	public String getNumberPhone() {
+		return numberPhone;
+	}
+
+	public void setNumberPhone(String numberPhone) {
+		this.numberPhone = numberPhone;
+	}
 
 }
