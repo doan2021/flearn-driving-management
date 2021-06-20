@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AnswerForm;
 import com.doanfpt.management.application.dto.QuestionForm;
@@ -53,9 +54,17 @@ public class QuestionServices {
             ans.setContent(answer.getContent());
             ans.setTrue(answer.isTrue());
             ans.setQuestion(question);
+            ans.setCreateBy(Common.getUsernameLogin());
+            ans.setCreateAt(Common.getSystemDate());
+            ans.setUpdateBy(Common.getUsernameLogin());
+            ans.setUpdateAt(Common.getSystemDate());
             listAnswers.add(ans);
         }
         question.setListAnswers(listAnswers);
+        question.setCreateBy(Common.getUsernameLogin());
+        question.setCreateAt(Common.getSystemDate());
+        question.setUpdateBy(Common.getUsernameLogin());
+        question.setUpdateAt(Common.getSystemDate());
         questionsRespository.save(question);
     }
 
@@ -68,6 +77,10 @@ public class QuestionServices {
                 image.setUrl(writeFile(c));
                 image.setDescription("Create new question");
                 image.setQuestion(question);
+                image.setCreateBy(Common.getUsernameLogin());
+                image.setCreateAt(Common.getSystemDate());
+                image.setUpdateBy(Common.getUsernameLogin());
+                image.setUpdateAt(Common.getSystemDate());
                 images.add(image);
             }
         }

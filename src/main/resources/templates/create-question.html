@@ -21,8 +21,9 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid mt--6">
-                <form class="row p-0 mb-3" th:action="@{/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+            <div class="container-fluid mt--6" id="create-question-app">
+                <form class="row p-0 mb-3" th:action="@{/management/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
                     <div class="col-7">
                         <div class="card">
                             <div class="card-header bg-transparent">
@@ -56,15 +57,10 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="numberQuestion">Upload ảnh</label>
 	                                            <input class="form-control d-none" type="file" id="upload" th:field="*{images}" @change="readURL" multiple>
-	                                            <div class="col-3 mt-3" v-if="images != [] && images.length != 0">
-	                                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload">
-	                                                    <img v-bind:src="img" alt="" class="img-fluid">
-	                                                </label>
-	                                            </div>
-	                                            <div class="col-3 mt-3" v-else>
-	                                                <label class="image-area d-block" for="upload" style="height:150px">
-	                                                </label>
-	                                            </div>
+                                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload" v-if="images != [] && images.length != 0">
+                                                    <img v-bind:src="img" alt="" class="img-fluid">
+                                                </label>
+                                                <label class="image-area d-block" for="upload" style="height:150px" v-if="images == [] || images.length == 0"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -117,6 +113,8 @@
                     </div>
                 </form>
             </div>
+        </th:block>
+        <th:block layout:fragment="script">
             <script th:src="@{../js/create-question.js}"></script>
         </th:block>
     </body>

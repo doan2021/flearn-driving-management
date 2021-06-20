@@ -3,19 +3,18 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout-management}">
 <head>
-<title>Tạo kỳ thi</title>
+<title>Sửa kỳ thi</title>
 <meta charset="utf-8" />
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<div class="header bg-primary pb-6">
+		<div class="header bg-primary">
 			<div class="container-fluid">
 				<div class="header-body">
 					<div class="row align-items-center py-4">
 						<div class="col-lg-6 col-7">
-							<h6 class="h2 text-white d-inline-block mb-0">Đường dẫn</h6>
 							<nav aria-label="breadcrumb"
-								class="d-none d-md-inline-block ml-md-4">
+								class="d-none d-md-inline-block">
 								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
 									<li class="breadcrumb-item"><a href="#"><i
 											class="fas fa-home"></i></a></li>
@@ -25,13 +24,7 @@
 								</ol>
 							</nav>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container-fluid mt--6">
-			<div class="row justify-content-center">
-				<div class="col">
+										<div class="col-12">
 					<div class="card">
 						<form th:action="@{/management/save-exam}"
 							th:object="${examForm}" method="POST">
@@ -97,6 +90,26 @@
 								</div>
 								<div class="row mt-3">
 									<div class="col-6">
+										<p>Người tạo</p>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-prepend"></div>
+												<span th:text="*{createBy}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-6">
+										<p>Thời gian tạo</p>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-prepend"></div>
+												<span th:text="*{createAt}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mt-3">
+									<div class="col-6">
 										<p>Người cập nhật</p>
 										<div class="form-group">
 											<div class="input-group">
@@ -119,12 +132,14 @@
 									<div class="col-12 mt-3 text-center">
 										<input type="submit" value="Sửa kỳ thi"
 											class="btn btn-primary" /> <a
-											th:href="@{/management/create-exam}"
-											class="btn btn-secondary">Làm mới</a>
+											th:href="@{/management/exam}"
+											class="btn btn-secondary">Trở về</a>
 									</div>
 								</div>
 							</div>
 						</form>
+					</div>
+				</div>
 					</div>
 				</div>
 			</div>

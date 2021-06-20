@@ -69,23 +69,23 @@
                                             <th scope="col" class="sort" data-sort="name">STT</th>
                                             <th scope="col" class="sort" data-sort="name">Nội dung</th>
                                             <th scope="col" class="sort" data-sort="budget">Câu hỏi liệt</th>
-                                            <th scope="col" class="sort" data-sort="status">Mô tả</th>
                                             <th scope="col" class="sort" data-sort="status">Cập nhật gần nhất</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="list">
-                                        <tr th:each="chapter : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
+                                        <tr th:each="question : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
                                             <th>
-                                                <span class="name mb-0 text-sm" th:text="${chapter.name}"></span>
+                                                <span class="name mb-0 text-sm" th:text="${question.number}"></span>
                                             </th>
                                             <td>
-                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="${chapter.content}"></a>
+                                                <span th:text="${question.content}"></span>
                                             </td>
                                             <td>
-                                                <span th:text="${chapter.description}"></span>
+                                                <span th:text="${question.isParalysis}"></span>
                                             </td>
                                             <td>
-                                                <span th:text="${chapter.updateAt}"></span>
+                                                <span th:text="${question.updateAt}"></span>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown">
