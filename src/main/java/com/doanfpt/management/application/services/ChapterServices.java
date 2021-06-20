@@ -1,12 +1,12 @@
 package com.doanfpt.management.application.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.FormSearchChapter;
@@ -45,17 +45,17 @@ public class ChapterServices {
         // Init condition with is_delete
         Specification<Chapter> conditions = Specification.where(ChapterSpecification.isDelete(false));
         if (formSearchChapter != null) {
-            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getName())) {
+            if (StringUtils.isNotBlank(formSearchChapter.getName())) {
                 conditions = conditions.and(ChapterSpecification.hasName(formSearchChapter.getName()));
             }
-            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getContent())) {
+            if (StringUtils.isNotBlank(formSearchChapter.getContent())) {
                 conditions = conditions.and(ChapterSpecification.likeContent(formSearchChapter.getContent()));
             }
 
-            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getUpdateAtFrom())) {
+            if (StringUtils.isNotBlank(formSearchChapter.getUpdateAtFrom())) {
                 conditions = conditions.and(ChapterSpecification.hasUpdateAtFrom(formSearchChapter.getUpdateAtFrom()));
             }
-            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getUpdateAtTo())) {
+            if (StringUtils.isNotBlank(formSearchChapter.getUpdateAtTo())) {
                 conditions = conditions.and(ChapterSpecification.hasUpdateAtTo(formSearchChapter.getUpdateAtTo()));
             }
         }
