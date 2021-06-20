@@ -30,6 +30,11 @@ public class AccountsManagementController {
         return "account-management";
     }
     
+    @GetMapping(value = { "/create-account" })
+    public String visitCreateAccountPage(Model model) {
+        return "create-account";
+    }
+  
     @PostMapping(value = {"/search-account"})
     public String searchAccount(FormSearchAccount formSearchAccount,Model model) {
 		model.addAttribute("listAccount", accountsServices.searchAccount(formSearchAccount));

@@ -5,18 +5,27 @@ $("#create-exam-form").validate({
 			maxlength: 255
 		},
 		description: {
-			required: true,
 			maxlength: 4000
+		},
+		startDate: {
+			required: true,
+			maxlength: 10
+		},
+		endDate: {
+			required: true,
+			maxlength: 10
 		}
 	},
 	messages: {
 		name: {
-			required : "Bat buoc",
-			maxlength: "Vui lòng nhập trên 255 ký tự!"
+			required : "Chưa điền tên kỳ thi, vui lòng kiểm tra lại!",
+			maxlength: "Vui lòng nhập dưới 255 ký tự!"
 		},
 		description: {
-			minlength: "Vui lòng nhập trên 10 ký tự!",
-			maxlength: "Không được nhập quá 4000 ký tự!"
+			maxlength: "Không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
+		},
+		startDate: {
+			required : "Chưa chọn ngày bắt đầu, vui lòng kiểm tra lại!",
 		}
 	},
 	
