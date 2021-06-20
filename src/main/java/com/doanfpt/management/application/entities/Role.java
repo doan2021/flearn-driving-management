@@ -16,11 +16,11 @@ public class Role {
     @Column(name = "role_id")
     private Long roleId;
 
-    @Column
+    @Column(name = "role_name")
     private String roleName;
-
-    @Column(columnDefinition = "boolean default false")
-    private boolean isDelete;
+    
+    @Column(name = "content")
+    private String content;
 
     public Long getRoleId() {
         return roleId;
@@ -38,11 +38,12 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public boolean isDelete() {
-        return isDelete;
+    public String getContent() {
+        return content;
     }
 
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
+    public void setContent(String content) {
+        this.content = content;
     }
+
 }

@@ -1,10 +1,15 @@
 package com.doanfpt.management.application.common;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.doanfpt.management.application.model.AccountPrincipal;
 
@@ -64,5 +69,20 @@ public class Common {
     
     public static Date getSystemDate() {
         return new Date();
+    }
+    
+    public static String writeFile(MultipartFile fileImage, String urlClassPath, String urlUploadFolder) {
+        byte data[];
+        String fileName = fileImage.getOriginalFilename();
+        try {
+            data = fileImage.getBytes();
+            File file = new File(urlClassPath + urlUploadFolder + "/" + fileName);
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(data);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return urlUploadFolder + "/" + fileName;
     }
 }

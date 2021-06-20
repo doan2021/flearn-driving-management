@@ -1,16 +1,20 @@
 package com.doanfpt.management.application.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class AccountForm {
     private String userName;
     private String firstName;
+    private String middleName;
     private String lastName;
     private String password;
     private String confirmPassword;
-    private int gender;
+    private Integer gender;
     private String email;
     private String birthDay;
-    private String phoneNumber;
+    private String numberPhone;
     private Long roleId;
+    private MultipartFile image;
 
     public String getUserName() {
         return userName;
@@ -84,16 +88,32 @@ public class AccountForm {
         this.birthDay = birthDay;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getNumberPhone() {
+        return numberPhone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setNumberPhone(String numberPhone) {
+        this.numberPhone = numberPhone;
     }
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
 }

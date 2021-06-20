@@ -1,8 +1,5 @@
 package com.doanfpt.management.application.services;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +31,10 @@ public class QuestionServices {
     private QuestionsRespository questionsRespository;
 
     @Autowired
-    private Environment env;
+    ChapterResponsitory chapterResponsitory;
 
     @Autowired
-    ChapterResponsitory chapterResponsitory;
+    private Environment env;
 
     @Transactional
     public void createNewQuestion(QuestionForm form) {
@@ -70,11 +67,13 @@ public class QuestionServices {
 
     public List<Image> handleImage(Question question, MultipartFile[] data) {
         List<Image> images = new ArrayList<>();
+        String pathClassPath = env.getProperty("url-class-path");
+        String pathFolderUpload = env.getProperty("url-upload-folder-question");
         for (MultipartFile c : data) {
             if (!c.isEmpty()) {
                 Image image = new Image();
                 image.setFileName(c.getOriginalFilename());
-                image.setUrl(writeFile(c));
+                image.setUrl(Common.writeFile(c, pathClassPath, pathFolderUpload));
                 image.setDescription("Create new question");
                 image.setQuestion(question);
                 image.setCreateBy(Common.getUsernameLogin());
@@ -85,23 +84,6 @@ public class QuestionServices {
             }
         }
         return images;
-    }
-
-    public String writeFile(MultipartFile fileImage) {
-        byte data[];
-        String pathClassPath = env.getProperty("url-class-path");
-        String pathFolderUpload = env.getProperty("url-upload-folder");
-        String fileName = fileImage.getOriginalFilename();
-        try {
-            data = fileImage.getBytes();
-            File file = new File(pathClassPath + pathFolderUpload + "/" + fileName);
-            FileOutputStream out = new FileOutputStream(file);
-            out.write(data);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return pathFolderUpload + "/" + fileName;
     }
 
     public List<Question> getAllQuestions() {
