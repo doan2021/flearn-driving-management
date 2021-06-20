@@ -29,4 +29,10 @@ public class AccountsManagementController {
         model.addAttribute("account", accountsServices.getAccountLogin());
         return "view-profile";
     }
+    
+    @GetMapping(value = { "/create-account" })
+    public String visitPageCreateAccount(Model model) {
+        model.addAttribute("account", accountsServices.getAccountLogin());
+        return "create-account";
+    }
 }
