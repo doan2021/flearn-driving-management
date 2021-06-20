@@ -1,5 +1,5 @@
 <th:block th:fragment="pagination" xmlns:th="http://www.thymeleaf.org">
-    <nav class="col-12 mt-3 d-flex justify-content-center" th:if="${pageContent.totalPages > 1 and !isSearch}">
+    <nav th:if="${pageContent.totalPages > 1 and !isSearch}">
         <ul class="pagination m-0">
             <li class="page-item">
                 <a class="page-link" th:href="@{/management/chapter?pageNumber=0}" th:if="${not pageContent.first}">
@@ -16,7 +16,7 @@
             </li>
         </ul>
     </nav>
-    <nav class="col-12 mt-3 d-flex justify-content-center" th:if="${pageContent.totalPages > 1 and isSearch}">
+    <nav th:if="${pageContent.totalPages > 1 and isSearch}">
         <ul class="pagination m-0">
             <li class="page-item">
                 <button class="page-link" th:if="${not pageContent.first}">

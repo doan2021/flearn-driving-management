@@ -1,7 +1,13 @@
 package com.doanfpt.management.application.common;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.doanfpt.management.application.model.AccountPrincipal;
 
 public class Common {
 
@@ -42,5 +48,22 @@ public class Common {
             e.printStackTrace();
         }
         return dateReturn;
+    }
+    
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
+    
+    public static String getUsernameLogin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AccountPrincipal loginedUser = (AccountPrincipal) auth.getPrincipal();
+        return loginedUser.getUsername();
+    }
+    
+    public static Date getSystemDate() {
+        return new Date();
     }
 }

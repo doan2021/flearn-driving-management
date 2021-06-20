@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-management}">
+<head>
+<title>Tạo kỳ thi</title>
+<meta charset="utf-8" />
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-lg-6 col-7">
+                      <h6 class="h2 text-white d-inline-block mb-0">Đường dẫn</h6>
+                      <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                          <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Quản lý kỳ thi</li>
+                        </ol>
+                      </nav>
+                    </div>
+                    <div class="col-lg-6 col-5 text-right">
+                      <a th:href="@{/management/create-exam}" class="btn btn-light btn-lg">Thêm kỳ thi</a>
+                    </div>
+                    <div class="col-12">
+                        <div class="card card-stats">
+                          <!-- Card body -->
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-12">
+                                  <h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
+                                  <form class="row mt-3" th:action="@{/management/search-exam}" th:object="${formSearchExam}" method="POST">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="Tên kỳ thi" th:field="*{name}" autofocus>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="Nội dung kỳ thi" th:field="*{description}">
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row justify-content-center">
+				<div class=" col">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<h3 class="mb-0">Danh sách kỳ thi</h3>
+						</div>
+						<div class="card-body">
+							<div class="row icon-examples">
+								<div class="table-responsive">
+										<table class="table align-items-center table-flush">
+										<thead class="thead-light">
+											<tr class="text-center">
+												<th scope="col" class="sort" data-sort="status">ID</th>
+												<th scope="col" class="sort" data-sort="budget">Tên kỳ thi</th>
+												<th scope="col" class="sort" data-sort="status">Nội dung kỳ thi</th>
+												<th scope="col" class="sort" data-sort="status">Ngày BĐ đăng ký</th>
+												<th scope="col" class="sort" data-sort="status">Ngày KT đăng ký</th>
+												<th scope="col" class="sort" data-sort="status">Ngày thi chính thức</th>
+												<th scope="col" class="sort" data-sort="status">is_delete</th>
+												<th scope="col" class="sort" data-sort="status">is_trial</th>
+												<th scope="col" class="sort" data-sort="status">create_at</th>
+												<th scope="col" class="sort" data-sort="status">create_by</th>
+												<th scope="col" class="sort" data-sort="status">update_at</th>
+												<th scope="col" class="sort" data-sort="status">update_by</th>
+												<th scope="col" class="sort" data-sort="status">Hành động</th>
+											</tr>
+										</thead>
+										<tbody class="list">
+											<tr th:each="exam : ${listExams}">
+												<th scope="row" class="text-center" th:text="${exam.examId}"></th>
+												<td class="text-center" th:text="${exam.name}"></td>
+												<td class="text-center" th:text="${exam.description}">
+												</td>
+												<td class="text-center" th:text="${exam.dateRegisExamStart}">
+												</td>
+												<td class="text-center" th:text="${exam.dateRegisExamEnd}">
+												</td>
+												<td class="text-center" th:text="${exam.dateExam}"></td>
+												<td class="text-center" th:text="${exam.isDelete}"></td>
+												<td class="text-center" th:text="${exam.isTrial}"></td>
+												<td class="text-center" th:text="${exam.createAt}"></td>
+												<td class="text-center" th:text="${exam.createBy}"></td>
+												<td class="text-center" th:text="${exam.updateAt}"></td>
+												<td class="text-center" th:text="${exam.updateBy}"></td>
+												<td class="text-center">
+													<a class="btn btn-success" th:href="@{${'/management/delete-exam?examId='} + ${exam.examId}}">Xóa</a>
+													<a class="btn btn-info" th:href="@{${'/management/edit-exam?examId='} + ${exam.examId}}">Sửa</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
-import com.doanfpt.management.application.entities.AuthenticationProvider;
 import com.doanfpt.management.application.entities.Role;
 import com.doanfpt.management.application.model.AccountPrincipal;
 import com.doanfpt.management.application.responsitories.AccountsRespository;
@@ -36,11 +35,6 @@ public class AccountServices {
     
     @Autowired
     private RoleRespository roleRespository;
-    
-    public Account getAccountByUserName(String userName) {
-        return accountsRespository.findByUserName(userName);
-    }
-    
 
     public List<Account> findAllAccount() {
         List<Account> listUser = accountsRespository.findAll();

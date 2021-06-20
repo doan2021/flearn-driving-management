@@ -1,5 +1,6 @@
 package com.doanfpt.management.application.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +13,6 @@ import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.responsitories.ChapterResponsitory;
 import com.doanfpt.management.application.specification.ChapterSpecification;
-import com.nimbusds.oauth2.sdk.util.StringUtils;
 
 @Service
 public class ChapterServices {
@@ -20,8 +20,8 @@ public class ChapterServices {
     @Autowired
     ChapterResponsitory chapterResponsitory;
 
-    public Chapter getOne(Long chapterId) {
-        return chapterResponsitory.getOne(chapterId);
+    public Chapter getChapterDetail(Long chapterId) {
+        return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
     }
 
     public void saveChapter(Chapter chapter) {

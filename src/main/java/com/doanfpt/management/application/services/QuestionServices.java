@@ -10,9 +10,14 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.doanfpt.management.application.common.Common;
+import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AnswerForm;
 import com.doanfpt.management.application.dto.QuestionForm;
 import com.doanfpt.management.application.entities.Answer;
@@ -30,7 +35,7 @@ public class QuestionServices {
 
     @Autowired
     private Environment env;
-    
+
     @Autowired
     ChapterResponsitory chapterResponsitory;
 
@@ -49,9 +54,17 @@ public class QuestionServices {
             ans.setContent(answer.getContent());
             ans.setTrue(answer.isTrue());
             ans.setQuestion(question);
+            ans.setCreateBy(Common.getUsernameLogin());
+            ans.setCreateAt(Common.getSystemDate());
+            ans.setUpdateBy(Common.getUsernameLogin());
+            ans.setUpdateAt(Common.getSystemDate());
             listAnswers.add(ans);
         }
         question.setListAnswers(listAnswers);
+        question.setCreateBy(Common.getUsernameLogin());
+        question.setCreateAt(Common.getSystemDate());
+        question.setUpdateBy(Common.getUsernameLogin());
+        question.setUpdateAt(Common.getSystemDate());
         questionsRespository.save(question);
     }
 
@@ -64,6 +77,10 @@ public class QuestionServices {
                 image.setUrl(writeFile(c));
                 image.setDescription("Create new question");
                 image.setQuestion(question);
+                image.setCreateBy(Common.getUsernameLogin());
+                image.setCreateAt(Common.getSystemDate());
+                image.setUpdateBy(Common.getUsernameLogin());
+                image.setUpdateAt(Common.getSystemDate());
                 images.add(image);
             }
         }
@@ -82,7 +99,6 @@ public class QuestionServices {
             out.write(data);
             out.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return pathFolderUpload + "/" + fileName;
@@ -90,5 +106,14 @@ public class QuestionServices {
 
     public List<Question> getAllQuestions() {
         return questionsRespository.findAll();
+    }
+
+    public Page<Question> getQuestionInChapter(Long chapterId, Integer pageNumber) {
+        if (pageNumber == null) {
+            pageNumber = 0;
+        }
+        Pageable pageable = PageRequest.of(pageNumber, Constant.RECORD_PER_PAGE);
+        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
+        return questionsRespository.findByChapter(chapter, pageable);
     }
 }
