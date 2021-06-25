@@ -10,7 +10,7 @@ function readURL(input) {
 	}
 }
 
-$("#create-account-form").validate({
+$("#edit-account-form").validate({
 	rules: {
 		firstName: {
 			required: true,
@@ -54,13 +54,13 @@ $("#create-account-form").validate({
 	},
 	messages: {
 		firstName: {
-			required: "Vui lòng nhập tên!"
+			required: "Vui lòng nhập họ!"
 		},
 		middleName: {
 			
 		},
 		lastName: {
-			required: "Vui lòng nhập họ!"
+			required: "Vui lòng nhập tên!"
 		},
 		email: {
 			required: "Vui lòng nhập Email!",
@@ -71,7 +71,7 @@ $("#create-account-form").validate({
 			rangelength: "Số điện thoại phải đủ 10 số, vui lòng kiểm tra lại!",
 			number: "Số điện thoại phải là số, vui lòng kiểm tra lại!"
 		},
-		birthDay: {
+		birthday: {
 			required: "Vui lòng chọn ngày sinh!"
 		},
 		userName: {
@@ -101,32 +101,8 @@ $("#create-account-form").validate({
 	},
 	errorPlacement: function (error, element) {
         switch (element.attr("name")) {
-		case 'lastName':
-            error.insertAfter($("#lastName-place"));
-            break;
-        case 'firstName':
-            error.insertAfter($("#firstName-place"));
-            break;
         case 'birthDay':
             error.insertAfter($("#birthday-place"));
-            break;
-		case 'numberPhone':
-			error.insertAfter($("#numberPhone-place"));
-			break;
-		case 'email':
-            error.insertAfter($("#email-place"));
-            break;
-        case 'userName':
-            error.insertAfter($("#username-place"));
-            break;
-        case 'password':
-            error.insertAfter($("#password-place"));
-            break;
-        case 'confirmPassword':
-            error.insertAfter($("#cPassword-place"));
-            break;
-        case 'roles':
-            error.insertAfter($("#role-place"));
             break;
         default:
             error.insertAfter(element);

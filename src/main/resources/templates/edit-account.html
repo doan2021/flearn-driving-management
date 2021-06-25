@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-management}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Sửa người dùng</title>
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-12">
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/management/account}">Quản lý người dùng</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Sửa người dùng</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row">
+				<div class="col-xl-4 order-xl-2">
+					<div class="card card-profile">
+						<img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+						<div class="row justify-content-center">
+							<div class="col-lg-3 order-lg-2">
+								<div class="card-profile-image">
+									<label for="fileImage">
+										<img src="../assets/img/theme/team-4.jpg" class="rounded-circle" id="image-preview">
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="card-body pt-0">
+							<div class="row">
+								<div class="col">
+									<div class="card-profile-stats d-flex justify-content-center">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-8 order-xl-1">
+					<div class="card">
+						<div class="card-header">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<h3 class="mb-0">Sửa người dùng </h3>
+								</div>
+								<div class="col-4 text-right">
+									<a href="#!" class="btn btn-sm btn-primary">Đổi mật khẩu</a>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<form id="edit-exam-form" th:action="@{/management/update-account}" th:object="${accountForm}" method="POST">
+								<input type="hidden" name="accountId" th:value="${accountForm.accountId}">
+								<div class="row">
+									<div class="col-6">
+										<h6 class="heading-small text-muted mb-4">THÔNG TIN CƠ BẢN</h6>
+									</div>
+									<div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="role">Bạn đang là: </label>
+                                            <span></span>
+                                        </div>
+                                    </div>
+								</div>
+								<div class="pl-lg-4">
+									<div class="row">
+										<div class="col-12">
+                                            <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${messageSuccess}">
+                                            </div>
+											<div class="alert alert-danger" th:if="${messageError != null}" th:text="${messageError}">
+                                            </div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<label class="form-control-label" for="input-username">Tên đăng nhập: </label>
+												<span th:text="*{userName}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-4">
+											<div class="form-group">
+												<label class="form-control-label" for="input-first-name">Họ</label>
+												<span class="text-danger">*</span>
+												<input th:field="*{firstName}" type="text" id="input-first-name" class="form-control" placeholder="Võ">
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group">
+												<label class="form-control-label" for="input-middle-name">Tên đệm</label>
+												<input th:field="*{middleName}" type="text" id="input-middle-name" class="form-control" placeholder="Văn">
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group">
+												<label class="form-control-label" for="input-last-name">Tên</label>
+												<span class="text-danger">*</span>
+												<input th:field="*{lastName}" type="text" id="input-last-name" class="form-control" placeholder="A">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group" id="birthday-place">
+                                                <label class="form-control-label" for="input-birthday">Ngày sinh</label>
+                                                <span class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                                    </div>
+                                                    <input th:field="*{birthDay}" class="form-control datepicker" id="input-birthday" placeholder="Ngày sinh" type="text" name="birthDay">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-number-phone">Số điện thoại</label>
+                                                <span class="text-danger">*</span>
+                                                <input th:field="*{numberPhone}" type="text" id="input-number-phone" placeholder="Số điện thoại" class="form-control" name="numberPhone">
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<label class="form-control-label" for="input-email">Email</label>
+												<span class="text-danger">*</span>
+												<input th:field="*{email}" type="email" id="input-email" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-gender">Giới tính</label>
+                                                <span class="text-danger">*</span>
+                                                <select th:field="*{gender}" class="form-control" id="input-gender" name="gender">
+                                                    <option value="">--------Chọn giới tính----------</option>
+                                                    <option value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
+                                                    <option value="2">Khác</option>
+                                                </select>
+                                            </div>
+                                        </div>
+									</div>
+								</div>
+								<hr class="my-4" />
+								<!-- Address -->
+								<h6 class="heading-small text-muted mb-4">THÔNG TIN KHÁC</h6>
+								<div class="pl-lg-4">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label" for="input-address">Địa chỉ 1</label>
+												<input id="input-address" class="form-control" placeholder="262 Lê Thanh Nghị">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label" for="input-address">Địa chỉ 2</label>
+												<input id="input-address" class="form-control" placeholder="Quán nhậu Bé Mặn">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-4">
+											<div class="form-group">
+												<label class="form-control-label" for="input-city">Phường</label>
+												<select class="form-control">
+													<option>Phường</option>
+													<option>1</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group">
+												<label class="form-control-label" for="input-country">Quận</label>
+												<select class="form-control">
+													<option>Quận</option>
+													<option>1</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group">
+												<label class="form-control-label" for="input-country">Thành phố</label>
+												<select class="form-control">
+													<option>Thành phố</option>
+													<option>1</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr class="my-4" />
+								<!-- Description -->
+								<h6 class="heading-small text-muted mb-4">Miêu tả về tôi</h6>
+								<div class="pl-lg-4">
+									<div class="form-group">
+										<label class="form-control-label">Viết chi cũng được</label>
+										<textarea rows="4" class="form-control" placeholder="Pass"></textarea>
+									</div>
+								</div>
+								<div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-primary">Sửa</button>
+                                        <a th:href="@{/management/account}" class="btn btn-info">Trở về</a>
+                                    </div>
+                                </div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:src="@{../js/edit-account.js}"></script>
+	</th:block>
+</body>
+
+</html>
