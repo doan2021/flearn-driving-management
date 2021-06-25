@@ -1,7 +1,6 @@
 package com.doanfpt.management.application.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-
 import com.doanfpt.management.application.entities.Account;
 import com.doanfpt.management.application.entities.Account_;
 

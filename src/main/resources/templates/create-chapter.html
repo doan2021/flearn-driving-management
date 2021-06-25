@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-management}">
+
+<head>
+	<title>Tạo kỳ thi</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" th:href="@{../css/create-chapter.css}" type="text/css">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-12">
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item active" aria-current="page">Tạo Chương Mới</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row">
+				<div class="col-xl-8 order-xl-1">
+					<div class="card">
+						<div class="card-header">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<h3 class="mb-0">Tạo Chương</h3>
+								</div>
+							</div>
+						</div>
+						<div class="card-body px-4">
+							<form th:action="@{/management/save-chapter}" th:object="${chapterForm}" method="POST">
+								<input type="file" onchange="readURL(this);" class="d-none" id="fileImage" name="image">
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="form-control-label" for="input-first-name">Tên Chương</label>
+											<input th:field="*{name}" type="text" id="input-first-name"
+												placeholder="Nhập tên chương" class="form-control" name="firstName"
+												value="">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="form-control-label" for="input-first-name">Mô tả</label>
+											<input th:field="*{description}" type="textarea" id="input-first-name"
+												placeholder="Nhập mô tả" class="form-control" name="description" value="">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label class="form-control-label" for="input-first-name">Nội dung</label>
+											<textarea th:field="*{content}" id="input-first-name" class="form-control"
+												name="content" placeholder="Nhập mô tả"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12 text-center">
+										<button type="submit" class="btn btn-primary">Tạo</button>
+										<a href="/management/create-chapter" class="btn btn-info">Làm mới</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>
