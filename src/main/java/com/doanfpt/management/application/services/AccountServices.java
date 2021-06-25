@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.doanfpt.management.application.common.Common;
+import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
@@ -129,5 +131,46 @@ public class AccountServices {
         account.setUpdateBy(Common.getUsernameLogin());
         account.setUpdateAt(Common.getSystemDate());
         accountsRespository.save(account);
+    }
+
+	public Object getObjectUpdate(Long accountId) {
+		AccountForm accountForm = new AccountForm();
+		Account account = accountsRespository.getOne(accountId);
+		accountForm.setAccountId(account.getAccountId());
+		accountForm.setFirstName(account.getFirstName());
+		accountForm.setMiddleName(account.getMiddleName());
+		accountForm.setLastName(account.getLastName());
+		accountForm.setUserName(account.getUserName());
+		accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+		accountForm.setNumberPhone(account.getNumberPhone());
+		accountForm.setEmail(account.getEmail());
+		accountForm.setGender(account.getGender());
+		
+		return accountForm;
+	}
+	
+    @Transactional
+    public boolean updateAccount(AccountForm accountForm) {
+    	if (accountForm == null) {
+    		return false;
+    	}
+        Account account = accountsRespository.findByAccountIdAndIsDelete(accountForm.getAccountId(), Constant.IS_NOT_DELETE);
+        if (account == null) {
+        	return false;
+        }
+        account.setFirstName(accountForm.getFirstName());
+        account.setMiddleName(accountForm.getMiddleName());
+        account.setLastName(accountForm.getLastName());
+        account.setBirthDay(Common.stringToDate(accountForm.getBirthDay()));
+        account.setEmail(accountForm.getEmail());
+        account.setNumberPhone(accountForm.getNumberPhone());
+        account.setGender(accountForm.getGender());
+        account.setUpdateBy(Common.getUsernameLogin());
+        account.setUpdateAt(Common.getSystemDate());
+        if (accountsRespository.save(account) == null) {
+        	return false;
+        } else {
+        	return true;
+        }
     }
 }

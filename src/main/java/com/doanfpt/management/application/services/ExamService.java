@@ -1,5 +1,6 @@
 package com.doanfpt.management.application.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,14 @@ public class ExamService {
 
     public List<Exam> listAll() {
         return examRepository.findByIsDeleteAndIsTrial(false, false);
+    }
+    
+    public List<Exam> findAllExam() {
+    	List<Exam> listExam = examRepository.findAll();
+    	if (listExam != null) {
+			return listExam;
+		}
+    	return new ArrayList<Exam>();
     }
 
     public void saveExam(ExamForm examForm) {

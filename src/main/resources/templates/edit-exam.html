@@ -26,8 +26,7 @@
 						</div>
 										<div class="col-12">
 					<div class="card">
-						<form th:action="@{/management/save-exam}"
-							th:object="${examForm}" method="POST">
+						<form th:action="@{/management/save-exam}" th:object="${examForm}" method="POST">
 							<input type="hidden" name="isUpdate" value="true">
 							<input type="hidden" name="examId" th:value="${examForm.examId}">
 							<div class="card-header bg-transparent">
@@ -41,18 +40,14 @@
 								<div class="row">
 									<div class="col-12 form-group">
 										<p>Tên kỳ thi</p>
-										<input type="text" class="form-control"
-											placeholder="Tên kỳ thi" name="name" th:field="*{name}"
-											maxlength="255" />
+										<input type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}" maxlength="255" />
 									</div>
 
 								</div>
 								<p>Mô tả kỳ thi</p>
 								<div class="row mt-3">
 									<div class="col-12">
-										<textarea cols="5" class="form-control"
-											placeholder="Mô tả kỳ thi" name="description"
-											th:field="*{description}" maxlength="4000"></textarea>
+										<textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
 									</div>
 								</div>
 								<div
@@ -65,10 +60,7 @@
 													<span class="input-group-text"><i
 														class="ni ni-calendar-grid-58"></i></span>
 												</div>
-												<input class="form-control"
-													placeholder="Ngày bắt đầu đăng ký" type="text"
-													autocomplete="off" th:field="*{dateRegisExamStart}"
-													maxlength="10">
+												<input class="form-control" placeholder="Ngày bắt đầu đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamStart}" maxlength="10">
 											</div>
 										</div>
 									</div>
@@ -80,10 +72,7 @@
 													<span class="input-group-text"><i
 														class="ni ni-calendar-grid-58"></i></span>
 												</div>
-												<input class="form-control"
-													placeholder="Ngày kết thúc đăng ký" type="text"
-													autocomplete="off" th:field="*{dateRegisExamEnd}"
-													maxlength="10">
+												<input class="form-control" placeholder="Ngày kết thúc đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamEnd}" maxlength="10">
 											</div>
 										</div>
 									</div>
@@ -130,10 +119,8 @@
 								</div>
 								<div class="row mt-3">
 									<div class="col-12 mt-3 text-center">
-										<input type="submit" value="Sửa kỳ thi"
-											class="btn btn-primary" /> <a
-											th:href="@{/management/exam}"
-											class="btn btn-secondary">Trở về</a>
+										<input type="submit" value="Sửa kỳ thi" class="btn btn-primary" /> 
+										<a th:href="@{/management/exam}" class="btn btn-secondary">Trở về</a>
 									</div>
 								</div>
 							</div>

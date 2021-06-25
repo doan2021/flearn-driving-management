@@ -5,14 +5,15 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.doanfpt.management.application.entities.Account;
-import com.doanfpt.management.application.entities.Role;
 
 @Repository
 public interface AccountsRespository extends JpaRepository<Account, Long>, JpaSpecificationExecutor<Account> {
 
-    public Account findByUserNameAndIsDeleteAndRole(String userName, boolean isDelete, Role role);
+    public Account findByUserNameAndIsDelete(String userName, boolean isDelete);
 
     Account findByEmail(String email);
 
     Boolean existsByUserName(String userName);
+
+	public Account findByAccountIdAndIsDelete(Long accountId, boolean isNotDelete);
 }
