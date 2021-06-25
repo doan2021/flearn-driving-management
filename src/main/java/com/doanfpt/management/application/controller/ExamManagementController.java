@@ -32,7 +32,7 @@ public class ExamManagementController {
 	public String createExamPage(Model model) {
 		ExamForm examForm = new ExamForm();
 		model.addAttribute("examForm", examForm);
-		return "create-exam";
+		return "create-exam"; 
 	}
 
 	@PostMapping(value = { "/save-exam" })
@@ -57,9 +57,13 @@ public class ExamManagementController {
 		return "exam-management";
 	}
 
-	@RequestMapping("/delete-exam")
-	public String deleteExam(Long examId) {
+	@GetMapping(value = { "/delete-exam" })
+	public String deleteExam(Long examId, Model model) {
 		examService.deleteExam(examId);
+		model.addAttribute("messageSuccess", "Đã xóa 1 record!");
+		FormSearchExam formSearchExam = new FormSearchExam();
+		model.addAttribute(Constant.PAGE_CONTENT_NAME, examService.searchExam(formSearchExam));
+		model.addAttribute("formSearchExam", formSearchExam);
 		return "exam-management";
 	}
 
