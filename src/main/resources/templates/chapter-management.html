@@ -29,7 +29,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
-                                                <form class="row mt-3" th:action="@{/management/search-chapter}" th:object="${formSearchChapter}" method="post" id="formSearchChapter">
+                                                <form class="row mt-3" th:action="@{/management/search-chapter}" th:object="${formSearchChapter}" method="post" id="formSearch">
                                                     <input type="hidden" th:field="*{pageNumber}" id="pageNumber">
                                                     <div class="col-6">
                                                         <input type="text" class="form-control" placeholder="Tên chương" th:field="*{name}" autofocus>

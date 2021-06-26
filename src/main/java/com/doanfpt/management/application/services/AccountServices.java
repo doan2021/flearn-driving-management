@@ -133,30 +133,30 @@ public class AccountServices {
         accountsRespository.save(account);
     }
 
-	public Object getObjectUpdate(Long accountId) {
-		AccountForm accountForm = new AccountForm();
-		Account account = accountsRespository.getOne(accountId);
-		accountForm.setAccountId(account.getAccountId());
-		accountForm.setFirstName(account.getFirstName());
-		accountForm.setMiddleName(account.getMiddleName());
-		accountForm.setLastName(account.getLastName());
-		accountForm.setUserName(account.getUserName());
-		accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
-		accountForm.setNumberPhone(account.getNumberPhone());
-		accountForm.setEmail(account.getEmail());
-		accountForm.setGender(account.getGender());
-		
-		return accountForm;
-	}
-	
+    public Object getObjectUpdate(Long accountId) {
+        AccountForm accountForm = new AccountForm();
+        Account account = accountsRespository.findByAccountIdAndIsDelete(accountId, Constant.IS_NOT_DELETE);
+        accountForm.setAccountId(account.getAccountId());
+        accountForm.setFirstName(account.getFirstName());
+        accountForm.setMiddleName(account.getMiddleName());
+        accountForm.setLastName(account.getLastName());
+        accountForm.setUserName(account.getUserName());
+        accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+        accountForm.setNumberPhone(account.getNumberPhone());
+        accountForm.setEmail(account.getEmail());
+        accountForm.setGender(account.getGender());
+        accountForm.setRoleId(account.getRole().getRoleId());
+        return accountForm;
+    }
+    
     @Transactional
     public boolean updateAccount(AccountForm accountForm) {
-    	if (accountForm == null) {
-    		return false;
-    	}
+        if (accountForm == null) {
+            return false;
+        }
         Account account = accountsRespository.findByAccountIdAndIsDelete(accountForm.getAccountId(), Constant.IS_NOT_DELETE);
         if (account == null) {
-        	return false;
+            return false;
         }
         account.setFirstName(accountForm.getFirstName());
         account.setMiddleName(accountForm.getMiddleName());
@@ -168,9 +168,9 @@ public class AccountServices {
         account.setUpdateBy(Common.getUsernameLogin());
         account.setUpdateAt(Common.getSystemDate());
         if (accountsRespository.save(account) == null) {
-        	return false;
+            return false;
         } else {
-        	return true;
+            return true;
         }
     }
 }

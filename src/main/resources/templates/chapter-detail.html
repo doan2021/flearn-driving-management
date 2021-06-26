@@ -63,13 +63,13 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
-                                    <thead class="thead-dark">
+                                <table class="table align-items-center table-hover">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th scope="col" class="sort" data-sort="name">STT</th>
-                                            <th scope="col" class="sort" data-sort="name">Nội dung</th>
-                                            <th scope="col" class="sort" data-sort="budget">Câu hỏi liệt</th>
-                                            <th scope="col" class="sort" data-sort="status">Cập nhật gần nhất</th>
+                                            <th scope="col" class="sort text-center" data-sort="name">STT</th>
+                                            <th scope="col" class="sort text-center" data-sort="name">Nội dung</th>
+                                            <th scope="col" class="sort text-center" data-sort="budget">Câu hỏi liệt</th>
+                                            <th scope="col" class="sort text-center" data-sort="status">Cập nhật gần nhất</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -81,23 +81,16 @@
                                             <td>
                                                 <span th:text="${question.content}"></span>
                                             </td>
-                                            <td>
-                                                <span th:text="${question.isParalysis}"></span>
+                                            <td th:if="${question.isParalysis}" class="text-center">
+                                                <span class="text-success h1"><i class="fas fa-check-circle"></i></span>
+                                            </td>
+                                            <td th:unless="${question.isParalysis}">
+                                            </td>
+                                            <td class="text-center">
+                                                <span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
                                             </td>
                                             <td>
-                                                <span th:text="${question.updateAt}"></span>
-                                            </td>
-                                            <td class="text-right">
-                                                <div class="dropdown">
-                                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
-                                                    </div>
-                                                </div>
+                                                <a href="#" class="text-danger h1"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                         <tr th:if="${pageContent.totalElements == 0}">
