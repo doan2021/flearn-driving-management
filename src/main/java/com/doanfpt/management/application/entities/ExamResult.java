@@ -19,78 +19,111 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "exam_result")
 public class ExamResult {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "exam_result_id")
-    private Long examResultId;
-    
-    @Column(name = "point")
-    private double point;
-    
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "exam_id")
-    private Exam exam;
-    
-    @JsonManagedReference
-    @OneToMany(mappedBy = "examResult", cascade = CascadeType.ALL)
-    private List<HistoryAnswer> listHistoryAnswer;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "exam_result_id")
+	private Long examResultId;
 
-    public Long getExamResultId() {
-        return examResultId;
-    }
+	@Column(name = "point")
+	private double point;
 
-    public void setExamResultId(Long examResultId) {
-        this.examResultId = examResultId;
-    }
+	@Column(name = "is_pass")
+	private boolean isPass;
 
-    public boolean isDelete() {
-        return isDelete;
-    }
+	@Column(name = "is_delete", columnDefinition = "boolean default false")
+	private boolean isDelete;
 
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
-    }
+	@Column(name = "time_exam_start")
+	private String timeExamStart;
 
-    public double getPoint() {
-        return point;
-    }
+	@Column(name = "time_exam_end")
+	private String timeExamEnd;
 
-    public void setPoint(double point) {
-        this.point = point;
-    }
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 
-    public Account getAccount() {
-        return account;
-    }
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "exam_id")
+	private Exam exam;
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+	@JsonManagedReference
+	@OneToMany(mappedBy = "examResult", cascade = CascadeType.ALL)
+	private List<HistoryAnswer> listHistoryAnswer;
 
-    public List<HistoryAnswer> getListHistoryAnswer() {
-        return listHistoryAnswer;
-    }
+	public Long getExamResultId() {
+		return examResultId;
+	}
 
-    public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
-        this.listHistoryAnswer = listHistoryAnswer;
-    }
+	public void setExamResultId(Long examResultId) {
+		this.examResultId = examResultId;
+	}
 
-    public Exam getExam() {
-        return exam;
-    }
+	public boolean isDelete() {
+		return isDelete;
+	}
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
-    
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public double getPoint() {
+		return point;
+	}
+
+	public void setPoint(double point) {
+		this.point = point;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public List<HistoryAnswer> getListHistoryAnswer() {
+		return listHistoryAnswer;
+	}
+
+	public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
+		this.listHistoryAnswer = listHistoryAnswer;
+	}
+
+	public Exam getExam() {
+		return exam;
+	}
+
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+
+	public boolean isPass() {
+		return isPass;
+	}
+
+	public void setPass(boolean isPass) {
+		this.isPass = isPass;
+	}
+
+	public String getTimeExamStart() {
+		return timeExamStart;
+	}
+
+	public void setTimeExamStart(String timeExamStart) {
+		this.timeExamStart = timeExamStart;
+	}
+
+	public String getTimeExamEnd() {
+		return timeExamEnd;
+	}
+
+	public void setTimeExamEnd(String timeExamEnd) {
+		this.timeExamEnd = timeExamEnd;
+	}
+
 }

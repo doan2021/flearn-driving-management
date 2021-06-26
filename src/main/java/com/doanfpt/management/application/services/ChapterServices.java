@@ -6,13 +6,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.responsitories.ChapterResponsitory;
 import com.doanfpt.management.application.specification.ChapterSpecification;
-import com.nimbusds.oauth2.sdk.util.StringUtils;
 
 @Service
 public class ChapterServices {
@@ -20,8 +20,8 @@ public class ChapterServices {
     @Autowired
     ChapterResponsitory chapterResponsitory;
 
-    public Chapter getOne(Long chapterId) {
-        return chapterResponsitory.getOne(chapterId);
+    public Chapter getChapterDetail(Long chapterId) {
+        return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
     }
 
     public void saveChapter(Chapter chapter) {
@@ -45,17 +45,17 @@ public class ChapterServices {
         // Init condition with is_delete
         Specification<Chapter> conditions = Specification.where(ChapterSpecification.isDelete(false));
         if (formSearchChapter != null) {
-            if (StringUtils.isNotBlank(formSearchChapter.getName())) {
+            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getName())) {
                 conditions = conditions.and(ChapterSpecification.hasName(formSearchChapter.getName()));
             }
-            if (StringUtils.isNotBlank(formSearchChapter.getContent())) {
+            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getContent())) {
                 conditions = conditions.and(ChapterSpecification.likeContent(formSearchChapter.getContent()));
             }
 
-            if (StringUtils.isNotBlank(formSearchChapter.getUpdateAtFrom())) {
+            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getUpdateAtFrom())) {
                 conditions = conditions.and(ChapterSpecification.hasUpdateAtFrom(formSearchChapter.getUpdateAtFrom()));
             }
-            if (StringUtils.isNotBlank(formSearchChapter.getUpdateAtTo())) {
+            if (StringUtils.isEmptyOrWhitespace(formSearchChapter.getUpdateAtTo())) {
                 conditions = conditions.and(ChapterSpecification.hasUpdateAtTo(formSearchChapter.getUpdateAtTo()));
             }
         }

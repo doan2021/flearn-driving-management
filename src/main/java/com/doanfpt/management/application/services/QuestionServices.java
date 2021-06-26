@@ -10,9 +10,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AnswerForm;
 import com.doanfpt.management.application.dto.QuestionForm;
 import com.doanfpt.management.application.entities.Answer;
@@ -30,7 +34,7 @@ public class QuestionServices {
 
     @Autowired
     private Environment env;
-    
+
     @Autowired
     ChapterResponsitory chapterResponsitory;
 
@@ -82,7 +86,6 @@ public class QuestionServices {
             out.write(data);
             out.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return pathFolderUpload + "/" + fileName;
@@ -90,5 +93,14 @@ public class QuestionServices {
 
     public List<Question> getAllQuestions() {
         return questionsRespository.findAll();
+    }
+
+    public Page<Question> getQuestionInChapter(Long chapterId, Integer pageNumber) {
+        if (pageNumber == null) {
+            pageNumber = 0;
+        }
+        Pageable pageable = PageRequest.of(pageNumber, Constant.RECORD_PER_PAGE);
+        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
+        return questionsRespository.findByChapter(chapter, pageable);
     }
 }

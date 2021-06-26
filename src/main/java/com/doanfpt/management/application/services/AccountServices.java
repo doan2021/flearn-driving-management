@@ -5,28 +5,24 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.doanfpt.management.application.common.Common;
+import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
-import com.doanfpt.management.application.entities.AuthenticationProvider;
 import com.doanfpt.management.application.entities.Role;
 import com.doanfpt.management.application.model.AccountPrincipal;
 import com.doanfpt.management.application.responsitories.AccountsRespository;
 import com.doanfpt.management.application.responsitories.RoleRespository;
 import com.doanfpt.management.application.specification.AccountSpecification;
-import com.doanfpt.management.application.specification.ChapterSpecification;
 import com.doanfpt.management.application.utils.EncrytedPasswordUtils;
-import com.nimbusds.oauth2.sdk.util.StringUtils;
-
-import ch.qos.logback.core.joran.conditional.Condition;
 
 @Service
 public class AccountServices {
@@ -36,16 +32,12 @@ public class AccountServices {
     
     @Autowired
     private RoleRespository roleRespository;
-    
-    public Account getAccountByUserName(String userName) {
-        return accountsRespository.findByUserName(userName);
-    }
-    
 
     public List<Account> findAllAccount() {
-        List<Account> listUser = accountsRespository.findAll();
-        if (listUser != null) {
-            return listUser;
+    	Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
+        List<Account> listAccount = accountsRespository.findAll(conditions);
+        if (listAccount != null) {
+            return listAccount;
         }
         return new ArrayList<Account>();
     }
@@ -64,7 +56,7 @@ public class AccountServices {
         account.setEmail(appUserForm.getEmail());
         account.setGender(appUserForm.getGender());
         account.setEncrytedPassword(encrytedPassword);
-        Role role = roleRespository.getOne(new Long(2));
+        Role role = roleRespository.getOne(Constant.ROLE_ID_ADMIN);
         account.setRole(role);
         accountsRespository.save(account);
     }
@@ -75,26 +67,6 @@ public class AccountServices {
         return accountsRespository.findByEmail(loginedUser.getEmail());
     }
     
-    @Transactional
-    public void createAccountAfterOAuthLoginSuccess(String email, String firstName, String lastName, String authenticationProvider) {
-        Account account = new Account();
-        account.setUserName(email);
-        account.setEmail(email);
-        account.setFirstName(firstName);
-        account.setLastName(lastName);
-        account.setDelete(false);
-        account.setAuthProvider(AuthenticationProvider.GOOGLE.toString());
-        account.setEncrytedPassword("");
-        Role role = roleRespository.getOne(new Long(2));
-        account.setRole(role);
-        accountsRespository.save(account);
-    }
-
-    @Transactional
-    public void updateAccountAfterOAuthLoginSuccess(Account account, String authenticationProvider) {
-        account.setAuthProvider(AuthenticationProvider.GOOGLE.toString());
-        accountsRespository.save(account);
-    }
     public List<Account> searchAccount(FormSearchAccount formSearchAccount){
     	
     	Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
@@ -123,7 +95,9 @@ public class AccountServices {
     public void deleteAccount(Long accountId) {
     	Account account = accountsRespository.getOne(accountId);
     	account.setDelete(true);
-    	account.setUpdateBy(null);
+    	account.setUpdateBy(Common.getUsernameLogin());
+    	account.setUpdateAt(Common.getSystemDate());
         accountsRespository.save(account);
     }
+
 }

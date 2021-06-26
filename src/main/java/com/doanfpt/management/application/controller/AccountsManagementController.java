@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
-import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.services.AccountServices;
 import com.doanfpt.management.application.services.RoleServices;
 
@@ -53,6 +51,7 @@ public class AccountsManagementController {
         accountsServices.createAccount(appUserForm);
         return "login";
     }
+
     
     @GetMapping(value = { "/view-profile" })
     public String viewProfile(Model model) {

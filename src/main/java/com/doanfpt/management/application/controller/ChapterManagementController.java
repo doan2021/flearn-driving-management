@@ -12,6 +12,7 @@ import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.services.ChapterServices;
+import com.doanfpt.management.application.services.QuestionServices;
 
 @Controller
 @RequestMapping("/management")
@@ -19,6 +20,9 @@ public class ChapterManagementController {
     
     @Autowired
     ChapterServices chapterServices;
+    
+    @Autowired
+    QuestionServices questionServices;
 
     @GetMapping(value = { "/chapter" })
     public String visitChapterPage(Integer pageNumber, Model model) {
@@ -34,6 +38,13 @@ public class ChapterManagementController {
         model.addAttribute("formSearchChapter", formSearchChapter);
         model.addAttribute("isSearch", true);
         return "chapter-management";
+    }
+    
+    @GetMapping(value = { "/chapter-detail" })
+    public String visitChapterDetailPage(Long chapterId, Integer pageNumber, Model model) {
+        model.addAttribute("chapter", chapterServices.getChapterDetail(chapterId));
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, questionServices.getQuestionInChapter(chapterId, pageNumber));
+        return "chapter-detail";
     }
     
     @GetMapping(value = { "/create-chapter" })
