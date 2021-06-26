@@ -8,21 +8,40 @@
     </head>
     <body>
         <th:block layout:fragment="content">
-            <div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
-                <!-- Mask -->
-                <span class="mask bg-gradient-default opacity-8"></span>
-                <!-- Header container -->
-                <div class="container-fluid d-flex align-items-center">
-                    <div class="row">
-                        <div class="col-12">
-                            <h1 class="display-2 text-white" th:text="|Chương ${chapter.chapterId}|"></h1>
-                            <p class="text-white mt-0 mb-5" th:text="${chapter.content}"></p>
+            <div class="header bg-primary pb-5">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="#">Quản lý chương</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Chi tiết</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Tạo câu hỏi</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col-12">
+                                <div class="card card-stats">
+                                    <!-- Card body -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h1 class="display-2" th:text="|Chương ${chapter.name}|">Hello Jesse</h1>
+                                                <p class="mt-0" th:text="${chapter.content}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid mt--6">
-                <form class="row p-0 mb-3" th:action="@{/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+            <div class="container-fluid mt--6" id="create-question-app">
+                <form class="row p-0 mb-3" th:action="@{/management/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
                     <div class="col-7">
                         <div class="card">
                             <div class="card-header bg-transparent">
@@ -56,15 +75,10 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="numberQuestion">Upload ảnh</label>
 	                                            <input class="form-control d-none" type="file" id="upload" th:field="*{images}" @change="readURL" multiple>
-	                                            <div class="col-3 mt-3" v-if="images != [] && images.length != 0">
-	                                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload">
-	                                                    <img v-bind:src="img" alt="" class="img-fluid">
-	                                                </label>
-	                                            </div>
-	                                            <div class="col-3 mt-3" v-else>
-	                                                <label class="image-area d-block" for="upload" style="height:150px">
-	                                                </label>
-	                                            </div>
+                                                <label class="image-area mb-3 d-block" v-for="img in images" :key="img" for="upload" v-if="images != [] && images.length != 0">
+                                                    <img v-bind:src="img" alt="" class="img-fluid">
+                                                </label>
+                                                <label class="image-area d-block" for="upload" style="height:150px" v-if="images == [] || images.length == 0"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -117,6 +131,8 @@
                     </div>
                 </form>
             </div>
+        </th:block>
+        <th:block layout:fragment="script">
             <script th:src="@{../js/create-question.js}"></script>
         </th:block>
     </body>

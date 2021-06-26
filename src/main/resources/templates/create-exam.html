@@ -4,64 +4,67 @@
     <head>
         <title>Tạo kỳ thi</title>
         <meta charset="utf-8"/>
+        <link rel="stylesheet" th:href="@{../css/create-exam.css}" type="text/css">
     </head>
+    
     <body>
         <th:block layout:fragment="content">
-            <div class="header bg-primary pb-6">
+            <div class="header bg-primary">
               <div class="container-fluid">
                 <div class="header-body">
                   <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                      <h6 class="h2 text-white d-inline-block mb-0">Đường dẫn</h6>
-                      <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                           <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Danh sách kỳ thi</a></li>
+                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Quản lý kỳ thi</a></li>
                           <li class="breadcrumb-item active" aria-current="page">Tạo kỳ thi</li>
                         </ol>
                       </nav>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-			<div class="container-fluid mt--6">
-                <div class="row justify-content-center">
-                    <div class=" col">
+                                        <div class=" col-12">
                         <div class="card">
                             <div class="card-header bg-transparent">
                                 <h3 class="mb-0">Tạo kỳ thi</h3>
                             </div>
                             <div class="card-body">
-                            	<form th:action="@{/management/create-exam}" th:object="${examForm}" method="POST">
+                            	<form th:action="@{/management/save-exam}" th:object="${examForm}" method="POST" id="create-exam-form">
+									<input type="hidden" name="isUpdate" value="false">
 	                            	<div class="row">
 	                                    <div class="col-12">
-	                                        <input type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}"  maxlength="255"/>
+	                                    	<label for="name">Tên kỳ thi</label>
+	                                    	<span class="text-danger">*</span>
+	                                        <input id="name" type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}" maxlength="255"/>
 	                                    </div>
 	                            	</div>
 	                            	<div class="row mt-3">
 	                            		<div class="col-12">
-	                                    	<textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}"  maxlength="4000"></textarea>
+	                            			<label for="description">Mô tả kỳ thi</label>
+	                                    	<textarea id="description" cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
 	                                    </div>
 	                            	</div>
 									<div class="input-daterange datepicker row align-items-center mt-3">
 									    <div class="col-6">
 									        <div class="form-group">
+									        	<label for="startDate">Ngày bắt đầu đăng ký</label>
+									        	<span class="text-danger">*</span>
 									            <div class="input-group">
 									                <div class="input-group-prepend">
 									                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 									                </div>
-									                <input class="form-control" placeholder="Ngày bắt đầu đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamStart}" maxlength="10">
+									                <input id="startDate" class="form-control" placeholder="Ngày bắt đầu đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamStart}" maxlength="10" name="startDate">
 									            </div>
 									        </div>
 									    </div>
 									    <div class="col-6">
 									        <div class="form-group">
+									        	<label for="endDate">Ngày kết thúc đăng ký</label>
+									        	<span class="text-danger">*</span>
 									            <div class="input-group">
 									                <div class="input-group-prepend">
 									                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 									                </div>
-									                <input class="form-control" placeholder="Ngày kết thúc đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamEnd}" maxlength="10">
+									                <input id="endDate" class="form-control" placeholder="Ngày kết thúc đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamEnd}" maxlength="10" name="endDate">
 									            </div>
 									        </div>
 									    </div>
@@ -76,8 +79,18 @@
                             </div>
                         </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+			<div class="container-fluid mt--6">
+                <div class="row justify-content-center">
+
                 </div>
             </div>
+        </th:block>
+        <th:block layout:fragment="script">
+        	<script th:src="@{../js/create-exam.js}"></script>
         </th:block>
     </body>
 </html>

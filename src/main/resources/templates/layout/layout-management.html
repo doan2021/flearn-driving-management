@@ -11,6 +11,7 @@
         <link rel="stylesheet" th:href="@{../assets/vendor/nucleo/css/nucleo.css}" type="text/css">
         <link rel="stylesheet" th:href="@{../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css}" type="text/css">
         <link rel="stylesheet" th:href="@{../assets/css/argon.css?v=1.2.0}" type="text/css">
+        <link rel="stylesheet" th:href="@{../css/common.css}" type="text/css">
     </head>
     <body class="bg-white">
         <nav class="sidenav navbar navbar-vertical fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -59,10 +60,6 @@
                         </ul>
                         <!-- Divider -->
                         <hr class="my-3">
-                        <!-- Heading -->
-                        <h6 class="navbar-heading p-0 text-muted">
-                            <span class="docs-normal">Documentation</span>
-                        </h6>
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
@@ -128,7 +125,7 @@
                         <div class="dropdown-header noti-title">
                           <h6 class="text-overflow m-0">Welcome!</h6>
                         </div>
-                        <a href="#!" class="dropdown-item">
+                        <a th:href="@{/mangement/view-profile}" class="dropdown-item">
                           <i class="ni ni-single-02"></i>
                           <span>My profile</span>
                         </a>
@@ -153,6 +150,11 @@
         <script th:src="@{../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js}"></script>
         <script th:src="@{../assets/vendor/chart.js/dist/Chart.min.js}"></script>
         <script th:src="@{../assets/vendor/chart.js/dist/Chart.extension.js}"></script>
+        <script th:src="@{../assets/js/jquery.validate.min.js}"></script>
+        <script th:src="@{../assets/js/axios.min.js}"></script>
+        <script th:src="@{../assets/js/vue.js}"></script>
         <script th:src="@{../assets/js/argon.js?v=1.2.0}"></script>
+        <script th:src="@{../js/common.js}"></script>
+        <th:block layout:fragment="script"></th:block>
     </body>
 </html>

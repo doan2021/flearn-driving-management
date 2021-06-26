@@ -1,8 +1,5 @@
 package com.doanfpt.management.application.services;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AnswerForm;
 import com.doanfpt.management.application.dto.QuestionForm;
@@ -33,10 +31,10 @@ public class QuestionServices {
     private QuestionsRespository questionsRespository;
 
     @Autowired
-    private Environment env;
+    ChapterResponsitory chapterResponsitory;
 
     @Autowired
-    ChapterResponsitory chapterResponsitory;
+    private Environment env;
 
     @Transactional
     public void createNewQuestion(QuestionForm form) {
@@ -53,42 +51,39 @@ public class QuestionServices {
             ans.setContent(answer.getContent());
             ans.setTrue(answer.isTrue());
             ans.setQuestion(question);
+            ans.setCreateBy(Common.getUsernameLogin());
+            ans.setCreateAt(Common.getSystemDate());
+            ans.setUpdateBy(Common.getUsernameLogin());
+            ans.setUpdateAt(Common.getSystemDate());
             listAnswers.add(ans);
         }
         question.setListAnswers(listAnswers);
+        question.setCreateBy(Common.getUsernameLogin());
+        question.setCreateAt(Common.getSystemDate());
+        question.setUpdateBy(Common.getUsernameLogin());
+        question.setUpdateAt(Common.getSystemDate());
         questionsRespository.save(question);
     }
 
     public List<Image> handleImage(Question question, MultipartFile[] data) {
         List<Image> images = new ArrayList<>();
+        String pathClassPath = env.getProperty("url-class-path");
+        String pathFolderUpload = env.getProperty("url-upload-folder-question");
         for (MultipartFile c : data) {
             if (!c.isEmpty()) {
                 Image image = new Image();
                 image.setFileName(c.getOriginalFilename());
-                image.setUrl(writeFile(c));
+                image.setUrl(Common.writeFile(c, pathClassPath, pathFolderUpload));
                 image.setDescription("Create new question");
                 image.setQuestion(question);
+                image.setCreateBy(Common.getUsernameLogin());
+                image.setCreateAt(Common.getSystemDate());
+                image.setUpdateBy(Common.getUsernameLogin());
+                image.setUpdateAt(Common.getSystemDate());
                 images.add(image);
             }
         }
         return images;
-    }
-
-    public String writeFile(MultipartFile fileImage) {
-        byte data[];
-        String pathClassPath = env.getProperty("url-class-path");
-        String pathFolderUpload = env.getProperty("url-upload-folder");
-        String fileName = fileImage.getOriginalFilename();
-        try {
-            data = fileImage.getBytes();
-            File file = new File(pathClassPath + pathFolderUpload + "/" + fileName);
-            FileOutputStream out = new FileOutputStream(file);
-            out.write(data);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return pathFolderUpload + "/" + fileName;
     }
 
     public List<Question> getAllQuestions() {

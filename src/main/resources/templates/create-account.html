@@ -1,155 +1,192 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout-management}">
+    layout:decorate="~{layout/layout-management}">
 
-<head>
-	<meta charset="utf-8">
-	<title>Tạo người dùng</title>
-</head>
-
-<body>
-	<th:block layout:fragment="content">
-		<div class="header bg-primary pb-6">
-			<div class="container-fluid">
-				<div class="header-body">
-					<div class="row align-items-center py-4">
-						<div class="col-lg-6 col-7">
-							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-									<li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-									<li class="breadcrumb-item active" aria-current="page">Tạo người dùng</li>
-								</ol>
-							</nav>
-						</div>
-						<div class="col-lg-6 col-5 text-right">
-							<a href="#" class="btn btn-sm btn-neutral">Thêm</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container-fluid mt--6">
-			<div class="row">
-				<div class="col-xl-4 order-xl-2">
-					<div class="card card-profile">
-						<img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
-						<div class="row justify-content-center">
-							<div class="col-lg-3 order-lg-2">
-								<div class="card-profile-image">
-									<a href="#">
-										<img src="../assets/img/theme/team-4.jpg" class="rounded-circle">
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-							<div class="d-flex justify-content-between">
-							</div>
-						</div>
-						<div class="card-body pt-0">
-							<div class="row">
-								<div class="col">
-									<div class="card-profile-stats d-flex justify-content-center">
-									</div>
-								</div>
-							</div>
-							<div class="text-center">
-
-									<a href="#!" class="btn btn-sm btn-primary">Tải ảnh lên</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-8 order-xl-1">
-					<div class="card">
-						<div class="card-header">
-							<div class="row align-items-center">
-								<div class="col-8">
-									<h3 class="mb-0">Tạo thông tin quản trị viên</h3>
-								</div>
-							</div>
-						</div>
-						<div class="card-body">
-							<form>
-								<div class="pl-lg-4">
-									<div class="row">
-										<div class="col-lg-4">
-											<div class="form-group">
-												<label class="form-control-label" for="input-username">Tài khoản</label>
-												<input type="text" id="input-username" class="form-control">
-											</div>
-										</div>
-										<div class="col-lg-4">
-											<div class="form-group">
-												<label class="form-control-label" for="input-first-name">Họ</label>
-												<input type="text" id="input-first-name" class="form-control">
-											</div>
-										</div>
-										<div class="col-lg-4">
-											<div class="form-group">
-												<label class="form-control-label" for="input-last-name">Tên</label>
-												<input type="text" id="input-last-name" class="form-control">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-7">
-											<div class="form-group">
-												<label class="form-control-label" for="input-email">Email </label>
-												<input type="email" id="input-email" class="form-control"
-													placeholder="anh@example.com">
-											</div>
-										</div>
-										<div class="col-lg-5">
-											<div class="form-group">
-												<label class="form-control-label" for="input-last-name">Số điện
-													thoại</label>
-												<input type="text" id="input-last-name" class="form-control">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label class="form-control-label" for="input-password">Mật khẩu</label>
-												<input type="password" placeholder="**********" name="psw" id="psw"
-													class="form-control" required>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="form-group">
-												<label for="exampleFormControlSelect1">Giới tính</label>
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Nam</option>
-													<option>Nữ</option>
-													<option>Khác!!</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label class="form-control-label" for="input-password">Xác nhận mật
-													khẩu</label>
-												<input type="password" placeholder="**********" name="psw-repeat"
-													id="psw-repeat" class="form-control" required>
-											</div>
-										</div>
-									</div>
-								</div>
-						</div>
-					</div>
-					<a href="#!" class="btn  btn-primary ">Tạo</a>
-					<a href="#!" class="btn  btn-primary">Reset</a>
-					<br></br>
-					</form>
-				</div>
-			</div>
-		</div>
-		</div>
-		</div>
-	</th:block>
-</body>
-
+    <head>
+        <meta charset="utf-8">
+        <title>Tạo người dùng</title>
+    </head>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="header bg-primary pb-6">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Tạo người dùng</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt--6">
+                <div class="row">
+                    <div class="col-xl-4 order-xl-2">
+                        <div class="card card-profile">
+                            <img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-3 order-lg-2">
+                                    <div class="card-profile-image">
+                                        <label for="fileImage">
+                                            <img src="../assets/img/theme/team-4.jpg" class="rounded-circle" id="image-preview">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                <div class="d-flex justify-content-between">
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-profile-stats d-flex justify-content-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 order-xl-1">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h3 class="mb-0">Tạo người dùng</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body px-4">
+                                <form th:action="@{/management/save-account}" th:object="${accountForm}" method="POST" enctype="multipart/form-data" id="create-account-form">
+                                    <input type='file' onchange="readURL(this);" class="d-none" th:field="*{image}" id="fileImage"/>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                                                <p class="m-0" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('numberPhone')}" th:errors="*{numberPhone}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}"></p>
+                                            </div>
+                                            <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${messageSuccess}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group" id="lastName-place">
+                                                <label class="form-control-label" for="input-first-name">Họ</label>
+                                                <input type="text" id="input-first-name" placeholder="Họ" class="form-control" th:field="*{lastName}" name="lastName">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group" id="middleName-place">
+                                                <label class="form-control-label" for="input-middle-name">Tên đệm</label>
+                                                <input type="text" id="input-middle-name" placeholder="Họ" class="form-control" th:field="*{middleName}" name="middleName">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group" id="firstName-place">
+                                                <label class="form-control-label" for="input-last-name">Tên</label>
+                                                <input type="text" id="input-last-name" placeholder="Tên" class="form-control" th:field="*{firstName}" name="firstName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group" id="birthday-place">
+                                                <label class="form-control-label" for="input-birthday">Ngày sinh</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                                    </div>
+                                                    <input class="form-control datepicker" id="input-birthday" placeholder="Ngày sinh" type="text" th:field="*{birthDay}" name="birthDay">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group" id="numberPhone-place">
+                                                <label class="form-control-label" for="input-number-phone">Số điện thoại</label>
+                                                <input type="text" id="input-number-phone" placeholder="Số điện thoại" class="form-control" th:field="*{numberPhone}" name="numberPhone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <div class="form-group" id="email-place">
+                                                <label class="form-control-label" for="input-email">Email </label>
+                                                <input type="email" id="input-email" class="form-control" placeholder="anh@example.com" th:field="*{email}" name="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group" id="username-place">
+                                                <label class="form-control-label" for="input-user-name">Tên đăng nhập</label>
+                                                <input type="text" id="input-user-name" class="form-control" placeholder="Tên đăng nhập" th:field="*{userName}" autocomplete="off" name="userName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="password-place">
+                                                <label class="form-control-label" for="input-password">Mật khẩu</label>
+                                                <input type="password" placeholder="Mật khẩu" id="input-password" class="form-control" th:field="*{password}" autocomplete="off" name="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="cPassword-place">
+                                                <label class="form-control-label" for="input-confirm-password">Xác nhận mật khẩu</label>
+                                                <input type="password" placeholder="Xác nhận mật khẩu" id="input-confirm-password" class="form-control" th:field="*{confirmPassword}" autocomplete="off" name="cPassword">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="gender-place">
+                                                <label class="form-control-label" for="input-gender">Giới tính</label>
+                                                <select class="form-control" id="input-gender" th:field="*{gender}" name="gender">
+                                                    <option value="">--------Chọn giới tính----------</option>
+                                                    <option value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
+                                                    <option value="2">Khác</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="role-place">
+                                                <label class="form-control-label" for="role">Quyền</label>
+                                                <select class="form-control" id="role" th:field="*{roleId}" name="roles">
+                                                    <option value="">--------Chọn quyền----------</option>
+                                                    <option th:each="role : ${listRole}" th:value="${role.roleId}" th:text="${role.content}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="submit" class="btn btn-primary">Tạo</button>
+                                            <a th:href="@{/management/create-account}" class="btn btn-info">Làm mới</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/create-account.js}"></script>
+        </th:block>
+    </body>
 </html>
