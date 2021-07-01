@@ -26,7 +26,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
-                                                <form class="row mt-3" th:action="@{/management/search-account}" th:object="${formSearchAccount}" method="POST">
+                                                <form class="row mt-3" th:action="@{/management/search-account}" th:object="${formSearchAccount}" method="POST"  id="formSearch">
                                                     <div class=" col-3">
                                                         <input type="text" class="form-control" placeholder="Tài khoản"
                                                             th:field="*{userName}">
@@ -72,40 +72,39 @@
                                    <a th:href="@{/management/create-account}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Người dùng mới</a>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="row icon-examples">
-                                    <div class="table-responsive">
-                                        <table class="table align-items-center table-flush">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col" class="sort" data-sort="name">Tài khoản</th>
-                                                    <th scope="col" class="sort" data-sort="budget">Họ và tên</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col" class="sort" data-sort="completion">Giới tính</th>
-                                                    <th scope="col">Số điện thoại</th>
-                                                    <th scope="col"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody th:each="acc : ${listAccount}">
-                                                <tr>
-                                                    <td th:text="${acc.userName}"></td>
-                                                    <td th:text="|${acc.lastName} ${acc.middleName} ${acc.firstName}|"></td>
-                                                    <!--<td th:if="${acc.middleName == null || acc.middleName == ''}">[[${acc.firstName}]] [[${acc.middleName}]] [[${acc.lastName}]]-->
-                                                    <td th:text="${acc.email}"></td>
-                                                    <td th:if="${acc.gender == 1}">Nam</td>
-                                                    <td th:if="${acc.gender == 0}">Nữ</td>
-                                                    <td th:if="${acc.gender == 2}">Khác</td>
-                                                    <td th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
-                                                    <td th:text="${acc.numberPhone}"></td>
-                                                    <td>
-                                                        <a th:href="@{${'/management/edit-account?accountId='} + ${acc.accountId}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        <a th:href="@{${'/management/delete-account?accountId='} + ${acc.accountId}}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="sort" data-sort="name">Tài khoản</th>
+                                            <th scope="col" class="sort" data-sort="budget">Họ và tên</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col" class="sort" data-sort="completion">Giới tính</th>
+                                            <th scope="col">Số điện thoại</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="acc : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
+                                        <tr>
+                                            <td th:text="${acc.userName}"></td>
+                                            <td th:text="|${acc.lastName} ${acc.middleName} ${acc.firstName}|"></td>
+                                            <!--<td th:if="${acc.middleName == null || acc.middleName == ''}">[[${acc.firstName}]] [[${acc.middleName}]] [[${acc.lastName}]]-->
+                                            <td th:text="${acc.email}"></td>
+                                            <td th:if="${acc.gender == 1}">Nam</td>
+                                            <td th:if="${acc.gender == 0}">Nữ</td>
+                                            <td th:if="${acc.gender == 2}">Khác</td>
+                                            <td th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
+                                            <td th:text="${acc.numberPhone}"></td>
+                                            <td>
+                                                <a th:href="@{${'/management/edit-account?accountId='} + ${acc.accountId}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                <a th:href="@{${'/management/delete-account?accountId='} + ${acc.accountId}}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+							<div class="card-footer py-4">
+                                <div th:insert="fragment-common/pagination :: pagination"></div>
                             </div>
                         </div>
                     </div>

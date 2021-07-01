@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -100,8 +102,10 @@ public class AccountServices {
         return accountsRespository.findByEmail(loginedUser.getEmail());
     }
 
-    public List<Account> searchAccount(FormSearchAccount formSearchAccount) {
-
+    public Page<Account> searchAccount(FormSearchAccount formSearchAccount) {
+        if (formSearchAccount.getPageNumber() == null) {
+        	formSearchAccount.setPageNumber(0);
+        }
         Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
         if (formSearchAccount != null) {
             if (StringUtils.isNotBlank(formSearchAccount.getEmail())) {
@@ -119,8 +123,8 @@ public class AccountServices {
                 conditions = conditions.and(AccountSpecification.hasGender(formSearchAccount.getGender()));
             }
         }
-        List<Account> listAccount = accountsRespository.findAll(conditions);
-
+        PageRequest pageable = PageRequest.of(formSearchAccount.getPageNumber(), Constant.RECORD_PER_PAGE);
+        Page<Account> listAccount = accountsRespository.findAll(conditions, pageable);
         return listAccount;
     }
 

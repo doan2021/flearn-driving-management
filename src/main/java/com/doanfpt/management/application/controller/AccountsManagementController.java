@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.services.AccountServices;
@@ -47,17 +48,16 @@ public class AccountsManagementController {
     }
 
     @GetMapping(value = { "/account" })
-    public String visitAccountPage(Model model) {
-        model.addAttribute("listAccount", accountsServices.findAllAccount());
+    public String visitAccountPage(FormSearchAccount formSearchAccount, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, accountsServices.searchAccount(formSearchAccount));
         model.addAttribute("formSearchAccount", new FormSearchAccount());
         return "account-management";
     }
 
     @PostMapping(value = { "/search-account" })
     public String searchAccount(FormSearchAccount formSearchAccount, Model model) {
-        model.addAttribute("listAccount", accountsServices.searchAccount(formSearchAccount));
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, accountsServices.searchAccount(formSearchAccount));
         model.addAttribute("formSearchAccount", formSearchAccount);
-        model.addAttribute("isSearch", true);
         return "account-management";
     }
 
