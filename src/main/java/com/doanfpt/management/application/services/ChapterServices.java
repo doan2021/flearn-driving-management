@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
+import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.responsitories.ChapterResponsitory;
@@ -24,7 +26,12 @@ public class ChapterServices {
         return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
     }
 
-    public void saveChapter(Chapter chapter) {
+    public void saveChapter(ChapterForm chapterForm) {
+    	Chapter chapter = new Chapter();
+    	chapter.setName(chapterForm.getName());
+    	chapter.setDescription(chapterForm.getDescription());
+    	chapter.setContent(chapterForm.getContent());
+    	chapter.setUpdateAt(Common.getSystemDate());
         chapterResponsitory.save(chapter);
     }
 

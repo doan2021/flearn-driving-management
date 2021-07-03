@@ -18,14 +18,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private AccountsRespository accountsRespository;
-    
-    @Autowired
-    private RoleRespository roleRespository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Role role = roleRespository.getOne(Constant.ROLE_ID_ADMIN); 
-        Account account = accountsRespository.findByUserNameAndIsDeleteAndRole(userName, Constant.IS_NOT_DELETE, role);
+        Account account = accountsRespository.findByUserNameAndIsDelete(userName, Constant.IS_NOT_DELETE);
         AccountPrincipal userDetails = AccountPrincipal.create(account);
         return userDetails;
     }

@@ -17,7 +17,7 @@ import com.doanfpt.management.application.responsitories.AccountsRespository;
  *
  */
 @Component
-public class AccountFormValidator implements Validator {
+public class AccountFormUpdateValidator implements Validator {
 
     @Autowired
     private AccountsRespository accountsRespository;
@@ -39,12 +39,12 @@ public class AccountFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.accountForm.gender");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roleId", "NotEmpty.accountForm.roleId");
         if (!errors.hasErrors()) {
-            // Duplicate email đã được sử dụng bởi tài khoản khác.
             if (accountsRespository.findByEmail(appUserForm.getEmail()) != null) {
+                // Duplicate email đã được sử dụng bởi tài khoản khác.
                 errors.rejectValue("email", "Duplicate.accountForm.email");
             }
-            // Tên tài khoản đã bị sử dụng bởi người khác.
             if (accountsRespository.existsByUserName(appUserForm.getUserName())) {
+                // Tên tài khoản đã bị sử dụng bởi người khác.
                 errors.rejectValue("userName", "Duplicate.accountForm.userName");
             }
             if (appUserForm.getPassword().length() < 8) {

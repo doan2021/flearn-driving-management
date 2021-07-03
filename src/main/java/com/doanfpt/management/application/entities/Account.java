@@ -64,6 +64,9 @@ public class Account {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
 
@@ -263,6 +266,14 @@ public class Account {
 
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

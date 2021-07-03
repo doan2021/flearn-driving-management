@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.services.AccountServices;
+import com.doanfpt.management.application.services.AddressServices;
 import com.doanfpt.management.application.services.RoleServices;
 import com.doanfpt.management.application.validator.AccountFormValidator;
 
@@ -30,6 +30,9 @@ public class AccountsManagementController {
 
     @Autowired
     private AccountFormValidator accountFormValidator;
+    
+    @Autowired
+    AddressServices addressServices;
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
@@ -73,9 +76,7 @@ public class AccountsManagementController {
     }
 
     @PostMapping(value = { "/save-account" })
-    public String saveAccount(@Validated AccountForm accountForm, BindingResult result,
-            final RedirectAttributes redirectAttributes, Model model) {
-        // Validate result
+    public String saveAccount(@Validated AccountForm accountForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("accountForm", accountForm);
         } else {
@@ -85,6 +86,35 @@ public class AccountsManagementController {
         }
         model.addAttribute("listRole", roleServices.findAllRole());
         return "create-account";
+    }
+
+    @PostMapping(value = { "/update-account" })
+    public String updateAccount(AccountForm accountForm, Model model) {
+        try {
+            boolean updateSuccess = accountsServices.updateAccount(accountForm);
+            if (updateSuccess) {
+                model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
+            } else {
+                model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
+            }
+            model.addAttribute("accountForm", accountForm);
+            return "edit-account";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "403";
+        }
+    }
+
+    @RequestMapping("/edit-account")
+    public String showEditAccountForm(Long accountId, Model model) {
+        try {
+            model.addAttribute("accountForm", accountsServices.getObjectUpdate(accountId));
+            model.addAttribute("listProvince", addressServices.getAllProvince());
+            return "edit-account";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "403";
+        }
     }
 
     @GetMapping(value = { "/delete-account" })

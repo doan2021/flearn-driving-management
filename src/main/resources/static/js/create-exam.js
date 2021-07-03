@@ -22,10 +22,13 @@ $("#create-exam-form").validate({
 			maxlength: "Vui lòng nhập dưới 255 ký tự!"
 		},
 		description: {
-			maxlength: "Không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
+			maxlength: "Mô tả không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
 		},
 		startDate: {
-			required : "Chưa chọn ngày bắt đầu, vui lòng kiểm tra lại!",
+			required : "Chưa chọn ngày bắt đầu đăng ký, vui lòng kiểm tra lại!",
+		},
+		endDate: {
+			required: "Chưa chọn ngày kết thúc đăng ký, vui lòng kiểm tra lại!",
 		}
 	},
 	
@@ -36,6 +39,18 @@ $("#create-exam-form").validate({
 	unhighlight: function(element) {
 		$(element).removeClass('is-invalid');
 	},
+	errorPlacement: function (error, element) {
+        switch (element.attr("name")) {
+        case 'startDay':
+            error.insertAfter($("#startDay"));
+            break;
+        case 'endtDay':
+            error.insertAfter($("#endDay"));
+            break;
+        default:
+            error.insertAfter(element);
+        }
+    },
 	submitHandler: function(form) {
 		form.submit();
 	}

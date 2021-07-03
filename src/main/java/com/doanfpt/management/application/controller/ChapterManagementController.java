@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.doanfpt.management.application.common.Constant;
+import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.services.ChapterServices;
@@ -48,13 +49,14 @@ public class ChapterManagementController {
     
     @GetMapping(value = { "/create-chapter" })
     public String createChapter(Model model) {
-        model.addAttribute("chapterForm", new Chapter());
+    	ChapterForm chapterForm = new ChapterForm();
+        model.addAttribute("chapterForm", chapterForm);
         return "create-chapter";
     }
     
     @PostMapping(value = { "/save-chapter" })
-    public String saveChapter(@ModelAttribute("chapterForm") Chapter chapterForm, Model model) {
-        chapterServices.saveChapter(chapterForm);
+    public String saveChapter(@ModelAttribute("chapterForm") ChapterForm chapterForm) {
+    	chapterServices.saveChapter(chapterForm);
         return "create-chapter";
     }
 }

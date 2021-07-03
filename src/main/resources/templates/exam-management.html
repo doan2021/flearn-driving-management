@@ -28,6 +28,10 @@
                                     <div class="card-body">
                                         <form class="row mt-3" th:action="@{/management/search-exam}" th:object="${formSearchExam}" method="POST">
                                             <div class="col-12">
+                                                <div class="alert alert-info" role="alert" th:if="${messageSuccess != null}" th:text="${messageSuccess}">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
                                                 <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
                                             </div>
                                             <input type="hidden" th:field="*{pageNumber}" id="pageNumber">
@@ -135,7 +139,6 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid mt--6">
                 <div class="row justify-content-center">
                     <div class=" col">
                         <div class="card">
@@ -178,6 +181,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="card-footer py-4">
                             </div>
                         </div>
                     </div>
