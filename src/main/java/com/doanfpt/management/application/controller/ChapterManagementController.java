@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
-import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.QuestionServices;
 

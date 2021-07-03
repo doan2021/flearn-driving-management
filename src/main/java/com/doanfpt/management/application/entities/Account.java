@@ -100,6 +100,10 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Image> listImages;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<DrivingLicenseInfo> listDrivingLicenseInfo;
+
     public Long getAccountId() {
         return accountId;
     }
@@ -274,6 +278,22 @@ public class Account {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<DrivingLicenseInfo> getListDrivingLicenseProfiles() {
+        return listDrivingLicenseInfo;
+    }
+
+    public void setListDrivingLicenseProfiles(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
+        this.listDrivingLicenseInfo = listDrivingLicenseInfo;
+    }
+
+    public List<DrivingLicenseInfo> getListDrivingLicenseInfo() {
+        return listDrivingLicenseInfo;
+    }
+
+    public void setListDrivingLicenseInfo(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
+        this.listDrivingLicenseInfo = listDrivingLicenseInfo;
     }
 
 }

@@ -9,159 +9,187 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "exam")
 public class Exam {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "exam_id")
-	private Long examId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exam_id")
+    private Long examId;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@Column(name = "is_trial")
-	public boolean isTrial;
+    @Column(name = "is_trial")
+    public boolean isTrial;
 
-	@Column(name = "date_regis_exam_start")
-	private Date dateRegisExamStart;
+    @Column(name = "date_regis_exam_start")
+    private Date dateRegisExamStart;
 
-	@Column(name = "date_regis_exam_end")
-	private Date dateRegisExamEnd;
+    @Column(name = "date_regis_exam_end")
+    private Date dateRegisExamEnd;
 
-	@Column(name = "date_exam")
-	private Date dateExam;
+    @Column(name = "date_exam")
+    private Date dateExam;
 
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description")
+    private String description;
 
-	@Column(name = "is_delete", columnDefinition = "boolean default false")
-	private boolean isDelete;
+    @Column(name = "is_delete", columnDefinition = "boolean default false")
+    private boolean isDelete;
 
-	@Column(name = "create_by")
-	private String createBy;
+    @Column(name = "create_by")
+    private String createBy;
 
-	@Column(name = "create_at")
-	private Date createAt;
+    @Column(name = "create_at")
+    private Date createAt;
 
-	@Column(name = "update_by")
-	private String updateBy;
+    @Column(name = "update_by")
+    private String updateBy;
 
-	@Column(name = "update_at")
-	private Date updateAt;
+    @Column(name = "update_at")
+    private Date updateAt;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-	private List<ExamResult> listExamResult;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    private List<ExamResult> listExamResult;
 
-	public Long getExamId() {
-		return examId;
-	}
+    @JsonManagedReference
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    private List<DrivingLicenseInfo> listDrivingLicenseInfo;
 
-	public void setExamId(Long examId) {
-		this.examId = examId;
-	}
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "driving_license_id")
+    private DrivingLicense drivingLicense;
 
-	public String getName() {
-		return name;
-	}
+    public Long getExamId() {
+        return examId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setExamId(Long examId) {
+        this.examId = examId;
+    }
 
-	public boolean isTrial() {
-		return isTrial;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setTrial(boolean isTrial) {
-		this.isTrial = isTrial;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Date getDateRegisExamStart() {
-		return dateRegisExamStart;
-	}
+    public boolean isTrial() {
+        return isTrial;
+    }
 
-	public void setDateRegisExamStart(Date date) {
-		this.dateRegisExamStart = date;
-	}
+    public void setTrial(boolean isTrial) {
+        this.isTrial = isTrial;
+    }
 
-	public Date getDateRegisExamEnd() {
-		return dateRegisExamEnd;
-	}
+    public Date getDateRegisExamStart() {
+        return dateRegisExamStart;
+    }
 
-	public void setDateRegisExamEnd(Date dateRegisExamEnd) {
-		this.dateRegisExamEnd = dateRegisExamEnd;
-	}
+    public void setDateRegisExamStart(Date date) {
+        this.dateRegisExamStart = date;
+    }
 
-	public Date getDateExam() {
-		return dateExam;
-	}
+    public Date getDateRegisExamEnd() {
+        return dateRegisExamEnd;
+    }
 
-	public void setDateExam(Date dateExam) {
-		this.dateExam = dateExam;
-	}
+    public void setDateRegisExamEnd(Date dateRegisExamEnd) {
+        this.dateRegisExamEnd = dateRegisExamEnd;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Date getDateExam() {
+        return dateExam;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDateExam(Date dateExam) {
+        this.dateExam = dateExam;
+    }
 
-	public boolean isDelete() {
-		return isDelete;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getCreateBy() {
-		return createBy;
-	}
+    public boolean isDelete() {
+        return isDelete;
+    }
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
 
-	public Date getCreateAt() {
-		return createAt;
-	}
+    public String getCreateBy() {
+        return createBy;
+    }
 
-	public void setCreateAt(Date createAt) {
-		this.createAt = createAt;
-	}
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
-	public String getUpdateBy() {
-		return updateBy;
-	}
+    public Date getCreateAt() {
+        return createAt;
+    }
 
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
 
-	public Date getUpdateAt() {
-		return updateAt;
-	}
+    public String getUpdateBy() {
+        return updateBy;
+    }
 
-	public void setUpdateAt(Date updateAt) {
-		this.updateAt = updateAt;
-	}
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
 
-	public List<ExamResult> getListExamResult() {
-		return listExamResult;
-	}
+    public Date getUpdateAt() {
+        return updateAt;
+    }
 
-	public void setListExamResult(List<ExamResult> listExamResult) {
-		this.listExamResult = listExamResult;
-	}
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public List<ExamResult> getListExamResult() {
+        return listExamResult;
+    }
+
+    public void setListExamResult(List<ExamResult> listExamResult) {
+        this.listExamResult = listExamResult;
+    }
+
+    public List<DrivingLicenseInfo> getListDrivingLicenseInfo() {
+        return listDrivingLicenseInfo;
+    }
+
+    public void setListDrivingLicenseInfo(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
+        this.listDrivingLicenseInfo = listDrivingLicenseInfo;
+    }
+
+    public DrivingLicense getDrivingLicense() {
+        return drivingLicense;
+    }
+
+    public void setDrivingLicense(DrivingLicense drivingLicense) {
+        this.drivingLicense = drivingLicense;
+    }
 
 }

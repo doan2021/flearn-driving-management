@@ -1,8 +1,8 @@
 package com.doanfpt.management.application.services;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
@@ -18,42 +18,58 @@ import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ExamForm;
 import com.doanfpt.management.application.dto.FormSearchExam;
+import com.doanfpt.management.application.entities.DrivingLicense;
 import com.doanfpt.management.application.entities.Exam;
+import com.doanfpt.management.application.exception.ApplicationException;
+import com.doanfpt.management.application.responsitories.DrivingLicenseRespository;
 import com.doanfpt.management.application.responsitories.ExamRepository;
 import com.doanfpt.management.application.specification.ExamSpecification;
 
 @Service
 public class ExamService {
+
     @Autowired
     private ExamRepository examRepository;
+
+    @Autowired
+    private DrivingLicenseRespository drivingLicenseRespository;
 
     public List<Exam> listAll() {
         return examRepository.findByIsDeleteAndIsTrial(false, false);
     }
-    
-    public List<Exam> findAllExam() {
-    	List<Exam> listExam = examRepository.findAll();
-    	if (listExam != null) {
-			return listExam;
-		}
-    	return new ArrayList<Exam>();
-    }
 
-    public void saveExam(ExamForm examForm) {
-        Exam exam = new Exam();
-        if (examForm.getIsUpdate()) {
-            exam = examRepository.getOne(examForm.getExamId());
+    public void createExam(ExamForm examForm) {
+        if (Objects.isNull(examForm)) {
+            throw new ApplicationException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng");
         }
+        Exam exam = new Exam();
         exam.setName(examForm.getName());
         exam.setDescription(examForm.getDescription());
         exam.setDateRegisExamStart(Common.stringToDate(examForm.getDateRegisExamStart()));
         exam.setDateRegisExamEnd(Common.stringToDate(examForm.getDateRegisExamEnd()));
         Date dateExam = Common.addDays(Common.stringToDate(examForm.getDateRegisExamEnd()), 15);
         exam.setDateExam(dateExam);
-        if (!examForm.getIsUpdate()) {
-            exam.setCreateBy(Common.getUsernameLogin());
-            exam.setCreateAt(Common.getSystemDate());
+        DrivingLicense drivingLicense = drivingLicenseRespository.getOne(examForm.getDrivingLicenseId());
+        exam.setDrivingLicense(drivingLicense);
+        exam.setCreateBy(Common.getUsernameLogin());
+        exam.setCreateAt(Common.getSystemDate());
+        exam.setUpdateBy(Common.getUsernameLogin());
+        exam.setUpdateAt(Common.getSystemDate());
+        examRepository.save(exam);
+    }
+
+    public void updateExam(ExamForm examForm) {
+        if (Objects.isNull(examForm)) {
+            throw new ApplicationException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng");
         }
+        Exam exam = new Exam();
+        exam = examRepository.getOne(examForm.getExamId());
+        exam.setName(examForm.getName());
+        exam.setDescription(examForm.getDescription());
+        exam.setDateRegisExamStart(Common.stringToDate(examForm.getDateRegisExamStart()));
+        exam.setDateRegisExamEnd(Common.stringToDate(examForm.getDateRegisExamEnd()));
+        Date dateExam = Common.addDays(Common.stringToDate(examForm.getDateRegisExamEnd()), 15);
+        exam.setDateExam(dateExam);
         exam.setUpdateBy(Common.getUsernameLogin());
         exam.setUpdateAt(Common.getSystemDate());
         examRepository.save(exam);

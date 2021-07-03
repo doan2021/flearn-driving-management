@@ -30,7 +30,7 @@ public class AccountsManagementController {
 
     @Autowired
     private AccountFormValidator accountFormValidator;
-    
+
     @Autowired
     AddressServices addressServices;
 
@@ -90,31 +90,21 @@ public class AccountsManagementController {
 
     @PostMapping(value = { "/update-account" })
     public String updateAccount(AccountForm accountForm, Model model) {
-        try {
-            boolean updateSuccess = accountsServices.updateAccount(accountForm);
-            if (updateSuccess) {
-                model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
-            } else {
-                model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
-            }
-            model.addAttribute("accountForm", accountForm);
-            return "edit-account";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "403";
+        boolean updateSuccess = accountsServices.updateAccount(accountForm);
+        if (updateSuccess) {
+            model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
+        } else {
+            model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
         }
+        model.addAttribute("accountForm", accountForm);
+        return "edit-account";
     }
 
     @RequestMapping("/edit-account")
     public String showEditAccountForm(Long accountId, Model model) {
-        try {
-            model.addAttribute("accountForm", accountsServices.getObjectUpdate(accountId));
-            model.addAttribute("listProvince", addressServices.getAllProvince());
-            return "edit-account";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "403";
-        }
+        model.addAttribute("accountForm", accountsServices.getObjectUpdate(accountId));
+        model.addAttribute("listProvince", addressServices.getAllProvince());
+        return "edit-account";
     }
 
     @GetMapping(value = { "/delete-account" })

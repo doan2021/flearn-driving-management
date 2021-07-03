@@ -168,7 +168,7 @@
                                     <tbody class="list">
                                         <tr th:each="exam : ${pageContent.content}">
                                             <th scope="row" class="text-center" th:text="${exam.examId}"></th>
-                                            <td class="text-center"><a th:href="@{${'/management/edit-exam?examId='} + ${exam.examId}}" th:text="${exam.name}"></a></td>
+                                            <td class="text-center"><a th:href="@{${'/management/update-exam?examId='} + ${exam.examId}}" th:text="${exam.name}"></a></td>
                                             <td class="text-center" th:text="${exam.description}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.dateRegisExamStart, 'dd-MM-yyyy')}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.dateRegisExamEnd, 'dd-MM-yyyy')}"></td>
@@ -187,7 +187,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </th:block>
         <th:block layout:fragment="script">
             <script th:src="@{../js/delete-exam.js}"></script>

@@ -11,7 +11,7 @@ public class ExamForm {
 	private String createAt;
 	private String updateBy;
 	private String updateAt;
-	private Boolean isUpdate;
+	private Long drivingLicenseId;
 
 	public String getUpdateAt() {
 		return updateAt;
@@ -89,16 +89,16 @@ public class ExamForm {
 		this.updateBy = updateBy;
 	}
 
-	public Boolean getIsUpdate() {
-		return isUpdate;
-	}
-
-	public void setIsUpdate(Boolean isUpdate) {
-		this.isUpdate = isUpdate;
-	}
-
 	public String getName() {
 		return name;
 	}
+
+    public Long getDrivingLicenseId() {
+        return drivingLicenseId;
+    }
+
+    public void setDrivingLicenseId(Long drivingLicenseId) {
+        this.drivingLicenseId = drivingLicenseId;
+    }
 
 }
