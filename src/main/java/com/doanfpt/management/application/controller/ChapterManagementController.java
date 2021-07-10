@@ -3,17 +3,20 @@ package com.doanfpt.management.application.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
-import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.QuestionServices;
+import com.doanfpt.management.application.validator.ChapterCreateValidator;
 
 @Controller
 @RequestMapping("/management")
@@ -24,6 +27,21 @@ public class ChapterManagementController {
     
     @Autowired
     QuestionServices questionServices;
+    
+    @Autowired
+    ChapterCreateValidator chapterCreateValidator;
+    
+    @InitBinder
+    protected void initBinder(WebDataBinder dataBinder) {
+        // Form mục tiêu
+        Object target = dataBinder.getTarget();
+        if (target == null) {
+            return;
+        }
+        if (target.getClass() == ChapterForm.class) {
+            dataBinder.setValidator(chapterCreateValidator);
+        }
+    }
 
     @GetMapping(value = { "/chapter" })
     public String visitChapterPage(FormSearchChapter formSearchChapter, Model model) {
@@ -55,8 +73,22 @@ public class ChapterManagementController {
     }
     
     @PostMapping(value = { "/save-chapter" })
-    public String saveChapter(@ModelAttribute("chapterForm") ChapterForm chapterForm) {
-    	chapterServices.saveChapter(chapterForm);
-        return "create-chapter";
+    public String saveChapter(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
+    	try {
+			if (result.hasErrors()) {
+				return "create-chapter";
+			}
+			boolean createSuccess = chapterServices.saveChapter(chapterForm);
+			if (createSuccess) {
+				model.addAttribute("messageSuccess", "Tạo chương mới thành công!");
+			} else {
+				model.addAttribute("messageError", "Quá trình tạo chương thất bại!");
+			}
+			model.addAttribute("chapterForm", chapterForm);
+			return "create-chapter";
+		} catch (Exception e) {
+			model.addAttribute("error", e.getMessage());
+			return "403";
+		}
     }
 }

@@ -2,7 +2,7 @@ package com.doanfpt.management.application.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class AccountForm {
+public class AccountUpdateForm {
 	private Long accountId;
 	private String userName;
 	private String firstName;

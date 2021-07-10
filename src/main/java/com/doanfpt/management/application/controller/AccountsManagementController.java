@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
+import com.doanfpt.management.application.dto.AccountUpdateForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.services.AccountServices;
 import com.doanfpt.management.application.services.AddressServices;
 import com.doanfpt.management.application.services.RoleServices;
 import com.doanfpt.management.application.validator.AccountFormValidator;
+import com.doanfpt.management.application.validator.AccountUpdateValidator;
 
 @Controller
 @RequestMapping("/management")
@@ -33,6 +35,9 @@ public class AccountsManagementController {
     private AccountFormValidator accountFormValidator;
     
     @Autowired
+    private AccountUpdateValidator accountUpdateValidator;
+    
+    @Autowired
     AddressServices addressServices;
 
     @InitBinder
@@ -44,6 +49,9 @@ public class AccountsManagementController {
         }
         if (target.getClass() == AccountForm.class) {
             dataBinder.setValidator(accountFormValidator);
+        }
+        if (target.getClass() == AccountUpdateForm.class) {
+            dataBinder.setValidator(accountUpdateValidator);
         }
     }
 
@@ -63,8 +71,28 @@ public class AccountsManagementController {
 
     @GetMapping(value = { "/view-profile" })
     public String viewProfile(Model model) {
-        model.addAttribute("account", accountsServices.getAccountLogin());
+    	model.addAttribute("accountUpdateForm", accountsServices.getAccountLoginInfo());
         return "view-profile";
+    }
+    
+    @PostMapping(value = { "/update-account-view" })
+    public String updateAccountView(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, Model model) {
+        try {
+        	if (result.hasErrors()) {
+        		return "view-profile";
+        	}
+            boolean updateSuccess = accountsServices.updateAccount(accountUpdateForm);
+            if (updateSuccess) {
+                model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
+            } else {
+                model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
+            }
+            model.addAttribute("accountUpdateForm", accountUpdateForm);
+            return "view-profile";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "403";
+        }
     }
 
     @GetMapping(value = { "/create-account" })
@@ -89,28 +117,28 @@ public class AccountsManagementController {
     }
 
     @PostMapping(value = { "/update-account" })
-    public String updateAccount(AccountForm accountForm, Model model) {
+    public String updateAccount(AccountUpdateForm accountUpdateForm, Model model) {
         try {
-            boolean updateSuccess = accountsServices.updateAccount(accountForm);
+            boolean updateSuccess = accountsServices.updateAccount(accountUpdateForm);
             if (updateSuccess) {
                 model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
             } else {
                 model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
             }
-            model.addAttribute("accountForm", accountForm);
-            return "edit-account";
+            model.addAttribute("accountUpdateForm", accountUpdateForm);
+            return "update-account";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "403";
         }
     }
 
-    @RequestMapping("/edit-account")
+    @GetMapping("/update-account")
     public String showEditAccountForm(Long accountId, Model model) {
         try {
-            model.addAttribute("accountForm", accountsServices.getObjectUpdate(accountId));
+            model.addAttribute("accountUpdateForm", accountsServices.getObjectUpdate(accountId));
             model.addAttribute("listProvince", addressServices.getAllProvince());
-            return "edit-account";
+            return "update-account";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "403";

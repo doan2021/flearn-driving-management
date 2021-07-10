@@ -54,33 +54,6 @@
                                                                     <span class="input-group-text"> <i
                                                                         class="ni ni-calendar-grid-58"></i></span>
                                                                 </div>
-                                                                <input class="form-control" placeholder="Bắt đầu đăng ký từ ngày" type="text" th:field="*{dateRegisExamStartFrom}" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group m-0">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"> 
-                                                                        <i class="ni ni-calendar-grid-58"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <input class="form-control" placeholder="Đến ngày" type="text" th:field="*{dateRegisExamStartTo}" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="input-daterange datepicker row align-items-center">
-                                                    <div class="col">
-                                                        <div class="form-group m-0">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"> <i
-                                                                        class="ni ni-calendar-grid-58"></i></span>
-                                                                </div>
                                                                 <input class="form-control" placeholder="Kết thúc đăng ký từ ngày" type="text" th:field="*{dateRegisExamEndFrom}" autocomplete="off">
                                                             </div>
                                                         </div>
@@ -99,7 +72,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 mt-3">
+                                            <div class="col-6 mt-3">
                                                 <div class="input-daterange datepicker row align-items-center">
                                                     <div class="col">
                                                         <div class="form-group m-0">
@@ -157,7 +130,6 @@
                                             <th scope="col" class="sort" data-sort="status">ID</th>
                                             <th scope="col" class="sort" data-sort="budget">Tên kỳ thi</th>
                                             <th scope="col" class="sort" data-sort="status">Mô tả kỳ thi</th>
-                                            <th scope="col" class="sort" data-sort="status">Ngày BĐ đăng ký</th>
                                             <th scope="col" class="sort" data-sort="status">Ngày KT đăng ký</th>
                                             <th scope="col" class="sort" data-sort="status">Ngày thi chính thức</th>
                                             <th scope="col" class="sort" data-sort="status">Cập nhật lần cuối</th>
@@ -170,7 +142,6 @@
                                             <th scope="row" class="text-center" th:text="${exam.examId}"></th>
                                             <td class="text-center"><a th:href="@{${'/management/edit-exam?examId='} + ${exam.examId}}"><span th:utext="${exam.name}"></span></a></td>
                                             <td class="text-center" th:text="${exam.description}"></td>
-                                            <td class="text-center" th:text="${#dates.format(exam.dateRegisExamStart, 'dd-MM-yyyy')}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.dateRegisExamEnd, 'dd-MM-yyyy')}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.dateExam, 'dd-MM-yyyy')}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.updateAt, 'dd-MM-yyyy')}"></td>

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
+import com.doanfpt.management.application.dto.AccountUpdateForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
 import com.doanfpt.management.application.entities.Image;
@@ -149,32 +150,52 @@ public class AccountServices {
         accountForm.setNumberPhone(account.getNumberPhone());
         accountForm.setEmail(account.getEmail());
         accountForm.setGender(account.getGender());
+        accountForm.setDescription(account.getDescription());
         accountForm.setRoleId(account.getRole().getRoleId());
         return accountForm;
     }
     
     @Transactional
-    public boolean updateAccount(AccountForm accountForm) {
-        if (accountForm == null) {
+    public boolean updateAccount(AccountUpdateForm accountUpdateForm) {
+        if (accountUpdateForm == null) {
             return false;
         }
-        Account account = accountsRespository.findByAccountIdAndIsDelete(accountForm.getAccountId(), Constant.IS_NOT_DELETE);
+        Account account = accountsRespository.findByAccountIdAndIsDelete(accountUpdateForm.getAccountId(), Constant.IS_NOT_DELETE);
         if (account == null) {
             return false;
         }
-        account.setFirstName(accountForm.getFirstName());
-        account.setMiddleName(accountForm.getMiddleName());
-        account.setLastName(accountForm.getLastName());
-        account.setBirthDay(Common.stringToDate(accountForm.getBirthDay()));
-        account.setEmail(accountForm.getEmail());
-        account.setNumberPhone(accountForm.getNumberPhone());
-        account.setGender(accountForm.getGender());
+        account.setFirstName(accountUpdateForm.getFirstName());
+        account.setMiddleName(accountUpdateForm.getMiddleName());
+        account.setLastName(accountUpdateForm.getLastName());
+        account.setBirthDay(Common.stringToDate(accountUpdateForm.getBirthDay()));
+        account.setEmail(accountUpdateForm.getEmail());
+        account.setNumberPhone(accountUpdateForm.getNumberPhone());
+        account.setGender(accountUpdateForm.getGender());
         account.setUpdateBy(Common.getUsernameLogin());
         account.setUpdateAt(Common.getSystemDate());
+        account.setDescription(accountUpdateForm.getDescription());
         if (accountsRespository.save(account) == null) {
             return false;
         } else {
             return true;
         }
+    }
+    
+    public Object getAccountLoginInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AccountPrincipal loginedUser = (AccountPrincipal) auth.getPrincipal(); 
+        AccountForm accountForm = new AccountForm();
+        Account account = accountsRespository.findByEmail(loginedUser.getEmail());
+        accountForm.setAccountId(account.getAccountId());
+        accountForm.setFirstName(account.getFirstName());
+        accountForm.setMiddleName(account.getMiddleName());
+        accountForm.setLastName(account.getLastName());
+        accountForm.setUserName(account.getUserName());
+        accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+        accountForm.setNumberPhone(account.getNumberPhone());
+        accountForm.setEmail(account.getEmail());
+        accountForm.setGender(account.getGender());
+        accountForm.setRoleId(account.getRole().getRoleId());
+        return accountForm;
     }
 }
