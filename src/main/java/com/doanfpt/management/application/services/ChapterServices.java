@@ -26,13 +26,20 @@ public class ChapterServices {
         return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
     }
 
-    public void saveChapter(ChapterForm chapterForm) {
+    public boolean saveChapter(ChapterForm chapterForm) {
+    	if (chapterForm == null) {
+			return false;
+		}
     	Chapter chapter = new Chapter();
     	chapter.setName(chapterForm.getName());
     	chapter.setDescription(chapterForm.getDescription());
     	chapter.setContent(chapterForm.getContent());
     	chapter.setUpdateAt(Common.getSystemDate());
-        chapterResponsitory.save(chapter);
+    	if (chapterResponsitory.save(chapter) == null) {
+			return false;
+		} else {
+			return true;
+		}
     }
 
     public Page<Chapter> getAllChapter(Integer pageNumber) {

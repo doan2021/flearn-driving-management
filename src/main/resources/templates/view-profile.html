@@ -17,84 +17,93 @@
 			<!-- Header container -->
 			<div class="container-fluid d-flex align-items-center">
 				<div class="row">
-					<div class="col-lg-7 col-md-10">
-						<h1 class="display-2 text-white">Hi Sir</h1>
-						<p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made
-							with your work and manage your projects or assigned tasks</p>
+					<div class="col-lg-10 col-md-10">
+						<h1 class="display-2 text-white">Hi [[${accountUpdateForm.lastName}]] [[${accountUpdateForm.middleName}]] [[${accountUpdateForm.firstName}]]</h1>
+						<p class="text-white mt-0 mb-5">Đây là trang cá nhân của bạn. Tại đây bạn có thể xem thông tin cơ bản và những thông tin liên quan khác về bạn.</p>
 
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div class="container-fluid mt--6">
 			<div class="row">
 				<div class="col-xl-4 order-xl-2">
 					<div class="card card-profile">
-						<img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
-						<div class="row justify-content-center">
-							<div class="col-lg-3 order-lg-2">
-								<div class="card-profile-image">
-									<label for="fileImage">
-										<img src="../assets/img/theme/team-4.jpg" class="rounded-circle"
-											id="image-preview">
-									</label>
-									<br></br>
-								</div>
-							</div>
-						</div>
-						<div class="card-body pt-0">
-							<div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-								<div class="d-flex justify-content-between">
-								</div>
-							</div>
-							<div class="text-center">
-								<h5 class="h3">
-									Anh Phạm<span class="font-weight-light">, 21</span>
-								</h5>
-								<div class="h5 font-weight-300">
-									<i class="ni location_pin mr-2"></i>Đà Nẵng, Việt Nam, Trái đất.
-								</div>
-								<div class="h5 mt-4">
-									<i class="ni business_briefcase-24 mr-2"></i>Full stack - Project Manager - Business
-									Analyst
-								</div>
-								<div>
-									<i class="ni education_hat mr-2"></i>FPT University
-								</div>
-								<div class="mt-4">
-									<button style="" href="#" class="btn btn-primary">Đổi mật khẩu</button>
-								</div>
-							</div>
-						</div>
-					</div>
+                            <img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-3 order-lg-2">
+                                    <div class="card-profile-image">
+                                        <label for="fileImage">
+                                            <img src="../assets/img/theme/team-4.jpg" class="rounded-circle" id="image-preview">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                <div class="d-flex justify-content-between">
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-profile-stats d-flex justify-content-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 				</div>
 				<div class="col-xl-8 order-xl-1">
 					<div class="card">
 						<div class="card-body">
-							<form>
-								<h6 class="heading-small text-muted mb-4">THÔNG TIN CƠ BẢN</h6>
+							<form id="view-profile-form" th:action="@{/management/update-account-view}" th:object="${accountUpdateForm}" method="POST" enctype="multipart/form-data">
+								<input type="hidden" th:field="*{accountId}"/>
+								<div class="row">
+									<div class="col-6">
+										<h6 class="heading-small text-muted mb-4">THÔNG TIN CƠ BẢN</h6>
+									</div>
+									<div class="col-lg-6 text-right">
+                                        <div class="form-group">
+                                            <span class="badge badge-pill badge-success badge-lg" th:if="${accountUpdateForm.roleId == 1}">Quản trị viên</span>
+                                            <span class="badge badge-pill badge-warning badge-lg" th:if="${accountUpdateForm.roleId == 2}">Người dùng</span>
+                                        </div>
+                                    </div>
+								</div>
+								<div class="row">
+									<div class="col-12">
+										<div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
+			                                <p class="m-0" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+			                                <p class="m-0" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+			                                <p class="m-0" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></p>
+			                                <p class="m-0" th:if="${#fields.hasErrors('numberPhone')}" th:errors="*{numberPhone}"></p>
+			                                <p class="m-0" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+			                            </div>
+									</div>
+								</div>
+								<div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${messageSuccess}"></div>
+                                    	<div class="alert alert-danger" th:if="${messageError != null}" th:text="${messageError}"></div>
+                                    </div>
+                                </div>
 								<div class="pl-lg-4">
 									<div class="row">
 										<div class="col-lg-4">
 											<div class="form-group">
 												<label class="form-control-label" for="input-first-name">Họ</label>
-												<input type="text" id="input-first-name" class="form-control"
-													placeholder="Họ" value="Phạm"></div>
+												<input type="text" id="input-first-name" class="form-control" th:field="*{lastName}">
+											</div>
 										</div>
 										<div class="col-lg-4">
 											<div class="form-group">
-												<label class="form-control-label" for="input-middle-name">Tên
-													đệm</label>
-												<input type="text" id="input-middle-name" class="form-control"
-													placeholder="Tên đệm" value="Quang">
+												<label class="form-control-label" for="input-middle-name">Tên đệm</label>
+												<input id="input-middle-name" class="form-control" th:field="*{middleName}">
 											</div>
 										</div>
 										<div class="col-lg-4">
 											<div class="form-group">
 												<label class="form-control-label" for="input-last-name">Tên</label>
-												<input type="text" id="input-last-name" class="form-control"
-													placeholder="Tên" value="Anh">
+												<input type="text" id="input-last-name" class="form-control" th:field="*{firstName}">
 											</div>
 										</div>
 									</div>
@@ -104,62 +113,36 @@
 												<label class="form-control-label" for="input-birthday">Ngày sinh</label>
 												<div class="input-group">
 													<div class="input-group-prepend">
-														<span class="input-group-text"><i
-																class="ni ni-calendar-grid-58"></i></span>
+														<span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 													</div>
-													<input class="form-control datepicker" id="input-birthday"
-														placeholder="Ngày sinh" type="text" name="birthDay"
-														value="09/01/1999">
+													<input class="form-control" id="input-birthday" name="birthDay" th:field="*{birthDay}">
 												</div>
 											</div>
 										</div>
 										<div class="col-6">
 											<div class="form-group">
-												<label class="form-control-label" for="input-number-phone">Số điện
-													thoại</label>
-												<input type="text" id="input-number-phone" placeholder="Số điện thoại"
-													class="form-control" name="numberPhone" value="0957694663">
+												<label class="form-control-label" for="input-number-phone">Số điện thoại</label>
+												<input type="text" id="input-number-phone" class="form-control" th:field="*{numberPhone}">
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-lg-6">
+										<div class="col-lg-12">
 											<div class="form-group">
 												<label class="form-control-label" for="input-email">Email</label>
-												<input type="email" id="input-email" class="form-control"
-													value="skygarden@yahoo.com.vn">
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label class="form-control-label" for="input-username">Tên đăng
-													nhập</label>
-												<input type="text" id="input-username" class="form-control"
-													placeholder="Username" value="admin">
+												<input type="text" id="input-email" class="form-control" th:field="*{email}">
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<div class="form-group">
-												<label class="form-control-label" for="input-gender">Giới tính</label>
-												<select class="form-control" id="input-gender" name="gender">
-													<option value="1">Nam</option>
-													<option value="0">Nữ</option>
-													<option value="2">Khác</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="form-group">
-												<label class="form-control-label" for="role">Quyền</label>
-												<select class="form-control" id="role" name="roles">
-													<option value="0">Admin</option>
-													<option value="1">User</option>
-
-												</select>
-											</div>
-										</div>
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-gender">Giới tính: </label>
+                                                <span th:if="${accountUpdateForm.gender == 1}" class="form-control">Nam</span>
+                                                <span th:if="${accountUpdateForm.gender == 0}">Nữ</span>
+                                                <span th:if="${accountUpdateForm.gender == 2}">Khác</span>
+                                            </div>
+                                        </div>	
 									</div>
 								</div>
 								<!-- Address -->
@@ -169,50 +152,27 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="form-control-label" for="input-address">Địa chỉ</label>
-												<input id="input-address" class="form-control" placeholder=""
-													value="Đà Nẵng">
+												<span id="input-address" class="form-control" value="Đà Nẵng">
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-4">
 											<div class="form-group">
-												<label class="form-control-label" for="input-city">Phường</label>
-												<select class="form-control">
-													<option>Phước Mỹ</option>
-													<option>An Hải Bắc</option>
-													<option>An Hải Đông</option>
-													<option>An Hải Tây</option>
-													<option>Mân Thái</option>
-													<option>Nại Hiên Đông</option>
-													<option>Thọ Quang</option>
-													<option>...</option>
-												</select>
+												<label class="form-control-label" for="input-city">Phường / Xã</label>
+												<span id="input-address" class="form-control" value="Nại Hiên Đông">
 											</div>
 										</div>
 										<div class="col-lg-4">
 											<div class="form-group">
-												<label class="form-control-label" for="input-country">Quận</label>
-												<select class="form-control">
-													<option>Sơn Trà</option>
-													<option>Hải Châu</option>
-													<option>Cẩm Lệ</option>
-													<option>Thanh Khê</option>
-													<option>Liên Chiểu</option>
-													<option>Ngũ Hành Sơn</option>
-													<option>Hòa Vang</option>
-													<option>Hoàng Sa</option>
-													<option>...</option>
-												</select>
+												<label class="form-control-label" for="input-country">Quận / Huyện</label>
+												<span id="input-address" class="form-control" value="Sơn Trà">
 											</div>
 										</div>
 										<div class="col-lg-4">
 											<div class="form-group">
-												<label class="form-control-label" for="input-country">Thành phố</label>
-												<select class="form-control">
-													<option>Đà Nẵng</option>
-													<option>Và còn 63 tỉnh thành khác nữa ^^</option>
-												</select>
+												<label class="form-control-label" for="input-country">Tỉnh / Thành phố</label>
+												<span id="input-address" class="form-control" value="Sơn Trà">
 											</div>
 										</div>
 									</div>
@@ -221,8 +181,7 @@
 								<h6 class="heading-small text-muted mb-4">Miêu tả về tôi</h6>
 								<div class="pl-lg-4">
 									<div class="form-group">
-										<textarea rows="4" class="form-control"
-											placeholder="Hí ae, mình làm xong form rồi, hôm nay hơi mệt, mình xin off nốt bữa hôm nay nhé, yêu cả lò nhà mình! :v"></textarea>
+										<textarea rows="4" class="form-control" th:value="${accountUpdateForm.description}"></textarea>
 									</div>
 								</div>
 								<div class="row">
@@ -239,8 +198,8 @@
 		</div>
 	</th:block>
 	<th:block layout:fragment="script">
-		<script th:src="@{../js/edit-account.js}"></script>
-	</th:block>
+        <script th:src="@{../js/create-account.js}"></script>
+    </th:block>
 </body>
 
 </html>
