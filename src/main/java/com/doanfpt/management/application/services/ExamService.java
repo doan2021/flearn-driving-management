@@ -45,7 +45,6 @@ public class ExamService {
         Exam exam = new Exam();
         exam.setName(examForm.getName());
         exam.setDescription(examForm.getDescription());
-        exam.setDateRegisExamStart(Common.stringToDate(examForm.getDateRegisExamStart()));
         exam.setDateRegisExamEnd(Common.stringToDate(examForm.getDateRegisExamEnd()));
         Date dateExam = Common.addDays(Common.stringToDate(examForm.getDateRegisExamEnd()), 15);
         exam.setDateExam(dateExam);
@@ -66,7 +65,6 @@ public class ExamService {
         exam = examRepository.getOne(examForm.getExamId());
         exam.setName(examForm.getName());
         exam.setDescription(examForm.getDescription());
-        exam.setDateRegisExamStart(Common.stringToDate(examForm.getDateRegisExamStart()));
         exam.setDateRegisExamEnd(Common.stringToDate(examForm.getDateRegisExamEnd()));
         Date dateExam = Common.addDays(Common.stringToDate(examForm.getDateRegisExamEnd()), 15);
         exam.setDateExam(dateExam);
@@ -81,7 +79,6 @@ public class ExamService {
         examForm.setExamId(exam.getExamId());
         examForm.setName(exam.getName());
         examForm.setDescription(exam.getDescription());
-        examForm.setDateRegisExamStart(DateFormatUtils.format(exam.getDateRegisExamStart(), Constant.FORMAT_DATE));
         examForm.setDateRegisExamEnd(DateFormatUtils.format(exam.getDateRegisExamEnd(), Constant.FORMAT_DATE));
         examForm.setDateExam(DateFormatUtils.format(exam.getDateExam(), Constant.FORMAT_DATE));
         examForm.setUpdateAt(DateFormatUtils.format(exam.getUpdateAt(), Constant.FORMAT_DATE));
@@ -112,14 +109,6 @@ public class ExamService {
         if (formSearchExam != null) {
             if (StringUtils.isNotBlank(formSearchExam.getName())) {
                 conditions = conditions.and(ExamSpecification.hasName(formSearchExam.getName()));
-            }
-            if (StringUtils.isNotBlank(formSearchExam.getDateRegisExamStartFrom())) {
-                conditions = conditions
-                        .and(ExamSpecification.hasDateRegisExamStartFrom(formSearchExam.getDateRegisExamStartFrom()));
-            }
-            if (StringUtils.isNotBlank(formSearchExam.getDateRegisExamStartTo())) {
-                conditions = conditions
-                        .and(ExamSpecification.hasDateRegisExamStartTo(formSearchExam.getDateRegisExamStartTo()));
             }
             if (StringUtils.isNotBlank(formSearchExam.getDateRegisExamEndFrom())) {
                 conditions = conditions

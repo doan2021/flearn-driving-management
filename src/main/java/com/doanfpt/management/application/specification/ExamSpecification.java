@@ -23,14 +23,6 @@ public class ExamSpecification {
 		return (root, query, cb) -> cb.like(root.get(Exam_.DESCRIPTION), "%" + description + "%");
 	}
 
-	public static Specification<Exam> hasDateRegisExamStartFrom(String dateRegisExamStartFrom) {
-		return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_START), Common.stringToDate(dateRegisExamStartFrom));
-	}
-
-	public static Specification<Exam> hasDateRegisExamStartTo(String dateRegisExamStartTo) {
-		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_START), Common.stringToDate(dateRegisExamStartTo));
-	}
-
 	public static Specification<Exam> hasDateRegisExamEndFrom(String dateRegisExamEndFrom) {
 		return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_END), Common.stringToDate(dateRegisExamEndFrom));
 	}

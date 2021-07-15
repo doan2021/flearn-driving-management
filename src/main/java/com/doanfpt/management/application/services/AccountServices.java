@@ -8,19 +8,16 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
-import com.doanfpt.management.application.entities.Image;
 import com.doanfpt.management.application.entities.Role;
 import com.doanfpt.management.application.model.AccountPrincipal;
 import com.doanfpt.management.application.responsitories.AccountsRespository;
@@ -36,9 +33,6 @@ public class AccountServices {
 
     @Autowired
     private RoleRespository roleRespository;
-    
-    @Autowired
-    private Environment env;
 
     public List<Account> findAllAccount() {
         List<Account> listUser = accountsRespository.findAll();
@@ -67,31 +61,11 @@ public class AccountServices {
         account.setGender(accountForm.getGender());
         Role role = roleRespository.getOne(accountForm.getRoleId());
         account.setRole(role);
-        account.setListImages(handleImage(account, accountForm.getImage()));
         account.setCreateBy(Common.getUsernameLogin());
         account.setCreateAt(Common.getSystemDate());
         account.setUpdateBy(Common.getUsernameLogin());
         account.setUpdateAt(Common.getSystemDate());
         accountsRespository.save(account);
-    }
-    
-    public List<Image> handleImage(Account account, MultipartFile data) {
-        String pathClassPath = env.getProperty("url-class-path");
-        String pathFolderUpload = env.getProperty("url-upload-folder-account");
-        List<Image> images = new ArrayList<>();
-        if (!data.isEmpty()) {
-            Image image = new Image();
-            image.setFileName(data.getOriginalFilename());
-            image.setUrl(Common.writeFile(data, pathClassPath, pathFolderUpload));
-            image.setDescription("Create new account");
-            image.setAccount(account);
-            image.setCreateBy(Common.getUsernameLogin());
-            image.setCreateAt(Common.getSystemDate());
-            image.setUpdateBy(Common.getUsernameLogin());
-            image.setUpdateAt(Common.getSystemDate());
-            images.add(image);
-        }
-        return images;
     }
 
     public Account getAccountLogin() {

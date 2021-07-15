@@ -98,7 +98,7 @@ public class Account {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Image> listImages;
+    private List<Document> listImages;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
@@ -192,11 +192,11 @@ public class Account {
         this.listStatusLearn = listStatusLearn;
     }
 
-    public List<Image> getListImages() {
+    public List<Document> getListImages() {
         return listImages;
     }
 
-    public void setListImages(List<Image> listImages) {
+    public void setListImages(List<Document> listImages) {
         this.listImages = listImages;
     }
 

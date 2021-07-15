@@ -4,7 +4,9 @@
 package com.doanfpt.management.application.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "driving_license_info")
@@ -61,6 +65,9 @@ public class DrivingLicenseInfo {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "issue_date")
+    private Date issueDate;
+
     @Column(name = "create_at")
     private Date createAt;
 
@@ -76,8 +83,8 @@ public class DrivingLicenseInfo {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "province_id")
-    private Province province;
+    @JoinColumn(name = "place_of_issue")
+    private Province placeOfIssue;
 
     @JsonBackReference
     @ManyToOne
@@ -88,6 +95,10 @@ public class DrivingLicenseInfo {
     @ManyToOne
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "drivingLicenseInfo", cascade = CascadeType.ALL)
+    private List<Document> listDocuments;
 
     public Long getDrivingLicenseInfoId() {
         return drivingLicenseInfoId;
@@ -217,12 +228,12 @@ public class DrivingLicenseInfo {
         this.ward = ward;
     }
 
-    public Province getProvince() {
-        return province;
+    public Province getPlaceOfIssue() {
+        return placeOfIssue;
     }
 
-    public void setProvince(Province province) {
-        this.province = province;
+    public void setPlaceOfIssue(Province placeOfIssue) {
+        this.placeOfIssue = placeOfIssue;
     }
 
     public Exam getExam() {
@@ -239,6 +250,22 @@ public class DrivingLicenseInfo {
 
     public void setDrivingLicense(DrivingLicense drivingLicense) {
         this.drivingLicense = drivingLicense;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public List<Document> getListDocuments() {
+        return listDocuments;
+    }
+
+    public void setListDocuments(List<Document> listDocuments) {
+        this.listDocuments = listDocuments;
     }
 
 }

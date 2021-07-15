@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -31,9 +30,6 @@ public class Exam {
 
     @Column(name = "is_trial")
     public boolean isTrial;
-
-    @Column(name = "date_regis_exam_start")
-    private Date dateRegisExamStart;
 
     @Column(name = "date_regis_exam_end")
     private Date dateRegisExamEnd;
@@ -67,7 +63,6 @@ public class Exam {
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<DrivingLicenseInfo> listDrivingLicenseInfo;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;
@@ -94,14 +89,6 @@ public class Exam {
 
     public void setTrial(boolean isTrial) {
         this.isTrial = isTrial;
-    }
-
-    public Date getDateRegisExamStart() {
-        return dateRegisExamStart;
-    }
-
-    public void setDateRegisExamStart(Date date) {
-        this.dateRegisExamStart = date;
     }
 
     public Date getDateRegisExamEnd() {
@@ -191,5 +178,4 @@ public class Exam {
     public void setDrivingLicense(DrivingLicense drivingLicense) {
         this.drivingLicense = drivingLicense;
     }
-
 }

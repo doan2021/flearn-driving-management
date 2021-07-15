@@ -10,7 +10,7 @@ var pageListData = new Vue({
     },
     methods: {
         readURL: function(e){
-        	this.images = [];
+            this.images = [];
             if (e.target.files) {
                 for (i = 0; i < e.target.files.length; i++) {
                     this.images.push(URL.createObjectURL(e.target.files[i]));

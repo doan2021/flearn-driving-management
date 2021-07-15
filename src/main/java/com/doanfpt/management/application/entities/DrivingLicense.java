@@ -18,13 +18,22 @@ public class DrivingLicense {
 
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "type")
     private String type;
-    
+
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "number_question")
+    private Double numberQuestion;
+
+    @Column(name = "exam_minutes")
+    private Integer examMinutes;
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "number_year_expires")
     private Integer numberYearExpires;
 
@@ -58,6 +67,38 @@ public class DrivingLicense {
 
     public void setNumberYearExpires(Integer numberYearExpires) {
         this.numberYearExpires = numberYearExpires;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getNumberQuestion() {
+        return numberQuestion;
+    }
+
+    public void setNumberQuestion(Double numberQuestion) {
+        this.numberQuestion = numberQuestion;
+    }
+
+    public Integer getExamMinutes() {
+        return examMinutes;
+    }
+
+    public void setExamMinutes(Integer examMinutes) {
+        this.examMinutes = examMinutes;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
