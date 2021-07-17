@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-management}">
+
+<head>
+	<title>Quản lý đề thi</title>
+	<meta charset="utf-8">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-lg-6 col-7">
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i
+												class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item active" aria-current="page">Quản lý đề thi</li>
+								</ol>
+							</nav>
+						</div>
+						<div class="col-lg-6 col-5 text-right">
+							<a th:href="@{/management/create-exam-questions}" class="btn btn-sm btn-neutral"><i
+									class="fas fa-plus"></i> Tạo đề thi mới</a>
+						</div>
+						<div class="col-12">
+							<div class="card card-stats">
+								<!-- Card body -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12">
+											<h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
+											<form class="row mt-3">
+												<div class="col-12">
+													<input type="text" class="form-control" placeholder="Tên : "
+														autofocus>
+												</div>
+												<div class="col-6 mt-3">
+													<div class="form-group">
+														<div class="input-group">
+															<div class="input-group-prepend">
+																<span class="input-group-text"><i
+																		class="ni ni-calendar-grid-58"></i></span>
+															</div>
+															<input class="form-control" placeholder="Ngày cập nhật : "
+																type="text" autocomplete="off">
+														</div>
+													</div>
+												</div>
+												<div class="col-6 mt-3">
+													<div class="form-group">
+														<div class="input-group">
+															<div class="input-group-prepend">
+																<span class="input-group-text"><i
+																		class="ni ni-calendar-grid-58"></i></span>
+															</div>
+															<input class="form-control" placeholder="Người cập nhật : "
+																type="text" autocomplete="off">
+														</div>
+													</div>
+												</div>
+												<div class="col-12">
+													<button class="btn btn-primary"><i class="fas fa-search"></i> Tìm
+														kiếm</button>
+													<a th:href="@{../management/chapter}" class="btn btn-info"><i
+															class="fas fa-eraser"></i> Xóa</a>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row justify-content-center">
+				<div class=" col">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<h2 class="mb-0">Toàn bộ đề thi</h2>
+						</div>
+						<table>
+							<thead class="thead-light">
+								<tr>
+									<th scope="col" class="text-center" data-sort="name">Tên đề thi</th>
+									<th scope="col" class="text-center" data-sort="budget">Số lượng câu hỏi</th>
+									<th scope="col" class="text-center" data-sort="status">Thời gian cập nhật</th>
+									<th scope="col" class="text-center" data-sort="status">Người cập nhật</th>
+									<th scope="col"></th>
+								</tr>
+							</thead>
+							<tbody class="list">
+								<tr th:each="examQuestions : ${examQuestions}">
+									<th>
+										<span th:text="${examQuestions.name}"></span>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<div class="card-footer py-4">
+							<div th:insert="fragment-common/pagination :: pagination"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>

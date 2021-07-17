@@ -1,93 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/layout-management}">
-    <head>
-        <title>Quản lý chương</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <th:block layout:fragment="content">
-            <div class="header bg-primary pb-6">
-                <div class="container-fluid">
-                    <div class="header-body">
-                        <div class="row align-items-center py-4">
-                            <div class="col-lg-6 col-7">
-                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                        <li class="breadcrumb-item"><a href="#">Quản lý chương</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Chi tiết chương</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                            <div class="col-12">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid mt--6">
-                <div class="row">
-                    <div class="col-5">
-                        <div class="card">
-                            <div class="card-header bg-transparent">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h3 class="mb-0">Chi tiết chương</h3>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="#" class="btn btn-sm btn-default float-right"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h1>Chương 1</h1>
-                                        <p></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="card">
-                            <div class="card-header bg-transparent">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h3 class="mb-0">Câu hỏi trong chương</h3>
-                                    </div>
-                                    <div class="col-6">
-                                        <a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-default float-right"><i class="fas fa-plus"></i> Tạo câu hỏi</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-items-center table-hover">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col" class="sort text-center" data-sort="name">STT</th>
-                                            <th scope="col" class="sort text-center" data-sort="name">Nội dung</th>
-                                            <th scope="col" class="sort text-center" data-sort="budget">Câu hỏi liệt</th>
-                                            <th scope="col" class="sort text-center" data-sort="status">Cập nhật gần nhất</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="list">
-                                        <tr th:each="question : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
-                                            <th>
-                                                <span class="name mb-0 text-sm" th:text="${question.number}"></span>
-                                            </th>
-                                            <td>
-                                                <span th:text="${question.content}"></span>
-                                            </td>
-                                            <td th:if="${question.isParalysis}" class="text-center">
-                                                <span class="text-success h1"><i class="fas fa-check-circle"></i></span>
-                                            </td>
-                                            <td th:unless="${question.isParalysis}">
-                                            </td>
-                                            <td class="text-center">
-                                                <span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
+	layout:decorate="~{layout/layout-management}">
+
+<head>
+	<title>Quản lý chương</title>
+	<meta charset="utf-8">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-lg-6 col-7">
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item"><a th:href="@{/management/chapter}">Quản lý chương</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Chi tiết chương</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row">
+				<div class="col-5">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<div class="row">
+								<div class="col-6">
+									<h3 class="mb-0">Chi tiết chương</h3>
+								</div>
+								<div class="col-6">
+									<a th:href="@{${'/management/edit-chapter-detail?chapterId='} + ${chapter.chapterId}}"
+										class="btn btn-sm btn-default float-right"><i class="fas fa-edit"></i> Chỉnh
+										sửa</a>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="row"> 	
+								<div class="col-12">
+									<span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="|${chapter.name}|"></span>
+								</div>
+								<div class="col-12 mt-3">
+									<span style="font-weight: bold;">Nội dung : </span><span th:text="|${chapter.content}|"></span>
+								</div>
+								<div class="col-12 mt-2">
+									<span style="font-weight: bold;" >Mô Tả : </span><span th:text="|${chapter.description}|"></span>
+								</div>
+								<div class="col-12 mt-2">
+									<span style="font-weight: bold;" >Người cập nhật : </span><span th:text="|${chapter.updateBy}|"></span>
+								</div>
+								<div class="col-12 mt-2">
+									<span style="font-weight: bold;">Thời gian cập nhật : </span><span th:text="${chapter.updateAt}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-7">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<div class="row">
+								<div class="col-6">
+									<h3 class="mb-0">Câu hỏi trong chương</h3>
+								</div>
+								<div class="col-6">
+									<a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}"
+										class="btn btn-sm btn-default float-right"><i class="fas fa-plus"></i> Tạo câu
+										hỏi</a>
+								</div>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table align-items-center table-hover">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col" class="sort text-center" data-sort="name">STT</th>
+										<th scope="col" class="sort text-center" data-sort="name">Nội dung</th>
+										<th scope="col" class="sort text-center" data-sort="budget">Câu hỏi liệt</th>
+										<th scope="col" class="sort text-center" data-sort="status">Cập nhật gần nhất
+										</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody class="list">
+									<tr th:each="question : ${pageContent.content}"
+										th:if="${pageContent.totalElements != 0}">
+										<th>
+											<span class="name mb-0 text-sm" th:text="${question.number}"></span>
+										</th>
+										<td>
+											<span th:text="${question.content}"></span>
+										</td>
+										<td th:if="${question.isParalysis}" class="text-center">
+											<span class="text-success h1"><i class="fas fa-check-circle"></i></span>
+										</td>
+										<td th:unless="${question.isParalysis}">
+										</td>
+										<td class="text-center">
+											<span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
                                             </td>
                                             <td>
                                                 <a href="#" class="text-danger h1"><i class="fas fa-trash-alt"></i></a>

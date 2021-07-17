@@ -142,7 +142,7 @@ public class AccountServices {
         accountForm.setMiddleName(account.getMiddleName());
         accountForm.setLastName(account.getLastName());
         accountForm.setUserName(account.getUserName());
-        accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+        accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE_TIME));
         accountForm.setNumberPhone(account.getNumberPhone());
         accountForm.setEmail(account.getEmail());
         accountForm.setGender(account.getGender());

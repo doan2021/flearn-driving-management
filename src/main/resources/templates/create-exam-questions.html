@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-management}">
+
+<head>
+	<title>Tạo Đề Thi</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" th:href="@{../css/create-chapter.css}" type="text/css">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-12">
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item active" aria-current="page">Tạo Đề Thi Mới</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row">
+				<div class="col-xl-8 order-xl-1">
+					<div class="card">
+						<div class="card-header">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<h3 class="mb-0">Tạo Đề Thi</h3>
+								</div>
+							</div>
+						</div>
+						<div class="card-body px-4">
+							<form th:action="@{/management/save-exam}" th:object="${examForm}" method="POST">
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="form-control-label" for="input-first-name">Tên Đề Thi</label>
+											<input  th:field="*{}" type="text" id="input-first-name"
+												placeholder="Nhập tên đề thi" class="form-control" name="firstName"
+												value="">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="form-control-label" for="input-first-name">Số lượng câu hỏi</label>
+											<input  type="textarea" id="input-first-name"
+												placeholder="Nhập số lượng câu hỏi" class="form-control" name="description"
+												value="">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12 text-center">
+										<button type="submit" class="btn btn-primary">Tạo</button>
+										<a href="/management/create-chapter" class="btn btn-info">Làm mới</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>
