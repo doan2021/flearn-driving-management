@@ -57,7 +57,7 @@ public class Question {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Image> listImage;
+    private List<Document> listImage;
 
     @JsonBackReference
     @ManyToOne
@@ -108,11 +108,11 @@ public class Question {
         this.listAnswers = listAnswers;
     }
 
-    public List<Image> getListImage() {
+    public List<Document> getListImage() {
         return listImage;
     }
 
-    public void setListImage(List<Image> listImage) {
+    public void setListImage(List<Document> listImage) {
         this.listImage = listImage;
     }
 

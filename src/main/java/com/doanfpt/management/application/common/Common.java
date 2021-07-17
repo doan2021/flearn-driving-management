@@ -85,4 +85,28 @@ public class Common {
         }
         return urlUploadFolder + "/" + fileName;
     }
+    
+	public static boolean isValidEmailAddress(String email) {
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(Constant.PATTERN_EMAIL);
+		java.util.regex.Matcher m = p.matcher(email);
+		return m.matches();
+	}
+	
+	public static boolean isValidPhoneNumber(String numberPhone) {
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(Constant.PATTERN_PHONENUMBER);
+		java.util.regex.Matcher m = p.matcher(numberPhone);
+		return m.matches();
+	}
+
+	public static boolean isValidName(String chapterName) {
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(Constant.PATTERN_CHAPTER_NAME);
+		java.util.regex.Matcher m = p.matcher(chapterName);
+		return m.matches();
+	}
+	
+	public static boolean isValidContent(String chapterContent) {
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(Constant.PATTERN_CHAPTER_CONTENT);
+		java.util.regex.Matcher m = p.matcher(chapterContent);
+		return m.matches();
+	}
 }

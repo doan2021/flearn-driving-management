@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.entities.Account;
-import com.doanfpt.management.application.entities.Role;
 import com.doanfpt.management.application.model.AccountPrincipal;
 import com.doanfpt.management.application.responsitories.AccountsRespository;
-import com.doanfpt.management.application.responsitories.RoleRespository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

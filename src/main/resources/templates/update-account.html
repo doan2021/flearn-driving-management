@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Sửa người dùng</title>
+    <link rel="icon" type="image/ico" th:href="@{../image/favicon.ico}"/>
 </head>
 
 <body>
@@ -62,16 +63,16 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="edit-exam-form" th:action="@{/management/update-account}" th:object="${accountForm}" method="POST">
-                                <input type="hidden" name="accountId" th:value="${accountForm.accountId}">
+                            <form id="edit-exam-form" th:action="@{/management/update-account}" th:object="${accountUpdateForm}" method="POST">
+                                <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
                                 <div class="row">
                                     <div class="col-6">
                                         <h6 class="heading-small text-muted mb-4">THÔNG TIN CƠ BẢN</h6>
                                     </div>
                                     <div class="col-lg-6 text-right">
                                         <div class="form-group">
-                                            <span class="badge badge-pill badge-success badge-lg" th:if="${accountForm.roleId == 1}">Quản trị viên</span>
-                                            <span class="badge badge-pill badge-warning badge-lg" th:if="${accountForm.roleId == 2}">Người dùng</span>
+                                            <span class="badge badge-pill badge-success badge-lg" th:if="${accountUpdateForm.roleId == 1}">Quản trị viên</span>
+                                            <span class="badge badge-pill badge-warning badge-lg" th:if="${accountUpdateForm.roleId == 2}">Người dùng</span>
                                         </div>
                                     </div>
                                 </div>
@@ -95,9 +96,9 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="input-first-name">Họ</label>
+                                                <label class="form-control-label" for="input-last-name">Họ</label>
                                                 <span class="text-danger">*</span>
-                                                <input th:field="*{firstName}" type="text" id="input-first-name" class="form-control" placeholder="Võ">
+                                                <input th:field="*{lastName}" type="text" id="input-last-name" class="form-control" placeholder="Võ">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -108,9 +109,9 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="input-last-name">Tên</label>
+                                                <label class="form-control-label" for="input-first-name">Tên</label>
                                                 <span class="text-danger">*</span>
-                                                <input th:field="*{lastName}" type="text" id="input-last-name" class="form-control" placeholder="A">
+                                                <input th:field="*{firstName}" type="text" id="input-first-name" class="form-control" placeholder="A">
                                             </div>
                                         </div>
                                     </div>

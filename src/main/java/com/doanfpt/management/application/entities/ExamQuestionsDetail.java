@@ -14,22 +14,23 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "image")
-public class Image {
+@Table(name = "exam_questions_detail")
+public class ExamQuestionsDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
-    private Long imageId;
+    @Column(name = "exam_questions_detail_id")
+    private Long examQuestionsDetailId;
 
-    @Column(name = "file_name")
-    private String fileName;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
 
-    @Column(name = "url")
-    private String url;
-
-    @Column(name = "description")
-    private String description;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "exam_questions_id")
+    private ExamQuestions examQuestions;
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
@@ -46,46 +47,20 @@ public class Image {
     @Column(name = "update_at")
     private Date updateAt;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    public Long getImageId() {
-        return imageId;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public void setImageId(Long imageId) {
-        this.imageId = imageId;
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
-    public String getFileName() {
-        return fileName;
+    public Long getExamQuestionsDetailId() {
+        return examQuestionsDetailId;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setExamQuestionsDetailId(Long examQuestionsDetailId) {
+        this.examQuestionsDetailId = examQuestionsDetailId;
     }
 
     public Question getQuestion() {
@@ -96,12 +71,12 @@ public class Image {
         this.question = question;
     }
 
-    public boolean isDelete() {
-        return isDelete;
+    public ExamQuestions getExamQuestions() {
+        return examQuestions;
     }
 
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
+    public void setExamQuestions(ExamQuestions examQuestions) {
+        this.examQuestions = examQuestions;
     }
 
     public String getCreateBy() {
@@ -134,14 +109,6 @@ public class Image {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
 }

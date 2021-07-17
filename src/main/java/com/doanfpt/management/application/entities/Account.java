@@ -98,7 +98,11 @@ public class Account {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Image> listImages;
+    private List<Document> listImages;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<DrivingLicenseInfo> listDrivingLicenseInfo;
 
     public Long getAccountId() {
         return accountId;
@@ -188,11 +192,11 @@ public class Account {
         this.listStatusLearn = listStatusLearn;
     }
 
-    public List<Image> getListImages() {
+    public List<Document> getListImages() {
         return listImages;
     }
 
-    public void setListImages(List<Image> listImages) {
+    public void setListImages(List<Document> listImages) {
         this.listImages = listImages;
     }
 
@@ -274,6 +278,22 @@ public class Account {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<DrivingLicenseInfo> getListDrivingLicenseProfiles() {
+        return listDrivingLicenseInfo;
+    }
+
+    public void setListDrivingLicenseProfiles(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
+        this.listDrivingLicenseInfo = listDrivingLicenseInfo;
+    }
+
+    public List<DrivingLicenseInfo> getListDrivingLicenseInfo() {
+        return listDrivingLicenseInfo;
+    }
+
+    public void setListDrivingLicenseInfo(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
+        this.listDrivingLicenseInfo = listDrivingLicenseInfo;
     }
 
 }
