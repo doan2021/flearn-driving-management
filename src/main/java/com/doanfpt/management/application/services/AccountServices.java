@@ -39,9 +39,10 @@ public class AccountServices {
     private RoleRespository roleRespository;
 
     public List<Account> findAllAccount() {
-        List<Account> listUser = accountsRespository.findAll();
-        if (listUser != null) {
-            return listUser;
+    	Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
+        List<Account> listAccount = accountsRespository.findAll(conditions);
+        if (listAccount != null) {
+            return listAccount;
         }
         return new ArrayList<Account>();
     }
@@ -121,7 +122,7 @@ public class AccountServices {
         accountForm.setMiddleName(account.getMiddleName());
         accountForm.setLastName(account.getLastName());
         accountForm.setUserName(account.getUserName());
-        accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+        accountForm.setBirthDay(DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE_TIME));
         accountForm.setNumberPhone(account.getNumberPhone());
         accountForm.setEmail(account.getEmail());
         accountForm.setGender(account.getGender());

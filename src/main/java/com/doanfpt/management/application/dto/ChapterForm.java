@@ -1,6 +1,7 @@
 package com.doanfpt.management.application.dto;
 
 public class ChapterForm {
+	private Long chapterId;
 	private String name;
 	private String content;
 	private String description;
@@ -9,6 +10,14 @@ public class ChapterForm {
 	private String updateBy;
 	private String updateAt;
 
+	public Long getChapterId() {
+		return chapterId;
+	}
+
+	public void setChapterId(Long chapterId) {
+		this.chapterId = chapterId;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -11,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ExamForm;
 import com.doanfpt.management.application.dto.FormSearchExam;
+
 import com.doanfpt.management.application.services.DrivingLicenseServices;
-import com.doanfpt.management.application.services.ExamService;
+import com.doanfpt.management.application.services.ExamServices;
 
 @Controller
 @RequestMapping("/management")
 public class ExamManagementController {
 
     @Autowired
-    private ExamService examService;
+    private ExamServices examService;
     
     @Autowired
     private DrivingLicenseServices drivingLicenseServices;

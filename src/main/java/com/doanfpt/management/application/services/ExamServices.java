@@ -26,7 +26,7 @@ import com.doanfpt.management.application.responsitories.ExamRepository;
 import com.doanfpt.management.application.specification.ExamSpecification;
 
 @Service
-public class ExamService {
+public class ExamServices {
 
     @Autowired
     private ExamRepository examRepository;
@@ -81,9 +81,9 @@ public class ExamService {
         examForm.setDescription(exam.getDescription());
         examForm.setDateRegisExamEnd(DateFormatUtils.format(exam.getDateRegisExamEnd(), Constant.FORMAT_DATE));
         examForm.setDateExam(DateFormatUtils.format(exam.getDateExam(), Constant.FORMAT_DATE));
-        examForm.setUpdateAt(DateFormatUtils.format(exam.getUpdateAt(), Constant.FORMAT_DATE));
+        examForm.setUpdateAt(DateFormatUtils.format(exam.getUpdateAt(), Constant.FORMAT_DATE_TIME));
         examForm.setUpdateBy(exam.getUpdateBy());
-        examForm.setCreateAt(DateFormatUtils.format(exam.getCreateAt(), Constant.FORMAT_DATE));
+        examForm.setCreateAt(DateFormatUtils.format(exam.getCreateAt(), Constant.FORMAT_DATE_TIME));
         examForm.setCreateBy(exam.getCreateBy());
         return examForm;
 
