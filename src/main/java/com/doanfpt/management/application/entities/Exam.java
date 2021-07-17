@@ -37,6 +37,9 @@ public class Exam {
     @Column(name = "date_exam")
     private Date dateExam;
 
+    @Column(name = "status")
+    private Integer status;
+
     @Column(name = "description")
     private String description;
 
@@ -178,4 +181,13 @@ public class Exam {
     public void setDrivingLicense(DrivingLicense drivingLicense) {
         this.drivingLicense = drivingLicense;
     }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
 }

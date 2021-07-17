@@ -1,13 +1,18 @@
 package com.doanfpt.management.application.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "exam_questions")
@@ -24,12 +29,13 @@ public class ExamQuestions {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "list_id_question")
-    private String listIdQuestion;
-    
+    @JsonManagedReference
+    @OneToMany(mappedBy = "examQuestions", cascade = CascadeType.ALL)
+    private List<ExamQuestionsDetail> listExamQuestionsDetail;
+
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
-    
+
     @Column(name = "create_by")
     private String createBy;
 
@@ -74,12 +80,44 @@ public class ExamQuestions {
         this.isDelete = isDelete;
     }
 
-    public String getListIdQuestion() {
-        return listIdQuestion;
+    public List<ExamQuestionsDetail> getListExamQuestionsDetail() {
+        return listExamQuestionsDetail;
     }
 
-    public void setListIdQuestion(String listIdQuestion) {
-        this.listIdQuestion = listIdQuestion;
+    public void setListExamQuestionsDetail(List<ExamQuestionsDetail> listExamQuestionsDetail) {
+        this.listExamQuestionsDetail = listExamQuestionsDetail;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
 }
