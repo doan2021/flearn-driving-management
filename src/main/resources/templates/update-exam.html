@@ -2,147 +2,94 @@
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout/layout-management}">
-<head>
-<title>Sửa kỳ thi</title>
-<meta charset="utf-8" />
-</head>
-<body>
-    <th:block layout:fragment="content">
-        <div class="header bg-primary">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <nav aria-label="breadcrumb"
-                                class="d-none d-md-inline-block">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="#"><i
-                                            class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a
-                                        th:href="@{/management/exam}">Danh sách kỳ thi</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Sửa kỳ thi</li>
-                                </ol>
-                            </nav>
+    <head>
+        <title>Sửa kỳ thi</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="header bg-primary">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-lg-6 col-7">
+                                <nav aria-label="breadcrumb"
+                                    class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item"><a href="#"><i
+                                                class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a
+                                            th:href="@{/management/exam}">Danh sách kỳ thi</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Sửa kỳ thi</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <form th:action="@{/management/update-exam}" th:object="${examUpdateForm}" method="POST">
+                                        <input type="hidden" name="examId" th:value="${examUpdateForm.examId}">
+                                        <div class="card-header bg-transparent row">
+                                            <div class="col-10">
+                                                <h1 class="m-0">Chỉnh sửa kỳ thi</h1>
+                                            </div>
+                                            <div class="col-2 d-flex align-items-center justify-content-end">
+                                                <a th:href="@{${'/management/detail-exam?examId='} + ${examUpdateForm.examId}}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <span class="badge badge-pill badge-info badge-lg" th:text="${examUpdateForm.typeDrivingLicense}"></span>
+                                                </div>
+                                                <div class="col-12 mt-4">
+                                                    <label class="form-control-label" for="exam-name">Tên kỳ thi<span class="text-danger"> *</span></label>
+                                                    <input type="text" class="form-control" placeholder="Tên kỳ thi" th:field="*{name}" maxlength="255" id="exam-name"/>
+                                                </div>
+                                                <div class="col-12 mt-3">
+                                                    <label class="form-control-label" for="exam-name">Mô tả về kỳ thi</label>
+                                                    <textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
+                                                </div>
+                                                <div class="col-6 mt-3">
+                                                    <label class="form-control-label" for="dateRegisExamEnd">Hạn đăng ký<span class="text-danger"> *</span></label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="ni ni-calendar-grid-58"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input class="form-control" placeholder="Hạn đăng ký" type="text" autocomplete="off" th:field="*{strDateRegisExamEnd}" id="dateRegisExamEnd" maxlength="10">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 mt-3">
+                                                    <label class="form-control-label">Ngày thi chính thức</label>
+                                                    <span class="alert-secondary border form-control" th:text="${#dates.format(examUpdateForm.dateExam, 'dd/MM/yyyy')}"></span>
+                                                </div>
+                                                <div class="col-6 mt-3">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Trạng thái</label>
+                                                        <div class="alert alert-success rounded-pill w-25 text-center" th:if="${examUpdateForm.status == 1 && examUpdateForm.dateRegisExamEnd.after(#dates.createNow())}"><strong>ĐANG MỞ</strong></div>
+                                                        <div class="alert alert-danger rounded-pill w-25 text-center" th:if="${examUpdateForm.status == 2}"><strong>ĐÃ HỦY</strong></div>
+                                                        <div class="alert alert-warning rounded-pill w-25 text-center" th:if="${examUpdateForm.dateRegisExamEnd.before(#dates.createNow())}"><strong>HẾT HẠN</strong></div>
+                                                        <div class="alert alert-default rounded-pill w-25 text-center" th:if="${examUpdateForm.status == null}"><strong>KHÔNG XÁC ĐỊNH</strong></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-12 mt-3 text-center">
+                                                    <button class="btn btn-success"><i class="fas fa-save"></i> Lưu</button>
+                                                    <a th:href="@{${'/management/cancel-exam?examId='} + ${examUpdateForm.examId}}" class="btn btn-warning" th:if="${examUpdateForm.status == 1 && examUpdateForm.dateRegisExamEnd.after(#dates.createNow())}"><i class="fas fa-ban"></i> Hủy kì thi</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                                        <div class="col-12">
-                    <div class="card">
-                        <form th:action="@{/management/update-exam}" th:object="${examForm}" method="POST">
-                            <input type="hidden" name="isUpdate" value="true">
-                            <input type="hidden" name="examId" th:value="${examForm.examId}">
-                            <div class="card-header bg-transparent">
-                                <h3>Sửa kỳ thi</h3>
-                                <div class="form-group" style="font-weight: bold;">
-                                    <i style="padding-left: 10px;" class="fas fa-id-badge mt-3"></i>
-                                    ID: <span th:text="${examForm.examId}"/>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12 form-group">
-                                        <p>Tên kỳ thi</p>
-                                        <input type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}" maxlength="255" />
-                                    </div>
-
-                                </div>
-                                <p>Mô tả kỳ thi</p>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
-                                    </div>
-                                </div>
-                                <div
-                                    class="input-daterange datepicker row align-items-center mt-3">
-                                    <div class="col-6">
-                                        <p>Ngày bắt đầu đăng ký</p>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i
-                                                        class="ni ni-calendar-grid-58"></i></span>
-                                                </div>
-                                                <input class="form-control" placeholder="Ngày bắt đầu đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamStart}" maxlength="10">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <p>Ngày kết thúc đăng ký</p>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i
-                                                        class="ni ni-calendar-grid-58"></i></span>
-                                                </div>
-                                                <input class="form-control" placeholder="Ngày kết thúc đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamEnd}" maxlength="10">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="type">Loại bằng</label>
-                                            <span class="text-danger">*</span>
-                                            <select class="form-control" id="type" th:field="*{drivingLicenseId}">
-                                                <option value="">Chọn loại</option>
-                                                <option th:each="drivingLicense : ${listDrivingLicense}" th:text="${drivingLicense.name}" th:value="${drivingLicense.drivingLicenseId}"></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-6">
-                                        <p>Người tạo</p>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"></div>
-                                                <span th:text="*{createBy}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <p>Thời gian tạo</p>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"></div>
-                                                <span th:text="*{createAt}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-6">
-                                        <p>Người cập nhật</p>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"></div>
-                                                <span th:text="*{updateBy}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <p>Thời gian cập nhật</p>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"></div>
-                                                <span th:text="*{updateAt}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-12 mt-3 text-center">
-                                        <input type="submit" value="Sửa kỳ thi" class="btn btn-primary" /> 
-                                        <a th:href="@{/management/exam}" class="btn btn-secondary">Trở về</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </th:block>
-</body>
+        </th:block>
+    </body>
 </html>

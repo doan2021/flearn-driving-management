@@ -28,9 +28,6 @@ public class Exam {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "is_trial")
-    public boolean isTrial;
-
     @Column(name = "date_regis_exam_end")
     private Date dateRegisExamEnd;
 
@@ -84,14 +81,6 @@ public class Exam {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isTrial() {
-        return isTrial;
-    }
-
-    public void setTrial(boolean isTrial) {
-        this.isTrial = isTrial;
     }
 
     public Date getDateRegisExamEnd() {
