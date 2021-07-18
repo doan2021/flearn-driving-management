@@ -6,6 +6,7 @@ import java.util.Map;
 public class ResponeData {
     private String status;
     private String message;
+    private boolean isError;
     private Map<String, Object> result;
 
     public ResponeData() {
@@ -35,9 +36,17 @@ public class ResponeData {
     public void setResult(Map<String, Object> result) {
         this.result = result;
     }
-    
+
     public void putResult(String key, Object value) {
         this.result.put(key, value);
+    }
+
+    public boolean isError() {
+        return isError;
+    }
+
+    public void setError(boolean isError) {
+        this.isError = isError;
     }
 
 }

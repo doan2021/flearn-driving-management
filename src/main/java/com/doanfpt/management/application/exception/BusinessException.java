@@ -1,13 +1,13 @@
 package com.doanfpt.management.application.exception;
 
-public class ApplicationException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
 
-    public ApplicationException(int code, String message) {
+    public BusinessException(int code, String message) {
         super();
         this.code = code;
         this.message = message;

@@ -24,6 +24,6 @@ public class ChapterSpecification {
     }
     
     public static Specification<Chapter> hasUpdateAtTo(String updateAtTo) {
-        return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Chapter_.UPDATE_AT), Common.stringToDate(updateAtTo));
+        return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Chapter_.UPDATE_AT), Common.getLastOfTheDate(Common.stringToDate(updateAtTo)));
     }
 }

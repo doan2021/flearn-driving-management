@@ -956,13 +956,16 @@ var Datepicker = (function() {
 
 	function init($this) {
 		var options = {
+			language: 'en',
+			format: 'dd/mm/yyyy',
 			disableTouchKeyboard: true,
-			autoclose: false
+			autoclose: false,
+			showOnFocus : true,
+			todayHighlight: true,
+			todayBtn: true
 		};
-
 		$this.datepicker(options);
 	}
-
 
 	// Events
 
@@ -974,37 +977,9 @@ var Datepicker = (function() {
 
 })();
 
-//
-// Form control
-//
-
 'use strict';
 
 var noUiSlider = (function() {
-
-	// Variables
-
-	// var $sliderContainer = $('.input-slider-container'),
-	// 		$slider = $('.input-slider'),
-	// 		$sliderId = $slider.attr('id'),
-	// 		$sliderMinValue = $slider.data('range-value-min');
-	// 		$sliderMaxValue = $slider.data('range-value-max');;
-
-
-	// // Methods
-	//
-	// function init($this) {
-	// 	$this.on('focus blur', function(e) {
-  //       $this.parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-  //   }).trigger('blur');
-	// }
-	//
-	//
-	// // Events
-	//
-	// if ($input.length) {
-	// 	init($input);
-	// }
 
 
 
@@ -1058,11 +1033,6 @@ var noUiSlider = (function() {
 	}
 
 })();
-
-//
-// Scrollbar
-//
-
 'use strict';
 
 var Scrollbar = (function() {
