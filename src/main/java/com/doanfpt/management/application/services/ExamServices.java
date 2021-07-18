@@ -27,7 +27,7 @@ import com.doanfpt.management.application.responsitories.ExamRepository;
 import com.doanfpt.management.application.specification.ExamSpecification;
 
 @Service
-public class ExamService {
+public class ExamServices {
 
     @Autowired
     private ExamRepository examRepository;

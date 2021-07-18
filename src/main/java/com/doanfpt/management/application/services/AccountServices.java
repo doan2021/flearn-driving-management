@@ -39,9 +39,10 @@ public class AccountServices {
     private RoleRespository roleRespository;
 
     public List<Account> findAllAccount() {
-        List<Account> listUser = accountsRespository.findAll();
-        if (listUser != null) {
-            return listUser;
+    	Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
+        List<Account> listAccount = accountsRespository.findAll(conditions);
+        if (listAccount != null) {
+            return listAccount;
         }
         return new ArrayList<Account>();
     }

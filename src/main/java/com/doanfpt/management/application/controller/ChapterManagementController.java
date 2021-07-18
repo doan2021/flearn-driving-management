@@ -21,7 +21,7 @@ import com.doanfpt.management.application.validator.ChapterCreateValidator;
 @Controller
 @RequestMapping("/management")
 public class ChapterManagementController {
-    
+
     @Autowired
     ChapterServices chapterServices;
     
@@ -91,4 +91,27 @@ public class ChapterManagementController {
 			return "403";
 		}
     }
+	@PostMapping(value = { "/edit-chapter-detail" })
+	public String editChapterDetail(ChapterForm chapterForm,Model model) {
+        try {
+        	chapterServices.editChapterDetail(chapterForm);
+            model.addAttribute("chapterForm", chapterForm);
+            return "edit-chapter-detail";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "403";
+        }
+	}
+	
+	@GetMapping(value = { "/edit-chapter-detail" })
+	public String editPageChapterDetail(Long chapterId ,Model model) {
+		try {
+			model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterId));
+			return "edit-chapter-detail";
+		} catch (Exception e) {
+			// TODO: handle exception
+			model.addAttribute("error", e.getMessage());
+		}
+		return "403";
+	}
 }
