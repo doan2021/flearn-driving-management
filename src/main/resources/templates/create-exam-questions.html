@@ -28,7 +28,7 @@
 		</div>
 		<div class="container-fluid mt--6">
 			<div class="row">
-				<div class="col-xl-8 order-xl-1">
+				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
 							<div class="row align-items-center">
@@ -38,22 +38,30 @@
 							</div>
 						</div>
 						<div class="card-body px-4">
-							<form th:action="@{/management/save-exam}" th:object="${examForm}" method="POST">
+							<form th:action="@{/management/save-exam}" th:object="${examQuestionsForm}" method="POST">
 								<div class="row">
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label" for="input-first-name">Tên Đề Thi</label>
-											<input  th:field="*{}" type="text" id="input-first-name"
+											<input th:field="*{name}" type="text" id="input-first-name"
 												placeholder="Nhập tên đề thi" class="form-control" name="firstName"
 												value="">
 										</div>
 									</div>
 									<div class="col-lg-6">
 										<div class="form-group">
-											<label class="form-control-label" for="input-first-name">Số lượng câu hỏi</label>
-											<input  type="textarea" id="input-first-name"
-												placeholder="Nhập số lượng câu hỏi" class="form-control" name="description"
-												value="">
+											<label class="form-control-label" for="input-first-name">Số lượng câu
+												hỏi</label>
+											<input type="textarea" id="input-first-name"
+												placeholder="Nhập số lượng câu hỏi" class="form-control"
+												name="description" value="">
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label class="form-control-label" for="input-first-name">Mô Tả</label>
+											<textarea id="input-first-name" placeholder="Mô Tả" class="form-control"
+												th:field="*{description}"></textarea>
 										</div>
 									</div>
 								</div>
@@ -65,6 +73,106 @@
 								</div>
 							</form>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="card">
+						<div class="card-header">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<h3 class="mb-0">Thêm câu hỏi</h3>
+								</div>
+							</div>
+						</div>
+						<table class="table align-items-center table-hover">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col" class="sort text-center" data-sort="name">STT</th>
+									<th scope="col" class="sort text-center" data-sort="name">Nội dung</th>
+									<th scope="col" class="sort text-center" data-sort="budget">Câu hỏi liệt</th>
+									<th scope="col" class="sort text-center" data-sort="status">Cập nhật gần nhất
+									</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody class="list">
+								<tr th:each="question : ${pageContent.content}"
+									th:if="${pageContent.totalElements != 0}">
+									<th>
+										<span class="name mb-0 text-sm" th:text="${question.number}"></span>
+									</th>
+									<td>
+										<span th:text="${question.content}"></span>
+									</td>
+									<td th:if="${question.isParalysis}" class="text-center">
+										<span class="text-success h1"><i class="fas fa-check-circle"></i></span>
+									</td>
+									<td th:unless="${question.isParalysis}">
+									</td>
+									<td class="text-center">
+										<span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="text-success h1"><i class="fas fa-minus"></i></a>
+                                            </td>
+                                 </tr>
+                                <tr th:if="${pageContent.totalElements == 0}">
+                                    <td colspan="4"><span class="text-danger">Không có câu hỏi nào trong chương này!</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+						<div class="card-footer px-4">
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="card">
+						<div class="card-header">
+							<div class="row align-items-center">
+								<div class="col-8">
+									<h3 class="mb-0">Danh sách câu hỏi</h3>
+								</div>
+							</div>
+						</div>
+						<table class="table align-items-center table-hover">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col" class="sort text-center" data-sort="name">STT</th>
+									<th scope="col" class="sort text-center" data-sort="name">Nội dung</th>
+									<th scope="col" class="sort text-center" data-sort="budget">Câu hỏi liệt</th>
+									<th scope="col" class="sort text-center" data-sort="status">Cập nhật gần nhất
+									</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody class="list">
+								<tr th:each="question : ${pageContent.content}"
+									th:if="${pageContent.totalElements != 0}">
+									<th>
+										<span class="name mb-0 text-sm" th:text="${question.number}"></span>
+									</th>
+									<td>
+										<span th:text="${question.content}"></span>
+									</td>
+									<td th:if="${question.isParalysis}" class="text-center">
+										<span class="text-success h1"><i class="fas fa-check-circle"></i></span>
+									</td>
+									<td th:unless="${question.isParalysis}">
+									</td>
+									<td class="text-center">
+										<span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="text-success h1"><i class="fas fa-plus"></i></a>
+                                            </td>
+                                 </tr>
+                                <tr th:if="${pageContent.totalElements == 0}">
+                                    <td colspan="4"><span class="text-danger">Không có câu hỏi nào trong chương này!</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
 					</div>
 				</div>
 			</div>
