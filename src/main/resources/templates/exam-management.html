@@ -140,11 +140,7 @@
                                     <tbody class="list">
                                         <tr th:each="exam : ${pageContent.content}">
                                             <th scope="row" class="text-center" th:text="${exam.examId}"></th>
-<<<<<<< HEAD
                                             <td class="text-center"><a th:href="@{${'/management/update-exam?examId='} + ${exam.examId}}" th:text="${exam.name}"></a></td>
-=======
-                                            <td class="text-center"><a th:href="@{${'/management/edit-exam?examId='} + ${exam.examId}}"><span th:utext="${exam.name}"></span></a></td>
->>>>>>> 86d15a6a4c587d597f92c699d079b5f03f37aed6
                                             <td class="text-center" th:text="${exam.description}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.dateRegisExamEnd, 'dd-MM-yyyy')}"></td>
                                             <td class="text-center" th:text="${#dates.format(exam.dateExam, 'dd-MM-yyyy')}"></td>

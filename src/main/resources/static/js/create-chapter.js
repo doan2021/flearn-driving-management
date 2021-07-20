@@ -5,11 +5,11 @@ $("#create-chapter-form").validate({
 			maxlength: 255
 		},
 		description: {
-			maxlength: 3
+			maxlength: 4000
 		},
 		content: {
 			required: true,
-			maxlength: 3
+			maxlength: 4000
 		},
 	},
 	messages: {
