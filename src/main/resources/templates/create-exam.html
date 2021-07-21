@@ -32,47 +32,32 @@
                                     <input type="hidden" name="isUpdate" value="false">
                                     <div class="row">
                                         <div class="col-12">
-                                            <label for="name">Tên kỳ thi</label>
+                                            <label for="name" class="form-control-label">Tên kỳ thi</label>
                                             <span class="text-danger">*</span>
                                             <input id="name" type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}" maxlength="255"/>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12">
-                                            <label for="description">Mô tả kỳ thi</label>
+                                            <label for="description" class="form-control-label">Mô tả kỳ thi</label>
                                             <textarea id="description" cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
                                         </div>
                                     </div>
-                                    <div class="input-daterange datepicker row align-items-center mt-3">
+                                    <div class="row align-items-center mt-3">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="startDate">Ngày bắt đầu đăng ký</label>
-                                                <span class="text-danger">*</span>
+                                                <label class="form-control-label" for="endDate">Ngày hết hạn đăng ký</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                     </div>
-                                                    <input id="startDate" class="form-control" placeholder="Ngày bắt đầu đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamStart}" maxlength="10" name="startDate">
+                                                    <input class="form-control datepicker" id="endDate" placeholder="Ngày hết hạn đăng ký" type="text" th:field="*{dateRegisExamEnd}">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="endDate">Ngày kết thúc đăng ký</label>
-                                                <span class="text-danger">*</span>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                    </div>
-                                                    <input id="endDate" class="form-control" placeholder="Ngày kết thúc đăng ký" type="text" autocomplete="off" th:field="*{dateRegisExamEnd}" maxlength="10" name="endDate">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="type">Loại bằng</label>
+                                                <label for="type" class="form-control-label">Loại bằng</label>
                                                 <span class="text-danger">*</span>
                                                 <select class="form-control" id="type" th:field="*{drivingLicenseId}">
                                                     <option value="">Chọn loại</option>

@@ -1,23 +1,35 @@
 package com.doanfpt.management.application.dto;
 
+import java.util.List;
+
 public class ExamQuestionsForm {
-    private String content;
-    private boolean isTrue;
 
-    public String getContent() {
-        return content;
-    }
+	private String name;
+	private String description;
+	private List<Long> listIdQuestion;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public boolean isTrue() {
-        return isTrue;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setTrue(boolean isTrue) {
-        this.isTrue = isTrue;
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Long> getListIdQuestion() {
+		return listIdQuestion;
+	}
+
+	public void setListIdQuestion(List<Long> listIdQuestion) {
+		this.listIdQuestion = listIdQuestion;
+	}
 
 }

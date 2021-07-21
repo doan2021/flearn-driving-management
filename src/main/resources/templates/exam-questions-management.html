@@ -89,6 +89,7 @@
 							<thead class="thead-light">
 								<tr>
 									<th scope="col" class="text-center" data-sort="name">Tên đề thi</th>
+									<th scope="col" class="text-center" data-sort="name">Mô Tả</th>
 									<th scope="col" class="text-center" data-sort="budget">Số lượng câu hỏi</th>
 									<th scope="col" class="text-center" data-sort="status">Thời gian cập nhật</th>
 									<th scope="col" class="text-center" data-sort="status">Người cập nhật</th>
@@ -97,9 +98,21 @@
 							</thead>
 							<tbody class="list">
 								<tr th:each="examQuestions : ${examQuestions}">
-									<th>
+									<td>
 										<span th:text="${examQuestions.name}"></span>
-									</th>
+									</td>
+									<td>
+										<span th:text="${examQuestions.description}"></span>
+									</td>
+									<td>
+										<span th:text="${examQuestions.listIdQuestion}"></span>
+									</td>
+									<td>
+										<span th:text="${examQuestions.updateAt}"></span>
+									</td>
+									<td>
+										<span th:text="${examQuestions.updateBy}"></span>
+									</td>
 								</tr>
 							</tbody>
 						</table>

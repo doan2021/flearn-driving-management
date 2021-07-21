@@ -14,10 +14,6 @@ public class ExamSpecification {
 	public static Specification<Exam> isDelete(boolean isDelete) {
 		return (root, query, cb) -> cb.equal(root.get(Exam_.IS_DELETE), isDelete);
 	}
-	
-	public static Specification<Exam> isTrial(boolean isTrial) {
-		return (root, query, cb) -> cb.equal(root.get(Exam_.IS_TRIAL), isTrial);
-	}
 
 	public static Specification<Exam> likeContent(String description) {
 		return (root, query, cb) -> cb.like(root.get(Exam_.DESCRIPTION), "%" + description + "%");
@@ -28,14 +24,14 @@ public class ExamSpecification {
 	}
 
 	public static Specification<Exam> hasDateRegisExamEndTo(String dateRegisExamEndTo) {
-		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_END), Common.stringToDate(dateRegisExamEndTo));
+		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_END), Common.getLastOfTheDate(Common.stringToDate(dateRegisExamEndTo)));
 	}
 
 	public static Specification<Exam> hasUpdateFrom(String updateAtFrom) {
 		return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(Exam_.UPDATE_AT), Common.stringToDate(updateAtFrom));
 	}
 	public static Specification<Exam> hasUpdateTo(String updateAtTo) {
-		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.UPDATE_AT), Common.stringToDate(updateAtTo));
+		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.UPDATE_AT), Common.getLastOfTheDate(Common.stringToDate(updateAtTo)));
 	}
 
 	public static Specification<Exam> hasDescription(String description) {

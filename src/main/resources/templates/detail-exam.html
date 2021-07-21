@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout-management}">
+    <head>
+        <title>Chi tiết kỳ thi</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="header bg-primary">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-lg-6 col-7">
+                                <nav aria-label="breadcrumb"
+                                    class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item">
+                                            <a href="#"><i class="fas fa-home"></i></a>
+                                        </li>
+                                        <li class="breadcrumb-item">
+                                            <a th:href="@{/management/exam}">Danh sách kỳ thi</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-transparent row">
+                                        <div class="col-10">
+                                            <h1 class="m-0">Chi tiết kỳ thi</h1>
+                                        </div>
+                                        <div class="col-2 d-flex align-items-center justify-content-end">
+                                            <a th:href="@{/management/exam}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12 mb-4" th:if="${messageSuccess != null}">
+                                                <div class="alert alert-success" role="alert">
+                                                    <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                    <span class="alert-text"><strong>Thành công!</strong> <span th:text="${messageSuccess}"></span></span>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <span class="badge badge-pill badge-info badge-lg" th:text="${exam.drivingLicense.name}"></span>
+                                            </div>
+                                            <div class="col-12 mt-4">
+                                                <label class="form-control-label" for="exam-name">Tên kỳ thi<span class="text-danger"> *</span></label>
+                                                <div class="alert alert-secondary border" th:text="${exam.name}"></div>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <label class="form-control-label" for="exam-name">Mô tả về kỳ thi</label>
+                                                <div class="alert alert-secondary border" th:text="${exam.description}"></div>
+                                            </div>
+                                            <div class="col-5 mt-3">
+                                                <label class="form-control-label" for="dateRegisExamEnd">Hạn đăng ký<span class="text-danger"> *</span></label>
+                                                <div class="alert alert-secondary border" th:text="${#dates.format(exam.dateRegisExamEnd, 'dd/MM/yyyy' )}"></div>
+                                            </div>
+                                            <div class="col-5 mt-3">
+                                                <label class="form-control-label" for="dateRegisExamEnd">Ngày thi chính thức<span class="text-danger"> *</span></label>
+                                                <div class="alert alert-secondary border" th:text="${#dates.format(exam.dateExam, 'dd/MM/yyyy' )}"></div>
+                                            </div>
+                                            <div class="col-2 mt-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Trạng thái</label>
+                                                    <div class="alert alert-success rounded-pill text-center" th:if="${exam.status == 1 && exam.dateRegisExamEnd.after(#dates.createNow())}"><strong>ĐANG MỞ</strong></div>
+                                                    <div class="alert alert-danger rounded-pill text-center" th:if="${exam.status == 2}"><strong>ĐÃ HỦY</strong></div>
+                                                    <div class="alert alert-warning rounded-pill text-center" th:if="${exam.status != null && exam.dateRegisExamEnd.before(#dates.createNow())}"><strong>HẾT HẠN ĐĂNG KÝ</strong></div>
+                                                    <div class="alert alert-default rounded-pill text-center" th:if="${exam.status == null}"><strong>KHÔNG XÁC ĐỊNH</strong></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-6">
+                                                <label class="form-control-label">Người tạo</label>
+                                                <div class="alert alert-secondary border" th:text="${exam.createBy}"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-control-label">Ngày tạo</label>
+                                                <div class="alert alert-secondary border" th:text="${#dates.format(exam.createAt, 'dd/MM/yyyy HH:mm')}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-6">
+                                                <label class="form-control-label">Người cập nhật</label>
+                                                <div class="alert alert-secondary border" th:text="${exam.updateBy}"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-control-label">Cập nhật lần cuối</label>
+                                                <div class="alert alert-secondary border" th:text="${#dates.format(exam.updateAt, 'dd/MM/yyyy HH:mm')}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 mt-3 text-center">
+                                                <a th:href="@{${'/management/update-exam?examId='} + ${exam.examId}}" class="btn btn-primary" th:if="${exam.status == 1 && exam.dateRegisExamEnd.after(#dates.createNow())}"><i class="fas fa-pen"></i> Chỉnh sửa</a>
+                                                <a th:href="@{${'/management/cancel-exam?examId='} + ${exam.examId}}" class="btn btn-warning" th:if="${exam.status == 1 && exam.dateRegisExamEnd.after(#dates.createNow())}"><i class="fas fa-ban"></i> Hủy kì thi</a>
+                                                <a th:href="@{${'/management/delete-exam?examId='} + ${exam.examId}}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Xóa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/create-question.js}"></script>
+        </th:block>
+    </body>
+</html>

@@ -58,8 +58,13 @@ public class QuestionServices {
         questionsRespository.save(question);
     }
 
-    public List<Question> getAllQuestions() {
-        return questionsRespository.findAll();
+    public Page<Question> getAllQuestions(Integer pageNumber) {
+    	 if (pageNumber == null) {
+             pageNumber = 0;
+         }
+    	Pageable pageable = PageRequest.of(pageNumber, Constant.RECORD_PER_PAGE);
+        return questionsRespository.findAll(pageable);
+        
     }
 
     public Page<Question> getQuestionInChapter(Long chapterId, Integer pageNumber) {

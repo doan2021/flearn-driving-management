@@ -138,8 +138,6 @@ public class AccountsManagementController {
     @GetMapping(value = { "/delete-account" })
     public String viewProfile(Long accountId, Model model) {
         accountsServices.deleteAccount(accountId);
-        model.addAttribute("listAccount", accountsServices.findAllAccount());
-        model.addAttribute("formSearchAccount", new FormSearchAccount());
-        return "account-management";
+        return "redirect:account";
     }
 }

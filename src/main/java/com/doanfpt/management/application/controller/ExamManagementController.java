@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ExamForm;
+import com.doanfpt.management.application.dto.ExamUpdateForm;
 import com.doanfpt.management.application.dto.FormSearchExam;
 
 import com.doanfpt.management.application.services.DrivingLicenseServices;
@@ -47,19 +48,31 @@ public class ExamManagementController {
         model.addAttribute("listDrivingLicense", drivingLicenseServices.findAll());
         return "create-exam";
     }
+    
+    @GetMapping(value = {"/detail-exam"})
+    public String visitDetailExamPage(Long examId, Model model) {
+        model.addAttribute("exam", examService.getOne(examId));
+        return "detail-exam";
+    }
+    
+    @GetMapping(value = { "/cancel-exam" })
+    public String cancelExam(Long examId, Model model) {
+        model.addAttribute("exam", examService.cancelExam(examId));
+        model.addAttribute("messageSuccess", "Hủy bỏ kì thi hoàn tất.");
+        return "detail-exam";
+    }
 
     @GetMapping(value = {"/update-exam"})
     public String visitUpdateExamPage(Long examId, Model model) {
-        model.addAttribute("examForm", examService.getObjectUpdate(examId));
-        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAll());
+        model.addAttribute("examUpdateForm", examService.getObjectUpdate(examId));
         return "update-exam";
     }
 
     @PostMapping(value = { "/update-exam" })
-    public String saveExam(@ModelAttribute("examForm") ExamForm examForm, Model model) {
-        examService.updateExam(examForm);
-        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAll());
-        return "update-exam";
+    public String saveExam(@ModelAttribute("examForm") ExamUpdateForm examUpdateForm, Model model) {
+        model.addAttribute("exam", examService.updateExam(examUpdateForm));
+        model.addAttribute("messageSuccess", "Chỉnh sửa kỳ thi hoàn tất.");
+        return "detail-exam";
     }
 
     @PostMapping(value = { "/search-exam" })
@@ -77,5 +90,10 @@ public class ExamManagementController {
         model.addAttribute(Constant.PAGE_CONTENT_NAME, examService.searchExam(formSearchExam));
         model.addAttribute("formSearchExam", formSearchExam);
         return "exam-management";
+    }
+    
+    @GetMapping(value = {"/review-exam-info"})
+    public String visitReviewExamInfoPage(Model model) {
+        return "review-exam-info";
     }
 }
