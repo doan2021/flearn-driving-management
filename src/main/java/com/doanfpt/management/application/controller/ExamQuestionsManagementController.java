@@ -31,6 +31,12 @@ public class ExamQuestionsManagementController {
 	@Autowired
 	ExamQuestionsServices examQuestionsServices;
 	
+	@Autowired
+	DrivingLicenseServices drivingLicenseServices;
+	
+	@Autowired
+	ChapterServices chapterServices;
+	
 	@GetMapping(value = { "/create-exam-questions" })
 	public String createExamQuestionManagement(Integer pageNumber, Model model) {
 		ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
