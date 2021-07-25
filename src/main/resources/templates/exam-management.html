@@ -35,15 +35,9 @@
                                                 <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
                                             </div>
                                             <input type="hidden" th:field="*{pageNumber}" id="pageNumber">
-                                            <div class="col-6 mt-3">
+                                            <div class="col-12 mt-3">
                                                 <input type="text" class="form-control"
                                                     placeholder="Tên kỳ thi" th:field="*{name}" autofocus>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <input type="text" class="form-control" placeholder="Người cập nhật" th:field="*{updateBy}">
-                                            </div>
-                                            <div class="col-12 mt-3">
-                                                <textarea class="form-control" placeholder="Mô tả" th:field="*{description}"></textarea>
                                             </div>
                                             <div class="col-6 mt-3">
                                                 <div class="input-daterange datepicker row align-items-center">
@@ -100,7 +94,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 mt-3">
+                                            <div class="col-12 mt-4">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
                                                 <a th:href="@{../management/exam}" class="btn btn-info"><i class="fas fa-eraser"></i> Xóa</a>
                                             </div>
@@ -128,15 +122,15 @@
                                 <table class="table align-items-center">
                                     <thead class="thead-light">
                                         <tr class="text-center">
-                                            <th scope="col" class="sort" data-sort="status">ID</th>
-                                            <th scope="col" class="sort" data-sort="budget">Tên kỳ thi</th>
-                                            <th scope="col" class="sort" data-sort="status">Mô tả kỳ thi</th>
-                                            <th scope="col" class="sort" data-sort="status">Hạn đăng ký</th>
-                                            <th scope="col" class="sort" data-sort="status">Ngày thi chính thức</th>
-                                            <th scope="col" class="sort" data-sort="status">Trạng thái</th>
-                                            <th scope="col" class="sort" data-sort="status">Hạng</th>
-                                            <th scope="col" class="sort" data-sort="status">Cập nhật lần cuối</th>
-                                            <th scope="col" class="sort" data-sort="status">Người cập nhật</th>
+                                            <th>ID</th>
+                                            <th>Tên kỳ thi</th>
+                                            <th>Mô tả kỳ thi</th>
+                                            <th>Hạn đăng ký</th>
+                                            <th>Ngày thi chính thức</th>
+                                            <th>Trạng thái</th>
+                                            <th>Hạng</th>
+                                            <th>Cập nhật lần cuối</th>
+                                            <th>Người cập nhật</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list">
@@ -149,7 +143,7 @@
                                             <td class="text-center">
                                                 <span class="badge badge-pill badge-success badge-lg" th:if="${exam.status == 1 && exam.dateRegisExamEnd.after(#dates.createNow())}"><strong>ĐANG MỞ</strong></span>
                                                 <span class="badge badge-pill badge-danger badge-lg" th:if="${exam.status == 2}"><strong>ĐÃ HỦY</strong></span>
-                                                <span class="badge badge-pill badge-warning badge-lg" th:if="${exam.status != null && exam.dateRegisExamEnd.before(#dates.createNow())}"><strong>HẾT HẠN ĐĂNG KÝ</strong></span>
+                                                <span class="badge badge-pill badge-warning badge-lg" th:if="${exam.status != null && exam.status != 2 && exam.dateRegisExamEnd.before(#dates.createNow())}"><strong>HẾT HẠN ĐĂNG KÝ</strong></span>
                                                 <span class="badge badge-pill badge-primary badge-lg" th:if="${exam.status == null}"><strong>KHÔNG XÁC ĐỊNH</strong></span>
                                             </td>
                                             <td class="text-center">

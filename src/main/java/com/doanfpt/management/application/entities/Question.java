@@ -33,7 +33,7 @@ public class Question {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "isParalysis", columnDefinition = "boolean default false")
+    @Column(name = "is_paralysis", columnDefinition = "boolean default false")
     private boolean isParalysis;
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")

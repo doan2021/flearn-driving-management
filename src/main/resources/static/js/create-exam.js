@@ -1,57 +1,57 @@
 $("#create-exam-form").validate({
-	rules: {
-		name: {
-			required: true,
-			maxlength: 255
-		},
-		description: {
-			maxlength: 4000
-		},
-		startDate: {
-			required: true,
-			maxlength: 10
-		},
-		endDate: {
-			required: true,
-			maxlength: 10
-		}
-	},
-	messages: {
-		name: {
-			required : "Chưa điền tên kỳ thi, vui lòng kiểm tra lại!",
-			maxlength: "Vui lòng nhập dưới 255 ký tự!"
-		},
-		description: {
-			maxlength: "Mô tả không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
-		},
-		startDate: {
-			required : "Chưa chọn ngày bắt đầu đăng ký, vui lòng kiểm tra lại!",
-		},
-		endDate: {
-			required: "Chưa chọn ngày kết thúc đăng ký, vui lòng kiểm tra lại!",
-		}
-	},
-	
-	errorClass: 'text-danger',
-	highlight: function(element) {
-		$(element).addClass('is-invalid');
-	},
-	unhighlight: function(element) {
-		$(element).removeClass('is-invalid');
-	},
-	errorPlacement: function (error, element) {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 255
+        },
+        description: {
+            maxlength: 4000
+        },
+        dateRegisExamEnd: {
+            required: true,
+            maxlength: 10
+        },
+        drivingLicenseId: {
+            required: true
+        }
+    },
+    messages: {
+        name: {
+            required : "Vui lòng điền tên kỳ thi!",
+            maxlength: "Vui lòng nhập dưới 255 ký tự!"
+        },
+        description: {
+            maxlength: "Mô tả không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
+        },
+        dateRegisExamEnd: {
+            required: "Vui lòng chọn ngày hết hạn đăng ký!"
+        },
+        drivingLicenseId: {
+            required: "Vui lòng chọn loại bằng!"
+        }
+    },
+    errorClass: 'text-danger',
+    highlight: function(element) {
+        $(element).addClass('is-invalid');
+    },
+    unhighlight: function(element) {
+        $(element).removeClass('is-invalid');
+    },
+    errorPlacement: function (error, element) {
         switch (element.attr("name")) {
-        case 'startDay':
-            error.insertAfter($("#startDay"));
+        case 'dateRegisExamEnd':
+            error.insertAfter($("#dateRegisExamEndArea"));
             break;
-        case 'endtDay':
-            error.insertAfter($("#endDay"));
+        case 'typeDrivingLicense':
+            error.insertAfter($("#typeDrivingLicense"));
             break;
         default:
             error.insertAfter(element);
         }
     },
-	submitHandler: function(form) {
-		form.submit();
-	}
+    submitHandler: function(form) {
+        if (confirm("Xác nhận tạo mới kỳ thi!")) {
+            form.submit();
+        }
+    }
 });

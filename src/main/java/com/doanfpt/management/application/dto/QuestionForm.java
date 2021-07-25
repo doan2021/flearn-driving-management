@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class QuestionForm {
     private Integer number;
     private String content;
+    private Boolean isParalysis;
     private List<AnswerForm> listAnswers;
     private MultipartFile[] images;
     private Long chapterId;
@@ -49,6 +50,14 @@ public class QuestionForm {
 
     public void setChapterId(Long chapterId) {
         this.chapterId = chapterId;
+    }
+
+    public Boolean getIsParalysis() {
+        return isParalysis;
+    }
+
+    public void setIsParalysis(Boolean isParalysis) {
+        this.isParalysis = isParalysis;
     }
 
 }

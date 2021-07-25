@@ -3,12 +3,12 @@
     layout:decorate="~{layout/layout-management}">
     <head>
         <meta charset="utf-8"/>
-        <title>Learn</title>
+        <title>Tạo câu hỏi</title>
         <link rel="stylesheet" th:href="@{../css/create-question.css}">
     </head>
     <body>
         <th:block layout:fragment="content">
-            <div class="header bg-primary pb-5">
+            <div class="header bg-primary">
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="row align-items-center py-4">
@@ -23,12 +23,21 @@
                                 </nav>
                             </div>
                             <div class="col-12">
-                                <div class="card card-stats">
-                                    <!-- Card body -->
+                                <div class="card card-stats m-0">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <h2 class="m-0">Tạo câu hỏi</h2>
+                                            </div>
+                                            <div class="col-2 d-flex align-items-center justify-content-end">
+                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <h1 class="display-2" th:text="|Chương ${chapter.name}|">Hello Jesse</h1>
+                                                <h1 th:text="|Chương ${chapter.name}|"></h1>
                                                 <p class="mt-0" th:text="${chapter.content}"></p>
                                             </div>
                                         </div>
@@ -38,99 +47,121 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="container-fluid mt--6">
-                <form class="row p-0 mb-3" th:action="@{/management/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
-                    <div class="col-7">
-                        <div class="card">
-                            <div class="card-header bg-transparent">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3 class="mb-0">Tạo câu hỏi</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="numberQuestion">Số thứ tự</label>
-                                                    <input type="text" class="form-control" id="numberQuestion" placeholder="Số thứ tự" th:field="*{number}"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="contentQuestion">Nội dung câu hỏi</label>
-                                                    <textarea class="form-control" id="contentQuestion" rows="3" th:field="*{content}" placeholder="Nội dung câu hỏi"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="numberQuestion">Upload ảnh</label>
-                                            <input class="form-control d-none" type="file" id="upload" th:field="*{images}" accept="image/*" multiple>
-                                            <label class="image-area mb-3 d-block" for="upload" style="height:150px">
-                                                <img alt="" class="img-fluid">
-                                            </label>
+                <div class="container-fluid">
+                    <form class="row p-0 mb-3" th:action="@{/management/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data" id="formCreateQuestion">
+                        <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
+                        <div class="col-7">
+                            <div class="card">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3 class="m-0">Câu hỏi</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 mt-3 text-center">
-                                        <button type="submit" class="btn btn-primary w-25">Tạo</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="card">
-                            <div class="card-header bg-transparent">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h3 class="mb-0">Câu trả lời</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row p-0 mb-3">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" placeholder="Đáp án 1">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="numberQuestion">Số thứ tự <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="numberQuestion" placeholder="Số thứ tự" th:field="*{number}"/>
                                             </div>
-                                            <div class="col-3 d-flex align-items-center justify-content-center">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="answer1">
-                                                    <label class="custom-control-label" for="answer1">Đáp án đúng</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="numberQuestion">Câu liệt</label>
+                                                <div class="custom-control custom-checkbox-question">
+                                                    <input type="checkbox" class="custom-control-input" id="isParalysis" th:field="*{isParalysis}">
+                                                    <label class="custom-control-label" for="isParalysis"></label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mt-4">
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" placeholder="Đáp án 2">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="contentQuestion">Nội dung câu hỏi <span class="text-danger">*</span></label>
+                                                <textarea class="form-control" id="contentQuestion" rows="3" th:field="*{content}" placeholder="Nội dung câu hỏi"></textarea>
                                             </div>
-                                            <div class="col-3 d-flex align-items-center justify-content-center">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="answer2">
-                                                    <label class="custom-control-label" for="answer2">Đáp án đúng</label>
-                                                </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Hình ảnh</label>
+                                                <input id="images-question" type="file" class="file" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 text-center mt-4">
-                                        <button type="button" class="btn btn-danger rounded-pill w-25"><i class="fas fa-trash-alt"></i> Xóa</button>
-                                        <button type="button" class="btn btn-success rounded-pill w-25"><i class="fas fa-plus"></i> Thêm</button>
+                                    <div class="row">
+                                        <div class="col-12 mt-3 text-center">
+                                            <button type="submit" class="btn btn-primary">Tạo</button>
+                                            <a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}" class="btn btn-info">Làm mới</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="col-5">
+                            <div class="card">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3 class="mb-0">Đáp án <span class="text-danger">(tổi thiểu 2 tối đa 10)</span></h3>
+                                            <span class="text-danger d-none" id="errorCheckIsTrue">Vui lòng chọn tối thiểu 1 đáp án đúng!</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" id="content-answer" th:if="${questionForm.listAnswers != null && questionForm.listAnswers.size != 0}">
+                                    <div class="row answer" th:each="answer,stat : ${questionForm.listAnswers}" th:classappend ="${stat.index == 0} ? '' : 'mt-4'">
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" th:placeholder="|Đáp án ${stat.index + 1}|" th:field="*{listAnswers[__${stat.index}__].content}" th:if="${stat.index < 2}">
+                                            <div class="input-group" th:unless="${stat.index < 2}" th:id="|errorPlace${stat.index}|">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-outline-danger" type="button" id="deleteAnswer"><i class="fas fa-trash-alt"></i></button>
+                                                </div>
+                                                <input type="text" class="form-control" th:placeholder="|Đáp án ${stat.index + 1}|" th:field="*{listAnswers[__${stat.index}__].content}">
+                                            </div>
+                                        </div>
+                                        <div class="col-3 d-flex align-items-center justify-content-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" th:id="|answer${stat.index}|" th:field="*{listAnswers[__${stat.index}__].true}">
+                                                <label class="custom-control-label" th:for="|answer${stat.index}|">Đáp án đúng</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" id="content-answer" th:unless="${questionForm.listAnswers != null && questionForm.listAnswers.size != 0}">
+                                    <div class="row answer">
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" placeholder="Đáp án 1" th:field="*{listAnswers[0].content}">
+                                        </div>
+                                        <div class="col-3 d-flex align-items-center justify-content-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="answer0" th:field="*{listAnswers[0].true}">
+                                                <label class="custom-control-label" for="answer0">Đáp án đúng</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4 answer">
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" placeholder="Đáp án 2" th:field="*{listAnswers[1].content}">
+                                        </div>
+                                        <div class="col-3 d-flex align-items-center justify-content-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="answer1" th:field="*{listAnswers[1].true}">
+                                                <label class="custom-control-label" for="answer1">Đáp án đúng</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-success" id="addAnswer"><i class="fas fa-plus"></i> Thêm đáp án</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </th:block>
         <th:block layout:fragment="script">
