@@ -9,9 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -47,6 +50,11 @@ public class ExamQuestions {
 
     @Column(name = "update_at")
     private Date updateAt;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "driving_license_id")
+    private DrivingLicense drivingLicense;
 
     public Long getExamQuestionsId() {
         return examQuestionsId;
@@ -118,6 +126,14 @@ public class ExamQuestions {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public DrivingLicense getDrivingLicense() {
+        return drivingLicense;
+    }
+
+    public void setDrivingLicense(DrivingLicense drivingLicense) {
+        this.drivingLicense = drivingLicense;
     }
 
 }

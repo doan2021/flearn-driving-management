@@ -36,8 +36,8 @@ public class QuestionManagementController {
     
     @PostMapping(value = {"/save-question"})
     public String createNewQuestion(@ModelAttribute QuestionForm questionForm, Model model) {
-        questionServices.createNewQuestion(questionForm);
-        model.addAttribute("questionForm", new QuestionForm());
+//        questionServices.createNewQuestion(questionForm);
+        model.addAttribute("questionForm", questionForm);
         model.addAttribute("chapter", chapterServices.getChapterDetail(questionForm.getChapterId()));
         return "create-question";
     }

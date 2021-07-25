@@ -1,0 +1,17 @@
+.custom-checkbox-question .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: transparent!important;
+    background-color: transparent!important;
+}
+
+.custom-checkbox-question .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: url(/assets/svg/check-circle-solid.svg);
+}
+
+.custom-checkbox-question .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+    border: none!important;
+    fill: green;
+}
+
+.custom-checkbox-question .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+    border: none!important;
+}
