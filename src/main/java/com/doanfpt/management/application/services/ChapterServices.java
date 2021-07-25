@@ -1,5 +1,7 @@
 package com.doanfpt.management.application.services;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,35 +28,39 @@ public class ChapterServices {
     public Chapter getChapterDetail(Long chapterId) {
         return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
     }
+    
+    public List<Chapter> findAll() {
+        return chapterResponsitory.findByIsDeleteOrderByName(false);
+    }
 
     public boolean saveChapter(ChapterForm chapterForm) {
-    	if (chapterForm == null) {
-			return false;
-		}
-    	Chapter chapter = new Chapter();
-    	chapter.setName(chapterForm.getName());
-    	chapter.setDescription(chapterForm.getDescription());
-    	chapter.setContent(chapterForm.getContent());
-    	chapter.setCreateBy(Common.getUsernameLogin());
-    	chapter.setCreateAt(Common.getSystemDate());
-    	chapter.setUpdateBy(Common.getUsernameLogin());
-    	chapter.setUpdateAt(Common.getSystemDate());
-    	if (chapterResponsitory.save(chapter) == null) {
-			return false;
-		} else {
-			return true;
-		}
-    }
-    
-    public void editChapterDetail(ChapterForm chapterForm) {
-		Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(), false);
-		chapter.setName(chapterForm.getName());
-		chapter.setContent(chapterForm.getContent());
-		chapter.setDescription(chapterForm.getDescription());
-		chapter.setUpdateBy(Common.getUsernameLogin());
+        if (chapterForm == null) {
+            return false;
+        }
+        Chapter chapter = new Chapter();
+        chapter.setName(chapterForm.getName());
+        chapter.setDescription(chapterForm.getDescription());
+        chapter.setContent(chapterForm.getContent());
+        chapter.setCreateBy(Common.getUsernameLogin());
+        chapter.setCreateAt(Common.getSystemDate());
+        chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
-		chapterResponsitory.save(chapter);
-	}
+        if (chapterResponsitory.save(chapter) == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void editChapterDetail(ChapterForm chapterForm) {
+        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(), false);
+        chapter.setName(chapterForm.getName());
+        chapter.setContent(chapterForm.getContent());
+        chapter.setDescription(chapterForm.getDescription());
+        chapter.setUpdateBy(Common.getUsernameLogin());
+        chapter.setUpdateAt(Common.getSystemDate());
+        chapterResponsitory.save(chapter);
+    }
 
     public Page<Chapter> getAllChapter(Integer pageNumber) {
         if (pageNumber == null) {
@@ -93,16 +99,15 @@ public class ChapterServices {
         return listChapter;
     }
 
-	public Object getObjectUpdate(Long chapterId) {
-		// TODO Auto-generated method stub
-		ChapterForm chapterForm = new ChapterForm();
-		Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
-		chapterForm.setName(chapter.getName());
-		chapterForm.setChapterId(chapter.getChapterId());
-		chapterForm.setDescription(chapter.getDescription());
-		chapterForm.setContent(chapter.getContent());
-		chapterForm.setUpdateAt(DateFormatUtils.format(chapter.getUpdateAt(), Constant.FORMAT_DATE_TIME));
-		chapterForm.setUpdateBy(Common.getUsernameLogin());
-		return chapterForm;
-	}
+    public Object getObjectUpdate(Long chapterId) {
+        ChapterForm chapterForm = new ChapterForm();
+        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+        chapterForm.setName(chapter.getName());
+        chapterForm.setChapterId(chapter.getChapterId());
+        chapterForm.setDescription(chapter.getDescription());
+        chapterForm.setContent(chapter.getContent());
+        chapterForm.setUpdateAt(DateFormatUtils.format(chapter.getUpdateAt(), Constant.FORMAT_DATE_TIME));
+        chapterForm.setUpdateBy(Common.getUsernameLogin());
+        return chapterForm;
+    }
 }

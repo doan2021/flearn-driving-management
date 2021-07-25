@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="card">
-                                    <form th:action="@{/management/update-exam}" th:object="${examUpdateForm}" method="POST">
+                                    <form th:action="@{/management/update-exam}" th:object="${examUpdateForm}" method="POST" id="update-exam-form">
                                         <input type="hidden" name="examId" th:value="${examUpdateForm.examId}">
                                         <div class="card-header bg-transparent row">
                                             <div class="col-10">
@@ -47,19 +47,17 @@
                                                 </div>
                                                 <div class="col-12 mt-3">
                                                     <label class="form-control-label" for="exam-name">Mô tả về kỳ thi</label>
-                                                    <textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
+                                                    <textarea cols="5" class="form-control" placeholder="Mô tả kỳ thi" th:field="*{description}" maxlength="4000"></textarea>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label class="form-control-label" for="dateRegisExamEnd">Hạn đăng ký<span class="text-danger"> *</span></label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                    <i class="ni ni-calendar-grid-58"></i>
-                                                                </span>
-                                                            </div>
-                                                            <input class="form-control" placeholder="Hạn đăng ký" type="text" autocomplete="off" th:field="*{strDateRegisExamEnd}" id="dateRegisExamEnd" maxlength="10">
+                                                    <div class="input-group" id="dateRegisExamEndArea">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="ni ni-calendar-grid-58"></i>
+                                                            </span>
                                                         </div>
+                                                        <input class="form-control datepicker" placeholder="Hạn đăng ký" type="text" autocomplete="off" th:field="*{strDateRegisExamEnd}" id="dateRegisExamEnd" maxlength="10">
                                                     </div>
                                                 </div>
                                                 <div class="col-6 mt-3">
@@ -79,7 +77,7 @@
                                             <div class="row mt-3">
                                                 <div class="col-12 mt-3 text-center">
                                                     <button class="btn btn-success"><i class="fas fa-save"></i> Lưu</button>
-                                                    <a th:href="@{${'/management/cancel-exam?examId='} + ${examUpdateForm.examId}}" class="btn btn-warning" th:if="${examUpdateForm.status == 1 && examUpdateForm.dateRegisExamEnd.after(#dates.createNow())}"><i class="fas fa-ban"></i> Hủy kì thi</a>
+                                                    <button class="btn btn-warning" th:if="${examUpdateForm.status == 1 && examUpdateForm.dateRegisExamEnd.after(#dates.createNow())}" onclick="cancelExam()"><i class="fas fa-ban"></i> Hủy kì thi</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,6 +88,12 @@
                     </div>
                 </div>
             </div>
+            <form th:action="@{/management/cancel-exam}" method="POST" id="cancel-exam-form">
+                <input type="hidden" name="examId" th:value="${examUpdateForm.examId}">
+            </form>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/update-exam.js}"></script>
         </th:block>
     </body>
 </html>

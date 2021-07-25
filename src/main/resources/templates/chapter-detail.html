@@ -33,7 +33,7 @@
                         <div class="card-header bg-transparent">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="mb-0">Chi tiết chương</h3>
+                                    <h2 class="m-0">Chi tiết chương</h2>
                                 </div>
                                 <div class="col-6">
                                     <a th:href="@{${'/management/edit-chapter-detail?chapterId='} + ${chapter.chapterId}}"
@@ -57,7 +57,7 @@
                                     <span style="font-weight: bold;" >Người cập nhật : </span><span th:text="|${chapter.updateBy}|"></span>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <span style="font-weight: bold;">Thời gian cập nhật : </span><span th:text="${chapter.updateAt}"></span>
+                                    <span style="font-weight: bold;">Thời gian cập nhật : </span><span th:text="${#dates.format(chapter.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
                                 </div>
                             </div>
                         </div>
@@ -68,12 +68,12 @@
                         <div class="card-header bg-transparent">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="mb-0">Câu hỏi trong chương</h3>
+                                    <h2 class="m-0">Câu hỏi thuộc chương</h2>
                                 </div>
                                 <div class="col-6">
-                                    <a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}"
-                                        class="btn btn-sm btn-default float-right"><i class="fas fa-plus"></i> Tạo câu
-                                        hỏi</a>
+                                    <a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-success float-right">
+                                        <i class="fas fa-plus"></i> Câu hỏi mới
+                                    </a>
                                 </div>
                             </div>
                         </div>

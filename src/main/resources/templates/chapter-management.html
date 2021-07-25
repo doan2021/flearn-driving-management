@@ -86,38 +86,33 @@
                                 <table class="table align-items-center table-flush">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col" class="sort" data-sort="name">Tên chương</th>
-                                            <th scope="col" class="sort" data-sort="budget">Nội dung</th>
-                                            <th scope="col" class="sort" data-sort="status">Mô tả</th>
-                                            <th scope="col" class="sort" data-sort="status">Nguoi tao</th>
-                                            <th scope="col" class="sort" data-sort="status">Thoi gian tao</th>
-                                            <th scope="col" class="sort" data-sort="status">Nguoi cap nhat</th>
-                                            <th scope="col" class="sort" data-sort="status">Thoi gian cap nhat</th>
-                                            <th scope="col"></th>
+                                            <th>Tên chương</th>
+                                            <th>Nội dung</th>
+                                            <th>Mô tả</th>
+                                            <th>Số lượng câu hỏi</th>
+                                            <th>Cập nhật gần nhất</th>
+                                            <th>Người cập nhật</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list">
                                         <tr th:each="chapter : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
-                                            <th>
-                                                <span class="name mb-0 text-sm" th:text="${chapter.name}"></span>
+                                            <th class="text-center">
+                                                <span class="name mb-0 text-sm" th:text="|Chương ${chapter.name}|"></span>
                                             </th>
-                                            <td>
+                                            <td class="text-center">
                                                 <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="${chapter.content}"></a>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <span th:text="${chapter.description}"></span>
                                             </td>
-                                            <td>
-                                                <span th:text="${chapter.createBy}"></span>
+                                            <td class="text-center">
+                                                <span th:text="${chapter.listQuestion.size}"></span>
                                             </td>
-                                            <td>
-                                                <span th:text="${chapter.createAt}"></span>
+                                            <td class="text-center">
+                                                <span th:text="${#dates.format(chapter.updateAt, 'dd/MM/yyyy HH:mm')}"></span>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <span th:text="${chapter.updateBy}"></span>
-                                            </td>
-                                            <td>
-                                                <span th:text="${chapter.updateAt}"></span>
                                             </td>
                                         </tr>
                                         <tr th:if="${pageContent.totalElements == 0}">

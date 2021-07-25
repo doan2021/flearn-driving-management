@@ -10,6 +10,8 @@
         <!-- Icons -->
         <link rel="stylesheet" th:href="@{../assets/vendor/nucleo/css/nucleo.css}" type="text/css">
         <link rel="stylesheet" th:href="@{../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css}" type="text/css">
+        <!-- File input -->
+        <link rel="stylesheet" th:href="@{../assets/css/fileinput.min.css}" type="text/css">
         <link rel="stylesheet" th:href="@{../assets/css/argon.css?v=1.2.0}" type="text/css">
         <link rel="stylesheet" th:href="@{../css/common.css}" type="text/css">
     </head>
@@ -46,7 +48,11 @@
                                     <span class="nav-link-text">Quản lý chương</span>
                                 </a>
                             </li>
-                            
+                        </ul>
+                        <!-- Divider -->
+                        <hr class="my-3">
+                        <!-- Navigation -->
+                        <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{../management/exam}">
                                     <i class="fas fa-diagnoses text-warning mr-2" style="font-size: 20px"></i>
@@ -60,16 +66,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{../management/exam-questions-management}">
-                                    <i class="fas fa-diagnoses text-warning mr-2" style="font-size: 20px"></i>
+                                <a class="nav-link" th:href="@{../management/exam-questions}">
+                                    <i class="fas fa-file-alt text-warning mr-2" style="font-size: 20px"></i>
                                     <span class="nav-link-text">Quản lý đề thi</span>
                                 </a>
                             </li>
-                        </ul>
-                        <!-- Divider -->
-                        <hr class="my-3">
-                        <!-- Navigation -->
-                        <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
                                 <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
                                     <i class="ni ni-spaceship"></i>
@@ -152,7 +153,12 @@
         </div>
         <script th:src="@{../assets/vendor/jquery/dist/jquery.min.js}"></script>
         <script th:src="@{../assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+        <script th:src="@{../assets/js/plugins/piexif.min.js}"></script>
+        <script th:src="@{../assets/js/plugins/sortable.min.js}"></script>
         <script th:src="@{../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{../assets/js/fileinput.min.js}"></script>
+        <script th:src="@{../assets/themes/fas/theme.js}"></script>
+        <script th:src="@{../assets/js/locales/vi.js}"></script>
         <script th:src="@{../assets/vendor/js-cookie/js.cookie.js}"></script>
         <script th:src="@{../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js}"></script>
         <script th:src="@{../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js}"></script>

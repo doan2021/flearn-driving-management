@@ -26,7 +26,10 @@ public class DrivingLicense {
     private Double price;
 
     @Column(name = "number_question")
-    private Double numberQuestion;
+    private Integer numberQuestion;
+
+    @Column(name = "number_question_correct")
+    private Integer numberQuestionCorrect;
 
     @Column(name = "exam_minutes")
     private Integer examMinutes;
@@ -36,6 +39,9 @@ public class DrivingLicense {
 
     @Column(name = "number_year_expires")
     private Integer numberYearExpires;
+
+    @Column(name = "number_question_in_chapter", columnDefinition="TEXT")
+    private String numberQuestionInChapter;
 
     public Long getDrivingLicenseId() {
         return drivingLicenseId;
@@ -77,14 +83,6 @@ public class DrivingLicense {
         this.price = price;
     }
 
-    public Double getNumberQuestion() {
-        return numberQuestion;
-    }
-
-    public void setNumberQuestion(Double numberQuestion) {
-        this.numberQuestion = numberQuestion;
-    }
-
     public Integer getExamMinutes() {
         return examMinutes;
     }
@@ -99,6 +97,30 @@ public class DrivingLicense {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getNumberQuestion() {
+        return numberQuestion;
+    }
+
+    public void setNumberQuestion(Integer numberQuestion) {
+        this.numberQuestion = numberQuestion;
+    }
+
+    public Integer getNumberQuestionCorrect() {
+        return numberQuestionCorrect;
+    }
+
+    public void setNumberQuestionCorrect(Integer numberQuestionCorrect) {
+        this.numberQuestionCorrect = numberQuestionCorrect;
+    }
+
+    public String getNumberQuestionInChapter() {
+        return numberQuestionInChapter;
+    }
+
+    public void setNumberQuestionInChapter(String numberQuestionInChapter) {
+        this.numberQuestionInChapter = numberQuestionInChapter;
     }
 
 }

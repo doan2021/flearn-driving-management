@@ -17,15 +17,20 @@
                       <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                           <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Quản lý kỳ thi</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Tạo kỳ thi</li>
+                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Danh sách kỳ thi</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Kỳ thi mới</li>
                         </ol>
                       </nav>
                     </div>
                     <div class=" col-12">
                         <div class="card">
-                            <div class="card-header bg-transparent">
-                                <h3 class="mb-0">Tạo kỳ thi</h3>
+                            <div class="card-header bg-transparent row">
+                                <div class="col-10">
+                                    <h1 class="m-0">Kỳ thi mới</h1>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <a th:href="@{/management/exam}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <form th:action="@{/management/create-exam}" th:object="${examForm}" method="POST" id="create-exam-form">
@@ -34,33 +39,32 @@
                                         <div class="col-12">
                                             <label for="name" class="form-control-label">Tên kỳ thi</label>
                                             <span class="text-danger">*</span>
-                                            <input id="name" type="text" class="form-control" placeholder="Tên kỳ thi" name="name" th:field="*{name}" maxlength="255"/>
+                                            <input id="name" type="text" class="form-control" placeholder="Tên kỳ thi" th:field="*{name}" maxlength="255"/>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12">
                                             <label for="description" class="form-control-label">Mô tả kỳ thi</label>
-                                            <textarea id="description" cols="5" class="form-control" placeholder="Mô tả kỳ thi" name="description" th:field="*{description}" maxlength="4000"></textarea>
+                                            <textarea id="description" cols="5" class="form-control" placeholder="Mô tả kỳ thi" th:field="*{description}" maxlength="4000"></textarea>
                                         </div>
                                     </div>
                                     <div class="row align-items-center mt-3">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="endDate">Ngày hết hạn đăng ký</label>
-                                                <div class="input-group">
+                                                <label class="form-control-label" for="dateRegisExamEnd">Hạn đăng ký <span class="text-danger">*</span></label>
+                                                <div class="input-group" id="dateRegisExamEndArea">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                     </div>
-                                                    <input class="form-control datepicker" id="endDate" placeholder="Ngày hết hạn đăng ký" type="text" th:field="*{dateRegisExamEnd}">
+                                                    <input class="form-control datepicker" id="dateRegisExamEnd" placeholder="Hạn đăng ký" type="text" th:field="*{dateRegisExamEnd}">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="type" class="form-control-label">Loại bằng</label>
-                                                <span class="text-danger">*</span>
-                                                <select class="form-control" id="type" th:field="*{drivingLicenseId}">
-                                                    <option value="">Chọn loại</option>
+                                                <label for="typeDrivingLicense" class="form-control-label">Loại bằng <span class="text-danger">*</span></label>
+                                                <select class="form-control" id="typeDrivingLicense" th:field="*{drivingLicenseId}">
+                                                    <option value="">----- Chọn loại -----</option>
                                                     <option th:each="drivingLicense : ${listDrivingLicense}" th:text="${drivingLicense.name}" th:value="${drivingLicense.drivingLicenseId}"></option>
                                                 </select>
                                             </div>
@@ -68,8 +72,8 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12 mt-3 text-center">
-                                            <input type="submit" value="Tạo kỳ thi" class="btn btn-primary"/>
-                                            <a th:href="@{/management/create-exam}" class="btn btn-secondary">Làm mới</a>
+                                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Lưu</button>
+                                            <a th:href="@{/management/create-exam}" class="btn btn-secondary"><i class="fas fa-eraser"></i> Làm mới</a>
                                         </div>
                                     </div>
                                 </form>
