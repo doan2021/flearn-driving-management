@@ -22,53 +22,45 @@ import com.doanfpt.management.application.services.QuestionServices;
 @RequestMapping("/management")
 public class ExamQuestionsManagementController {
 
-	@Autowired
-	ExamServices examServices;
-	
-	@Autowired
-	QuestionServices questionServices;
-	
-	@Autowired
-	ExamQuestionsServices examQuestionsServices;
-	
-	@Autowired
-	DrivingLicenseServices drivingLicenseServices;
-	
-	@Autowired
-	ChapterServices chapterServices;
-	
-	@GetMapping(value = { "/create-exam-questions" })
-	public String createExamQuestionManagement(Integer pageNumber, Model model) {
-		ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
-		model.addAttribute("examQuestionsForm", examQuestionsForm);
-		model.addAttribute(Constant.PAGE_CONTENT_NAME, questionServices.getAllQuestions(pageNumber));
-		return "create-exam-questions";
-	}
-	
+    @Autowired
+    ExamServices examServices;
+
+    @Autowired
+    QuestionServices questionServices;
+
+    @Autowired
+    ExamQuestionsServices examQuestionsServices;
+
+    @Autowired
+    DrivingLicenseServices drivingLicenseServices;
+
+    @Autowired
+    ChapterServices chapterServices;
+
+    @GetMapping(value = { "/create-exam-questions" })
+    public String visitCreateExamQuestionPage(Integer pageNumber, Model model) {
+        ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
+        model.addAttribute("examQuestionsForm", examQuestionsForm);
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, questionServices.getAllQuestions(pageNumber));
+        return "create-exam-questions";
+    }
+
     @GetMapping(value = { "/exam-questions" })
-    public String visitExamQuestionsForm(FormSearchExamQuestions formSearchExamQuestions, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME, examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
+    public String visitExamQuestionManagementPage(FormSearchExamQuestions formSearchExamQuestions, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME,
+                examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
         model.addAttribute("formSearchExamQuestions", new FormSearchExamQuestions());
         return "exam-questions-management";
     }
-    
+
     @PostMapping(value = { "/search-exam-questions" })
     public String searchExamQuestions(FormSearchExamQuestions formSearchExamQuestions, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME, examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
+        model.addAttribute(Constant.PAGE_CONTENT_NAME,
+                examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
         model.addAttribute("formSearchExamQuestions", formSearchExamQuestions);
         return "exam-questions-management";
     }
 
-    @GetMapping(value = { "/exam-questions" })
-    public String visitExamQuestionManagementPage(Integer pageNumber, Model model) {
-        return "exam-questions-management";
-    }
-
-    @GetMapping(value = { "/create-exam-questions" })
-    public String visitCreateExamQuestionPage(Model model) {
-        return "create-exam-questions";
-    }
-    
     @GetMapping(value = { "/init-create-exam-questions" })
     public @ResponseBody ResponeData initExamQuestion() {
         ResponeData responeData = new ResponeData();
