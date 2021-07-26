@@ -59,6 +59,8 @@ public class Constant {
     public static final String DOCUMENT_IMAGE_PORTRAIT_LABEL = "IMAGE_PORTRAIT";
 
     public static final String DOCUMENT_HEALTH_CERTIFICATION_FILE_LABEL = "HEALTH_CERTIFICATION_FILE";
+    
+    public static final String DOCUMENT_QUESTION_IMAGE = "DOCUMENT_QUESTION_IMAGE";
 
     public static final String DOCUMENT_ORDER_LABEL = "HEALTH_CERTIFICATION_FILE";
     

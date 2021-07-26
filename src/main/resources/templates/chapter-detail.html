@@ -36,7 +36,7 @@
                                     <h2 class="m-0">Chi tiết chương</h2>
                                 </div>
                                 <div class="col-6">
-                                    <a th:href="@{${'/management/edit-chapter-detail?chapterId='} + ${chapter.chapterId}}"
+                                    <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}"
                                         class="btn btn-sm btn-default float-right"><i class="fas fa-edit"></i> Chỉnh
                                         sửa</a>
                                 </div>
@@ -45,19 +45,22 @@
                         <div class="card-body">
                             <div class="row">     
                                 <div class="col-12">
-                                    <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="|${chapter.name}|"></span>
+                                    <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.name}"></span>
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <span style="font-weight: bold;">Nội dung : </span><span th:text="|${chapter.content}|"></span>
+                                    <span th:text="${chapter.content}"></span>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <strong>Mô Tả: </strong><span th:text="${chapter.description}"></span>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <span style="font-weight: bold;" >Mô Tả : </span><span th:text="|${chapter.description}|"></span>
+                                    <strong>Số lượng câu hỏi: </strong><span th:text="${chapter.listQuestion.size}"></span>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <span style="font-weight: bold;" >Người cập nhật : </span><span th:text="|${chapter.updateBy}|"></span>
+                                    <strong>Người cập nhật: </strong><span th:text="${chapter.updateBy}"></span>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <span style="font-weight: bold;">Thời gian cập nhật : </span><span th:text="${#dates.format(chapter.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
+                                    <strong>Thời gian cập nhật: </strong><span th:text="${#dates.format(chapter.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
                                 </div>
                             </div>
                         </div>
@@ -77,48 +80,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="height:616px">
                             <table class="table align-items-center table-hover">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col" class="sort text-center" data-sort="name">STT</th>
-                                        <th scope="col" class="sort text-center" data-sort="name">Nội dung</th>
-                                        <th scope="col" class="sort text-center" data-sort="budget">Câu hỏi liệt</th>
-                                        <th scope="col" class="sort text-center" data-sort="status">Cập nhật gần nhất
-                                        </th>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Nội dung</th>
+                                        <th class="text-center">Câu hỏi liệt</th>
+                                        <th class="text-center">Cập nhật gần nhất</th>
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody class="list">
-                                    <tr th:each="question : ${pageContent.content}"
-                                        th:if="${pageContent.totalElements != 0}">
-                                        <th>
-                                            <span class="name mb-0 text-sm" th:text="${question.number}"></span>
+                                <tbody>
+                                    <tr th:each="question : ${chapter.listQuestion}" th:if="${chapter.listQuestion.size != 0}">
+                                        <th class="text-center p-1">
+                                            <a th:href="@{${'/management/detail-question?questionId='} + ${question.questionId}}" class="name mb-0 text-sm" th:text="${question.number}"></a>
                                         </th>
-                                        <td>
+                                        <td class="text-center p-1">
                                             <span th:text="${question.content}"></span>
                                         </td>
-                                        <td th:if="${question.isParalysis}" class="text-center">
-                                            <span class="text-success h1"><i class="fas fa-check-circle"></i></span>
+                                        <td class="text-center p-1">
+                                            <span class="text-success h1" th:if="${question.isParalysis}"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-danger h1" th:unless="${question.isParalysis}"><i class="fas fa-times-circle"></i></span>
                                         </td>
-                                        <td th:unless="${question.isParalysis}">
-                                        </td>
-                                        <td class="text-center">
+                                        <td class="text-center p-1">
                                             <span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
-                                            </td>
-                                            <td>
-                                                <a href="#" class="text-danger h1"><i class="fas fa-trash-alt"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr th:if="${pageContent.totalElements == 0}">
-                                            <td colspan="4"><span class="text-danger">Không có câu hỏi nào trong chương này!</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer py-4">
-                                <div th:insert="fragment-common/pagination :: pagination"></div>
-                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr th:unless="${chapter.listQuestion.size != 0}">
+                                        <td colspan="4"><span class="text-danger">Không có câu hỏi nào trong chương này!</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                        </div>
                         </div>
                     </div>
                 </div>

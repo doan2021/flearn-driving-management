@@ -1,17 +1,54 @@
-.custom-checkbox-question .custom-control-input:checked ~ .custom-control-label::before {
-    border-color: transparent!important;
-    background-color: transparent!important;
+.custom-control-question {
+	padding-left: 0;
 }
 
-.custom-checkbox-question .custom-control-input:checked ~ .custom-control-label::after {
-    background-image: url(/assets/svg/check-circle-solid.svg);
+.custom-control-label-question::after {
+	cursor: pointer;
 }
 
-.custom-checkbox-question .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-    border: none!important;
-    fill: green;
+.custom-control-label-question::before {
+	cursor: pointer;
 }
 
-.custom-checkbox-question .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-    border: none!important;
+.custom-control-question .custom-control-label::after {
+	width: 46px;
+	height: 46px;
+	background: none;
+}
+
+.custom-control-input-question:checked ~ .custom-control-label-question::after{
+	background-image: url(/assets/svg/check-circle-solid.svg);
+	border: none;
+	box-shadow: none;
+}
+
+.custom-control-question .custom-control-label::before {
+	background-image: url(/assets/svg/check-circle-solid-uncheck.svg);
+	border: none;
+	width: 46px;
+	height: 46px;
+}
+
+.custom-control-input-question:checked ~ .custom-control-label-question::before
+	{
+	border: none;
+	background: none;
+	box-shadow: none;
+}
+
+.custom-control-input-question:focus ~ .custom-control-label-question::before
+	{
+	box-shadow: none;
+}
+
+.custom-control-input-question:focus:not(:checked) ~
+	.custom-control-label-question::before {
+	border: none;
+}
+
+.custom-control-input-question:not(:disabled):active ~
+	.custom-control-label-question::before {
+	border: none;
+	background: none;
+	box-shadow: none;
 }
