@@ -31,7 +31,8 @@ $(document).ready(function() {
         rules: {
             number: {
                 required: true,
-                maxlength: 255
+                number: true,
+                maxlength: 10
             },
             content: {
                 required: true,
@@ -71,11 +72,12 @@ $(document).ready(function() {
         messages: {
             number: {
                 required : "Vui lòng điền số thứ tự câu hỏi!",
-                maxlength: "Vui lòng nhập dưới 255 ký tự!"
+                number   : "Chỉ được nhập số!",
+                maxlength: "Số thứ tự không được nhập quá 10 ký tự, vui lòng kiểm tra lại!"
             },
             content: {
-            	required : "Vui lòng điền nội dung câu hỏi!",
-                maxlength: "Nội dung không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
+                required : "Vui lòng điền nội dung câu hỏi!",
+                maxlength: "Nội dung không được nhập quá 4000 ký tự, vui lòng kiểm tra lại!"
             },
             'listAnswers[0].content': {
                 required: "Vui lòng điền nội dung đáp án 1!",
@@ -146,13 +148,13 @@ $(document).ready(function() {
             }
         },
         submitHandler: function(form) {
-        	if (!checkAnswerTrue()) {
-        		$('#errorCheckIsTrue').removeClass('d-none');
-        	} else {
-	            if (confirm("Xác nhận tạo mới câu hỏi!")) {
-	                form.submit();
-	            }
-        	}
+            if (!checkAnswerTrue()) {
+                $('#errorCheckIsTrue').removeClass('d-none');
+            } else {
+                if (confirm("Xác nhận tạo mới câu hỏi!")) {
+                    form.submit();
+                }
+            }
         }
     });
 });
@@ -163,51 +165,35 @@ $(document).on('click', '#deleteAnswer',function() {
 });
 
 function checkAnswerTrue() {
-	if ($('#answers0').is(":checked")) {
-		return true;
-	}
-	if ($('#answers1').is(":checked")) {
-		return true;
-	}
-	if ($('#answers2').is(":checked")) {
-		return true;
-	}
-	if ($('#answers3').is(":checked")) {
-		return true;
-	}
-	if ($('#answers4').is(":checked")) {
-		return true;
-	}
-	if ($('#answers5').is(":checked")) {
-		return true;
-	}
-	if ($('#answers6').is(":checked")) {
-		return true;
-	}
-	if ($('#answers7').is(":checked")) {
-		return true;
-	}
-	if ($('#answers8').is(":checked")) {
-		return true;
-	}
-	if ($('#answers9').is(":checked")) {
-		return true;
-	}
-	return false;
+    if ($('#answer0').is(":checked")) {
+        return true;
+    }
+    if ($('#answer1').is(":checked")) {
+        return true;
+    }
+    if ($('#answer2').is(":checked")) {
+        return true;
+    }
+    if ($('#answer3').is(":checked")) {
+        return true;
+    }
+    if ($('#answer4').is(":checked")) {
+        return true;
+    }
+    if ($('#answer5').is(":checked")) {
+        return true;
+    }
+    if ($('#answer6').is(":checked")) {
+        return true;
+    }
+    if ($('#answer7').is(":checked")) {
+        return true;
+    }
+    if ($('#answer8').is(":checked")) {
+        return true;
+    }
+    if ($('#answer9').is(":checked")) {
+        return true;
+    }
+    return false;
 }
-
-// Init file input
-$("#images-question").fileinput({
-    theme         : "fas",
-    showCancel    : false,
-    showUpload    : false,
-    showClose     : false,
-    browseLabel   : 'Tải lên ảnh',
-    removeLabel   : 'Xóa',
-    removeIcon    : '<i class="fas fa-trash-alt"></i>',
-    removeClass   : 'btn btn-danger',
-    dropZoneTitle : 'Kéo và thả ảnh vào đây',
-    maxFileSize   : '102400',
-    msgSizeTooLarge : 'Tải lên ảnh tối đa {size} KB',
-    msgProcessing : 'Đang chọn file....'
-});

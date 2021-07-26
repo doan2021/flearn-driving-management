@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doanfpt.management.application.common.Constant;
-import com.doanfpt.management.application.dto.ExamQuestionsForm;
 import com.doanfpt.management.application.dto.FormSearchExamQuestions;
-import com.doanfpt.management.application.services.ExamQuestionsServices;
 import com.doanfpt.management.application.respone.ResponeData;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.DrivingLicenseServices;
+import com.doanfpt.management.application.services.ExamQuestionsServices;
 import com.doanfpt.management.application.services.ExamServices;
 import com.doanfpt.management.application.services.QuestionServices;
 
@@ -37,14 +36,6 @@ public class ExamQuestionsManagementController {
     @Autowired
     ChapterServices chapterServices;
 
-    @GetMapping(value = { "/create-exam-questions" })
-    public String visitCreateExamQuestionPage(Integer pageNumber, Model model) {
-        ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
-        model.addAttribute("examQuestionsForm", examQuestionsForm);
-        model.addAttribute(Constant.PAGE_CONTENT_NAME, questionServices.getAllQuestions(pageNumber));
-        return "create-exam-questions";
-    }
-
     @GetMapping(value = { "/exam-questions" })
     public String visitExamQuestionManagementPage(FormSearchExamQuestions formSearchExamQuestions, Model model) {
         model.addAttribute(Constant.PAGE_CONTENT_NAME,
@@ -59,6 +50,11 @@ public class ExamQuestionsManagementController {
                 examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
         model.addAttribute("formSearchExamQuestions", formSearchExamQuestions);
         return "exam-questions-management";
+    }
+
+    @GetMapping(value = { "/create-exam-questions" })
+    public String visitCreateExamQuestionPage(Integer pageNumber, Model model) {
+        return "create-exam-questions";
     }
 
     @GetMapping(value = { "/init-create-exam-questions" })

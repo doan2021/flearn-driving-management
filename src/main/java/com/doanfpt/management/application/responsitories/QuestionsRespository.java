@@ -16,7 +16,7 @@ import com.doanfpt.management.application.entities.Question;
 @Repository
 public interface QuestionsRespository  extends JpaRepository<Question, Long>, PagingAndSortingRepository<Question, Long> {
 
-    public Question findByNumber(int number);
+    public Question findByNumberAndIsDelete(Integer number, Boolean isDelete);
     
     public Page<Question> findByChapter(Chapter chapter, Pageable pageable);
     

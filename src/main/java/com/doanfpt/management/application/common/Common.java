@@ -1,18 +1,19 @@
 package com.doanfpt.management.application.common;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.doanfpt.management.application.entities.Document;
 import com.doanfpt.management.application.model.AccountPrincipal;
 
 public class Common {
@@ -101,21 +102,8 @@ public class Common {
         return DateFormatUtils.format(date, format);
     }
 
-    public static void writeFile(com.doanfpt.management.application.entities.Document document) {
-        byte data[];
-        try {
-            File theDir = new File(document.getPath());
-            if (!theDir.exists()) {
-                theDir.mkdirs();
-            }
-            data = document.getData().getBytes();
-            File file = new File(document.getPath() + "/" + document.getFileName());
-            FileOutputStream out = new FileOutputStream(file);
-            out.write(data);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void writeFile(Document document) {
+
     }
 
     public static String generateFileName(MultipartFile multipartFile, String label) {
@@ -124,7 +112,7 @@ public class Common {
         // Remove extension old
         String fileName = FilenameUtils.removeExtension(multipartFile.getOriginalFilename());
         return Common.dateToString(Common.getSystemDate(), Constant.PATTERN_FORMAT_DATE_TIME) + "_" + label + "_"
-                + fileName + "." + extension;
+                + fileName.replace(" ", "_") + "." + extension;
     }
     
     public static Date getLastOfTheDate(Date date) {
@@ -134,5 +122,11 @@ public class Common {
         cal.add(Calendar.MINUTE, 59);
         cal.add(Calendar.SECOND, 59);
         return cal.getTime();
+    }
+    
+    public static File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
+        File convFile = new File(multipartFile.getOriginalFilename());
+        FileUtils.writeByteArrayToFile(convFile, multipartFile.getBytes());
+        return convFile;
     }
 }
