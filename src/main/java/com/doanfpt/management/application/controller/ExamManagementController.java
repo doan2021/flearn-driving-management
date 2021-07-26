@@ -55,7 +55,7 @@ public class ExamManagementController {
         return "detail-exam";
     }
     
-    @GetMapping(value = { "/cancel-exam" })
+    @PostMapping(value = { "/cancel-exam" })
     public String cancelExam(Long examId, Model model) {
         model.addAttribute("exam", examService.cancelExam(examId));
         model.addAttribute("messageSuccess", "Hủy bỏ kì thi hoàn tất.");
