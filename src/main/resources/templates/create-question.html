@@ -49,6 +49,24 @@
                 </div>
                 <div class="container-fluid">
                     <form class="row p-0 mb-3" th:action="@{/management/save-question}" th:object="${questionForm}" method="post" enctype="multipart/form-data" id="formCreateQuestion">
+                        <div class="col-12" th:if="${success != null}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                <span class="alert-text" th:text="${success}"></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                                <p class="m-0" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></p>
+                                <p class="m-0" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+                                <p class="m-0" th:if="${#fields.hasErrors('listAnswers')}" th:errors="*{listAnswers}"></p>
+                            </div>
+                            <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${messageSuccess}">
+                            </div>
+                        </div>
                         <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
                         <div class="col-7">
                             <div class="card">
@@ -61,18 +79,18 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-8">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="numberQuestion">Số thứ tự <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="numberQuestion" placeholder="Số thứ tự" th:field="*{number}"/>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4 text-center">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="numberQuestion">Câu liệt</label>
-                                                <div class="custom-control custom-checkbox-question">
-                                                    <input type="checkbox" class="custom-control-input" id="isParalysis" th:field="*{isParalysis}">
-                                                    <label class="custom-control-label" for="isParalysis"></label>
+                                                <label class="form-control-label" for="isParalysis">Câu liệt</label>
+                                                 <div class="custom-control custom-control-question">
+                                                    <input type="checkbox" class="custom-control-input custom-control-input-question" id="isParalysis" th:field="*{isParalysis}">
+                                                    <label class="custom-control-label custom-control-label-question" for="isParalysis"></label>
                                                 </div>
                                             </div>
                                         </div>
