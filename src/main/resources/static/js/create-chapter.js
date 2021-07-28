@@ -4,24 +4,24 @@ $("#create-chapter-form").validate({
 			required: true,
 			maxlength: 255
 		},
-		description: {
-			maxlength: 3
-		},
 		content: {
 			required: true,
-			maxlength: 3
+			maxlength: 4000
 		},
+		description: {
+			maxlength: 4000
+		}
 	},
 	messages: {
 		name: {
-			required : "Chưa điền tên chương, vui lòng kiểm tra lại!",
+			required: "Chưa điền tên chương, vui lòng kiểm tra lại!",
 			maxlength: "Nội dung chương không được nhập quá 255 ký tự, vui lòng kiểm tra lại!"
 		},
 		description: {
 			maxlength: "Mô tả chương không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
 		},
 		content: {
-			required : "Chưa điền nội dung chương, vui lòng kiểm tra lại!",
+			required: "Chưa điền nội dung chương, vui lòng kiểm tra lại!",
 			maxlength: "Nội dung chương không được nhập quá 4000 ký tự, vui lòng kiểm tra lại!"
 		}
 	},
