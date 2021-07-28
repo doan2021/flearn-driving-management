@@ -101,14 +101,14 @@
 	                                <table class="table align-items-center table-hover">
 	                                    <thead class="thead-light">
 	                                        <tr>
-	                                            <th class="text-center">Chọn</th>
-	                                            <th class="text-center">Câu hỏi số</th>
+	                                            <th class="text-center">#</th>
+	                                            <th class="text-center">STT</th>
 	                                            <th class="text-center">Nội dung</th>
-	                                            <th class="text-center">Câu hỏi liệt</th>
+	                                            <th class="text-center">Câu liệt</th>
 	                                        </tr>
 	                                    </thead>
-	                                    <tbody class="list">
-	                                        <tr v-for="question in chapter.listQuestion" :key="question.questionId" v-if="chapter.listQuestion != null && chapter.listQuestion.length != 0">
+	                                    <tbody class="list" v-if="chapter.listQuestion != null && chapter.listQuestion.length != 0">
+	                                        <tr v-for="question in chapter.listQuestion" :key="question.questionId">
 	                                            <th class="text-center p-1">
 	                                                <div class="custom-control custom-checkbox">
 	                                                    <input type="checkbox" class="custom-control-input" :id="'queCheck' + question.questionId" :value="question.questionId" v-model="listQuestionAdd">
@@ -126,11 +126,13 @@
 	                                                <span class="text-danger h2" v-else><i class="fas fa-times-circle"></i></span>
 	                                            </td>
 	                                        </tr>
-	                                        <tr v-else>
-	                                            <td class="text-center" colspan="4">
-	                                                <span class="text-danger">Không có câu hỏi nào trong hệ thống!</span>
-	                                            </td>
-	                                        </tr>
+	                                    </tbody>
+	                                    <tbody v-else>
+	                                        <tr>
+                                                <td class="text-center" colspan="4">
+                                                    <span class="text-danger">Không có câu hỏi nào trong chương này!</span>
+                                                </td>
+                                            </tr>
 	                                    </tbody>
 	                                </table>
                                 </div>

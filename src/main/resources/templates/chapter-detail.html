@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive" style="height:616px">
+                        <div class="table-responsive" style="max-height:616px">
                             <table class="table align-items-center table-hover">
                                 <thead class="thead-light">
                                     <tr>
@@ -105,6 +105,8 @@
                                         </td>
                                         <td class="text-center p-1">
                                             <span th:text="${#dates.format(question.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
+                                        </td>
+                                        <td>
                                         </td>
                                     </tr>
                                     <tr th:unless="${chapter.listQuestion.size != 0}">
