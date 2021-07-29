@@ -66,7 +66,7 @@ public class ValidationApplicationUtils extends ValidationUtils {
 			@Nullable Object[] errorArgs, @Nullable String defaultMessage) {
 		Assert.notNull(errors, "Errors object must not be null");
 		Object value = errors.getFieldValue(field);
-		if (!Common.isValidContent(value.toString())) {
+		if (Common.isValidContent(value.toString())) {
 			errors.rejectValue(field, errorCode, errorArgs, defaultMessage);
 		}
 	}
