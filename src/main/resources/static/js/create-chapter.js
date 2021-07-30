@@ -15,7 +15,7 @@ $("#create-chapter-form").validate({
 	messages: {
 		name: {
 			required: "Chưa điền tên chương, vui lòng kiểm tra lại!",
-			maxlength: "Tên chương không được nhập quá 255 ký tự, vui lòng kiểm tra lại!"
+			maxlength: "Nội dung chương không được nhập quá 255 ký tự, vui lòng kiểm tra lại!"
 		},
 		description: {
 			maxlength: "Mô tả chương không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"

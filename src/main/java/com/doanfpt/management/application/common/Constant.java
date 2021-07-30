@@ -75,9 +75,9 @@ public class Constant {
 
 	public static final String PATTERN_PHONENUMBER = "^[0][0-9]{9}$";
 	
-	public static final String PATTERN_CHAPTER_NAME = "^[0-9]$";
+	public static final String PATTERN_CHAPTER_NAME = "^[a-zA-Z0-9]{1,10}$";
 	
-	public static final String PATTERN_CHAPTER_CONTENT = "^[a-zA-Z0-9 ]+$";
+	public static final String PATTERN_CHAPTER_CONTENT = "^[a-zA-Z0-9]{1,10}$";
 
 	public static final Integer STS_EXAM_OPENING = 1;
 	
