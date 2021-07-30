@@ -4,7 +4,7 @@ var pageCreateExamQuestions = new Vue({
         listDrivingLicense    : [],
         listChapter           : [],
         drivingLicenseCurrent : '',
-        listQuestionAdd       : [],
+        listQuestionAdd       : []
     },
     mounted() {
     	this.initPage();
@@ -18,7 +18,17 @@ var pageCreateExamQuestions = new Vue({
             }
             axios(config).then(function (response) {
                 _this.listDrivingLicense = response.data.result.listDrivingLicense;
-                _this.listChapter = response.data.result.listChapter;
+            })
+            .catch(function (error) {
+            });
+        },
+        selectDrivingLicense: function() {
+            var _this = this;
+            var config = {
+                url: "/management/select-driving-license", 
+                method: "GET"
+            }
+            axios(config).then(function (response) {
             })
             .catch(function (error) {
             });
