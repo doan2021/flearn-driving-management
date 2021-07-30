@@ -5,8 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <title>Layout page</title>
         <link rel="icon" th:href="@{../assets/img/brand/favicon.png}" type="image/png">
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
         <!-- Icons -->
         <link rel="stylesheet" th:href="@{../assets/vendor/nucleo/css/nucleo.css}" type="text/css">
         <link rel="stylesheet" th:href="@{../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css}" type="text/css">
@@ -53,21 +51,27 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
+                                <a class="nav-link" th:href="@{../management/driving-license}">
+                                    <span class="text-primary icon-menu"><i class="fas fa-address-card"></i></span>
+                                    <span class="nav-link-text">Quản lý hạng bằng</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{../management/exam-questions}">
+                                    <span class=" text-warning icon-menu"><i class="fas fa-file-alt"></i></span>
+                                    <span class="nav-link-text">Quản lý đề thi</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" th:href="@{../management/exam}">
-                                    <i class="fas fa-diagnoses text-warning mr-2" style="font-size: 20px"></i>
+                                    <span class="text-warning icon-menu"><i class="fas fa-diagnoses"></i></span>
                                     <span class="nav-link-text">Quản lý thi cử</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link"  th:href="@{../management/review-exam-info}">
-                                    <i class="fas fa-id-card text-primary mr-2" style="font-size: 20px"></i>
+                                    <span class="text-success icon-menu"><i class="fas fa-thumbs-up"></i></span>
                                     <span class="nav-link-text">Phê duyệt hồ sơ</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{../management/exam-questions}">
-                                    <i class="fas fa-file-alt text-warning mr-2" style="font-size: 20px"></i>
-                                    <span class="nav-link-text">Quản lý đề thi</span>
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -61,7 +61,6 @@ public class ExamQuestionsManagementController {
     public @ResponseBody ResponeData initExamQuestion() {
         ResponeData responeData = new ResponeData();
         responeData.putResult("listDrivingLicense", drivingLicenseServices.findAll());
-        responeData.putResult("listChapter", chapterServices.findAll());
         return responeData;
     }
 }

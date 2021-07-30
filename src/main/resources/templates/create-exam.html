@@ -40,7 +40,6 @@
                             </div>
                             <div class="card-body">
                                 <form th:action="@{/management/create-exam}" th:object="${examForm}" method="POST" id="create-exam-form">
-                                    <input type="hidden" name="isUpdate" value="false">
                                     <div class="row">
                                         <div class="col-12">
                                             <label for="name" class="form-control-label">Tên kỳ thi</label>

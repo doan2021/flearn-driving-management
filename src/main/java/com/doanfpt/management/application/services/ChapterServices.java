@@ -26,11 +26,11 @@ public class ChapterServices {
     ChapterResponsitory chapterResponsitory;
 
     public Chapter getChapterDetail(Long chapterId) {
-        return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
+        return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
     }
     
-    public List<Chapter> findAll() {
-        return chapterResponsitory.findByIsDeleteOrderByName(false);
+    public List<Chapter> findAllChapter() {
+        return chapterResponsitory.findByIsDeleteOrderByName(Constant.IS_NOT_DELETE);
     }
 
     public boolean saveChapter(ChapterForm chapterForm) {
@@ -60,16 +60,6 @@ public class ChapterServices {
         chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
         chapterResponsitory.save(chapter);
-    }
-
-    public Page<Chapter> getAllChapter(Integer pageNumber) {
-        if (pageNumber == null) {
-            pageNumber = 0;
-        }
-        Specification<Chapter> conditions = Specification.where(ChapterSpecification.isDelete(false));
-        Pageable pageable = PageRequest.of(pageNumber, Constant.RECORD_PER_PAGE);
-        Page<Chapter> listChapter = chapterResponsitory.findAll(conditions, pageable);
-        return listChapter;
     }
 
     public Page<Chapter> searchChapter(FormSearchChapter formSearchChapter) {
@@ -109,5 +99,9 @@ public class ChapterServices {
         chapterForm.setUpdateAt(DateFormatUtils.format(chapter.getUpdateAt(), Constant.FORMAT_DATE_TIME));
         chapterForm.setUpdateBy(Common.getUsernameLogin());
         return chapterForm;
+    }
+    
+    public List<Chapter> getListChapterForExamQuestion(String listChapterName) {
+        return null;
     }
 }

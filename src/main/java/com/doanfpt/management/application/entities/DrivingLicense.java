@@ -1,11 +1,17 @@
 package com.doanfpt.management.application.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "driving_license")
@@ -19,17 +25,17 @@ public class DrivingLicense {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "type")
-    private String type;
-
     @Column(name = "price")
     private Double price;
 
     @Column(name = "number_question")
     private Integer numberQuestion;
 
+    @Column(name = "number_question_paralysis")
+    private Integer numberQuestionParalysis;
+
     @Column(name = "number_question_correct")
-    private Integer numberQuestionCorrect;
+    private Integer numberQuestionCorect;
 
     @Column(name = "exam_minutes")
     private Integer examMinutes;
@@ -40,8 +46,9 @@ public class DrivingLicense {
     @Column(name = "number_year_expires")
     private Integer numberYearExpires;
 
-    @Column(name = "number_question_in_chapter", columnDefinition="TEXT")
-    private String numberQuestionInChapter;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "drivingLicense", cascade = CascadeType.ALL)
+    private List<ExamStructure> listExamStructure;
 
     public Long getDrivingLicenseId() {
         return drivingLicenseId;
@@ -57,14 +64,6 @@ public class DrivingLicense {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Integer getNumberYearExpires() {
@@ -107,20 +106,28 @@ public class DrivingLicense {
         this.numberQuestion = numberQuestion;
     }
 
-    public Integer getNumberQuestionCorrect() {
-        return numberQuestionCorrect;
+    public List<ExamStructure> getListExamStructure() {
+        return listExamStructure;
     }
 
-    public void setNumberQuestionCorrect(Integer numberQuestionCorrect) {
-        this.numberQuestionCorrect = numberQuestionCorrect;
+    public void setListExamStructure(List<ExamStructure> listExamStructure) {
+        this.listExamStructure = listExamStructure;
     }
 
-    public String getNumberQuestionInChapter() {
-        return numberQuestionInChapter;
+    public Integer getNumberQuestionParalysis() {
+        return numberQuestionParalysis;
     }
 
-    public void setNumberQuestionInChapter(String numberQuestionInChapter) {
-        this.numberQuestionInChapter = numberQuestionInChapter;
+    public void setNumberQuestionParalysis(Integer numberQuestionParalysis) {
+        this.numberQuestionParalysis = numberQuestionParalysis;
+    }
+
+    public Integer getNumberQuestionCorect() {
+        return numberQuestionCorect;
+    }
+
+    public void setNumberQuestionCorect(Integer numberQuestionCorect) {
+        this.numberQuestionCorect = numberQuestionCorect;
     }
 
 }

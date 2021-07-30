@@ -63,38 +63,42 @@
                 </div>
             </div>
             <div class="container-fluid mt--6">
-                <div class="row justify-content-center">
-                    <div class=" col ">
+                <div class="row">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="card-header bg-transparent row">
-                                <h3 class="mb-0 col-10">Toàn bộ người dùng</h3>
-                                <div class="col-2">
-                                   <a th:href="@{/management/create-account}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Người dùng mới</a>
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h3 class="m-0">Toàn bộ người dùng</h3>
+                                    </div>
+	                                <div class="col-2">
+	                                   <a th:href="@{/management/create-account}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Người dùng mới</a>
+	                                </div>
                                 </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col" class="sort" data-sort="name">Tài khoản</th>
-                                            <th scope="col" class="sort" data-sort="budget">Họ và tên</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col" class="sort" data-sort="completion">Giới tính</th>
-                                            <th scope="col">Số điện thoại</th>
-                                            <th scope="col"></th>
+                                            <th>Tài khoản</th>
+                                            <th>Họ và tên</th>
+                                            <th>Email</th>
+                                            <th>Giới tính</th>
+                                            <th>Số điện thoại</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="acc : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
                                         <tr>
-                                            <td th:text="${acc.userName}"></td>
-                                            <td th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
-                                            <td th:text="${acc.email}"></td>
-                                            <td th:if="${acc.gender == 1}">Nam</td>
-                                            <td th:if="${acc.gender == 0}">Nữ</td>
-                                            <td th:if="${acc.gender == 2}">Khác</td>
-                                            <td th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
-                                            <td th:text="${acc.numberPhone}"></td>
-                                            <td>
+                                            <td class="text-center" th:text="${acc.userName}"></td>
+                                            <td class="text-center" th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
+                                            <td class="text-center" th:text="${acc.email}"></td>
+                                            <td class="text-center" th:if="${acc.gender == 1}">Nam</td>
+                                            <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
+                                            <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
+                                            <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
+                                            <td class="text-center" th:text="${acc.numberPhone}"></td>
+                                            <td class="text-center">
                                                 <a th:href="@{${'/management/update-account?accountId='} + ${acc.accountId}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                                 <a th:href="@{${'/management/delete-account?accountId='} + ${acc.accountId}}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                                             </td>

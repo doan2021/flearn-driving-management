@@ -1,45 +1,15 @@
 @charset 'UTF-8';
-/*!
 
-=========================================================
-* Argon Dashboard - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
-* Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Varela+Round&display=swap');
 
 *, *::before, *::after {
 	box-sizing: border-box;
 }
 
-html {
-	font-family: sans-serif;
-	line-height: 1.15;
-	-webkit-text-size-adjust: 100%;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-article, aside, figcaption, figure, footer, header, hgroup, main, nav,
-	section {
-	display: block;
-}
-
 body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	font-size: 1.2rem;
-	font-weight: 500;
-	line-height: 1.5;
+	font-family: 'Nunito', sans-serif;
+	font-family: 'Varela Round', sans-serif;
 	margin: 0;
-	text-align: left;
 	color: #525f7f;
 	background-color: #F5F6FF;
 }
@@ -422,6 +392,11 @@ mark, .mark {
 	padding: .2em;
 	background-color: #fcf8e3;
 }
+
+.icon-menu{
+	width: 2.5rem;
+    font-size: 1.5rem;
+ }
 
 .list-unstyled {
 	padding-left: 0;
@@ -4910,10 +4885,7 @@ input[type='submit'].btn-block, input[type='reset'].btn-block, input[type='butto
 	padding: 1.25rem 1.5rem;
 	border-bottom: 1px solid rgba(0, 0, 0, .05);
 	background-color: #fff;
-}
-
-.card-header:first-child {
-	border-radius: calc(.375rem - 1px) calc(.375rem - 1px) 0 0;
+	border-radius: .8rem .8rem 0 0;
 }
 
 .card-header+.list-group .list-group-item:first-child {
@@ -15827,7 +15799,7 @@ textarea[resize='horizontal'] {
 }
 
 .navbar-vertical .navbar-nav .nav-link {
-	font-size: .875rem;
+	font-size: 1rem;
 	font-weight: 500;
 	padding-right: 1rem;
 	padding-left: 1rem;
@@ -15915,7 +15887,7 @@ textarea[resize='horizontal'] {
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-inner {
-	padding: 1.5rem;
+	padding: 1rem;
 }
 
 .navbar-vertical.navbar-expand-xs>[class*='container'] {
@@ -15947,10 +15919,6 @@ textarea[resize='horizontal'] {
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
 	display: flex;
 	flex-direction: column;
-	padding-right: 1.5rem;
-	padding-left: 1.5rem;
-	flex: 1 1;
-	align-items: stretch;
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-collapse>* {
@@ -15965,10 +15933,6 @@ textarea[resize='horizontal'] {
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link {
 	padding: .675rem 1.5rem;
-}
-
-.navbar-vertical.navbar-expand-xs .navbar-nav>.nav-item {
-	margin-top: 2px;
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-nav>.nav-item>.nav-link.active {

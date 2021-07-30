@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout-management}">
+    <head>
+        <title>Hạng bằng mới</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" th:href="@{../css/create-exam.css}" type="text/css">
+    </head>
+    
+    <body>
+        <th:block layout:fragment="content">
+            <div class="header bg-primary">
+              <div class="container-fluid">
+                <div class="header-body">
+                  <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                          <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Danh hạng bằng lái</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Hạng bằng mới</li>
+                        </ol>
+                      </nav>
+                    </div>
+                    <div class=" col-12">
+                        <div class="card">
+                            <div class="card-header bg-transparent row">
+                                <div class="col-10">
+                                    <h1 class="m-0">Hạng bằng mới</h1>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <a th:href="@{/management/driving-license}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/management/create-driving-license}" th:object="${drivingLicenseForm}" method="POST" id="create-driving-license-form">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="name" class="form-control-label">Tên <span class="text-danger">*</span></label>
+                                            <input id="name" type="text" class="form-control" placeholder="Tên" th:field="*{name}" maxlength="255"/>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="description" class="form-control-label">Mô tả</label>
+                                            <textarea id="description" cols="5" class="form-control" placeholder="Mô tả" th:field="*{description}" maxlength="4000"></textarea>
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <label for="numberQuestion" class="form-control-label">Số lượng câu hỏi <span class="text-danger">*</span></label>
+                                            <input id="numberQuestion" type="text" class="form-control" placeholder="Số lượng câu hỏi" th:field="*{numberQuestion}" maxlength="5"/>
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <label for="numberQuestionCorect" class="form-control-label">Số lượng câu đạt <span class="text-danger">*</span></label>
+                                            <input id="numberQuestionCorect" type="text" class="form-control" placeholder="Số lượng câu đạt" th:field="*{numberQuestionCorect}" maxlength="5"/>
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <label for="numberQuestionParalysis" class="form-control-label">Số lượng câu liệt <span class="text-danger">*</span></label>
+                                            <input id="numberQuestionParalysis" type="text" class="form-control" placeholder="Số lượng câu liệt" th:field="*{numberQuestionParalysis}" maxlength="5"/>
+                                        </div>
+                                        <div class="col-6 mt-3">
+                                            <label for="examMinutes" class="form-control-label">Thời gian làm bài <span class="text-danger">*</span></label>
+                                            <div class="form-group m-0">
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control" placeholder="Thời gian làm bài" id="examMinutes" th:field="*{examMinutes}" maxlength="5">
+                                                  <div class="input-group-append">
+                                                    <span class="input-group-text">Phút</span>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mt-3">
+                                            <label for="price" class="form-control-label">Giá dự kiến <span class="text-danger">*</span></label>
+                                            <div class="form-group m-0">
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control" placeholder="Thời gian làm bài" id="price" th:field="*{price}" maxlength="5">
+                                                  <div class="input-group-append">
+                                                    <span class="input-group-text">VNĐ</span>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="price" class="form-control-label">Thời hạn (nếu bằng lái không thời hạn thì nhập 0) <span class="text-danger">*</span></label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control" placeholder="Thời gian làm bài" id="price" th:field="*{price}" maxlength="5">
+                                                  <div class="input-group-append">
+                                                    <span class="input-group-text">Năm</span>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label class="form-control-label">Cấu trúc bộ đề tương ứng<span class="text-danger">*</span></label>
+                                            <p>Nhập vào số câu hỏi theo từng chương, và không được vượt quá số lượng câu hỏi đã nhập</p>
+                                            <div class="row">
+                                                <div class="col-3" th:each="chapter : ${listChapter}">
+                                                    <div class="card card-stats">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${chapter.name}|"></h5>
+                                                                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                  <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                                                                      <i class="ni ni-chart-pie-35"></i>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                            <p class="mt-3 mb-0 text-sm">
+                                                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                                                <span class="text-nowrap">Since last month</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-12 mt-3 text-center">
+                                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Lưu</button>
+                                            <a th:href="@{/management/create-exam}" class="btn btn-secondary"><i class="fas fa-eraser"></i> Làm mới</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/create-exam.js}"></script>
+        </th:block>
+    </body>
+</html>
