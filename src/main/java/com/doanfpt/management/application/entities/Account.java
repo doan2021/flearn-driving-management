@@ -64,7 +64,7 @@ public class Account {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")

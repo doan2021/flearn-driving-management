@@ -97,10 +97,10 @@
                                     <tbody class="list">
                                         <tr th:each="chapter : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
                                             <th class="text-center">
-                                                <span class="name mb-0 text-sm" th:text="|Chương ${chapter.name}|"></span>
+                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="|Chương ${chapter.name}|"></a>
                                             </th>
                                             <td class="text-center">
-                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="${chapter.content}"></a>
+                                                <span class="name mb-0 text-sm" th:text="${chapter.content}"></span>
                                             </td>
                                             <td class="text-center">
                                                 <span th:text="${chapter.description}"></span>

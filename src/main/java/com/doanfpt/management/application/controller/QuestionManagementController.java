@@ -36,7 +36,6 @@ public class QuestionManagementController {
     
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
-        // Form mục tiêu
         Object target = dataBinder.getTarget();
         if (target == null) {
             return;
@@ -61,6 +60,7 @@ public class QuestionManagementController {
             return "create-question";
         }
         questionServices.createQuestion(questionForm);
+        model.addAttribute("questionForm", new QuestionForm());
         model.addAttribute(Constant.STATUS_SUCCESS, "Tạo câu hỏi thành công!");
         return "create-question";
     }

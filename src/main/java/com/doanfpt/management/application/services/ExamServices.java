@@ -22,8 +22,8 @@ import com.doanfpt.management.application.dto.FormSearchExam;
 import com.doanfpt.management.application.entities.DrivingLicense;
 import com.doanfpt.management.application.entities.Exam;
 import com.doanfpt.management.application.exception.BusinessException;
-import com.doanfpt.management.application.responsitories.DrivingLicenseRespository;
-import com.doanfpt.management.application.responsitories.ExamRepository;
+import com.doanfpt.management.application.respositories.DrivingLicenseRespository;
+import com.doanfpt.management.application.respositories.ExamRepository;
 import com.doanfpt.management.application.specification.ExamSpecification;
 
 @Service

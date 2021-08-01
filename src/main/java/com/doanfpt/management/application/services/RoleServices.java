@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doanfpt.management.application.entities.Role;
-import com.doanfpt.management.application.responsitories.RoleRespository;
+import com.doanfpt.management.application.respositories.RoleRespository;
 
 @Service
 public class RoleServices {

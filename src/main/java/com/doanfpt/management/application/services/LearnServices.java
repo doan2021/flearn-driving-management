@@ -17,18 +17,18 @@ import com.doanfpt.management.application.entities.HistoryAnswer;
 import com.doanfpt.management.application.entities.Question;
 import com.doanfpt.management.application.entities.StatusLearn;
 import com.doanfpt.management.application.respone.ResponeData;
-import com.doanfpt.management.application.responsitories.AccountsRespository;
-import com.doanfpt.management.application.responsitories.AnswerRespository;
-import com.doanfpt.management.application.responsitories.ChapterResponsitory;
-import com.doanfpt.management.application.responsitories.HistoryAnswerRespository;
-import com.doanfpt.management.application.responsitories.QuestionsRespository;
-import com.doanfpt.management.application.responsitories.StatusLearnRespository;
+import com.doanfpt.management.application.respositories.AccountsRespository;
+import com.doanfpt.management.application.respositories.AnswerRespository;
+import com.doanfpt.management.application.respositories.ChapterRespository;
+import com.doanfpt.management.application.respositories.HistoryAnswerRespository;
+import com.doanfpt.management.application.respositories.QuestionsRespository;
+import com.doanfpt.management.application.respositories.StatusLearnRespository;
 
 @Service
 public class LearnServices {
     
     @Autowired
-    ChapterResponsitory chapterResponsitory;
+    ChapterRespository chapterResponsitory;
     
     @Autowired
     QuestionsRespository questionsRespository;

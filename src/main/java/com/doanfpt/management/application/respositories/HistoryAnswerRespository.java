@@ -1,4 +1,4 @@
-package com.doanfpt.management.application.responsitories;
+package com.doanfpt.management.application.respositories;
 
 import java.util.List;
 

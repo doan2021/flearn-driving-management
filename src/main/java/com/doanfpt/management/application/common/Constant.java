@@ -22,7 +22,7 @@ public class Constant {
 
     public static final String PAGE_CONTENT_NAME = "pageContent";
 
-    public static final Integer RECORD_PER_PAGE = 5;
+    public static final Integer RECORD_PER_PAGE = 15;
 
     public static final Long ROLE_ID_ADMIN = 1L;
 

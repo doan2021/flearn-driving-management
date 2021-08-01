@@ -24,8 +24,8 @@ import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
 import com.doanfpt.management.application.entities.Role;
 import com.doanfpt.management.application.model.AccountPrincipal;
-import com.doanfpt.management.application.responsitories.AccountsRespository;
-import com.doanfpt.management.application.responsitories.RoleRespository;
+import com.doanfpt.management.application.respositories.AccountsRespository;
+import com.doanfpt.management.application.respositories.RoleRespository;
 import com.doanfpt.management.application.specification.AccountSpecification;
 import com.doanfpt.management.application.utils.EncrytedPasswordUtils;
 

@@ -37,7 +37,7 @@ public class Exam {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")

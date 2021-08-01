@@ -36,7 +36,7 @@ public class Chapter implements Serializable {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")

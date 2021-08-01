@@ -25,7 +25,7 @@ public class Answer {
     @Column(name = "answer_id")
     private Long answerId;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "is_true", columnDefinition = "boolean default false")
