@@ -1,5 +1,6 @@
 package com.doanfpt.management.application.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -40,11 +41,26 @@ public class DrivingLicense {
     @Column(name = "exam_minutes")
     private Integer examMinutes;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "number_year_expires")
     private Integer numberYearExpires;
+
+    @Column(name = "is_delete", columnDefinition = "boolean default false")
+    private boolean isDelete;
+
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "drivingLicense", cascade = CascadeType.ALL)
@@ -128,6 +144,46 @@ public class DrivingLicense {
 
     public void setNumberQuestionCorect(Integer numberQuestionCorect) {
         this.numberQuestionCorect = numberQuestionCorect;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
 }

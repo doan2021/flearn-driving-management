@@ -46,7 +46,7 @@ public class Document {
     @Column(name = "type")
     private int type;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "is_delete", columnDefinition = "boolean default false")

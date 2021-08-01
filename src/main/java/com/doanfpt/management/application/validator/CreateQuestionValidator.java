@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 
 import com.doanfpt.management.application.dto.AnswerForm;
 import com.doanfpt.management.application.dto.QuestionForm;
-import com.doanfpt.management.application.responsitories.QuestionsRespository;
+import com.doanfpt.management.application.respositories.QuestionsRespository;
 
 /**
  * @author tamdu

@@ -22,9 +22,9 @@ import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.entities.Document;
 import com.doanfpt.management.application.entities.Question;
 import com.doanfpt.management.application.exception.BusinessException;
-import com.doanfpt.management.application.responsitories.ChapterResponsitory;
-import com.doanfpt.management.application.responsitories.DocumentRespository;
-import com.doanfpt.management.application.responsitories.QuestionsRespository;
+import com.doanfpt.management.application.respositories.ChapterRespository;
+import com.doanfpt.management.application.respositories.DocumentRespository;
+import com.doanfpt.management.application.respositories.QuestionsRespository;
 
 @Service
 public class QuestionServices {
@@ -33,7 +33,7 @@ public class QuestionServices {
     QuestionsRespository questionsRespository;
 
     @Autowired
-    ChapterResponsitory chapterResponsitory;
+    ChapterRespository chapterResponsitory;
     
     @Autowired
     DocumentRespository documentRespository;
@@ -74,7 +74,7 @@ public class QuestionServices {
         // Handle document
         List<Document> listDocuments = new ArrayList<>();
         // Upload file CMND mặt trước
-        if (questionForm.getImages() != null && questionForm.getImages().length != 0) {
+        if (questionForm.getImages() != null && !questionForm.getImages()[0].isEmpty()) {
             // Get file to client
             for(MultipartFile multipartFile : questionForm.getImages()) {
                 Document document = new Document();
@@ -92,8 +92,8 @@ public class QuestionServices {
                 document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
             }
+            documentRespository.saveAll(listDocuments);
         }
-        documentRespository.saveAll(listDocuments);
         // Handle image
     }
 

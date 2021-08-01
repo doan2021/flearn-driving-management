@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.FormSearchExamQuestions;
 import com.doanfpt.management.application.entities.ExamQuestions;
-import com.doanfpt.management.application.responsitories.ExamQuestionsRepository;
+import com.doanfpt.management.application.respositories.ExamQuestionsRepository;
 import com.doanfpt.management.application.specification.ExamQuestionsSpecification;
 
 @Service

@@ -30,14 +30,14 @@ public class Question {
     @Column(name = "number")
     private int number;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "is_paralysis", columnDefinition = "Boolean default false")
-    private Boolean isParalysis;
+    private boolean isParalysis;
 
-    @Column(name = "is_delete", columnDefinition = "Boolean default false")
-    private Boolean isDelete;
+    @Column(name = "is_delete", columnDefinition = "boolean default false")
+    private boolean isDelete;
 
     @Column(name = "create_by")
     private String createBy;
@@ -92,12 +92,16 @@ public class Question {
         this.content = content;
     }
 
-    public Boolean isDelete() {
+    public boolean isDelete() {
         return isDelete;
     }
 
-    public void setDelete(Boolean isDelete) {
+    public void setDelete(boolean isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public void setParalysis(boolean isParalysis) {
+        this.isParalysis = isParalysis;
     }
 
     public List<Answer> getListAnswers() {
