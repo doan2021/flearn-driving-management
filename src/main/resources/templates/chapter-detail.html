@@ -29,45 +29,46 @@
         <div class="container-fluid mt--6">
             <div class="row">
                 <div class="col-5">
-                    <div class="card">
-                        <div class="card-header bg-transparent">
-                            <div class="row">
-                                <div class="col">
-                                    <h2 class="m-0">Chi tiết chương</h2>
-                                </div>
-                                <div class="col text-right">
-                                    <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-default">
-                                        <i class="fas fa-edit"></i> Chỉnh sửa
-                                    </a>
-                                    <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash-alt"></i> Xóa
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.name}"></span>
-                                </div>
-                                <div class="col-12 mt-3">
-                                    <span th:text="${chapter.content}"></span>
-                                </div>
-                                <div class="col-12 mt-4">
-                                    <strong>Mô Tả: </strong><span th:text="${chapter.description}"></span>
-                                </div>
-                                <div class="col-12 mt-2">
-                                    <strong>Số lượng câu hỏi: </strong><span th:text="${chapter.listQuestion.size}"></span>
-                                </div>
-                                <div class="col-12 mt-2">
-                                    <strong>Người cập nhật: </strong><span th:text="${chapter.updateBy}"></span>
-                                </div>
-                                <div class="col-12 mt-2">
-                                    <strong>Thời gian cập nhật: </strong><span th:text="${#dates.format(chapter.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+	                <div class="card">
+	                    <div class="card-header bg-transparent">
+	                        <div class="row">
+	                            <div class="col">
+	                                <h2 class="m-0">Chi tiết chương</h2>
+	                            </div>
+	                            <div class="col text-right">
+	                                <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-default">
+	                                    <i class="fas fa-edit"></i> Chỉnh sửa
+	                                </a>
+	                                <form th:action="@{/management/delete-chapter}" method="POST" id="formDeleteChapter" class="d-none">
+	                                	<input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
+	                                </form>
+	                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteChapter()"><i class="fas fa-trash-alt"></i> Xóa</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="card-body">
+	                        <div class="row">
+	                            <div class="col-12">
+	                                <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.name}"></span>
+	                            </div>
+	                            <div class="col-12 mt-3">
+	                                <span th:text="${chapter.content}"></span>
+	                            </div>
+	                            <div class="col-12 mt-4">
+	                                <strong>Mô Tả: </strong><span th:text="${chapter.description}"></span>
+	                            </div>
+	                            <div class="col-12 mt-2">
+	                                <strong>Số lượng câu hỏi: </strong><span th:text="${chapter.listQuestion.size}"></span>
+	                            </div>
+	                            <div class="col-12 mt-2">
+	                                <strong>Người cập nhật: </strong><span th:text="${chapter.updateBy}"></span>
+	                            </div>
+	                            <div class="col-12 mt-2">
+	                                <strong>Thời gian cập nhật: </strong><span th:text="${#dates.format(chapter.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
                 </div>
                 <div class="col-7">
                     <div class="card">
@@ -81,6 +82,15 @@
                                         <i class="fas fa-plus"></i> Câu hỏi mới
                                     </a>
                                 </div>
+                                <div class="col-12" th:if="${success != null}">
+						            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+						                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+						                <span class="alert-text" th:text="${success}"></span>
+						                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						                    <span aria-hidden="true">&times;</span>
+						                </button>
+						            </div>
+						        </div>
                             </div>
                         </div>
                         <div class="table-responsive" style="max-height:616px">
@@ -95,7 +105,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="question : ${chapter.listQuestion}" th:if="${chapter.listQuestion.size != 0}">
+                                    <tr th:each="question : ${chapter.listQuestion}" th:if="${chapter.listQuestion.size != 0 && question.delete == false}">
                                         <th class="text-center p-1">
                                             <a th:href="@{${'/management/detail-question?questionId='} + ${question.questionId}}" class="name mb-0 text-sm" th:text="${question.number}"></a>
                                         </th>
@@ -124,6 +134,9 @@
                     </div>
                 </div>
             </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/delete-chapter.js}"></script>
         </th:block>
     </body>
 </html>

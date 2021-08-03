@@ -1,4 +1,4 @@
-$("#create-chapter-form").validate({
+$("#update-chapter-form").validate({
 	rules: {
 		name: {
 			required: true,
@@ -33,7 +33,7 @@ $("#create-chapter-form").validate({
 		$(element).removeClass('is-invalid');
 	},
 	submitHandler: function(form) {
-        if (confirm("Xác nhận tạo mới chương!")) {
+        if (confirm("Xác nhận cập nhật chương!")) {
             form.submit();
         }
 	}

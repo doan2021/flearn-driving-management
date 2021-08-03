@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ChapterForm;
@@ -33,7 +34,6 @@ public class ChapterManagementController {
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
-        // Form mục tiêu
         Object target = dataBinder.getTarget();
         if (target == null) {
             return;
@@ -72,27 +72,22 @@ public class ChapterManagementController {
 
     @PostMapping(value = { "/save-chapter" })
     public String saveChapter(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                return "create-chapter";
-            }
-            boolean createSuccess = chapterServices.saveChapter(chapterForm);
-            if (createSuccess) {
-                model.addAttribute("messageSuccess", "Tạo chương mới thành công!");
-            } else {
-                model.addAttribute("messageError", "Quá trình tạo chương thất bại!");
-            }
-            model.addAttribute("chapterForm", chapterForm);
+        if (result.hasErrors()) {
             return "create-chapter";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "403";
         }
+        chapterServices.saveChapter(chapterForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Tạo chương mới thành công!");
+        model.addAttribute("chapterForm", new ChapterForm());
+        return "create-chapter";
     }
 
     @PostMapping(value = { "/update-chapter" })
-    public String editChapterDetail(ChapterForm chapterForm, Model model) {
-        chapterServices.editChapterDetail(chapterForm);
+    public String editChapterDetail(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
+    	if (result.hasErrors()) {
+            return "update-chapter";
+        }
+    	chapterServices.editChapterDetail(chapterForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Tạo chương mới thành công!");
         model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterForm.getChapterId()));
         return "update-chapter";
     }
@@ -101,5 +96,12 @@ public class ChapterManagementController {
     public String editPageChapterDetail(Long chapterId, Model model) {
         model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterId));
         return "update-chapter";
+    }
+    
+    @PostMapping(value = {"/delete-chapter"})
+    public String deleteChapter(Long chapterId, RedirectAttributes redirAttrs) {
+    	chapterServices.deleteChapter(chapterId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa chương thành công!");
+        return "redirect:chapter";
     }
 }
