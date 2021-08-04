@@ -14,8 +14,8 @@
                             <div class="col-12">
                                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Quản lý chương</li>
+                                        <li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Danh sách chương</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -25,7 +25,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-12">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
                                                 <form class="row mt-3" th:action="@{/management/search-chapter}" th:object="${formSearchChapter}" method="post" id="formSearch">
                                                     <input type="hidden" th:field="*{pageNumber}" id="pageNumber">
                                                     <div class="col-6">
@@ -97,10 +97,10 @@
                                     <tbody class="list">
                                         <tr th:each="chapter : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
                                             <th class="text-center">
-                                                <span class="name mb-0 text-sm" th:text="|Chương ${chapter.name}|"></span>
+                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="${chapter.name}"></a>
                                             </th>
                                             <td class="text-center">
-                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="${chapter.content}"></a>
+                                                <span class="name mb-0 text-sm" th:text="${chapter.content}"></span>
                                             </td>
                                             <td class="text-center">
                                                 <span th:text="${chapter.description}"></span>

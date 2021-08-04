@@ -1,10 +1,14 @@
 package com.doanfpt.management.application.validator;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.dto.ChapterForm;
+import com.doanfpt.management.application.dto.DrivingLicenseForm;
 import com.doanfpt.management.application.utils.ValidationApplicationUtils;
 
 @Component
@@ -17,10 +21,28 @@ public class ChapterCreateValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
+		ChapterForm chapterForm = (ChapterForm) target;
 		// Kiểm tra các field của chapterForm. 
         ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.chapterForm.name");
-        ValidationApplicationUtils.rejectNameIncorrectFormat(errors, "name", "Pattern.chapterForm.name");
         ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "content", "NotEmpty.chapterForm.content");
-        ValidationApplicationUtils.rejectContentIncorrectFormat(errors, "content", "Pattern.chapterForm.content");
+	
+        // Validate name
+        if (!errors.hasFieldErrors("name")) {
+            if (!StringUtils.isNumeric(chapterForm.getName())) {
+                errors.rejectValue("name", "WrongNumber.chapterForm.name");
+            } else if (Common.isInvalidMaxLengthString(chapterForm.getName(), 5)) {
+                errors.rejectValue("name", "Maxlength.chapterForm.name");
+            }
+        }
+        
+        // Validate content
+         if (!errors.hasFieldErrors("content") && Common.isInvalidMaxLengthString(chapterForm.getContent(), 255)) {
+        	 errors.rejectValue("content", "Maxlength.chapterForm.content");
+         }
+         
+         // Validate description
+         if (Common.isInvalidMaxLengthString(chapterForm.getDescription(), 4000)) {
+        	 errors.rejectValue("description", "Maxlength.chapterForm.description");
+         }
 	}
 }

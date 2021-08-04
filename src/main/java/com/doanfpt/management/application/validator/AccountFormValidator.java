@@ -10,7 +10,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.doanfpt.management.application.dto.AccountForm;
-import com.doanfpt.management.application.responsitories.AccountsRespository;
+import com.doanfpt.management.application.respositories.AccountsRespository;
 
 /**
  * @author tamdu

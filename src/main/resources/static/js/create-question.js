@@ -13,8 +13,8 @@ $(document).ready(function() {
                                 '</div>'+
                                 '<div class="col-3 d-flex align-items-center justify-content-center">'+
                                     '<div class="custom-control custom-checkbox">'+
-                                        '<input type="checkbox" class="custom-control-input" id="answer' + numAnswers + '">'+
-                                        '<label class="custom-control-label" for="answer' + numAnswers + '" name="listAnswers[' + numAnswers + '].isTrue">Đáp án đúng</label>'+
+                                        '<input type="checkbox" class="custom-control-input" id="answer' + numAnswers + '" name="listAnswers[' + numAnswers + '].true">'+
+                                        '<label class="custom-control-label" for="answer' + numAnswers + '">Đáp án đúng</label>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';

@@ -32,7 +32,7 @@ public class DataSetting {
     @Column(name = "value_5")
     private String value5;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     public DataSettingId getDataSettingId() {

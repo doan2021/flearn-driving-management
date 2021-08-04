@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.doanfpt.management.application.entities.DataSetting;
 import com.doanfpt.management.application.model.DataSettingId;
-import com.doanfpt.management.application.responsitories.DataSettingRespository;
+import com.doanfpt.management.application.respositories.DataSettingRespository;
 
 @Component
 public class DataSettingComponent {

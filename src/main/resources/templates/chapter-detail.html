@@ -32,18 +32,21 @@
                     <div class="card">
                         <div class="card-header bg-transparent">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col">
                                     <h2 class="m-0">Chi tiết chương</h2>
                                 </div>
-                                <div class="col-6">
-                                    <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}"
-                                        class="btn btn-sm btn-default float-right"><i class="fas fa-edit"></i> Chỉnh
-                                        sửa</a>
+                                <div class="col text-right">
+                                    <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-default">
+                                        <i class="fas fa-edit"></i> Chỉnh sửa
+                                    </a>
+                                    <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Xóa
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row">     
+                            <div class="row">
                                 <div class="col-12">
                                     <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.name}"></span>
                                 </div>

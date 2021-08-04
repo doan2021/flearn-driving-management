@@ -147,7 +147,7 @@
                                                 <span class="badge badge-pill badge-primary badge-lg" th:if="${exam.status == null}"><strong>KHÔNG XÁC ĐỊNH</strong></span>
                                             </td>
                                             <td class="text-center">
-                                                <span class="badge badge-pill badge-info badge-lg" th:text="${exam.drivingLicense.type}"></span>
+                                                <span class="badge badge-pill badge-info badge-lg" th:text="${exam.drivingLicense.name}"></span>
                                             </td>
                                             <td class="text-center" th:text="${#dates.format(exam.updateAt, 'dd/MM/yyyy')}"></td>
                                             <td class="text-center" th:text="${exam.updateBy}"></td>

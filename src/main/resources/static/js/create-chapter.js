@@ -33,6 +33,8 @@ $("#create-chapter-form").validate({
 		$(element).removeClass('is-invalid');
 	},
 	submitHandler: function(form) {
-		form.submit();
+        if (confirm("Xác nhận tạo mới chương!")) {
+            form.submit();
+        }
 	}
 });

@@ -1,15 +1,20 @@
 package com.doanfpt.management.application.dto;
 
+import java.util.List;
+
+import com.doanfpt.management.application.model.NumberOfChapter;
+
 public class DrivingLicenseForm {
 
     private String name;
-    private Double price;
-    private Integer numberQuestion;
-    private Integer numberQuestionCorect;
-    private Integer numberQuestionParalysis;
+    private String price;
+    private String numberQuestion;
+    private String numberQuestionCorect;
+    private String numberQuestionParalysis;
     private String description;
-    private Integer examMinutes;
-    private Integer numberYearExpires;
+    private String examMinutes;
+    private String numberYearExpires;
+    private List<NumberOfChapter> listNumberOfChapter;
 
     public String getName() {
         return name;
@@ -19,28 +24,36 @@ public class DrivingLicenseForm {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public Integer getNumberQuestion() {
+    public String getNumberQuestion() {
         return numberQuestion;
     }
 
-    public void setNumberQuestion(Integer numberQuestion) {
+    public void setNumberQuestion(String numberQuestion) {
         this.numberQuestion = numberQuestion;
     }
 
-    public Integer getExamMinutes() {
-        return examMinutes;
+    public String getNumberQuestionCorect() {
+        return numberQuestionCorect;
     }
 
-    public void setExamMinutes(Integer examMinutes) {
-        this.examMinutes = examMinutes;
+    public void setNumberQuestionCorect(String numberQuestionCorect) {
+        this.numberQuestionCorect = numberQuestionCorect;
+    }
+
+    public String getNumberQuestionParalysis() {
+        return numberQuestionParalysis;
+    }
+
+    public void setNumberQuestionParalysis(String numberQuestionParalysis) {
+        this.numberQuestionParalysis = numberQuestionParalysis;
     }
 
     public String getDescription() {
@@ -51,28 +64,28 @@ public class DrivingLicenseForm {
         this.description = description;
     }
 
-    public Integer getNumberYearExpires() {
+    public String getExamMinutes() {
+        return examMinutes;
+    }
+
+    public void setExamMinutes(String examMinutes) {
+        this.examMinutes = examMinutes;
+    }
+
+    public String getNumberYearExpires() {
         return numberYearExpires;
     }
 
-    public void setNumberYearExpires(Integer numberYearExpires) {
+    public void setNumberYearExpires(String numberYearExpires) {
         this.numberYearExpires = numberYearExpires;
     }
 
-    public Integer getNumberQuestionCorect() {
-        return numberQuestionCorect;
+    public List<NumberOfChapter> getListNumberOfChapter() {
+        return listNumberOfChapter;
     }
 
-    public void setNumberQuestionCorect(Integer numberQuestionCorect) {
-        this.numberQuestionCorect = numberQuestionCorect;
-    }
-
-    public Integer getNumberQuestionParalysis() {
-        return numberQuestionParalysis;
-    }
-
-    public void setNumberQuestionParalysis(Integer numberQuestionParalysis) {
-        this.numberQuestionParalysis = numberQuestionParalysis;
+    public void setListNumberOfChapter(List<NumberOfChapter> listNumberOfChapter) {
+        this.listNumberOfChapter = listNumberOfChapter;
     }
 
 }

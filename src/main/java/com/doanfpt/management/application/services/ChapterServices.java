@@ -16,14 +16,14 @@ import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
-import com.doanfpt.management.application.responsitories.ChapterResponsitory;
+import com.doanfpt.management.application.respositories.ChapterRespository;
 import com.doanfpt.management.application.specification.ChapterSpecification;
 
 @Service
 public class ChapterServices {
 
     @Autowired
-    ChapterResponsitory chapterResponsitory;
+    ChapterRespository chapterResponsitory;
 
     public Chapter getChapterDetail(Long chapterId) {
         return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);

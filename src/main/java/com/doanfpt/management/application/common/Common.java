@@ -114,7 +114,7 @@ public class Common {
         return Common.dateToString(Common.getSystemDate(), Constant.PATTERN_FORMAT_DATE_TIME) + "_" + label + "_"
                 + fileName.replace(" ", "_") + "." + extension;
     }
-    
+
     public static Date getLastOfTheDate(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -123,10 +123,17 @@ public class Common {
         cal.add(Calendar.SECOND, 59);
         return cal.getTime();
     }
-    
+
     public static File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
         File convFile = new File(multipartFile.getOriginalFilename());
         FileUtils.writeByteArrayToFile(convFile, multipartFile.getBytes());
         return convFile;
+    }
+
+    public static Boolean isInvalidMaxLengthString(String field, Integer maxLength) {
+        if (field == null) {
+            return true;
+        }
+        return !(field.length() <= maxLength);
     }
 }

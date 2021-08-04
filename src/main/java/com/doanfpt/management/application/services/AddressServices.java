@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doanfpt.management.application.entities.Province;
-import com.doanfpt.management.application.responsitories.ProvinceRespository;
+import com.doanfpt.management.application.respositories.ProvinceRespository;
 
 @Service
 public class AddressServices {
