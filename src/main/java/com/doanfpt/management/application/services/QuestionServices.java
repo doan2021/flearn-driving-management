@@ -109,4 +109,8 @@ public class QuestionServices {
     public Question getOneQuestion(Long questionId) {
         return questionsRespository.getOne(questionId);
     }
+    
+	public Integer countQuestion() {
+		return questionsRespository.countQuestion();
+	}
 }

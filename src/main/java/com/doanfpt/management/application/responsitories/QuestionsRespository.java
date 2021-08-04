@@ -32,5 +32,7 @@ public interface QuestionsRespository  extends JpaRepository<Question, Long>, Pa
             + "                  WHERE sl.account = :account "
             + "                      AND (sl.statusQuestion = 2 or sl.statusQuestion = 3))")
     public List<Question> getListQuestionRest(Chapter chapter, Account account);
-
+   
+    @Query("SELECT count(q) FROM Question q WHERE q.isDelete = false")
+	Integer countQuestion();
 }
