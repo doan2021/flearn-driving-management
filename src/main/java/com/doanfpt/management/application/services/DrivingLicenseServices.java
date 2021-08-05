@@ -33,9 +33,10 @@ public class DrivingLicenseServices {
     @Autowired
     private ChapterRespository chapterRespository;
     
-    public List<DrivingLicense> findAll() {
-        return drivingLicenseRespository.findAll();
-    }
+	
+	 public List<DrivingLicense> findAll() { return
+	 drivingLicenseRespository.findAll(); }
+	 
 
     public DrivingLicense findById(Long drivingLicenseId) {
         return drivingLicenseRespository.getOne(drivingLicenseId);
@@ -84,13 +85,21 @@ public class DrivingLicenseServices {
             if (StringUtils.isNotBlank(formSearchDrivingLicense.getPrice())) {
                 conditions = conditions.and(DrivingLicenseSpecification.hasPrice(formSearchDrivingLicense.getPrice()));
             }
-            
- 
-
-
+            if (StringUtils.isNotBlank(formSearchDrivingLicense.getNumberQuestion())) {
+                conditions = conditions.and(DrivingLicenseSpecification.hasNumberQuestion(formSearchDrivingLicense.getNumberQuestion()));
+            }
+            if (StringUtils.isNotBlank(formSearchDrivingLicense.getNumberQuestionParalysis())) {
+                conditions = conditions.and(DrivingLicenseSpecification.hasNumberQuestionParalysis(formSearchDrivingLicense.getNumberQuestionParalysis()));
+            }
+            if (StringUtils.isNotBlank(formSearchDrivingLicense.getExamMinutes())) {
+                conditions = conditions.and(DrivingLicenseSpecification.hasExamMinutes(formSearchDrivingLicense.getExamMinutes()));
+            }
+            if (StringUtils.isNotBlank(formSearchDrivingLicense.getNumberYearExpires())) {
+                conditions = conditions.and(DrivingLicenseSpecification.hasNumberYearExpires(formSearchDrivingLicense.getNumberYearExpires()));
+            }
         }
         Pageable pageable = PageRequest.of(formSearchDrivingLicense.getPageNumber(), Constant.RECORD_PER_PAGE);
-        Page<DrivingLicense> listDrivingLicense = drivingLicenseRespository.findAll(conditions, pageable);
+        Page<DrivingLicense> listDrivingLicense = drivingLicenseRespository.findAll(pageable);
         return listDrivingLicense;
     }
 }
