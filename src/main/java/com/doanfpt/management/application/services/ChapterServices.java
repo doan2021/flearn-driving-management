@@ -1,6 +1,9 @@
 package com.doanfpt.management.application.services;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -16,7 +19,10 @@ import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
+import com.doanfpt.management.application.entities.Question;
+import com.doanfpt.management.application.exception.BusinessException;
 import com.doanfpt.management.application.respositories.ChapterRespository;
+import com.doanfpt.management.application.respositories.QuestionsRespository;
 import com.doanfpt.management.application.specification.ChapterSpecification;
 
 @Service
@@ -24,18 +30,26 @@ public class ChapterServices {
 
     @Autowired
     ChapterRespository chapterResponsitory;
+    
+    @Autowired
+    QuestionsRespository questionsRespository;
 
     public Chapter getChapterDetail(Long chapterId) {
-        return chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+    	Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+        if (chapter == null) {
+        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
+        }
+        return chapter;
     }
     
     public List<Chapter> findAllChapter() {
         return chapterResponsitory.findByIsDeleteOrderByName(Constant.IS_NOT_DELETE);
     }
 
-    public boolean saveChapter(ChapterForm chapterForm) {
+    @Transactional
+    public void saveChapter(ChapterForm chapterForm) {
         if (chapterForm == null) {
-            return false;
+        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
         }
         Chapter chapter = new Chapter();
         chapter.setName(chapterForm.getName());
@@ -45,15 +59,12 @@ public class ChapterServices {
         chapter.setCreateAt(Common.getSystemDate());
         chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
-        if (chapterResponsitory.save(chapter) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        chapterResponsitory.save(chapter);
     }
 
+    @Transactional
     public void editChapterDetail(ChapterForm chapterForm) {
-        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(), false);
+        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(), Constant.IS_NOT_DELETE);
         chapter.setName(chapterForm.getName());
         chapter.setContent(chapterForm.getContent());
         chapter.setDescription(chapterForm.getDescription());
@@ -104,4 +115,24 @@ public class ChapterServices {
     public List<Chapter> getListChapterForExamQuestion(String listChapterName) {
         return null;
     }
+
+    @Transactional
+	public void deleteChapter(Long chapterId) {
+    	Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+        if (chapter == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
+        }
+		chapter.setDelete(Constant.IS_DELETE);
+		chapter.setUpdateBy(Common.getUsernameLogin());
+		chapter.setUpdateAt(Common.getSystemDate());
+		List<Question> listQuestion = new ArrayList<>();
+		for(Question question : chapter.getListQuestion()) {
+			question.setDelete(Constant.IS_DELETE);
+			question.setUpdateBy(Common.getUsernameLogin());
+			question.setUpdateAt(Common.getSystemDate());
+			listQuestion.add(question);
+		}
+		chapter.setListQuestion(listQuestion);
+		chapterResponsitory.save(chapter);
+	}
 }

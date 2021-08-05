@@ -3,7 +3,7 @@
     layout:decorate="~{layout/layout-management}">
     <head>
         <meta charset="utf-8"/>
-        <title>Tạo câu hỏi</title>
+        <title>Chi tiết câu hỏi</title>
         <link rel="stylesheet" th:href="@{../css/create-question.css}">
     </head>
     <body>
@@ -88,15 +88,20 @@
                                     <div class="col-4 p-3" th:each="document : ${question.listImage}">
                                         <img alt="" th:src="${document.path}" class="w-100 h-100 border rounded shadow">
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 mt-3 text-center">
-                                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-3 text-center">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</button>
+                                            <form th:action="@{/management/delete-question}" method="POST" id="formDeleteQuestion" class="d-none">
+                                                <input type="hidden" name="questionId" th:value="${question.questionId}">
+                                                <input type="hidden" name="chapterId" th:value="${question.chapter.chapterId}">
+                                            </form>
+                                            <button type="button" class="btn btn-danger" onclick="deleteQuestion()"><i class="fas fa-trash-alt"></i> Xóa</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <div class="col-5 mt-4">
                         <div class="card">
                             <div class="card-header bg-transparent">
@@ -123,6 +128,9 @@
                     </div>
                 </div>
             </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/delete-question.js}"></script>
         </th:block>
     </body>
 </html>
