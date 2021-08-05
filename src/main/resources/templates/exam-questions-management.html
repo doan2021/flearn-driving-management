@@ -95,44 +95,7 @@
 										class="fas fa-plus"></i> Đề thi mới</a>
 							</div>
 						</div>
-						<div class="table-responsive">
-							<table class="table align-items-center table-flush">
-								<thead class="thead-light">
-									<tr>
-										<th scope="col" class="text-center" data-sort="name">Tên đề thi</th>
-										<th scope="col" class="text-center" data-sort="name">Mô Tả</th>
-										<th scope="col" class="text-center" data-sort="budget">Số lượng câu hỏi</th>
-										<th scope="col" class="text-center" data-sort="status">Thời gian cập nhật</th>
-										<th scope="col" class="text-center" data-sort="status">Người cập nhật</th>
-										<th scope="col"></th>
-									</tr>
-								</thead>
-								<tbody class="list" th:if="${pageContent.totalElements != 0}">
-									<tr th:each="examQuestions : ${pageContent.content}">
-										<td class="text-center">
-											<a th:text="${examQuestions.name}" href="#"></a>
-										</td>
-										<td class="text-center">
-											<span th:text="${examQuestions.description}"></span>
-										</td>
-										<td class="text-center">
-											<span th:text="${examQuestions.listExamQuestionsDetail.size}"></span>
-										</td>
-										<td class="text-center">
-											<span th:text="${examQuestions.updateAt}"></span>
-										</td>
-										<td class="text-center">
-											<span th:text="${examQuestions.updateBy}"></span>
-										</td>
-									</tr>
-								</tbody>
-								<tbody class="list" th:if="${pageContent.totalElements == 0}">
-									<tr>
-										<td colspan="5"><span class="text-danger">Không có dữ liệu!</span></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+
 						<div class="card-footer py-4">
 							<div th:insert="fragment-common/pagination :: pagination"></div>
 						</div>

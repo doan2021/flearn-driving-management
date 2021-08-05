@@ -23,8 +23,6 @@ import com.doanfpt.management.application.model.NumberOfChapter;
 @Component
 public class CreateDrivingLicenseValidator implements Validator {
 
-    public static final Integer MAX_LENGTH_INT_NUMBER = 99999;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz == DrivingLicenseForm.class;
@@ -117,8 +115,8 @@ public class CreateDrivingLicenseValidator implements Validator {
         }
 
         // Validate listNumberOfChapter
-        if (!errors.hasFieldErrors("listNumberOfChapter") && !errors.hasFieldErrors("numberQuestion")) {
-            if (numberOfChapterValid(drivingLicenseForm.getListNumberOfChapter()) != NumberUtils
+        if (!errors.hasFieldErrors("listNumberOfChapter") && !errors.hasFieldErrors("numberQuestion") && !errors.hasFieldErrors("numberQuestionParalysis")) {
+            if ((numberOfChapterValid(drivingLicenseForm.getListNumberOfChapter()) + NumberUtils.toInt(drivingLicenseForm.getNumberQuestionParalysis())) != NumberUtils
                     .toInt(drivingLicenseForm.getNumberQuestion())) {
                 errors.rejectValue("listNumberOfChapter", "WrongNumber.drivingLicenseForm.listNumberOfChapter");
             }

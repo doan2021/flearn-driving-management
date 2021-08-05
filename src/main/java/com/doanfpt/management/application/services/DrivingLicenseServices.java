@@ -26,12 +26,12 @@ public class DrivingLicenseServices {
     @Autowired
     private ChapterRespository chapterRespository;
 
-    public List<DrivingLicense> findAll() {
-        return drivingLicenseRespository.findAll();
+    public List<DrivingLicense> findAllDrivingLicense() {
+        return drivingLicenseRespository.findByIsDelete(Constant.IS_NOT_DELETE);
     }
 
     public DrivingLicense findById(Long drivingLicenseId) {
-        return drivingLicenseRespository.getOne(drivingLicenseId);
+        return drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseId, Constant.IS_NOT_DELETE);
     }
     
     public void createDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
@@ -53,6 +53,7 @@ public class DrivingLicenseServices {
                 ExamStructure examStructure = new ExamStructure();
                 examStructure.setChapter(chapter);
                 examStructure.setDrivingLicense(drivingLicense);
+                examStructure.setNumberQuestion(NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()));
                 listExamStructures.add(examStructure);
             }
         }

@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "exam_structure")
@@ -28,7 +29,7 @@ public class ExamStructure {
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
