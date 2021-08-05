@@ -33,4 +33,6 @@ public interface QuestionsRespository  extends JpaRepository<Question, Long>, Pa
             + "                      AND (sl.statusQuestion = 2 or sl.statusQuestion = 3))")
     public List<Question> getListQuestionRest(Chapter chapter, Account account);
 
+	public Question findByQuestionIdAndIsDelete(Long questionId, Boolean isNotDelete);
+
 }

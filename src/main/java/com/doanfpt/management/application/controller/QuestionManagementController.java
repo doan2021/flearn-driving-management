@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.QuestionForm;
@@ -69,5 +70,12 @@ public class QuestionManagementController {
     public String visitDetailQuestionPage(Long questionId, Model model) {
         model.addAttribute("question", questionServices.getOneQuestion(questionId));
         return "detail-question";
+    }
+    
+    @PostMapping(value = {"/delete-question"})
+    public String deleteQuestion(Long questionId, Long chapterId, RedirectAttributes redirAttrs) {
+    	questionServices.deleteQuestion(questionId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa câu hỏi thành công!");
+        return "redirect:chapter-detail?chapterId=" + chapterId;
     }
 }

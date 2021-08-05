@@ -3,7 +3,7 @@
     layout:decorate="~{layout/layout-management}">
     <head>
         <meta charset="utf-8"/>
-        <title>Tạo câu hỏi</title>
+        <title>Chi tiết câu hỏi</title>
         <link rel="stylesheet" th:href="@{../css/create-question.css}">
     </head>
     <body>
@@ -89,6 +89,11 @@
                                     <div class="row">
                                         <div class="col-12 mt-3 text-center">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</button>
+                                            <form th:action="@{/management/delete-question}" method="POST" id="formDeleteQuestion" class="d-none">
+			                                	<input type="hidden" name="questionId" th:value="${question.questionId}">
+			                                	<input type="hidden" name="chapterId" th:value="${question.chapter.chapterId}">
+			                                </form>
+                                            <button type="button" class="btn btn-danger" onclick="deleteQuestion()"><i class="fas fa-trash-alt"></i> Xóa</button>
                                         </div>
                                     </div>
                                 </div>
@@ -121,6 +126,9 @@
                     </div>
                 </div>
             </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/delete-question.js}"></script>
         </th:block>
     </body>
 </html>
