@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout-management}">
+    <head>
+        <title>Chi tiết hạng bằng</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="header bg-primary pb-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-lg-6 col-7">
+                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/management/driving-license}">Danh sách hạng bằng lái</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Chi tiết hạng bằng lái</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt--6 mb-4">
+                <div class="row">
+                    <div class=" col-12">
+                        <div class="card">
+                            <div class="card-header bg-transparent row">
+                                <div class="col-10">
+                                    <h1 class="m-0">Chi tiết hạng bằng</h1>
+                                </div>
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <a th:href="@{/management/driving-license}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="name" class="form-control-label">Tên</label>
+                                        <div class="alert alert-secondary border" th:text="${drivingLicense.name}"></div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <label for="description" class="form-control-label">Mô tả</label>
+                                        <div class="alert alert-secondary border" th:text="${drivingLicense.description}"></div>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for=numberYearExpires class="form-control-label">Thời hạn</label>
+                                        <div class="form-group">
+                                            <div class="alert alert-secondary border" th:if="${drivingLicense.numberYearExpires != 0}" th:text="|${drivingLicense.numberYearExpires} năm|"></div>
+                                            <div class="alert alert-secondary border" th:unless="${drivingLicense.numberYearExpires != 0}">Không thời hạn</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="price" class="form-control-label">Phí dự thi</label>
+                                        <div class="alert alert-secondary border" th:text="|${#numbers.formatDecimal(drivingLicense.price, 0,'COMMA', 0, 'POINT')} VNĐ|"></div>
+                                     </div>
+                                     <div class="col-12 mt-4">
+                                        <label class="form-control-label text-danger">Quy chế thi và cấu trúc bộ đề</label>
+                                        <div class="row">
+                                            <div class="col-4 mt-3">
+                                                <label for="numberQuestion" class="form-control-label">Số lượng câu hỏi</label>
+                                                <div class="alert alert-secondary border" th:text="${drivingLicense.numberQuestion}"></div>
+                                            </div>
+                                            <div class="col-4 mt-3">
+                                                <label for="numberQuestionCorect" class="form-control-label">Số lượng câu đạt</label>
+                                                <div class="alert alert-secondary border" th:text="${drivingLicense.numberQuestionCorect}"></div>
+                                            </div>
+                                            <div class="col-4 mt-3">
+                                                <label for="numberQuestionParalysis" class="form-control-label">Số lượng câu liệt</label>
+                                                <div class="alert alert-secondary border" th:text="${drivingLicense.numberQuestionParalysis}"></div>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <label for="examMinutes" class="form-control-label">Thời gian làm bài</label>
+                                                <div class="alert alert-secondary border" th:text="|${drivingLicense.examMinutes} phút|"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <label class="form-control-label">Số lượng câu hỏi thuộc mỗi chương</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-2 mt-3" th:each="examStructure : ${drivingLicense.listExamStructure}">
+                                                <div class="card card-stats border">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${examStructure.chapter.name}|"></h5>
+                                                            </div>
+                                                            <div class="col-6 text-right">
+                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:data-target="|#modalDetailChapter${examStructure.chapter.chapterId}|">Chi tiết</button>
+                                                            </div>
+                                                            <div class="col-12 my-3">
+                                                                <span class="h2 font-weight-bold mb-0 text-success">[[${examStructure.numberQuestion}]]</span><span class="h2 font-weight-bold mb-0">/ [[${examStructure.chapter.listQuestion.size}]]</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" th:id="|modalDetailChapter${examStructure.chapter.chapterId}|" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title m-0" id="exampleModalLabel" th:text="|Chương ${examStructure.chapter.name}: ${examStructure.chapter.content}|"></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <label class="form-control-label mr-3">Số lượng câu hỏi</label><span th:text="${examStructure.chapter.listQuestion.size}"></span>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-control-label">Mô tả</label>
+                                                                        <p class="ml-3 my-0" th:text="${examStructure.chapter.description}"></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-12">
+                                        <label class="form-control-label">Các đề thi đang có của hạng bằng này</label>
+                                        <a th:href="@{${'/management/create-exam-questions?drivingLicenseId='} + ${drivingLicense.drivingLicenseId}}" class="btn btn-sm btn-success float-right">
+                                            <i class="fas fa-plus"></i> Đề thi mới
+                                        </a>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <div class="table-responsive border rounded shadow">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th class="text-center border-top-0">Tên đề thi</th>
+                                                        <th class="text-center border-top-0">Mô Tả</th>
+                                                        <th class="text-center border-top-0">Số lượng câu hỏi</th>
+                                                        <th class="text-center border-top-0">Thời gian cập nhật</th>
+                                                        <th class="text-center border-top-0">Người cập nhật</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list" th:if="${drivingLicense.listExamQuestion.size != 0}">
+                                                    <tr th:each="examQuestions : ${drivingLicense.listExamQuestion}">
+                                                        <td class="text-center">
+                                                            <a th:text="${examQuestions.name}" href="#"></a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span th:text="${examQuestions.description}"></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span th:text="${examQuestions.listExamQuestionsDetail.size}"></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span th:text="${examQuestions.updateAt}"></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span th:text="${examQuestions.updateBy}"></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody class="list" th:if="${drivingLicense.listExamQuestion.size == 0}">
+                                                    <tr>
+                                                        <td colspan="5"><span class="text-danger">Không có đề thi nào thuộc hạng bằng này!</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12 mt-3 text-center">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</button>
+                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <th:block layout:fragment="script">
+            <script th:src="@{../js/create-driving-license.js}"></script>
+        </th:block>
+    </body>
+</html>

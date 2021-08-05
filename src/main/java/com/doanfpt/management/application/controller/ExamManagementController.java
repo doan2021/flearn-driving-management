@@ -38,14 +38,14 @@ public class ExamManagementController {
     public String visitCreateExamPage(Model model) {
         ExamForm examForm = new ExamForm();
         model.addAttribute("examForm", examForm);
-        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAll());
+        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAllDrivingLicense());
         return "create-exam";
     }
 
     @PostMapping(value = { "/create-exam" })
     public String createExam(@ModelAttribute("examForm") ExamForm examForm, Model model) {
         examService.createExam(examForm);
-        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAll());
+        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAllDrivingLicense());
         return "create-exam";
     }
     

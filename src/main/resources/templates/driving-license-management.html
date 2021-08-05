@@ -44,7 +44,7 @@
 													<div class="form-group m-0">
 														<div class="input-group">
 															<input type="text" class="form-control"
-																placeholder="Giá dự kiến" id="price" maxlength="5" th:field="*{price}">
+																placeholder="Phí dự thi" id="price" th:field="*{price}">
 															<div class="input-group-append">
 																<span class="input-group-text">VNĐ</span>
 															</div>
@@ -56,7 +56,7 @@
 														<div class="input-group">
 															<input type="text" class="form-control"
 																placeholder="Thời gian làm bài" id="examMinutes"
-																maxlength="5" th:field="*{examMinutes}">
+																 th:field="*{examMinutes}">
 															<div class="input-group-append">
 																<span class="input-group-text">Phút</span>
 															</div>
@@ -68,7 +68,7 @@
 														<div class="input-group">
 															<input type="text" class="form-control"
 																placeholder="Thời hạn" id="price"
-																maxlength="5" th:field="*{numberYearExpires}">
+																 th:field="*{numberYearExpires}">
 															<div class="input-group-append">
 																<span class="input-group-text">Năm</span>
 															</div>
@@ -117,7 +117,7 @@
 										<th scope="col" class="text-center">Số lượng câu đạt</th>
 										<th scope="col" class="text-center">Số lượng câu liệt</th>
 										<th scope="col" class="text-center">Thời gian làm bài</th>
-										<th scope="col" class="text-center">Giá dự kiến</th>
+										<th scope="col" class="text-center">Phí dự thi</th>
 										<th scope="col" class="text-center">Thời hạn</th>
 									</tr>
 								</thead>
@@ -139,13 +139,13 @@
 											<span th:text="${drivingLicense.numberQuestionParalysis}"></span>
 										</td>
 										<td class="text-center">
-											<span th:text="${drivingLicense.examMinutes}"></span>
+											<span th:text="|${drivingLicense.examMinutes} Phút|"></span>
 										</td>
 										<td class="text-center">
-											<span th:text="${drivingLicense.price}"></span>
+											<span th:text="|${#numbers.formatDecimal(drivingLicense.price, 0,'COMMA', 0, 'POINT')} VNĐ|"></span>
 										</td>
 										<td class="text-center">
-											<span th:text="${drivingLicense.numberYearExpires}"></span>
+											<span th:text="|${drivingLicense.numberYearExpires} Năm|"></span>
 										</td>
 									</tr>
 								</tbody>

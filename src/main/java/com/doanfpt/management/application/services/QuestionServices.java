@@ -113,4 +113,19 @@ public class QuestionServices {
 	public Integer countQuestion() {
 		return questionsRespository.countQuestion();
 	}
+
+	public Object getQuestionDetail(Long questionId) {
+		return questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
+	}
+
+	public void deleteQuestion(Long questionId) {
+		Question question = questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
+		if (question == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi không tồn tại!");
+        }
+		question.setDelete(Constant.IS_DELETE);
+		question.setUpdateBy(Common.getUsernameLogin());
+		question.setUpdateAt(Common.getSystemDate());
+		questionsRespository.save(question);
+	}
 }
