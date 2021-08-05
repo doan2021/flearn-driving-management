@@ -66,4 +66,10 @@ public class DrivingLicenceManagementController {
         model.addAttribute("drivingLicenseForm", new DrivingLicenseForm());
         return "create-driving-license";
     }
+    
+    @GetMapping(value = { "/detail-driving-license" })
+    public String visitDetailDrivingLicenseManagementPage(Long drivingLicenseId, Model model) {
+        model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId));
+        return "detail-driving-license";
+    }
 }

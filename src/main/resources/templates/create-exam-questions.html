@@ -24,121 +24,167 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid mt--6" id="create-exam-questions-app">
+            <div class="container-fluid mt--6 mb-4">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col-10">
-                                        <h1 class="m-0">Kỳ thi mới</h1>
+                                <div class="row">
+                                    <div class="col">
+                                        <h1 class="m-0">Đề thi mới</h1>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-end">
-                                        <a th:href="@{/management/exam-questions}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                        <a th:href="@{${'/management/detail-driving-license?drivingLicenseId='} + ${drivingLicense.drivingLicenseId}}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body px-4">
+                            <form class="card-body px-4" th:action="@{/management/create-exam-questions}" th:method="POST" th:object="${examQuestionsForm}">
+                                <input type="hidden" th:field="*{drivingLicenseId}" th:value="${drivingLicense.drivingLicenseId}">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-10">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-first-name">Tên Đề Thi <span class="text-danger">*</span></label>
-                                            <input type="text" id="input-first-name" placeholder="Nhập tên đề thi" class="form-control">
+                                            <label class="form-control-label" for="input-first-name">Tên đề Thi <span class="text-danger">*</span></label>
+                                            <input type="text" id="input-first-name" placeholder="Tên đề thi" class="form-control" th:field="*{name}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-first-name">Loại bằng <span class="text-danger">*</span></label>
-                                            <select class="form-control" v-model="drivingLicenseCurrent" @change="selectDrivingLicense">
-                                                <option value="">----- Chọn loại bằng -----</option>
-                                                <option v-for="drivingLicense in listDrivingLicense" :value="drivingLicense">{{ drivingLicense.name }}</option>
-                                            </select>
-                                        </div>
+                                    <div class="col-2">
+                                        <label class="form-control-label">Hạng</label>
+                                        <h1><span class="badge badge-lg badge-pill badge-info w-100" th:text="${drivingLicense.name}"></span></h1>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Mô Tả</label>
-                                            <textarea id="input-first-name" placeholder="Mô Tả" class="form-control"></textarea>
+                                            <textarea id="input-first-name" placeholder="Mô Tả" class="form-control" th:field="*{description}"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row mt-3">
+                                    <div class="col-8">
+                                        <label class="form-control-label" for="input-first-name">Chọn câu hỏi <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <label class="form-control-label" for="input-first-name">Đã chọn</label>
+                                        <span class="mb-0 h3">0</span>
+                                        <span class="mb-0 h3">/</span>
+                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestion}|"></span>
+                                    </div>
+                                    <div class="col-12 col-lg-6 col-xl-4 mt-3" th:each="examStructure : ${drivingLicense.listExamStructure}">
+                                        <div class="card border">
+                                            <div class="card-header">
+                                                <div class="row align-items-center">
+                                                    <div class="col-6">
+                                                        <h3 class="mb-0" th:text="|Chương ${examStructure.chapter.name}|"></h3>
+                                                    </div>
+                                                    <div class="col-6 text-right">
+                                                        <span class="mb-0 h3">0</span>
+                                                        <span class="mb-0 h3">/</span>
+                                                        <span class="mb-0 h3 text-danger" th:text="${examStructure.numberQuestion}|"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive table-fixed-question">
+                                                <table class="table align-items-center table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th class="text-center">#</th>
+                                                            <th class="text-center">STT</th>
+                                                            <th class="text-center">Nội dung</th>
+                                                            <th class="text-center">Câu liệt</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list" th:if="${examStructure.chapter.listQuestion.size != 0}">
+                                                        <tr th:each="question : ${examStructure.chapter.listQuestion}" th:if="${(!question.delete) && (!question.paralysis)}">
+                                                            <th class="text-center p-1">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" th:field="*{listIdQuestion}" name="listIdQuestion" th:id="|question${question.questionId}|" th:value="${question.questionId}">
+                                                                    <label class="custom-control-label" th:for="|question${question.questionId}|"></label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="text-center p-1">
+                                                                <span class="name mb-0 text-sm" th:text="|Câu ${question.number}|"></span>
+                                                            </th>
+                                                            <td class="text-center p-1">
+                                                                <span th:text="${question.content}"></span>
+                                                            </td>
+                                                            <td class="text-center p-1">
+                                                                <span class="text-success h2" th:if="${question.paralysis}"><i class="fas fa-check-circle"></i></span>
+                                                                <span class="text-danger h2" th:unless="${question.paralysis}"><i class="fas fa-times-circle"></i></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody th:unless="${examStructure.chapter.listQuestion.size != 0}">
+                                                        <tr>
+                                                            <td class="text-center" colspan="4">
+                                                                <span class="text-danger">Không có câu hỏi nào trong chương này!</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6 col-xl-4 mt-3">
+                                        <div class="card border">
+                                            <div class="card-header">
+                                                <div class="row align-items-center">
+                                                    <div class="col-6">
+                                                        <h3 class="mb-0">Câu hỏi điểm liệt</h3>
+                                                    </div>
+                                                    <div class="col-6 text-right">
+                                                        <span class="mb-0 h3">0</span>
+                                                        <span class="mb-0 h3">/</span>
+                                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestionParalysis}|"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive table-fixed-question">
+                                                <table class="table align-items-center table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th class="text-center">#</th>
+                                                            <th class="text-center">STT</th>
+                                                            <th class="text-center">Nội dung</th>
+                                                            <th class="text-center">Thuộc chương</th>
+                                                            <th class="text-center">Câu liệt</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list">
+                                                        <th:block th:each="examStructure : ${drivingLicense.listExamStructure}">
+                                                            <tr th:each="question : ${examStructure.chapter.listQuestion}" th:if="${(!question.delete) && question.paralysis}">
+                                                                <th class="text-center p-1">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" th:field="*{listIdQuestionParalysis}" name="listIdQuestionParalysis" th:id="|question${question.questionId}|" th:value="${question.questionId}">
+                                                                        <label class="custom-control-label" th:for="|question${question.questionId}|"></label>
+                                                                    </div>
+                                                                </th>
+                                                                <th class="text-center p-1">
+                                                                    <span class="name mb-0 text-sm" th:text="|Câu ${question.number}|"></span>
+                                                                </th>
+                                                                <td class="text-center p-1">
+                                                                    <span th:text="${question.content}"></span>
+                                                                </td>
+                                                                <td class="text-center p-1">
+                                                                    <span class="font-weight-bold text-primary" th:text="|Chương ${examStructure.chapter.name}|"></span>
+                                                                </td>
+                                                                <td class="text-center p-1">
+                                                                    <span class="text-success h2" th:if="${question.paralysis}"><i class="fas fa-check-circle"></i></span>
+                                                                    <span class="text-danger h2" th:unless="${question.paralysis}"><i class="fas fa-times-circle"></i></span>
+                                                                </td>
+                                                            </tr>
+                                                        </th:block>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
                                     <div class="col-12 text-center">
-                                        <button type="submit" class="btn btn-primary">Tạo</button>
-                                        <a th:href="@{/management/create-exam-questions}" class="btn btn-info">Làm mới</a>
+                                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Tạo</button>
+                                        <a th:href="@{${'/management/create-exam-questions?drivingLicenseId='} + ${drivingLicense.drivingLicenseId}}" class="btn btn-secondary"><i class="fas fa-eraser"></i> Làm mới</a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3" v-if="drivingLicenseCurrent != null && drivingLicenseCurrent != ''">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col-12">
-                                        <h3 class="mb-0">Cấu trúc bộ đề  {{ drivingLicenseCurrent.type }}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="row">
-                                    <span class="col" v-for="obj in parseJsonNumQueChap()" v-if="obj.numberQuestion > 0">Chương {{ obj.chapterName }} : <strong class="text-danger">0/{{ obj.numberQuestion }}</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6 col-xl-4" v-for="chapter in listChapter" :key="chapter.chapterId">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col-12">
-                                        <h3 class="mb-0">Chương {{ chapter.name }}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table-fixed-question">
-                             <table class="table align-items-center table-hover">
-                                 <thead class="thead-light">
-                                     <tr>
-                                         <th class="text-center">#</th>
-                                         <th class="text-center">STT</th>
-                                         <th class="text-center">Nội dung</th>
-                                         <th class="text-center">Câu liệt</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody class="list" v-if="chapter.listQuestion != null && chapter.listQuestion.length != 0">
-                                     <tr v-for="question in chapter.listQuestion" :key="question.questionId">
-                                         <th class="text-center p-1">
-                                             <div class="custom-control custom-checkbox">
-                                                 <input type="checkbox" class="custom-control-input" :id="'queCheck' + question.questionId" :value="question.questionId" v-model="listQuestionAdd">
-                                                 <label class="custom-control-label" :for="'queCheck' + question.questionId"></label>
-                                             </div>
-                                         </th>
-                                         <th class="text-center p-1">
-                                             <span class="name mb-0 text-sm">{{ question.number }}</span>
-                                         </th>
-                                         <td class="text-center p-1">
-                                             <span>{{ question.content }}</span>
-                                         </td>
-                                         <td class="text-center p-1">
-                                             <span class="text-success h2" v-if="question.paralysis"><i class="fas fa-check-circle"></i></span>
-                                             <span class="text-danger h2" v-else><i class="fas fa-times-circle"></i></span>
-                                         </td>
-                                     </tr>
-                                 </tbody>
-                                 <tbody v-else>
-                                     <tr>
-                                            <td class="text-center" colspan="4">
-                                                <span class="text-danger">Không có câu hỏi nào trong chương này!</span>
-                                            </td>
-                                        </tr>
-                                 </tbody>
-                             </table>
-                            </div>
-                            <div class="card-footer px-4">
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

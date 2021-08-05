@@ -1,14 +1,12 @@
 package com.doanfpt.management.application.validator;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.dto.ChapterForm;
-import com.doanfpt.management.application.dto.DrivingLicenseForm;
 import com.doanfpt.management.application.utils.ValidationApplicationUtils;
 
 @Component

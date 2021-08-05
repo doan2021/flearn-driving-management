@@ -6,15 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.doanfpt.management.application.common.Constant;
-import com.doanfpt.management.application.dto.FormSearchExamQuestions;
-import com.doanfpt.management.application.respone.ResponeData;
-import com.doanfpt.management.application.services.ChapterServices;
+import com.doanfpt.management.application.dto.ExamQuestionsForm;
 import com.doanfpt.management.application.services.DrivingLicenseServices;
-import com.doanfpt.management.application.services.ExamQuestionsServices;
-import com.doanfpt.management.application.services.ExamServices;
 import com.doanfpt.management.application.services.QuestionServices;
 
 @Controller
@@ -22,45 +16,23 @@ import com.doanfpt.management.application.services.QuestionServices;
 public class ExamQuestionsManagementController {
 
     @Autowired
-    ExamServices examServices;
-
-    @Autowired
     QuestionServices questionServices;
-
-    @Autowired
-    ExamQuestionsServices examQuestionsServices;
 
     @Autowired
     DrivingLicenseServices drivingLicenseServices;
 
-    @Autowired
-    ChapterServices chapterServices;
-
-    @GetMapping(value = { "/exam-questions" })
-    public String visitExamQuestionManagementPage(FormSearchExamQuestions formSearchExamQuestions, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME,
-                examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
-        model.addAttribute("formSearchExamQuestions", new FormSearchExamQuestions());
-        return "exam-questions-management";
-    }
-
-    @PostMapping(value = { "/search-exam-questions" })
-    public String searchExamQuestions(FormSearchExamQuestions formSearchExamQuestions, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME,
-                examQuestionsServices.searchExamQuestions(formSearchExamQuestions));
-        model.addAttribute("formSearchExamQuestions", formSearchExamQuestions);
-        return "exam-questions-management";
-    }
 
     @GetMapping(value = { "/create-exam-questions" })
-    public String visitCreateExamQuestionPage(Integer pageNumber, Model model) {
+    public String visitCreateExamQuestionPage(Long drivingLicenseId, Model model) {
+        ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
+        model.addAttribute("examQuestionsForm", examQuestionsForm);
+        model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId)) ;
         return "create-exam-questions";
     }
 
-    @GetMapping(value = { "/init-create-exam-questions" })
-    public @ResponseBody ResponeData initExamQuestion() {
-        ResponeData responeData = new ResponeData();
-        responeData.putResult("listDrivingLicense", drivingLicenseServices.findAll());
-        return responeData;
+    @PostMapping(value = { "/create-exam-questions" })
+    public String createExamQuestion(ExamQuestionsForm examQuestionsForm, Model model) {
+        model.addAttribute("drivingLicense", drivingLicenseServices.findById(examQuestionsForm.getDrivingLicenseId())) ;
+        return "create-exam-questions";
     }
 }

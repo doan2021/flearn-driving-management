@@ -8,7 +8,7 @@
     </head>
     <body>
         <th:block layout:fragment="content">
-            <div class="header bg-primary">
+            <div class="header bg-primary pb-4">
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="row align-items-center py-4">
@@ -22,102 +22,104 @@
                                     </ol>
                                 </nav>
                             </div>
-                            <div class="col-12">
-                                <div class="card card-stats m-0">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <h2 class="m-0">Chi tiết câu hỏi</h2>
-                                            </div>
-                                            <div class="col-2 d-flex align-items-center justify-content-end">
-                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${question.chapter.chapterId}}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
-                                            </div>
-                                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt--6">
+                <div class="row p-0 mb-3">
+                    <div class="col-12">
+                        <div class="card card-stats m-0">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h2 class="m-0">Chi tiết câu hỏi</h2>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h1 th:text="|Chương ${question.chapter.name}|"></h1>
-                                                <p class="mt-0" th:text="${question.chapter.content}"></p>
-                                            </div>
-                                        </div>
+                                    <div class="col-2 d-flex align-items-center justify-content-end">
+                                        <a th:href="@{${'/management/chapter-detail?chapterId='} + ${question.chapter.chapterId}}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h1 th:text="|Chương ${question.chapter.name}|"></h1>
+                                        <p class="mt-0" th:text="${question.chapter.content}"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container-fluid">
-                    <div class="row p-0 mb-3">
-                        <div class="col-7">
-                            <div class="card">
-                                <div class="card-header bg-transparent">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h3 class="m-0">Câu hỏi</h3>
-                                        </div>
+                    <div class="col-7 mt-4">
+                        <div class="card">
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3 class="m-0">Câu hỏi</h3>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="numberQuestion">Số thứ tự <span class="text-danger">*</span></label>
-                                                <div class="alert alert-secondary border" th:text="${question.number}"></div>
-                                            </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="numberQuestion">Số thứ tự <span class="text-danger">*</span></label>
+                                            <div class="alert alert-secondary border" th:text="${question.number}"></div>
                                         </div>
-                                        <div class="col-4 text-center">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="isParalysis">Câu liệt</label>
-                                            </div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="isParalysis">Câu liệt</label>
+                                            <span class="d-block h1 text-success" th:if="${question.isParalysis}"><i class="fas fa-check-circle"></i></span>
+                                            <span class="d-block h1 text-danger" th:unless="${question.isParalysis}"><i class="fas fa-times-circle"></i></span>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="contentQuestion">Nội dung câu hỏi <span class="text-danger">*</span></label>
-                                                <div class="alert alert-secondary border" th:text="${question.content}"></div>
-                                            </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="contentQuestion">Nội dung câu hỏi <span class="text-danger">*</span></label>
+                                            <div class="alert alert-secondary border" th:text="${question.content}"></div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Hình ảnh</label>
-                                            </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Hình ảnh</label>
                                         </div>
-                                        <div class="col-4 p-3" th:each="document : ${question.listImage}">
-                                            <img alt="" th:src="${document.path}" class="w-100 h-100 border rounded shadow">
-                                        </div>
+                                    </div>
+                                    <div class="col-4 p-3" th:each="document : ${question.listImage}">
+                                        <img alt="" th:src="${document.path}" class="w-100 h-100 border rounded shadow">
+                                    </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12 mt-3 text-center">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</button>
                                             <form th:action="@{/management/delete-question}" method="POST" id="formDeleteQuestion" class="d-none">
-			                                	<input type="hidden" name="questionId" th:value="${question.questionId}">
-			                                	<input type="hidden" name="chapterId" th:value="${question.chapter.chapterId}">
-			                                </form>
+                                                <input type="hidden" name="questionId" th:value="${question.questionId}">
+                                                <input type="hidden" name="chapterId" th:value="${question.chapter.chapterId}">
+                                            </form>
                                             <button type="button" class="btn btn-danger" onclick="deleteQuestion()"><i class="fas fa-trash-alt"></i> Xóa</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-5">
-                            <div class="card">
-                                <div class="card-header bg-transparent">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h3 class="mb-0">Đáp án</h3>
-                                        </div>
+                    <div class="col-5 mt-4">
+                        <div class="card">
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3 class="mb-0">Đáp án</h3>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12" th:each="answer : ${question.listAnswers}">
-                                            <div class="alert alert-success border" th:if="${answer.true}">
-                                                 <span class="alert-text"><strong th:text="${answer.content}"></strong></span>
-                                                 <span class="alert-icon float-right m-0"><i class="fas fa-check-circle"></i></span>
-                                            </div>
-                                            <div class="alert alert-secondary border" th:unless="${answer.true}">
-                                                <span class="alert-text"><strong th:text="${answer.content}"></strong></span>
-                                            </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12" th:each="answer : ${question.listAnswers}">
+                                        <div class="alert alert-success border" th:if="${answer.true}">
+                                             <span class="alert-text"><strong th:text="${answer.content}"></strong></span>
+                                             <span class="alert-icon float-right m-0"><i class="fas fa-check-circle"></i></span>
+                                        </div>
+                                        <div class="alert alert-secondary border" th:unless="${answer.true}">
+                                            <span class="alert-text"><strong th:text="${answer.content}"></strong></span>
                                         </div>
                                     </div>
                                 </div>

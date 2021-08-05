@@ -8,6 +8,7 @@ public class ExamQuestionsForm {
     private String description;
     private Long drivingLicenseId;
     private List<Long> listIdQuestion;
+    private List<Long> listIdQuestionParalysis;
 
     public String getName() {
         return name;
@@ -39,6 +40,14 @@ public class ExamQuestionsForm {
 
     public void setDrivingLicenseId(Long drivingLicenseId) {
         this.drivingLicenseId = drivingLicenseId;
+    }
+
+    public List<Long> getListIdQuestionParalysis() {
+        return listIdQuestionParalysis;
+    }
+
+    public void setListIdQuestionParalysis(List<Long> listIdQuestionParalysis) {
+        this.listIdQuestionParalysis = listIdQuestionParalysis;
     }
 
 }

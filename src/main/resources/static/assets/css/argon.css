@@ -7082,7 +7082,7 @@ a.bg-darker:hover, a.bg-darker:focus, button.bg-darker:hover, button.bg-darker:f
 }
 
 .rounded {
-	border-radius: .375rem !important;
+    border-radius: 0.8rem!important;
 }
 
 .rounded-top {
