@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.DrivingLicenseForm;
+import com.doanfpt.management.application.dto.FormSearchDrivingLicense;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.DrivingLicenseServices;
 import com.doanfpt.management.application.validator.CreateDrivingLicenseValidator;
@@ -23,12 +24,28 @@ public class DrivingLicenceManagementController {
 
     @Autowired
     ChapterServices chapterServices;
-
+    
     @Autowired
     DrivingLicenseServices drivingLicenseServices;
 
     @Autowired
     CreateDrivingLicenseValidator createDrivingLicenseValidator;
+    
+    @GetMapping(value = { "/driving-license" })
+    public String visitDrivingLicensePage(FormSearchDrivingLicense formSearchDrivingLicense, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME,
+                drivingLicenseServices.searchDrivingLicense(formSearchDrivingLicense));
+        model.addAttribute("formSearchDrivingLicense", new FormSearchDrivingLicense());
+        return "driving-license-management";
+    }
+    
+    @PostMapping(value = { "/search-driving-license" })
+    public String searchDrivingLicense(FormSearchDrivingLicense formSearchDrivingLicense, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME,
+                drivingLicenseServices.searchDrivingLicense(formSearchDrivingLicense));
+        model.addAttribute("formSearchDrivingLicense", formSearchDrivingLicense);
+        return "driving-license-management";
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
@@ -40,11 +57,6 @@ public class DrivingLicenceManagementController {
         if (target.getClass() == DrivingLicenseForm.class) {
             dataBinder.setValidator(createDrivingLicenseValidator);
         }
-    }
-
-    @GetMapping(value = { "/driving-license" })
-    public String visitDrivingLicenseManagementPage(Model model) {
-        return "driving-license-management";
     }
 
     @GetMapping(value = { "/create-driving-license" })

@@ -1,135 +1,169 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-management}">
-    <head>
-        <title>Quản lý hạng bằng lái</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <th:block layout:fragment="content">
-            <div class="header bg-primary pb-6">
-                <div class="container-fluid">
-                    <div class="header-body">
-                        <div class="row align-items-center py-4">
-                            <div class="col-12">
-                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Danh sách hạng bằng lái</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                            <div class="col-12">
-                                <div class="card card-stats">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
-                                                <form class="row mt-3" th:action="@{/management/search-exam-questions}" method="post" id="formSearch">
-                                                    <input type="hidden" id="pageNumber">
-                                                    <div class="col-6">
-                                                        <input type="text" class="form-control" placeholder="Tên đề thi" 
-                                                            autofocus>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <input type="text" class="form-control" placeholder="Mô Tả"  autofocus>
-                                                    </div>
-                                                    <div class="col-12 mt-3">
-                                                        <div class="input-daterange datepicker row align-items-center">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">
-                                                                                <i class="ni ni-calendar-grid-58"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <input class="form-control" placeholder="Ngày cập nhật từ" type="text" autocomplete="off">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">
-                                                                                <i class="ni ni-calendar-grid-58"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <input class="form-control" placeholder="Ngày cập nhật đến" type="text" autocomplete="off">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <button class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
-                                                        <a th:href="@{../management/exam-questions-management}" class="btn btn-info"><i class="fas fa-eraser"></i> Xóa</a>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid mt--6">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h3 class="m-0">Toàn bộ hạng bằng lái</h3>
-                                    </div>
-	                                <div class="col-4 text-right">
-	                                    <a th:href="@{/management/create-driving-license}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Hạng bằng mới</a>
-	                                </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>Tên</th>
-                                            <th>Mô Tả</th>
-                                            <th>Loại</th>
-                                            <th>Thời gian cập nhật</th>
-                                            <th>Người cập nhật</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody th:if="${pageContent.totalElements != 0}">
-                                        <tr th:each="drivingLicense : ${pageContent.content}">
-                                            <td class="text-center">
-                                                <a th:text="${drivingLicense.name}" href="#"></a>
-                                            </td>
-                                            <td class="text-center">
-                                                <span th:text="${drivingLicense.description}"></span>
-                                            </td>
-                                            <td class="text-center">
-                                                <span th:text="${drivingLicense.updateAt"></span>
-                                            </td>
-                                            <td class="text-center">
-                                                <span th:text="${drivingLicense.updateBy}"></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody class="list" th:if="${pageContent.totalElements == 0}">
-                                        <tr>
-                                            <td colspan="5"><span class="text-danger">Không có dữ liệu!</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer py-4">
-                                <div th:insert="fragment-common/pagination :: pagination"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </th:block>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-management}">
+
+<head>
+	<title>Quản lý hạng bằng lái</title>
+	<meta charset="utf-8">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-12">
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item active" aria-current="page">Danh sách hạng bằng lái</li>
+								</ol>
+							</nav>
+						</div>
+						<div class="col-12">
+							<div class="card card-stats">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12">
+											<h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
+											<form class="row mt-3" th:action="@{/management/search-driving-license}" th:object="${formSearchDrivingLicense}" method="post" >
+												<input type="hidden" id="pageNumber" th:field="*{pageNumber}">
+												<div class="col-4 mt-3">
+													<input type="text" class="form-control" placeholder="Tên" autofocus th:field="*{name}">
+												</div>
+												<div class="col-4 mt-3">
+													<input type="text" class="form-control"
+														placeholder="Số lượng câu hỏi" autofocus th:field="*{numberQuestion}">
+												</div>
+												<div class="col-4 mt-3">
+													<input type="text" class="form-control"
+														placeholder="Số lượng câu liệt" autofocus th:field="*{numberQuestionParalysis}">
+												</div>
+												<div class="col-4 mt-3">
+													<div class="form-group m-0">
+														<div class="input-group">
+															<input type="text" class="form-control"
+																placeholder="Phí dự thi" id="price" th:field="*{price}">
+															<div class="input-group-append">
+																<span class="input-group-text">VNĐ</span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-4 mt-3">
+													<div class="form-group m-0">
+														<div class="input-group">
+															<input type="text" class="form-control"
+																placeholder="Thời gian làm bài" id="examMinutes"
+																 th:field="*{examMinutes}">
+															<div class="input-group-append">
+																<span class="input-group-text">Phút</span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-4 mt-3">
+													<div class="form-group">
+														<div class="input-group">
+															<input type="text" class="form-control"
+																placeholder="Thời hạn" id="price"
+																 th:field="*{numberYearExpires}">
+															<div class="input-group-append">
+																<span class="input-group-text">Năm</span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-12">
+													<button class="btn btn-primary"><i class="fas fa-search"></i> Tìm
+														kiếm</button>
+													<a th:href="@{../management/driving-license-management}"
+														class="btn btn-info"><i class="fas fa-eraser"></i> Xóa</a>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid mt--6">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-8">
+									<h3 class="m-0">Toàn bộ hạng bằng lái</h3>
+								</div>
+								<div class="col-4 text-right">
+									<a th:href="@{/management/create-driving-license}"
+										class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Hạng bằng
+										mới</a>
+								</div>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table align-items-center table-flush">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col" class="text-center">Tên</th>
+										<th scope="col" class="text-center">Mô Tả</th>
+										<th scope="col" class="text-center">Số lượng câu hỏi</th>
+										<th scope="col" class="text-center">Số lượng câu đạt</th>
+										<th scope="col" class="text-center">Số lượng câu liệt</th>
+										<th scope="col" class="text-center">Thời gian làm bài</th>
+										<th scope="col" class="text-center">Phí dự thi</th>
+										<th scope="col" class="text-center">Thời hạn</th>
+									</tr>
+								</thead>
+								<tbody th:if="${pageContent.totalElements != 0}">
+									<tr th:each="drivingLicense : ${pageContent.content}">
+										<td class="text-center">
+											<a th:text="${drivingLicense.name}" th:href="@{${'/management/detail-driving-license?drivingLicenseId='} + ${drivingLicense.drivingLicenseId}}"></a>
+										</td>
+										<td class="text-center">
+											<span th:text="${drivingLicense.description}"></span>
+										</td>
+										<td class="text-center">
+											<span th:text="${drivingLicense.numberQuestion}"></span>
+										</td>
+										<td class="text-center">
+											<span th:text="${drivingLicense.numberQuestionCorect}"></span>
+										</td>
+										<td class="text-center">
+											<span th:text="${drivingLicense.numberQuestionParalysis}"></span>
+										</td>
+										<td class="text-center">
+											<span th:text="|${drivingLicense.examMinutes} Phút|"></span>
+										</td>
+										<td class="text-center">
+											<span th:text="|${#numbers.formatDecimal(drivingLicense.price, 0,'COMMA', 0, 'POINT')} VNĐ|"></span>
+										</td>
+										<td class="text-center">
+											<span th:text="|${drivingLicense.numberYearExpires} Năm|"></span>
+										</td>
+									</tr>
+								</tbody>
+								<tbody class="list" th:if="${pageContent.totalElements == 0}">
+									<tr>
+										<td colspan="5"><span class="text-danger">Không có dữ liệu!</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="card-footer py-4">
+							<div th:insert="fragment-common/pagination :: pagination"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
 </html>

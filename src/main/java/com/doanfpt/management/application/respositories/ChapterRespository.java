@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,7 @@ public interface ChapterRespository  extends JpaRepository<Chapter, Long>, Pagin
     public Chapter findByChapterIdAndIsDelete(Long chapterId, Boolean isDelete);
     
     public List<Chapter> findByIsDeleteOrderByName(Boolean isDelete);
+    
+    @Query("SELECT count(c) FROM Chapter c WHERE c.isDelete = false")
+	Integer countChapter();
 }
