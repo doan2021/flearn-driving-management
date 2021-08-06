@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.entities.DrivingLicense;
 
 @Repository
-public interface DrivingLicenseRespository extends JpaRepository<DrivingLicense, Long>,PagingAndSortingRepository<DrivingLicense, Long>, JpaSpecificationExecutor<DrivingLicense> {
-    
-    public DrivingLicense findByDrivingLicenseIdAndIsDelete(Long drivingLicenseId, Boolean isDelete);
-    
-    public List<DrivingLicense> findByIsDelete(Boolean isDelete);
+public interface DrivingLicenseRespository extends JpaRepository<DrivingLicense, Long>, PagingAndSortingRepository<DrivingLicense, Long>, JpaSpecificationExecutor<DrivingLicense> {
+
+	public DrivingLicense findByDrivingLicenseIdAndIsDelete(Long drivingLicenseId, Boolean isDelete);
+
+	public List<DrivingLicense> findByIsDelete(Boolean isDelete);
+
 }
