@@ -151,7 +151,7 @@
                                                 <tbody class="list" th:if="${drivingLicense.listExamQuestion.size != 0}">
                                                     <tr th:each="examQuestions : ${drivingLicense.listExamQuestion}">
                                                         <td class="text-center">
-                                                            <a th:text="${examQuestions.name}" href="#"></a>
+                                                            <a th:text="${examQuestions.name}" href="#" class="font-weight-bold"></a>
                                                         </td>
                                                         <td class="text-center">
                                                             <span th:text="${examQuestions.description}"></span>

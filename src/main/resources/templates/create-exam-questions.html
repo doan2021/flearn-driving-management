@@ -8,6 +8,9 @@
     </head>
     <body>
         <th:block layout:fragment="content">
+            <input type="hidden" th:value="${drivingLicense.numberQuestion}" id="numberQuestion">
+            <input type="hidden" th:value="${drivingLicense.numberQuestionParalysis}" id="numberQuestionParalysis">
+            <input type="hidden" th:value="${drivingLicense.listExamStructure.size}" id="numberOfChapter">
             <div class="header bg-primary pb-4">
                 <div class="container-fluid">
                     <div class="header-body">
@@ -38,9 +41,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <form class="card-body px-4" th:action="@{/management/create-exam-questions}" th:method="POST" th:object="${examQuestionsForm}">
-                                <input type="hidden" th:field="*{drivingLicenseId}" th:value="${drivingLicense.drivingLicenseId}">
+                            <form class="card-body px-4" th:action="@{/management/create-exam-questions}" th:method="POST" th:object="${examQuestionsForm}" id="formCreateExamQuestions">
+                                <input type="hidden" name="drivingLicenseId" th:value="${drivingLicense.drivingLicenseId}">
                                 <div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                                            <p class="m-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('drivingLicenseId')}" th:errors="*{drivingLicenseId}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('listIdQuestion')}" th:errors="*{listIdQuestion}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('listIdQuestionParalysis')}" th:errors="*{listIdQuestionParalysis}"></p>
+                                        </div>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                                            <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                            <span class="alert-text" th:text="${success}"></span>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div class="col-10">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Tên đề Thi <span class="text-danger">*</span></label>
@@ -68,7 +87,7 @@
                                         <span class="mb-0 h3">/</span>
                                         <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestion}|"></span>
                                     </div>
-                                    <div class="col-12 col-lg-6 col-xl-4 mt-3" th:each="examStructure : ${drivingLicense.listExamStructure}">
+                                    <div class="col-12 col-lg-6 col-xl-4 mt-3" th:each="examStructure,stat : ${drivingLicense.listExamStructure}">
                                         <div class="card border">
                                             <div class="card-header">
                                                 <div class="row align-items-center">
@@ -76,9 +95,10 @@
                                                         <h3 class="mb-0" th:text="|Chương ${examStructure.chapter.name}|"></h3>
                                                     </div>
                                                     <div class="col-6 text-right">
-                                                        <span class="mb-0 h3">0</span>
+                                                        <span class="mb-0 h3" th:id="|numberQuestionCheckInChapter${stat.index}|">0</span>
                                                         <span class="mb-0 h3">/</span>
-                                                        <span class="mb-0 h3 text-danger" th:text="${examStructure.numberQuestion}|"></span>
+                                                        <span class="mb-0 h3 text-danger" th:text="${examStructure.numberQuestion}|" th:id="|labelNumberQuestionInChapter${stat.index}|"></span>
+                                                        <input type="hidden" th:value="${examStructure.numberQuestion}" th:id="|numberQuestionInChapter${stat.index}|">
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,7 +116,10 @@
                                                         <tr th:each="question : ${examStructure.chapter.listQuestion}" th:if="${(!question.delete) && (!question.paralysis)}">
                                                             <th class="text-center p-1">
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" th:field="*{listIdQuestion}" name="listIdQuestion" th:id="|question${question.questionId}|" th:value="${question.questionId}">
+                                                                    <input type="checkbox" class="custom-control-input question-check"
+                                                                        th:chapter-index="${stat.index}"
+                                                                        th:field="*{listIdQuestion}" name="listIdQuestion" th:id="|question${question.questionId}|" 
+                                                                        th:value="${question.questionId}">
                                                                     <label class="custom-control-label" th:for="|question${question.questionId}|"></label>
                                                                 </div>
                                                             </th>
@@ -153,7 +176,7 @@
                                                             <tr th:each="question : ${examStructure.chapter.listQuestion}" th:if="${(!question.delete) && question.paralysis}">
                                                                 <th class="text-center p-1">
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" th:field="*{listIdQuestionParalysis}" name="listIdQuestionParalysis" th:id="|question${question.questionId}|" th:value="${question.questionId}">
+                                                                        <input type="checkbox" class="custom-control-input question-paralysis-check" th:field="*{listIdQuestionParalysis}" name="listIdQuestionParalysis" th:id="|question${question.questionId}|" th:value="${question.questionId}">
                                                                         <label class="custom-control-label" th:for="|question${question.questionId}|"></label>
                                                                     </div>
                                                                 </th>

@@ -51,7 +51,7 @@
                                                 <p class="m-0" th:if="${#fields.hasErrors('examMinutes')}" th:errors="*{examMinutes}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('listNumberOfChapter')}" th:errors="*{listNumberOfChapter}"></p>
                                             </div>
-                                            <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${success}">
+                                            <div class="alert alert-success" th:if="${success != null}" th:text="${success}">
                                             </div>
                                         </div>
                                         <div class="col-12">
