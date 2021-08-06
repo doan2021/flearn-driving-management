@@ -26,9 +26,11 @@ $( document ).ready(function() {
             $(element).removeClass('is-invalid');
         },
         submitHandler: function(form) {
-            if (confirm("Xác nhận tạo mới đề thi!")) {
-                form.submit();
-            }
+            if (!isInvalidNumberQuestionForChapter()) {
+                if (confirm("Xác nhận tạo mới đề thi!")) {
+                    form.submit();
+                }
+            } 
         }
     });
     
@@ -40,24 +42,51 @@ $( document ).ready(function() {
         if (numberQuestionCheckInChapter == numberQuestionInChapter) {
             $('#labelNumberQuestionInChapter'+chapterIndex).removeClass('text-danger');
             $('#labelNumberQuestionInChapter'+chapterIndex).addClass('text-success');
+            $('#errorNumberQuestionInChapter' + chapterIndex).text('');
         } else {
             $('#labelNumberQuestionInChapter'+chapterIndex).addClass('text-danger');
             $('#labelNumberQuestionInChapter'+chapterIndex).removeClass('text-success');
         }
     });
+    
+    $('.question-paralysis-check').change(function(){
+        var numberQuestionParalysisCheck = $('.question-paralysis-check').filter(':checked').length;
+        var numberQuestionParalysis = $('#numberQuestionParalysis').val();
+        $('#numberQuestionParalysisCheck').text(numberQuestionParalysisCheck);
+        if (numberQuestionParalysisCheck == numberQuestionParalysis) {
+            $('#labelNumberQuestionParalysis').removeClass('text-danger');
+            $('#labelNumberQuestionParalysis').addClass('text-success');
+            $('#errorNumberQuestionParalysis').text('');
+        } else {
+            $('#labelNumberQuestionParalysis').addClass('text-danger');
+            $('#labelNumberQuestionParalysis').removeClass('text-success');
+        }
+    });
 });
 
-function checkNumberQuestionForChapter() {
+function isInvalidNumberQuestionForChapter() {
+    var isError = false;
     var numberOfChapter = $('#numberOfChapter').val();
-}
-
-function checkNumberQuestion() {
-    var numberQuestion = $('#numberQuestion').val();
-    var numberQuestionParalysis = $('#numberQuestionParalysis').val();
-    var numberQuestionCheck = $('.question-check').filter(':checked').length;
-    var numberQuestionParalysisCheck = $('.question-paralysis-check').filter(':checked').length;
-    
-    if (numberQuestion != numberQuestionCheck) {
-        
+    for (let i = 0; i < numberOfChapter; i++) {
+        var numberQuestionInChapter = $('#numberQuestionInChapter' + i).val();
+        var numberQuestionCheckInChapter = $('input[chapter-index=' + i + ']').filter(':checked').length;
+        if (numberQuestionInChapter != numberQuestionCheckInChapter) {
+            $('#errorNumberQuestionInChapter' + i).text('Số lượng câu hỏi không khớp!');
+            isError = true;
+        } else {
+            $('#errorNumberQuestionInChapter' + i).text('');
+            isError = false;
+        }
     }
+    
+    var numberQuestionParalysisCheck = $('.question-paralysis-check').filter(':checked').length;
+    var numberQuestionParalysis = $('#numberQuestionParalysis').val();
+    if (numberQuestionParalysisCheck != numberQuestionParalysis) {
+        $('#errorNumberQuestionParalysis').text('Số lượng câu hỏi không khớp!');
+        isError = true;
+    } else {
+        $('#errorNumberQuestionParalysis').text('');
+        isError = false;
+    }
+    return isError;
 }

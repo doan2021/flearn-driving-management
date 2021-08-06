@@ -9,7 +9,6 @@
     <body>
         <th:block layout:fragment="content">
             <input type="hidden" th:value="${drivingLicense.numberQuestion}" id="numberQuestion">
-            <input type="hidden" th:value="${drivingLicense.numberQuestionParalysis}" id="numberQuestionParalysis">
             <input type="hidden" th:value="${drivingLicense.listExamStructure.size}" id="numberOfChapter">
             <div class="header bg-primary pb-4">
                 <div class="container-fluid">
@@ -85,7 +84,7 @@
                                         <label class="form-control-label" for="input-first-name">Đã chọn</label>
                                         <span class="mb-0 h3">0</span>
                                         <span class="mb-0 h3">/</span>
-                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestion}|"></span>
+                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestion}"></span>
                                     </div>
                                     <div class="col-12 col-lg-6 col-xl-4 mt-3" th:each="examStructure,stat : ${drivingLicense.listExamStructure}">
                                         <div class="card border">
@@ -99,6 +98,9 @@
                                                         <span class="mb-0 h3">/</span>
                                                         <span class="mb-0 h3 text-danger" th:text="${examStructure.numberQuestion}|" th:id="|labelNumberQuestionInChapter${stat.index}|"></span>
                                                         <input type="hidden" th:value="${examStructure.numberQuestion}" th:id="|numberQuestionInChapter${stat.index}|">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <span th:id="|errorNumberQuestionInChapter${stat.index}|" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,9 +156,13 @@
                                                         <h3 class="mb-0">Câu hỏi điểm liệt</h3>
                                                     </div>
                                                     <div class="col-6 text-right">
-                                                        <span class="mb-0 h3">0</span>
+                                                        <span class="mb-0 h3" id="numberQuestionParalysisCheck">0</span>
                                                         <span class="mb-0 h3">/</span>
-                                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestionParalysis}|"></span>
+                                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestionParalysis}" id="labelNumberQuestionParalysis"></span>
+                                                        <input type="hidden" th:value="${drivingLicense.numberQuestionParalysis}" id="numberQuestionParalysis">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <span id="errorNumberQuestionParalysis" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
