@@ -115,6 +115,10 @@ public class ChapterServices {
     public List<Chapter> getListChapterForExamQuestion(String listChapterName) {
         return null;
     }
+    
+	public Integer countChapter() {
+		return chapterResponsitory.countChapter();
+	}
 
     @Transactional
 	public void deleteChapter(Long chapterId) {

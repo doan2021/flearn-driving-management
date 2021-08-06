@@ -109,6 +109,10 @@ public class QuestionServices {
     public Question getOneQuestion(Long questionId) {
         return questionsRespository.getOne(questionId);
     }
+    
+	public Integer countQuestion() {
+		return questionsRespository.countQuestion();
+	}
 
 	public Object getQuestionDetail(Long questionId) {
 		return questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
