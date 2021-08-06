@@ -66,4 +66,24 @@ public class DrivingLicenceManagementController {
         model.addAttribute("drivingLicenseForm", new DrivingLicenseForm());
         return "create-driving-license";
     }
+    
+    @PostMapping(value = { "/update-driving-license" })
+    public String updateDrivingLicense(@Validated DrivingLicenseForm drivingLicenseForm, BindingResult result, Model model) {
+        model.addAttribute("listChapter", chapterServices.findAllChapter());
+        if (result.hasErrors()) {
+            return "update-driving-license";
+        }
+        drivingLicenseServices.updateDrivingLicense(drivingLicenseForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa hạng bằng lái thành công!");
+        model.addAttribute("drivingLicenseForm", new DrivingLicenseForm());
+        return "update-driving-license";
+    }
+    
+    @GetMapping(value = { "/update-driving-license" })
+    public String updateDrivingLicense(Model model, Long drivingLicenseId) {
+    	model.addAttribute("drivingLicenseForm", drivingLicenseServices.getObjectUpdate(drivingLicenseId));
+    	return "update-driving-license";
+    }
+    
+    
 }

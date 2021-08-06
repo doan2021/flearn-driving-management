@@ -7,4 +7,6 @@ import com.doanfpt.management.application.entities.DrivingLicense;
 
 @Repository
 public interface DrivingLicenseRespository extends JpaRepository<DrivingLicense, Long>{
+
+	DrivingLicense findByDrivingLicenseIdAndIsDelete(Long drivingLicenseId, boolean isNotDelete);
 }
