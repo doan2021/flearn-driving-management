@@ -38,6 +38,8 @@ public class Constant {
     public static final String PATTERN_FORMAT_DATE_TIME = "yyyyMMddHHmmss";
 
     public static final Integer HTTPS_STATUS_CODE_500 = 500;
+    
+    public static final Integer HTTPS_STATUS_CODE_NOT_FOUND = 404;
 
     /** Rule type document */
     public static final Integer TYPE_DOCUMENT_AVATAR = 1;
