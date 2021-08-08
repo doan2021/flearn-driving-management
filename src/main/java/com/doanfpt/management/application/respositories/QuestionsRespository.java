@@ -2,8 +2,6 @@ package com.doanfpt.management.application.respositories;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -18,7 +16,7 @@ public interface QuestionsRespository  extends JpaRepository<Question, Long>, Pa
 
     public Question findByNumberAndIsDelete(Integer number, Boolean isDelete);
     
-    public Page<Question> findByChapter(Chapter chapter, Pageable pageable);
+    public List<Question> findByChapterAndIsDelete(Chapter chapter, Boolean isDelete);
     
     public List<Question> findByQuestionIdNotInAndChapter(List<Long> listIds, Chapter chapter);
     

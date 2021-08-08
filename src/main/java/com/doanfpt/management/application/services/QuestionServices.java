@@ -6,9 +6,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,7 +75,6 @@ public class QuestionServices {
             // Get file to client
             for(MultipartFile multipartFile : questionForm.getImages()) {
                 Document document = new Document();
-                document.setData(multipartFile);
                 document.setQuestion(question);
                 document.setFileName(Common.generateFileName(multipartFile, Constant.DOCUMENT_QUESTION_IMAGE));
                 document.setOriginFileName(multipartFile.getOriginalFilename());
@@ -97,13 +93,9 @@ public class QuestionServices {
         // Handle image
     }
 
-    public Page<Question> getQuestionInChapter(Long chapterId, Integer pageNumber) {
-        if (pageNumber == null) {
-            pageNumber = 0;
-        }
-        Pageable pageable = PageRequest.of(pageNumber, Constant.RECORD_PER_PAGE);
+    public List<Question> getQuestionInChapter(Long chapterId) {
         Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
-        return questionsRespository.findByChapter(chapter, pageable);
+        return questionsRespository.findByChapterAndIsDelete(chapter, Constant.IS_NOT_DELETE);
     }
 
     public Question getOneQuestion(Long questionId) {

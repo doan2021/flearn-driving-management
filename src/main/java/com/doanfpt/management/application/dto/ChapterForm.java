@@ -1,77 +1,88 @@
 package com.doanfpt.management.application.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ChapterForm {
-	private Long chapterId;
-	private String name;
-	private String content;
-	private String description;
-	private String createBy;
-	private String createAt;
-	private String updateBy;
-	private String updateAt;
+    private Long chapterId;
+    private String name;
+    private String content;
+    private String description;
+    private String createBy;
+    private String createAt;
+    private String updateBy;
+    private String updateAt;
+    private MultipartFile[] images;
 
-	public Long getChapterId() {
-		return chapterId;
-	}
+    public Long getChapterId() {
+        return chapterId;
+    }
 
-	public void setChapterId(Long chapterId) {
-		this.chapterId = chapterId;
-	}
-	
-	public String getName() {
-		return name;
-	}
+    public void setChapterId(Long chapterId) {
+        this.chapterId = chapterId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getCreateBy() {
-		return createBy;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
+    public String getCreateBy() {
+        return createBy;
+    }
 
-	public String getCreateAt() {
-		return createAt;
-	}
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
-	public void setCreateAt(String createAt) {
-		this.createAt = createAt;
-	}
+    public String getCreateAt() {
+        return createAt;
+    }
 
-	public String getUpdateBy() {
-		return updateBy;
-	}
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
 
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
+    public String getUpdateBy() {
+        return updateBy;
+    }
 
-	public String getUpdateAt() {
-		return updateAt;
-	}
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
 
-	public void setUpdateAt(String updateAt) {
-		this.updateAt = updateAt;
-	}
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public MultipartFile[] getImages() {
+        return images;
+    }
+
+    public void setImages(MultipartFile[] images) {
+        this.images = images;
+    }
 
 }

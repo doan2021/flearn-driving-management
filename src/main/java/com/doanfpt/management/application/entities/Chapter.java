@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "chapter" , uniqueConstraints = { @UniqueConstraint(name = "CHAPTER_UK", columnNames = "name") })
+@Table(name = "chapter", uniqueConstraints = { @UniqueConstraint(name = "CHAPTER_UK", columnNames = "name") })
 public class Chapter implements Serializable {
 
     /**
@@ -57,6 +57,10 @@ public class Chapter implements Serializable {
     @JsonManagedReference
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
     private List<Question> listQuestion;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    private List<Document> listImages;
 
     public Long getChapterId() {
         return chapterId;
@@ -140,6 +144,14 @@ public class Chapter implements Serializable {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public List<Document> getListImages() {
+        return listImages;
+    }
+
+    public void setListImages(List<Document> listImages) {
+        this.listImages = listImages;
     }
 
 }
