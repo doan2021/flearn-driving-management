@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
@@ -108,7 +109,7 @@ public class AccountsManagementController {
         if (result.hasErrors()) {
             model.addAttribute("accountForm", accountForm);
         } else {
-            model.addAttribute("messageSuccess", "Thêm người dùng thành công!");
+            model.addAttribute("messageSuccess", "Thêm người dùng mới thành công!");
             model.addAttribute("accountForm", new AccountForm());
             accountsServices.createAccount(accountForm);
         }
@@ -135,9 +136,10 @@ public class AccountsManagementController {
         return "update-account";
     }
 
-    @GetMapping(value = { "/delete-account" })
-    public String viewProfile(Long accountId, Model model) {
+    @PostMapping(value = { "/delete-account" })
+    public String viewProfile(Long accountId, RedirectAttributes redirAttrs) {
         accountsServices.deleteAccount(accountId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa tài khoản thành công!");
         return "redirect:account";
     }
 }
