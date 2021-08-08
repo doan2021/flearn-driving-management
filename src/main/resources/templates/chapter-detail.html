@@ -43,6 +43,7 @@
                                         <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
                                     </form>
                                     <button type="button" class="btn btn-sm btn-danger" onclick="deleteChapter()"><i class="fas fa-trash-alt"></i> Xóa</button>
+                                    <a th:href="@{/management/chapter}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +89,7 @@
                                 </div>
                                 <div class="col-6">
                                     <a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-success float-right">
-                                        <i class="fas fa-plus"></i> Câu hỏi mới
+                                        <i class="fas fa-plus"></i> Tạo câu hỏi
                                     </a>
                                 </div>
                                 <div class="col-12" th:if="${success != null}">
