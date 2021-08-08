@@ -15,9 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
+import com.doanfpt.management.application.dto.QuestionForm;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.QuestionServices;
 import com.doanfpt.management.application.validator.ChapterCreateValidator;
+import com.doanfpt.management.application.validator.CreateQuestionValidator;
 
 @Controller
 @RequestMapping("/management")
@@ -32,6 +34,9 @@ public class ChapterManagementController {
     @Autowired
     ChapterCreateValidator chapterCreateValidator;
 
+    @Autowired
+    CreateQuestionValidator createQuestionValidator;
+
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
         Object target = dataBinder.getTarget();
@@ -40,6 +45,9 @@ public class ChapterManagementController {
         }
         if (target.getClass() == ChapterForm.class) {
             dataBinder.setValidator(chapterCreateValidator);
+        }
+        if (target.getClass() == QuestionForm.class) {
+            dataBinder.setValidator(createQuestionValidator);
         }
     }
 
@@ -84,10 +92,10 @@ public class ChapterManagementController {
 
     @PostMapping(value = { "/update-chapter" })
     public String editChapterDetail(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
-    	if (result.hasErrors()) {
+        if (result.hasErrors()) {
             return "update-chapter";
         }
-    	chapterServices.editChapterDetail(chapterForm);
+        chapterServices.editChapterDetail(chapterForm);
         model.addAttribute(Constant.STATUS_SUCCESS, "Tạo chương mới thành công!");
         model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterForm.getChapterId()));
         return "update-chapter";
@@ -98,11 +106,44 @@ public class ChapterManagementController {
         model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterId));
         return "update-chapter";
     }
-    
-    @PostMapping(value = {"/delete-chapter"})
+
+    @PostMapping(value = { "/delete-chapter" })
     public String deleteChapter(Long chapterId, RedirectAttributes redirAttrs) {
-    	chapterServices.deleteChapter(chapterId);
+        chapterServices.deleteChapter(chapterId);
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa chương thành công!");
         return "redirect:chapter";
+    }
+
+    @GetMapping(value = { "/create-question" })
+    public String createQuestion(Long chapterId, Model model) {
+        QuestionForm questionForm = new QuestionForm();
+        model.addAttribute("questionForm", questionForm);
+        model.addAttribute("chapter", chapterServices.getChapterDetail(chapterId));
+        return "create-question";
+    }
+
+    @PostMapping(value = { "/save-question" })
+    public String saveQuestion(@Validated QuestionForm questionForm, BindingResult result, Model model) {
+        model.addAttribute("chapter", chapterServices.getChapterDetail(questionForm.getChapterId()));
+        if (result.hasErrors()) {
+            return "create-question";
+        }
+        questionServices.createQuestion(questionForm);
+        model.addAttribute("questionForm", new QuestionForm());
+        model.addAttribute(Constant.STATUS_SUCCESS, "Tạo câu hỏi thành công!");
+        return "create-question";
+    }
+
+    @GetMapping(value = { "/detail-question" })
+    public String visitDetailQuestionPage(Long questionId, Model model) {
+        model.addAttribute("question", questionServices.getOneQuestion(questionId));
+        return "detail-question";
+    }
+
+    @PostMapping(value = { "/delete-question" })
+    public String deleteQuestion(Long questionId, Long chapterId, RedirectAttributes redirAttrs) {
+        questionServices.deleteQuestion(questionId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa câu hỏi thành công!");
+        return "redirect:chapter-detail?chapterId=" + chapterId;
     }
 }

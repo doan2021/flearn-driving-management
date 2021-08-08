@@ -67,6 +67,13 @@ public class Account {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "address")
+    private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id", nullable = true)
+    private Ward ward;
+
     @Column(name = "is_delete", columnDefinition = "boolean default false")
     private boolean isDelete;
 
@@ -294,6 +301,22 @@ public class Account {
 
     public void setListDrivingLicenseInfo(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
         this.listDrivingLicenseInfo = listDrivingLicenseInfo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
     }
 
 }

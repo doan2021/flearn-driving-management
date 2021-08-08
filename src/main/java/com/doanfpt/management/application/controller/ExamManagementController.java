@@ -26,13 +26,13 @@ public class ExamManagementController {
 
     @Autowired
     private ExamServices examService;
-    
+
     @Autowired
     private DrivingLicenseServices drivingLicenseServices;
-    
+
     @Autowired
     private ExamCreateValidator examCreateValidator;
-    
+
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
         Object target = dataBinder.getTarget();
@@ -62,21 +62,21 @@ public class ExamManagementController {
 
     @PostMapping(value = { "/create-exam" })
     public String createExam(@ModelAttribute("examForm") ExamForm examForm, Model model, BindingResult result) {
-    	if (result.hasErrors()) {
+        if (result.hasErrors()) {
             return "create-exam";
         }
-    	examService.createExam(examForm);
-    	model.addAttribute(Constant.STATUS_SUCCESS, "Thêm kỳ thi mới thành công!");
-    	model.addAttribute("examForm", new ExamForm());
-    	return "create-exam";
+        examService.createExam(examForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Thêm kỳ thi mới thành công!");
+        model.addAttribute("examForm", new ExamForm());
+        return "create-exam";
     }
-    
-    @GetMapping(value = {"/detail-exam"})
+
+    @GetMapping(value = { "/detail-exam" })
     public String visitDetailExamPage(Long examId, Model model) {
         model.addAttribute("exam", examService.getOne(examId));
         return "detail-exam";
     }
-    
+
     @PostMapping(value = { "/cancel-exam" })
     public String cancelExam(Long examId, Model model) {
         model.addAttribute("exam", examService.cancelExam(examId));
@@ -84,7 +84,7 @@ public class ExamManagementController {
         return "detail-exam";
     }
 
-    @GetMapping(value = {"/update-exam"})
+    @GetMapping(value = { "/update-exam" })
     public String visitUpdateExamPage(Long examId, Model model) {
         model.addAttribute("examUpdateForm", examService.getObjectUpdate(examId));
         return "update-exam";
@@ -93,7 +93,7 @@ public class ExamManagementController {
     @PostMapping(value = { "/update-exam" })
     public String saveExam(@ModelAttribute("examForm") ExamUpdateForm examUpdateForm, RedirectAttributes redirAttrs) {
         examService.updateExam(examUpdateForm);
-    	redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa kỳ thi thành công!");
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa kỳ thi thành công!");
         return "redirect:detail-exam?examId=" + examUpdateForm.getExamId();
     }
 
@@ -109,10 +109,5 @@ public class ExamManagementController {
         examService.deleteExam(examId);
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa kỳ thi thành công!");
         return "redirect:exam";
-    }
-    
-    @GetMapping(value = {"/review-exam-info"})
-    public String visitReviewExamInfoPage(Model model) {
-        return "review-exam-info";
     }
 }
