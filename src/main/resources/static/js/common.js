@@ -5,7 +5,7 @@ function search(num) {
 }
 
 //Init file input
-$("#images-question").fileinput({
+$(".image-input").fileinput({
     theme         : "fas",
     showCancel    : false,
     showUpload    : false,
