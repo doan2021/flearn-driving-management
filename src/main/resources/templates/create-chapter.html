@@ -17,7 +17,7 @@
                                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                         <li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i class="fas fa-home"></i></a></li>
                                         <li class="breadcrumb-item"><a th:href="@{/management/chapter}">Quản lý chương</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Tạo chương mới</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Tạo chương</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -32,7 +32,7 @@
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-10">
-                                        <h1 class="mb-0">Tạo chương mới</h1>
+                                        <h2 class="mb-0">Tạo chương</h2>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-end">
                                         <a th:href="@{/management/chapter}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
@@ -77,7 +77,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group" id="description-place">
                                                 <label class="form-control-label" for="input-chapter-description">Mô tả</label>
-                                                <textarea th:field="*{description}" type="textarea" id="input-chapter-description" placeholder="Nhập mô tả" class="form-control" name="description"></textarea>
+                                                <textarea th:field="*{description}" id="input-chapter-description" placeholder="Nhập mô tả" class="form-control" name="description"></textarea>
                                             </div>
                                         </div>
                                     </div>

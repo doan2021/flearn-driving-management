@@ -18,7 +18,7 @@
                                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                         <li class="breadcrumb-item"><a href="#"><i
                                                 class="fas fa-home"></i></a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Danh sách kỳ thi</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Quản lý kỳ thi</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -28,14 +28,14 @@
                                     <div class="card-body">
                                         <form class="row mt-3" th:action="@{/management/search-exam}" th:object="${formSearchExam}" method="POST" id="formSearch">
                                             <div class="col-12" th:if="${success != null}">
-					                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-					                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
-					                                <span class="alert-text" th:text="${success}"></span>
-					                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					                                    <span aria-hidden="true">&times;</span>
-					                                </button>
-					                            </div>
-					                        </div>
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                    <span class="alert-text" th:text="${success}"></span>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
                                                 <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
                                             </div>
@@ -117,9 +117,9 @@
                         <div class="card">
                             <div class="card-header bg-transparent">
                                 <div class="row">
-                                    <h3 class="mb-0 col-10">Danh sách kỳ thi</h3>
+                                    <h3 class="mb-0 col-10">Quản lý kỳ thi</h3>
                                     <div class="col-2">
-                                         <a th:href="@{/management/create-exam}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Kỳ thi mới</a>
+                                         <a th:href="@{/management/create-exam}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Tạo kỳ thi</a>
                                      </div>
                                 </div>
                             </div>

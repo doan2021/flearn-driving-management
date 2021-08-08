@@ -6,27 +6,32 @@
         <meta charset="utf-8"/>
         <link rel="stylesheet" th:href="@{../css/create-exam.css}" type="text/css">
     </head>
-    
     <body>
         <th:block layout:fragment="content">
-            <div class="header bg-primary">
-              <div class="container-fluid">
-                <div class="header-body">
-                  <div class="row align-items-center py-4">
-                    <div class="col-lg-6 col-7">
-                      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                          <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                          <li class="breadcrumb-item"><a th:href="@{/management/exam}">Danh sách kỳ thi</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Kỳ thi mới</li>
-                        </ol>
-                      </nav>
+            <div class="header bg-primary pb-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-lg-6 col-7">
+                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/management/exam}">Quản lý kỳ thi</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Tạo kỳ thi</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
-                    <div class=" col-12">
+                </div>
+            </div>
+            <div class="container-fluid mt--6">
+                <div class="row">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-transparent row">
                                 <div class="col-10">
-                                    <h1 class="m-0">Kỳ thi mới</h1>
+                                    <h2 class="m-0">Tạo kỳ thi</h2>
                                 </div>
                                 <div class="col-2 d-flex align-items-center justify-content-end">
                                     <a th:href="@{/management/exam}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
@@ -35,23 +40,23 @@
                             <div class="card-body">
                                 <form th:action="@{/management/create-exam}" th:object="${examForm}" method="POST" id="create-exam-form">
                                     <div class="row">
-                                    	<div class="col-12">
+                                        <div class="col-12">
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
                                                 <p class="m-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-                                            	<p class="m-0" th:if="${#fields.hasErrors('dateRegisExamEnd')}" th:errors="*{dateRegisExamEnd}"></p>
-                                            	<p class="m-0" th:if="${#fields.hasErrors('drivingLicenseId')}" th:errors="*{drivingLicenseId}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('dateRegisExamEnd')}" th:errors="*{dateRegisExamEnd}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('drivingLicenseId')}" th:errors="*{drivingLicenseId}"></p>
                                             </div>
                                         </div>
-                                    	<div class="col-12" th:if="${success != null}">
-						                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-						                        <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
-						                        <span class="alert-text" th:text="${success}"></span>
-						                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						                            <span aria-hidden="true">&times;</span>
-						                        </button>
-						                    </div>
-                        				</div>
+                                        <div class="col-12" th:if="${success != null}">
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                <span class="alert-text" th:text="${success}"></span>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
@@ -98,9 +103,7 @@
                             </div>
                         </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
         </th:block>
         <th:block layout:fragment="script">

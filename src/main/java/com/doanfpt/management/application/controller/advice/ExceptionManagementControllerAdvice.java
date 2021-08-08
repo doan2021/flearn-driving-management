@@ -1,4 +1,4 @@
-package com.doanfpt.management.application.controller;
+package com.doanfpt.management.application.controller.advice;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.doanfpt.management.application.exception.BusinessException;
 
 @ControllerAdvice
-public class ExceptionManagementController {
+public class ExceptionManagementControllerAdvice {
     
     @ExceptionHandler(BusinessException.class)
     public String handleApplicationException(BusinessException e, Model model) {

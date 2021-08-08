@@ -19,3 +19,8 @@ $(".image-input").fileinput({
     msgSizeTooLarge : 'Tải lên ảnh tối đa {size} KB',
     msgProcessing : 'Đang chọn file....'
 });
+
+$('#btnOpenSideBar').click(function() {
+	$('.sidebar').toggleClass("open");
+	$('.main-content').toggleClass("open-sidebar");
+});
