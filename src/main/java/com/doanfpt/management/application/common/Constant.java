@@ -52,7 +52,7 @@ public class Constant {
 
     public static final Integer TYPE_DOCUMENT_HEALTH_CERTIFICATION_FILE = 5;
 
-    public static final Integer TYPE_DOCUMENT_ORDER = 6;
+    public static final Integer TYPE_DOCUMENT_ORTHER = 7;
     
     public static final String DOCUMENT_AVATAR_LABEL = "AVATAR";
 
@@ -66,7 +66,7 @@ public class Constant {
     
     public static final String DOCUMENT_QUESTION_IMAGE = "DOCUMENT_QUESTION_IMAGE";
 
-    public static final String DOCUMENT_ORDER_LABEL = "HEALTH_CERTIFICATION_FILE";
+    public static final String DOCUMENT_ORTHER_LABEL = "OTHER";
     
     /** Rule status driving_license_info */
     public static final Integer STS_SUBMITTED = 1;

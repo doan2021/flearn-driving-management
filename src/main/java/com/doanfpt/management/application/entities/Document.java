@@ -10,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -73,8 +70,10 @@ public class Document {
     @JoinColumn(name = "driving_license_info_id")
     private DrivingLicenseInfo drivingLicenseInfo;
 
-    @Transient
-    private MultipartFile data;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "chapter_id")
+    private Chapter chapter;
 
     public Long getImageId() {
         return documentId;
@@ -196,20 +195,20 @@ public class Document {
         this.type = type;
     }
 
-    public MultipartFile getData() {
-        return data;
-    }
-
-    public void setData(MultipartFile data) {
-        this.data = data;
-    }
-
     public String getContentType() {
         return contentType;
     }
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public Chapter getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
     }
 
 }

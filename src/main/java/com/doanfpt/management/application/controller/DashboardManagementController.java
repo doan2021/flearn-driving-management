@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.doanfpt.management.application.entities.DrivingLicenseInfo;
 import com.doanfpt.management.application.services.AccountServices;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.DrivingLicenseInfoServices;

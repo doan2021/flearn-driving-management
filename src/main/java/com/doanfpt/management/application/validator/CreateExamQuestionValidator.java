@@ -39,8 +39,6 @@ public class CreateExamQuestionValidator implements Validator {
         ExamQuestionsForm examQuestionsForm = (ExamQuestionsForm) target;
         // Validate required
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.examQuestionsForm.name");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "drivingLicenseId",
-                "NotEmpty.examQuestionsForm.drivingLicenseId");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "listIdQuestion",
                 "NotEmpty.examQuestionsForm.listIdQuestion");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "listIdQuestionParalysis",
@@ -81,6 +79,7 @@ public class CreateExamQuestionValidator implements Validator {
                         examQuestionsForm.getListIdQuestion())) {
                     errors.rejectValue("listIdQuestion", "ErrorNumberQuestion.examQuestionsForm.listIdQuestion");
                 }
+                
             }
         }
     }
@@ -101,6 +100,6 @@ public class CreateExamQuestionValidator implements Validator {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 }

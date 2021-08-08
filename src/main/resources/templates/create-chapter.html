@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="card-body px-4">
-                                <form th:action="@{/management/save-chapter}" th:object="${chapterForm}" method="POST" id="create-chapter-form">
+                                <form th:action="@{/management/save-chapter}" th:object="${chapterForm}" method="POST" id="create-chapter-form" enctype="multipart/form-data">
                                     <input type="file" onchange="readURL(this);" class="d-none" id="fileImage" name="image">
                                     <div class="row">
                                         <div class="col-12">
@@ -50,14 +50,14 @@
                                             </div>
                                         </div>
                                         <div class="col-12" th:if="${success != null}">
-				                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-				                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
-				                                <span class="alert-text" th:text="${success}"></span>
-				                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				                                    <span aria-hidden="true">&times;</span>
-				                                </button>
-				                            </div>
-				                        </div>
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                <span class="alert-text" th:text="${success}"></span>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -78,6 +78,14 @@
                                             <div class="form-group" id="description-place">
                                                 <label class="form-control-label" for="input-chapter-description">Mô tả</label>
                                                 <textarea th:field="*{description}" type="textarea" id="input-chapter-description" placeholder="Nhập mô tả" class="form-control" name="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Hình ảnh</label>
+                                                <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
                                             </div>
                                         </div>
                                     </div>
