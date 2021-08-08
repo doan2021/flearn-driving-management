@@ -9,7 +9,8 @@ function readURL(input) {
 		reader.readAsDataURL(input.files[0]);
 	}
 }
-$("#create-account-form").validate({
+
+$("#update-account-form").validate({
 	rules: {
 		firstName: {
 			required: true,
@@ -33,26 +34,16 @@ $("#create-account-form").validate({
 			rangelength: [10, 10]
 		},
 		birthDay: {
-			required: true
+			required: true,
+			maxlength: 10
 		},
 		userName: {
 			required: true,
 			maxlength: 36
 		},
-		password: {
-			required: true,
-			minlength: 8,
-			maxlength: 36
-		},
-		cPassword: {
-			equalTo: "#password"
-		},
 		gender: {
 			required: true
 		},
-		roles: {
-			required: true
-		}
 	},
 	messages: {
 		firstName: {
@@ -77,26 +68,16 @@ $("#create-account-form").validate({
 			number: "Số điện thoại phải là số, vui lòng kiểm tra lại!"
 		},
 		birthDay: {
-			required: "Vui lòng chọn ngày sinh!"
+			required: "Vui lòng chọn ngày sinh!",
+			maxlength: "Ngày sinh chỉ được nhập 10 ký tự!"
 		},
 		userName: {
 			required: "Vui lòng điền tên đăng nhập!",
 			maxlength: "Tên đăng nhập phải dưới 36 kí tự, vui lòng kiểm tra lại!"
 		},
-		password: {
-			required: "Vui lòng nhập mật khẩu!",
-			minlength: "Mật khẩu phải trên 8 kí tự, vui lòng kiểm tra lại!",
-			maxlength: "Mật khẩu phải dưới 36 kí tự, vui lòng kiểm tra lại!"
-		},
-		confirmPassword: {
-			equalTo: "Mật khẩu không khớp, vui lòng kiểm tra lại!"
-		},
 		gender: {
 			required: "Vui lòng chọn giới tính!"
 		},
-		roles: {
-			required: "Vui lòng chọn quyền"
-		}
 	},
 	errorClass: 'text-danger',
 	highlight: function(element) {
@@ -125,20 +106,19 @@ $("#create-account-form").validate({
         case 'userName':
             error.insertAfter($("#username-place"));
             break;
-        case 'password':
-            error.insertAfter($("#password-place"));
-            break;
-        case 'confirmPassword':
-            error.insertAfter($("#cPassword-place"));
-            break;
-        case 'roles':
-            error.insertAfter($("#role-place"));
-            break;
         default:
             error.insertAfter(element);
         }
     },
 	submitHandler: function(form) {
-		form.submit();
+		if (confirm("Xác nhận chỉnh sửa tài khoản?")) {
+			form.submit();
+		}
 	}
 });
+
+function deleteAccount() {
+	if (confirm("Xác nhận xóa tài khoản?")) {
+		$("#delete-account-form").submit();
+	}
+}

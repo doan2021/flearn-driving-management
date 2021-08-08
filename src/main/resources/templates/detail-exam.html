@@ -38,10 +38,10 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12 mb-4" th:if="${messageSuccess != null}">
+                                            <div class="col-12 mb-4" th:if="${success != null}">
                                                 <div class="alert alert-success" role="alert">
                                                     <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
-                                                    <span class="alert-text"><strong>Thành công!</strong> <span th:text="${messageSuccess}"></span></span>
+                                                    <span class="alert-text"><strong>Chỉnh sửa kỳ thi thành công!</strong> <span th:text="${messageSuccess}"></span></span>
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -100,7 +100,10 @@
                                             <div class="col-12 mt-3 text-center">
                                                 <a th:href="@{${'/management/update-exam?examId='} + ${exam.examId}}" class="btn btn-primary" th:if="${exam.status == 1 && exam.dateRegisExamEnd.after(#dates.createNow())}"><i class="fas fa-pen"></i> Chỉnh sửa</a>
                                                 <a th:href="@{${'/management/cancel-exam?examId='} + ${exam.examId}}" class="btn btn-warning" th:if="${exam.status == 1 && exam.dateRegisExamEnd.after(#dates.createNow())}"><i class="fas fa-ban"></i> Hủy kì thi</a>
-                                                <a th:href="@{${'/management/delete-exam?examId='} + ${exam.examId}}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Xóa</a>
+                                                <form th:action="@{/management/delete-exam}" method="POST" id="formDeleteExam" class="d-none">
+                                                	<input type="hidden" name="examId" th:value="${exam.examId}">
+                                                </form>
+                                                <button class="btn btn-danger" onclick="deleteExam()"><i class="fas fa-trash-alt"></i> Xóa</a>
                                             </div>
                                         </div>
                                     </div>
@@ -112,7 +115,7 @@
             </div>
         </th:block>
         <th:block layout:fragment="script">
-            <script th:src="@{../js/create-question.js}"></script>
+            <script th:src="@{../js/delete-exam.js}"></script>
         </th:block>
     </body>
 </html>

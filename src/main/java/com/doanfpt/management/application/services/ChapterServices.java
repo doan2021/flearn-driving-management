@@ -37,7 +37,7 @@ public class ChapterServices {
     public Chapter getChapterDetail(Long chapterId) {
     	Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
         if (chapter == null) {
-        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
+        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
         }
         return chapter;
     }
@@ -49,7 +49,7 @@ public class ChapterServices {
     @Transactional
     public void saveChapter(ChapterForm chapterForm) {
         if (chapterForm == null) {
-        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
+        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Chapter chapter = new Chapter();
         chapter.setName(chapterForm.getName());
@@ -124,7 +124,7 @@ public class ChapterServices {
 	public void deleteChapter(Long chapterId) {
     	Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
         if (chapter == null) {
-            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
         }
 		chapter.setDelete(Constant.IS_DELETE);
 		chapter.setUpdateBy(Common.getUsernameLogin());

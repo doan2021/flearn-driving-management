@@ -43,7 +43,7 @@ $(document).ready(function() {
 		},
 		submitHandler: function(form) {
 			if (confirm("Xác nhận chỉnh sửa kỳ thi?")) {
-				$(form).submit();
+				form.submit();
 			}
 		}
 	});

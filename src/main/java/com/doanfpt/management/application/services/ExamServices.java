@@ -79,12 +79,15 @@ public class ExamServices {
     }
 
     @Transactional
-    public Exam updateExam(ExamUpdateForm examUpdateForm) {
-        if (Objects.isNull(examUpdateForm)) {
-            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng");
+    public void updateExam(ExamUpdateForm examUpdateForm) {
+        if (examUpdateForm == null) {
+        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Exam exam = new Exam();
         exam = examRepository.findByExamIdAndIsDelete(examUpdateForm.getExamId(), Constant.IS_NOT_DELETE);
+        if (exam == null) {
+        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
+		}
         exam.setName(examUpdateForm.getName());
         exam.setDescription(examUpdateForm.getDescription());
         exam.setDateRegisExamEnd(Common.stringToDate(examUpdateForm.getStrDateRegisExamEnd()));
@@ -92,7 +95,7 @@ public class ExamServices {
         exam.setDateExam(dateExam);
         exam.setUpdateBy(Common.getUsernameLogin());
         exam.setUpdateAt(Common.getSystemDate());
-        return examRepository.save(exam);
+        examRepository.save(exam);
     }
 
     public Page<Exam> searchExam(FormSearchExam formSearchExam) {
@@ -132,7 +135,7 @@ public class ExamServices {
     @Transactional
     public void deleteExam(Long examId) {
         if (!existsById(examId)) {
-            throw new BusinessException(404, "Kỳ thi không tồn tại.");
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         Exam exam = examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
         exam.setDelete(true);
@@ -143,7 +146,7 @@ public class ExamServices {
     
     public Exam getOne(Long examId) {
         if (!existsById(examId)) {
-            throw new BusinessException(404, "Kỳ thi không tồn tại.");
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         return examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
     }
@@ -151,7 +154,7 @@ public class ExamServices {
     @Transactional
     public Exam cancelExam(Long examId) {
         if (!existsById(examId)) {
-            throw new BusinessException(404, "Kỳ thi không tồn tại.");
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         Exam exam = examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
         exam.setStatus(Constant.STS_EXAM_CANCEL);

@@ -15,7 +15,7 @@
                                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                         <li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i class="fas fa-home"></i></a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Danh sách người dùng</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Quản lý người dùng</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -25,9 +25,18 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Tìm kếm</h5>
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
                                                 <form class="row mt-3" th:action="@{/management/search-account}" th:object="${formSearchAccount}" method="POST" id="formSearch">
                                                     <input type="hidden" th:field="*{pageNumber}" id="pageNumber">
+                                                    <div class="col-12" th:if="${success != null}">
+							                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+							                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+							                                <span class="alert-text" th:text="${success}"></span>
+							                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							                                    <span aria-hidden="true">&times;</span>
+							                                </button>
+							                            </div>
+							                        </div>
                                                     <div class=" col-3">
                                                         <input type="text" class="form-control" placeholder="Tài khoản"th:field="*{userName}">
                                                     </div>
@@ -100,7 +109,6 @@
                                             <td class="text-center" th:text="${acc.numberPhone}"></td>
                                             <td class="text-center">
                                                 <a th:href="@{${'/management/update-account?accountId='} + ${acc.accountId}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                <a th:href="@{${'/management/delete-account?accountId='} + ${acc.accountId}}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
