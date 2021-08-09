@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="card-body px-4">
-                                <form th:action="@{/management/update-chapter}" th:object="${chapterForm}" method="POST" id="update-chapter-form">
+                                <form th:action="@{/management/update-chapter}" th:object="${chapterForm}" method="POST" id="update-chapter-form" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
@@ -80,16 +80,17 @@
                                                 <textarea th:field="*{description}" rows="4" class="form-control" placeholder="Mô tả về tôi"></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Thời gian cập nhật: </label>
-                                                <span th:text="${#dates.format(chapterForm.updateAt, 'MM/dd/yyyy HH:mm')}"></span>
-                                            </div>
+                                        <div class="col-12" th:if="${chapter.listImages != null && chapter.listImages.size != 0}">
+                                            <label class="form-control-label">Hình ảnh</label>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-4 p-3" th:each="document : ${chapter.listImages}" th:if="${chapter.listImages != null && chapter.listImages.size != 0}">
+                                            <img alt="" th:src="${document.path}" class="w-100 h-100 border rounded shadow">
+                                        </div>
+                                        <div class="col-12">
                                             <div class="form-group">
-                                                <label class="form-control-label">Người cập nhật: </label>
-                                                <span th:text="${chapterForm.updateBy}"></span>
+                                                <label class="form-control-label" th:if="${chapter.listImages != null && chapter.listImages.size != 0}">Đổi ảnh</label>
+                                                <label class="form-control-label" th:unless="${chapter.listImages != null && chapter.listImages.size != 0}">Thêm ảnh</label>
+                                                <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
                                             </div>
                                         </div>
                                         <div class="col-12 text-center">

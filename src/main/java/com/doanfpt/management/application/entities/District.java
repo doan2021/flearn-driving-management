@@ -3,9 +3,6 @@
  */
 package com.doanfpt.management.application.entities;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 /**
  * @author tamdu
  *
@@ -17,11 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "district")
@@ -39,10 +34,6 @@ public class District {
     @ManyToOne
     @JoinColumn(name = "province_id")
     private Province province;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "district", cascade = CascadeType.ALL)
-    private List<Ward> listWards;
 
     public Long getDistrictId() {
         return districtId;
@@ -67,13 +58,4 @@ public class District {
     public void setProvince(Province province) {
         this.province = province;
     }
-
-    public List<Ward> getListWards() {
-        return listWards;
-    }
-
-    public void setListWards(List<Ward> listWards) {
-        this.listWards = listWards;
-    }
-
 }

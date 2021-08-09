@@ -90,21 +90,21 @@ public class ChapterManagementController {
         return "create-chapter";
     }
 
-    @PostMapping(value = { "/update-chapter" })
-    public String editChapterDetail(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "update-chapter";
-        }
-        chapterServices.editChapterDetail(chapterForm);
-        model.addAttribute(Constant.STATUS_SUCCESS, "Tạo chương mới thành công!");
-        model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterForm.getChapterId()));
-        return "update-chapter";
-    }
-
     @GetMapping(value = { "/update-chapter" })
     public String editPageChapterDetail(Long chapterId, Model model) {
         model.addAttribute("chapterForm", chapterServices.getObjectUpdate(chapterId));
+        model.addAttribute("chapter", chapterServices.getChapterDetail(chapterId));
         return "update-chapter";
+    }
+
+    @PostMapping(value = { "/update-chapter" })
+    public String editChapterDetail(@Validated ChapterForm chapterForm, BindingResult result, RedirectAttributes redirAttrs) {
+        if (result.hasErrors()) {
+            return "update-chapter";
+        }
+        chapterServices.updateChapter(chapterForm);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa chương thành công!");
+        return "redirect:chapter-detail?chapterId=" + chapterForm.getChapterId();
     }
 
     @PostMapping(value = { "/delete-chapter" })

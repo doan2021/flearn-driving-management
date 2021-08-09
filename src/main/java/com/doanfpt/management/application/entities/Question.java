@@ -64,10 +64,6 @@ public class Question {
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<StatusLearn> listStatusLearn;
-
     public Long getQuestionId() {
         return questionId;
     }
@@ -134,14 +130,6 @@ public class Question {
 
     public void setParalysis(Boolean isParalysis) {
         this.isParalysis = isParalysis;
-    }
-
-    public List<StatusLearn> getListStatusLearn() {
-        return listStatusLearn;
-    }
-
-    public void setListStatusLearn(List<StatusLearn> listStatusLearn) {
-        this.listStatusLearn = listStatusLearn;
     }
 
     public String getCreateBy() {

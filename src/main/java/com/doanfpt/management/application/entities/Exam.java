@@ -59,10 +59,6 @@ public class Exam {
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<ExamResult> listExamResult;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-    private List<DrivingLicenseInfo> listDrivingLicenseInfo;
-
     @ManyToOne
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;
@@ -153,14 +149,6 @@ public class Exam {
 
     public void setListExamResult(List<ExamResult> listExamResult) {
         this.listExamResult = listExamResult;
-    }
-
-    public List<DrivingLicenseInfo> getListDrivingLicenseInfo() {
-        return listDrivingLicenseInfo;
-    }
-
-    public void setListDrivingLicenseInfo(List<DrivingLicenseInfo> listDrivingLicenseInfo) {
-        this.listDrivingLicenseInfo = listDrivingLicenseInfo;
     }
 
     public DrivingLicense getDrivingLicense() {
