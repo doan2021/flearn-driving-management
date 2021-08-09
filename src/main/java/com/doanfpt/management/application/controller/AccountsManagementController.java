@@ -104,16 +104,15 @@ public class AccountsManagementController {
         return "create-account";
     }
 
-    @PostMapping(value = { "/save-account" })
+    @PostMapping(value = { "/create-account" })
     public String saveAccount(@Validated AccountForm accountForm, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("accountForm", accountForm);
-        } else {
-            model.addAttribute("messageSuccess", "Thêm người dùng mới thành công!");
-            model.addAttribute("accountForm", new AccountForm());
-            accountsServices.createAccount(accountForm);
-        }
         model.addAttribute("listRole", roleServices.findAllRole());
+        if (result.hasErrors()) {
+            return "create-account";
+        }
+        model.addAttribute(Constant.STATUS_SUCCESS, "Tạo người dùng thành công!");
+        model.addAttribute("accountForm", new AccountForm());
+        accountsServices.createAccount(accountForm);
         return "create-account";
     }
 

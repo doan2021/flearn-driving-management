@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="col-4 text-right">
                                         <a href="#!" class="btn btn-sm btn-primary">Đổi mật khẩu</a>
-                                        <a class="btn btn-sm btn-danger" th:href="@{${'/management/delete-account?accountId='} + ${accountUpdateForm.accountId}}" onclick="deleteAccount()"><i class="fas fa-trash-alt"></i> Xóa</a>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="deleteAccount()"><i class="fas fa-trash-alt"></i> Xóa</button>
                                         <a th:href="@{../management/account}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
                                     </div>
                                 </div>
