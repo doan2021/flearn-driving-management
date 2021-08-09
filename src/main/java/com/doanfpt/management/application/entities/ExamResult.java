@@ -42,11 +42,6 @@ public class ExamResult {
 
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "account_id")
-	private Account account;
-
-	@JsonBackReference
-	@ManyToOne
 	@JoinColumn(name = "exam_id")
 	private Exam exam;
 
@@ -76,14 +71,6 @@ public class ExamResult {
 
 	public void setPoint(double point) {
 		this.point = point;
-	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
 	}
 
 	public List<HistoryAnswer> getListHistoryAnswer() {

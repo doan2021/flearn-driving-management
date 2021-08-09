@@ -66,10 +66,6 @@ public class DrivingLicense {
     @OneToMany(mappedBy = "drivingLicense", cascade = CascadeType.ALL)
     private List<ExamStructure> listExamStructure;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "drivingLicense", cascade = CascadeType.ALL)
-    private List<ExamQuestions> listExamQuestion;
-
     public Long getDrivingLicenseId() {
         return drivingLicenseId;
     }
@@ -188,14 +184,6 @@ public class DrivingLicense {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public List<ExamQuestions> getListExamQuestion() {
-        return listExamQuestion;
-    }
-
-    public void setListExamQuestion(List<ExamQuestions> listExamQuestion) {
-        this.listExamQuestion = listExamQuestion;
     }
 
 }

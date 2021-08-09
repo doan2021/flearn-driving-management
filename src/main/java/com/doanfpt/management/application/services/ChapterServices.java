@@ -72,7 +72,6 @@ public class ChapterServices {
         chapterResponsitory.save(chapter);
         // Handle document
         List<Document> listDocuments = new ArrayList<>();
-        // Upload file CMND mặt trước
         if (chapterForm.getImages() != null && !chapterForm.getImages()[0].isEmpty()) {
             // Get file to client
             for (MultipartFile multipartFile : chapterForm.getImages()) {
@@ -95,7 +94,7 @@ public class ChapterServices {
     }
 
     @Transactional
-    public void editChapterDetail(ChapterForm chapterForm) {
+    public void updateChapter(ChapterForm chapterForm) {
         Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(),
                 Constant.IS_NOT_DELETE);
         chapter.setName(chapterForm.getName());
@@ -103,6 +102,29 @@ public class ChapterServices {
         chapter.setDescription(chapterForm.getDescription());
         chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
+        // Handle document
+        if (chapterForm.getImages() != null && !chapterForm.getImages()[0].isEmpty()) {
+            documentRespository.deleteAll(chapter.getListImages());
+            List<Document> listDocuments = new ArrayList<>();
+            // Delete list old image
+            for (MultipartFile multipartFile : chapterForm.getImages()) {
+                Document document = new Document();
+                document.setChapter(chapter);
+                document.setFileName(Common.generateFileName(multipartFile, Constant.DOCUMENT_ORTHER_LABEL));
+                document.setOriginFileName(multipartFile.getOriginalFilename());
+                document.setExtension(MimeTypes.lookupExt(multipartFile.getContentType()));
+                document.setContentType(multipartFile.getContentType());
+                document.setSize(multipartFile.getSize());
+                document.setType(Constant.TYPE_DOCUMENT_ORTHER);
+                document.setDescription("Ảnh mô tả chương");
+                document.setCreateAt(Common.getSystemDate());
+                document.setCreateBy(Common.getUsernameLogin());
+                document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
+                listDocuments.add(document);
+            }
+            documentRespository.saveAll(listDocuments);
+            chapter.setListImages(listDocuments);
+        }
         chapterResponsitory.save(chapter);
     }
 

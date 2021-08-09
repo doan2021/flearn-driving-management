@@ -25,6 +25,15 @@
                 </div>
             </div>
             <div class="container-fluid mt--6">
+                <div class="col-12" th:if="${success != null}">
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                        <span class="alert-text" th:text="${success}"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-5">
                         <div class="card">
@@ -89,15 +98,6 @@
                                         <a th:href="@{${'/management/create-question?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-success float-right">
                                             <i class="fas fa-plus"></i> Tạo câu hỏi
                                         </a>
-                                    </div>
-                                    <div class="col-12" th:if="${success != null}">
-                                        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                                            <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
-                                            <span class="alert-text" th:text="${success}"></span>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
