@@ -88,7 +88,7 @@
                                             <label class="form-control-label text-danger">Quy chế thi và cấu trúc bộ đề</label>
                                             <div class="row">
                                                 <div class="col-4 mt-3">
-                                                    <label for="numberQuestion" class="form-control-label">Số lượng câu hỏi <span class="text-danger">*</span></label>
+                                                    <label for="numberQuestion" class="form-control-label">Số lượng câu hỏi (1) <span class="text-danger">*</span></label>
                                                     <input id="numberQuestion" type="text" class="form-control" placeholder="Số lượng câu hỏi" th:field="*{numberQuestion}" maxlength="5"/>
                                                 </div>
                                                 <div class="col-4 mt-3">
@@ -96,7 +96,7 @@
                                                     <input id="numberQuestionCorect" type="text" class="form-control" placeholder="Số lượng câu đạt" th:field="*{numberQuestionCorect}" maxlength="5"/>
                                                 </div>
                                                 <div class="col-4 mt-3">
-                                                    <label for="numberQuestionParalysis" class="form-control-label">Số lượng câu liệt <span class="text-danger">*</span></label>
+                                                    <label for="numberQuestionParalysis" class="form-control-label">Số lượng câu liệt (2) <span class="text-danger">*</span></label>
                                                     <input id="numberQuestionParalysis" type="text" class="form-control" placeholder="Số lượng câu liệt" th:field="*{numberQuestionParalysis}" maxlength="5"/>
                                                 </div>
                                                 <div class="col-12 mt-3">
@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-12">
-                                                    <label class="form-control-label">Nhập số lượng câu hỏi thuộc mỗi chương <span class="text-danger">(Tổng số câu hỏi thuộc mỗi chương phải bằng số lượng câu hỏi đã nhập)*</span></label>
+                                                    <label class="form-control-label">Số lượng câu hỏi thuộc mỗi chương (3) <span class="text-danger">(Tổng số lượng câu hỏi thuộc mỗi chương(3) + số lượng câu liệt(2) phải bằng số lượng câu hỏi(1))*</span></label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-12 mt-3 text-center">
-                                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Lưu</button>
+                                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Tạo</button>
                                             <a th:href="@{/management/create-driving-license}" class="btn btn-secondary"><i class="fas fa-eraser"></i> Làm mới</a>
                                         </div>
                                     </div>

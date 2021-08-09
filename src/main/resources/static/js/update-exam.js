@@ -48,9 +48,3 @@ $(document).ready(function() {
 		}
 	});
 });
-
-function cancelExam() {
-    if (confirm("Xác nhận hủy bỏ kỳ thi?")) {
-    	$("#cancel-exam-form").submit();
-    }
-}

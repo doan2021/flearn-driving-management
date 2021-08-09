@@ -3,6 +3,8 @@ package com.doanfpt.management.application.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,7 @@ public class DrivingLicenseServices {
 		return drivingLicenseRespository.getOne(drivingLicenseId);
 	}
 
+	@Transactional
 	public void createDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
 		DrivingLicense drivingLicense = new DrivingLicense();
 		drivingLicense.setName(drivingLicenseForm.getName());
@@ -56,10 +59,11 @@ public class DrivingLicenseServices {
 		// Create structure
 		List<ExamStructure> listExamStructures = new ArrayList<>();
 		for (NumberOfChapter numberOfChapter : drivingLicenseForm.getListNumberOfChapter()) {
-			if (numberOfChapter.getChapterId() != null) {
+			if (numberOfChapter.getChapterId() != null && NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()) != 0) {
 				Chapter chapter = chapterRespository.findByChapterIdAndIsDelete(numberOfChapter.getChapterId(), Constant.IS_NOT_DELETE);
 				ExamStructure examStructure = new ExamStructure();
 				examStructure.setChapter(chapter);
+				examStructure.setNumberQuestion(NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()));
 				examStructure.setDrivingLicense(drivingLicense);
 				listExamStructures.add(examStructure);
 			}
