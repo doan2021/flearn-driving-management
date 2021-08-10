@@ -121,7 +121,7 @@
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="col-8">
-                                                                    <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${chapter.name}|"></h5>
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${chapter.index}|"></h5>
                                                                 </div>
                                                                 <div class="col-4 text-right">
                                                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:data-target="|#modalDetailChapter${chapter.chapterId}|">Chi tiết</button>
@@ -140,7 +140,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div> th
+                                                            </div>
                                                             <p class="mt-3 mb-0 text-sm">
                                                                 <span class="text-nowrap">Trên tổng </span>
                                                                 <span class="text-success mr-2"> [[${chapter.listQuestion.size}]] Câu hỏi</span>
@@ -151,7 +151,7 @@
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title m-0" id="exampleModalLabel" th:text="|Chương ${chapter.name}: ${chapter.content}|"></h5>
+                                                                    <h5 class="modal-title m-0" id="exampleModalLabel" th:text="|Chương ${chapter.index}: ${chapter.name}|"></h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>

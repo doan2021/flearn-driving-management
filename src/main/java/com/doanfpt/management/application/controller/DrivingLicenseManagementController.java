@@ -41,6 +41,20 @@ public class DrivingLicenseManagementController {
     @Autowired
     CreateExamQuestionValidator createExamQuestionValidator;
 
+    @InitBinder
+    protected void initBinder(WebDataBinder dataBinder) {
+        Object target = dataBinder.getTarget();
+        if (target == null) {
+            return;
+        }
+        if (target.getClass() == DrivingLicenseForm.class) {
+            dataBinder.setValidator(createDrivingLicenseValidator);
+        }
+        if (target.getClass() == ExamQuestionsForm.class) {
+            dataBinder.setValidator(createExamQuestionValidator);
+        }
+    }
+
     @GetMapping(value = { "/driving-license" })
     public String visitDrivingLicensePage(FormSearchDrivingLicense formSearchDrivingLicense, Model model) {
         model.addAttribute(Constant.PAGE_CONTENT_NAME,
@@ -55,20 +69,6 @@ public class DrivingLicenseManagementController {
                 drivingLicenseServices.searchDrivingLicense(formSearchDrivingLicense));
         model.addAttribute("formSearchDrivingLicense", formSearchDrivingLicense);
         return "driving-license-management";
-    }
-
-    @InitBinder
-    protected void initBinder(WebDataBinder dataBinder) {
-        Object target = dataBinder.getTarget();
-        if (target == null) {
-            return;
-        }
-        if (target.getClass() == DrivingLicenseForm.class) {
-            dataBinder.setValidator(createDrivingLicenseValidator);
-        }
-        if (target.getClass() == ExamQuestionsForm.class) {
-            dataBinder.setValidator(createExamQuestionValidator);
-        }
     }
 
     @GetMapping(value = { "/create-driving-license" })
@@ -92,6 +92,14 @@ public class DrivingLicenseManagementController {
         return "create-driving-license";
     }
 
+    @GetMapping(value = { "/detail-driving-license" })
+    public String visitDetailDrivingLicenseManagementPage(Long drivingLicenseId, Model model) {
+        model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId));
+        model.addAttribute("listExamQuestions",
+                examQuestionsServices.findExamQuestionByDrivingLicenseId(drivingLicenseId));
+        return "detail-driving-license";
+    }
+
     @PostMapping(value = { "/update-driving-license" })
     public String updateDrivingLicense(@Validated DrivingLicenseForm drivingLicenseForm, BindingResult result,
             Model model) {
@@ -113,10 +121,11 @@ public class DrivingLicenseManagementController {
         return "update-driving-license";
     }
 
-    @GetMapping(value = { "/detail-driving-license" })
-    public String visitDetailDrivingLicenseManagementPage(Long drivingLicenseId, Model model) {
-        model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId));
-        return "detail-driving-license";
+    @PostMapping(value = { "/delete-driving-license" })
+    public String updateDrivingLicense(Long drivingLicenseId, RedirectAttributes redirAttrs) {
+        drivingLicenseServices.deleteDrivingLicense(drivingLicenseId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa hạng bằng thành công!");
+        return "redirect:driving-license";
     }
 
     @GetMapping(value = { "/create-exam-questions" })

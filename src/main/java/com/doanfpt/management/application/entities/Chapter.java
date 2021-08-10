@@ -1,6 +1,5 @@
 package com.doanfpt.management.application.entities;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,29 +11,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "chapter", uniqueConstraints = { @UniqueConstraint(name = "CHAPTER_UK", columnNames = "name") })
-public class Chapter implements Serializable {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+@Table(name = "chapter")
+public class Chapter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chapter_id")
     private Long chapterId;
 
+    @Column(name = "index")
+    private String index;
+
     @Column(name = "name")
     private String name;
-
-    @Column(name = "content")
-    private String content;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -70,20 +63,20 @@ public class Chapter implements Serializable {
         this.chapterId = chapterId;
     }
 
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public boolean isDelete() {
@@ -124,10 +117,6 @@ public class Chapter implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public String getCreateBy() {

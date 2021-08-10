@@ -38,6 +38,14 @@ public class ExamQuestionsServices {
     
     @Autowired
     QuestionsRespository questionsRespository;
+    
+    public List<ExamQuestions> findExamQuestionByDrivingLicenseId(Long drivingLicenseId) {
+        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseId, Constant.IS_NOT_DELETE);
+        if (drivingLicense == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
+        }
+        return examQuestionsRepository.findByDrivingLicenseAndIsDelete(drivingLicense, Constant.IS_NOT_DELETE);
+    }
 
     public Page<ExamQuestions> searchExamQuestions(FormSearchExamQuestions formSearchExamQuestions) {
         if (formSearchExamQuestions.getPageNumber() == null) {

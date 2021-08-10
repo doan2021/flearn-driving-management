@@ -2,7 +2,7 @@ $("#create-chapter-form").validate({
 	rules: {
 		name: {
 			required: true,
-			maxlength: 5
+			maxlength: 36
 		},
 		content: {
 			required: true,

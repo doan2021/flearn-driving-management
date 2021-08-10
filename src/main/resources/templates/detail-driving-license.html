@@ -88,7 +88,7 @@
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-6">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${examStructure.chapter.name}|"></h5>
+                                                                <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${examStructure.chapter.index}|"></h5>
                                                             </div>
                                                             <div class="col-6 text-right">
                                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:data-target="|#modalDetailChapter${examStructure.chapter.chapterId}|">Chi tiết</button>
@@ -103,7 +103,7 @@
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title m-0" id="exampleModalLabel" th:text="|Chương ${examStructure.chapter.name}: ${examStructure.chapter.content}|"></h5>
+                                                                <h5 class="modal-title m-0" id="exampleModalLabel" th:text="|Chương ${examStructure.chapter.index}: ${examStructure.chapter.name}|"></h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -139,7 +139,7 @@
                                     <div class="col-12 mt-3">
                                         <div class="table-responsive border rounded shadow">
                                             <table class="table align-items-center table-flush">
-                                                <thead class="thead-dark">
+                                                <thead class="thead-light">
                                                     <tr>
                                                         <th class="text-center border-top-0">Tên đề thi</th>
                                                         <th class="text-center border-top-0">Mô Tả</th>
@@ -148,8 +148,8 @@
                                                         <th class="text-center border-top-0">Người cập nhật</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="list" th:if="${drivingLicense.listExamQuestion.size != 0}">
-                                                    <tr th:each="examQuestions : ${drivingLicense.listExamQuestion}">
+                                                <tbody class="list" th:if="${listExamQuestions.size != 0}">
+                                                    <tr th:each="examQuestions : ${listExamQuestions}">
                                                         <td class="text-center">
                                                             <a th:text="${examQuestions.name}" href="#" class="font-weight-bold"></a>
                                                         </td>
@@ -167,7 +167,7 @@
                                                         </td>
                                                     </tr>
                                                 </tbody>
-                                                <tbody class="list" th:if="${drivingLicense.listExamQuestion.size == 0}">
+                                                <tbody class="list" th:if="${listExamQuestions.size == 0}">
                                                     <tr>
                                                         <td colspan="5"><span class="text-danger">Không có đề thi nào thuộc hạng bằng này!</span></td>
                                                     </tr>
@@ -179,7 +179,10 @@
                                 <div class="row mt-3">
                                     <div class="col-12 mt-3 text-center">
                                     	<a th:href="@{${'/management/update-driving-license?drivingLicenseId='} + ${drivingLicense.drivingLicenseId}}" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button>
+                                        <button type="button" class="btn btn-danger" onclick="deleteDrivingLicense()"><i class="fas fa-trash"></i> Xóa</button>
+                                        <form th:action="@{/management/delete-driving-license}" method="POST" id="formDeleteDrivingLicense" class="d-none">
+                                            <input type="hidden" name="drivingLicenseId" th:value="${drivingLicense.drivingLicenseId}">
+                                        </form>
                                     </div>
                                 </div>
                             </div>

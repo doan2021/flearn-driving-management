@@ -95,8 +95,8 @@
                                 <table class="table align-items-center table-flush">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th>Chỉ mục</th>
                                             <th>Tên chương</th>
-                                            <th>Nội dung</th>
                                             <th>Mô tả</th>
                                             <th>Số lượng câu hỏi</th>
                                             <th>Cập nhật gần nhất</th>
@@ -106,10 +106,10 @@
                                     <tbody class="list">
                                         <tr th:each="chapter : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
                                             <th class="text-center">
-                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" th:text="${chapter.name}"></a>
+                                                <span th:text="${chapter.index}" class="font-weight-bold"></span>
                                             </th>
                                             <td class="text-center">
-                                                <span class="name mb-0 text-sm" th:text="${chapter.content}"></span>
+                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" class="name mb-0 text-sm font-weight-bold" th:text="${chapter.name}"></a>
                                             </td>
                                             <td class="text-center">
                                                 <span th:text="${chapter.description}"></span>

@@ -91,7 +91,7 @@
                                             <div class="card-header">
                                                 <div class="row align-items-center">
                                                     <div class="col-6">
-                                                        <h3 class="mb-0" th:text="|Chương ${examStructure.chapter.name}|"></h3>
+                                                        <h3 class="mb-0" th:text="|Chương ${examStructure.chapter.index}|"></h3>
                                                     </div>
                                                     <div class="col-6 text-right">
                                                         <span class="mb-0 h3" th:id="|numberQuestionCheckInChapter${stat.index}|">0</span>
@@ -193,7 +193,7 @@
                                                                     <span th:text="${question.content}"></span>
                                                                 </td>
                                                                 <td class="text-center p-1">
-                                                                    <span class="font-weight-bold text-primary" th:text="|Chương ${examStructure.chapter.name}|"></span>
+                                                                    <span class="font-weight-bold text-primary" th:text="|Chương ${examStructure.chapter.index}|"></span>
                                                                 </td>
                                                                 <td class="text-center p-1">
                                                                     <span class="text-success h2" th:if="${question.paralysis}"><i class="fas fa-check-circle"></i></span>
