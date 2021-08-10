@@ -53,7 +53,7 @@ public class ChapterServices {
     }
 
     public List<Chapter> findAllChapter() {
-        return chapterResponsitory.findByIsDeleteOrderByName(Constant.IS_NOT_DELETE);
+        return chapterResponsitory.findByIsDeleteOrderByIndex(Constant.IS_NOT_DELETE);
     }
 
     @Transactional
@@ -62,9 +62,9 @@ public class ChapterServices {
         	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Chapter chapter = new Chapter();
-        chapter.setName(chapterForm.getName());
+        chapter.setIndex(chapterForm.getName());
         chapter.setDescription(chapterForm.getDescription());
-        chapter.setContent(chapterForm.getContent());
+        chapter.setName(chapterForm.getContent());
         chapter.setCreateBy(Common.getUsernameLogin());
         chapter.setCreateAt(Common.getSystemDate());
         chapter.setUpdateBy(Common.getUsernameLogin());
@@ -97,8 +97,8 @@ public class ChapterServices {
     public void updateChapter(ChapterForm chapterForm) {
         Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(),
                 Constant.IS_NOT_DELETE);
-        chapter.setName(chapterForm.getName());
-        chapter.setContent(chapterForm.getContent());
+        chapter.setIndex(chapterForm.getName());
+        chapter.setName(chapterForm.getContent());
         chapter.setDescription(chapterForm.getDescription());
         chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
@@ -126,6 +126,9 @@ public class ChapterServices {
             chapter.setListImages(listDocuments);
         }
         chapterResponsitory.save(chapter);
+        for (Document doc : chapter.getListImages()) {
+            amazonS3ClientService.deleteFileFromS3Bucket(doc.getPath());
+        }
     }
 
     public Page<Chapter> searchChapter(FormSearchChapter formSearchChapter) {
@@ -158,10 +161,10 @@ public class ChapterServices {
     public Object getObjectUpdate(Long chapterId) {
         ChapterForm chapterForm = new ChapterForm();
         Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
-        chapterForm.setName(chapter.getName());
+        chapterForm.setName(chapter.getIndex());
         chapterForm.setChapterId(chapter.getChapterId());
         chapterForm.setDescription(chapter.getDescription());
-        chapterForm.setContent(chapter.getContent());
+        chapterForm.setContent(chapter.getName());
         chapterForm.setUpdateAt(DateFormatUtils.format(chapter.getUpdateAt(), Constant.FORMAT_DATE_TIME));
         chapterForm.setUpdateBy(Common.getUsernameLogin());
         return chapterForm;

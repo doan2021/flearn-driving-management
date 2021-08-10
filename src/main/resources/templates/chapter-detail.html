@@ -57,10 +57,10 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.name}"></span>
+                                        <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.index}"></span>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <span th:text="${chapter.content}"></span>
+                                        <span th:text="${chapter.name}"></span>
                                     </div>
                                     <div class="col-12 mt-4">
                                         <strong>Mô Tả: </strong><span th:text="${chapter.description}"></span>
@@ -115,7 +115,7 @@
                                     <tbody>
                                         <tr th:each="question : ${listQuestion}" th:if="${listQuestion != null && listQuestion.size != 0}">
                                             <th class="text-center p-1">
-                                                <a th:href="@{${'/management/detail-question?questionId='} + ${question.questionId}}" class="name mb-0 text-sm" th:text="${question.number}"></a>
+                                                <a th:href="@{${'/management/detail-question?questionId='} + ${question.questionId}}" class="name mb-0 text-sm" th:text="|Câu ${question.number}|"></a>
                                             </th>
                                             <td class="text-center p-1">
                                                 <span th:text="${question.content}"></span>

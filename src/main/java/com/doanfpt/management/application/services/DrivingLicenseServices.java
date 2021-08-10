@@ -30,89 +30,104 @@ import com.doanfpt.management.application.specification.DrivingLicenseSpecificat
 @Service
 public class DrivingLicenseServices {
 
-	@Autowired
-	private DrivingLicenseRespository drivingLicenseRespository;
+    @Autowired
+    private DrivingLicenseRespository drivingLicenseRespository;
 
-	@Autowired
-	private ChapterRespository chapterRespository;
+    @Autowired
+    private ChapterRespository chapterRespository;
 
-	public List<DrivingLicense> findAllDrivingLicense() {
+    public List<DrivingLicense> findAllDrivingLicense() {
         return drivingLicenseRespository.findByIsDelete(Constant.IS_NOT_DELETE);
     }
 
-	public DrivingLicense findById(Long drivingLicenseId) {
-		return drivingLicenseRespository.getOne(drivingLicenseId);
-	}
+    public DrivingLicense findById(Long drivingLicenseId) {
+        return drivingLicenseRespository.getOne(drivingLicenseId);
+    }
 
-	@Transactional
-	public void createDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
-		DrivingLicense drivingLicense = new DrivingLicense();
-		drivingLicense.setName(drivingLicenseForm.getName());
-		drivingLicense.setPrice(NumberUtils.toDouble(drivingLicenseForm.getPrice()));
-		drivingLicense.setNumberQuestion(NumberUtils.toInt(drivingLicenseForm.getNumberQuestion()));
-		drivingLicense.setNumberQuestionParalysis(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionParalysis()));
-		drivingLicense.setNumberQuestionCorect(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionCorect()));
-		drivingLicense.setExamMinutes(NumberUtils.toInt(drivingLicenseForm.getExamMinutes()));
-		drivingLicense.setDescription(drivingLicenseForm.getDescription());
-		drivingLicense.setNumberYearExpires(NumberUtils.toInt(drivingLicenseForm.getNumberYearExpires()));
+    @Transactional
+    public void createDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
+        DrivingLicense drivingLicense = new DrivingLicense();
+        drivingLicense.setName(drivingLicenseForm.getName());
+        drivingLicense.setPrice(NumberUtils.toDouble(drivingLicenseForm.getPrice()));
+        drivingLicense.setNumberQuestion(NumberUtils.toInt(drivingLicenseForm.getNumberQuestion()));
+        drivingLicense.setNumberQuestionParalysis(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionParalysis()));
+        drivingLicense.setNumberQuestionCorect(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionCorect()));
+        drivingLicense.setExamMinutes(NumberUtils.toInt(drivingLicenseForm.getExamMinutes()));
+        drivingLicense.setDescription(drivingLicenseForm.getDescription());
+        drivingLicense.setNumberYearExpires(NumberUtils.toInt(drivingLicenseForm.getNumberYearExpires()));
 
-		// Create structure
-		List<ExamStructure> listExamStructures = new ArrayList<>();
-		for (NumberOfChapter numberOfChapter : drivingLicenseForm.getListNumberOfChapter()) {
-			if (numberOfChapter.getChapterId() != null && NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()) != 0) {
-				Chapter chapter = chapterRespository.findByChapterIdAndIsDelete(numberOfChapter.getChapterId(), Constant.IS_NOT_DELETE);
-				ExamStructure examStructure = new ExamStructure();
-				examStructure.setChapter(chapter);
-				examStructure.setNumberQuestion(NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()));
-				examStructure.setDrivingLicense(drivingLicense);
-				listExamStructures.add(examStructure);
-			}
-		}
-		drivingLicense.setListExamStructure(listExamStructures);
-		drivingLicense.setCreateBy(Common.getUsernameLogin());
-		drivingLicense.setCreateAt(Common.getSystemDate());
-		drivingLicense.setUpdateBy(Common.getUsernameLogin());
-		drivingLicense.setUpdateAt(Common.getSystemDate());
-		drivingLicenseRespository.save(drivingLicense);
-	}
+        // Create structure
+        List<ExamStructure> listExamStructures = new ArrayList<>();
+        for (NumberOfChapter numberOfChapter : drivingLicenseForm.getListNumberOfChapter()) {
+            if (numberOfChapter.getChapterId() != null
+                    && NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()) != 0) {
+                Chapter chapter = chapterRespository.findByChapterIdAndIsDelete(numberOfChapter.getChapterId(),
+                        Constant.IS_NOT_DELETE);
+                ExamStructure examStructure = new ExamStructure();
+                examStructure.setChapter(chapter);
+                examStructure.setNumberQuestion(NumberUtils.toInt(numberOfChapter.getNumberQuestionInChapter()));
+                examStructure.setDrivingLicense(drivingLicense);
+                listExamStructures.add(examStructure);
+            }
+        }
+        drivingLicense.setListExamStructure(listExamStructures);
+        drivingLicense.setCreateBy(Common.getUsernameLogin());
+        drivingLicense.setCreateAt(Common.getSystemDate());
+        drivingLicense.setUpdateBy(Common.getUsernameLogin());
+        drivingLicense.setUpdateAt(Common.getSystemDate());
+        drivingLicenseRespository.save(drivingLicense);
+    }
 
-	public DrivingLicenseForm getObjectUpdate(Long drivingLicenseId) {
-		DrivingLicenseForm drivingLicenseForm = new DrivingLicenseForm();
-		DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseId, Constant.IS_NOT_DELETE);
-		if (drivingLicense == null) {
-			throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
-		}
-		drivingLicenseForm.setName(drivingLicense.getName());
-		drivingLicenseForm.setPrice(String.valueOf(drivingLicense.getPrice()));
-		drivingLicenseForm.setNumberQuestion(String.valueOf(drivingLicense.getNumberQuestion()));
-		drivingLicenseForm.setNumberQuestionParalysis(String.valueOf(drivingLicense.getNumberQuestionParalysis()));
-		drivingLicenseForm.setNumberQuestionCorect(String.valueOf(drivingLicense.getNumberQuestionCorect()));
-		drivingLicenseForm.setExamMinutes(String.valueOf(drivingLicense.getExamMinutes()));
-		drivingLicenseForm.setDescription(drivingLicense.getDescription());
-		drivingLicenseForm.setNumberYearExpires(String.valueOf(drivingLicense.getNumberYearExpires()));
-		List<NumberOfChapter> listNumberOfChapter = new ArrayList<>();
-		for(ExamStructure examStructure : drivingLicense.getListExamStructure()) {
-			NumberOfChapter numberOfChapter = new NumberOfChapter();
-			numberOfChapter.setChapterId(examStructure.getChapter().getChapterId());
-			numberOfChapter.setNumberQuestionInChapter(String.valueOf(examStructure.getNumberQuestion()));
-			listNumberOfChapter.add(numberOfChapter);
-		}
-		drivingLicenseForm.setListNumberOfChapter(listNumberOfChapter);
-		return drivingLicenseForm;
+    @Transactional
+    public void deleteDrivingLicense(Long drivingLicenseId){
+        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseId,
+                Constant.IS_NOT_DELETE);
+        if (drivingLicense == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
+        }
+        drivingLicense.setDelete(Constant.IS_DELETE);
+        drivingLicenseRespository.save(drivingLicense);
+    }
 
-	}
+    public DrivingLicenseForm getObjectUpdate(Long drivingLicenseId) {
+        DrivingLicenseForm drivingLicenseForm = new DrivingLicenseForm();
+        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseId,
+                Constant.IS_NOT_DELETE);
+        if (drivingLicense == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
+        }
+        drivingLicenseForm.setName(drivingLicense.getName());
+        drivingLicenseForm.setPrice(String.valueOf(drivingLicense.getPrice()));
+        drivingLicenseForm.setNumberQuestion(String.valueOf(drivingLicense.getNumberQuestion()));
+        drivingLicenseForm.setNumberQuestionParalysis(String.valueOf(drivingLicense.getNumberQuestionParalysis()));
+        drivingLicenseForm.setNumberQuestionCorect(String.valueOf(drivingLicense.getNumberQuestionCorect()));
+        drivingLicenseForm.setExamMinutes(String.valueOf(drivingLicense.getExamMinutes()));
+        drivingLicenseForm.setDescription(drivingLicense.getDescription());
+        drivingLicenseForm.setNumberYearExpires(String.valueOf(drivingLicense.getNumberYearExpires()));
+        List<NumberOfChapter> listNumberOfChapter = new ArrayList<>();
+        for (ExamStructure examStructure : drivingLicense.getListExamStructure()) {
+            NumberOfChapter numberOfChapter = new NumberOfChapter();
+            numberOfChapter.setChapterId(examStructure.getChapter().getChapterId());
+            numberOfChapter.setNumberQuestionInChapter(String.valueOf(examStructure.getNumberQuestion()));
+            listNumberOfChapter.add(numberOfChapter);
+        }
+        drivingLicenseForm.setListNumberOfChapter(listNumberOfChapter);
+        return drivingLicenseForm;
 
-	public void updateDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
-		DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseForm.getDrivingLicenseId(), Constant.IS_NOT_DELETE);
-		drivingLicense.setName(drivingLicenseForm.getName());
-		drivingLicense.setPrice(NumberUtils.toDouble(drivingLicenseForm.getPrice()));
-		drivingLicense.setNumberQuestion(NumberUtils.toInt(drivingLicenseForm.getNumberQuestion()));
-		drivingLicense.setNumberQuestionParalysis(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionParalysis()));
-		drivingLicense.setNumberQuestionCorect(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionCorect()));
-		drivingLicense.setExamMinutes(NumberUtils.toInt(drivingLicenseForm.getExamMinutes()));
-		drivingLicense.setDescription(drivingLicenseForm.getDescription());
-		drivingLicense.setNumberYearExpires(NumberUtils.toInt(drivingLicenseForm.getNumberYearExpires()));
-		
+    }
+
+    public void updateDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
+        DrivingLicense drivingLicense = drivingLicenseRespository
+                .findByDrivingLicenseIdAndIsDelete(drivingLicenseForm.getDrivingLicenseId(), Constant.IS_NOT_DELETE);
+        drivingLicense.setName(drivingLicenseForm.getName());
+        drivingLicense.setPrice(NumberUtils.toDouble(drivingLicenseForm.getPrice()));
+        drivingLicense.setNumberQuestion(NumberUtils.toInt(drivingLicenseForm.getNumberQuestion()));
+        drivingLicense.setNumberQuestionParalysis(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionParalysis()));
+        drivingLicense.setNumberQuestionCorect(NumberUtils.toInt(drivingLicenseForm.getNumberQuestionCorect()));
+        drivingLicense.setExamMinutes(NumberUtils.toInt(drivingLicenseForm.getExamMinutes()));
+        drivingLicense.setDescription(drivingLicenseForm.getDescription());
+        drivingLicense.setNumberYearExpires(NumberUtils.toInt(drivingLicenseForm.getNumberYearExpires()));
+
 //		List<ExamStructure> listExamStructures = new ArrayList<>();
 //		for (NumberOfChapter numberOfChapter : drivingLicenseForm.getListNumberOfChapter()) {
 //			if (numberOfChapter.getChapterId() != null) {
@@ -124,16 +139,16 @@ public class DrivingLicenseServices {
 //			}
 //		}
 //		drivingLicense.setListExamStructure(listExamStructures);
-		drivingLicense.setCreateBy(Common.getUsernameLogin());
-		drivingLicense.setCreateAt(Common.getSystemDate());
-		drivingLicense.setUpdateBy(Common.getUsernameLogin());
-		drivingLicense.setUpdateAt(Common.getSystemDate());
-		drivingLicenseRespository.save(drivingLicense);
-	}
-	
+        drivingLicense.setCreateBy(Common.getUsernameLogin());
+        drivingLicense.setCreateAt(Common.getSystemDate());
+        drivingLicense.setUpdateBy(Common.getUsernameLogin());
+        drivingLicense.setUpdateAt(Common.getSystemDate());
+        drivingLicenseRespository.save(drivingLicense);
+    }
+
     public Page<DrivingLicense> searchDrivingLicense(FormSearchDrivingLicense formSearchDrivingLicense) {
         if (formSearchDrivingLicense.getPageNumber() == null) {
-        	formSearchDrivingLicense.setPageNumber(0);
+            formSearchDrivingLicense.setPageNumber(0);
         }
         // Init condition with is_delete
         Specification<DrivingLicense> conditions = Specification.where(DrivingLicenseSpecification.isDelete(false));
@@ -145,16 +160,20 @@ public class DrivingLicenseServices {
                 conditions = conditions.and(DrivingLicenseSpecification.hasPrice(formSearchDrivingLicense.getPrice()));
             }
             if (StringUtils.isNotBlank(formSearchDrivingLicense.getNumberQuestion())) {
-                conditions = conditions.and(DrivingLicenseSpecification.hasNumberQuestion(formSearchDrivingLicense.getNumberQuestion()));
+                conditions = conditions.and(
+                        DrivingLicenseSpecification.hasNumberQuestion(formSearchDrivingLicense.getNumberQuestion()));
             }
             if (StringUtils.isNotBlank(formSearchDrivingLicense.getNumberQuestionParalysis())) {
-                conditions = conditions.and(DrivingLicenseSpecification.hasNumberQuestionParalysis(formSearchDrivingLicense.getNumberQuestionParalysis()));
+                conditions = conditions.and(DrivingLicenseSpecification
+                        .hasNumberQuestionParalysis(formSearchDrivingLicense.getNumberQuestionParalysis()));
             }
             if (StringUtils.isNotBlank(formSearchDrivingLicense.getExamMinutes())) {
-                conditions = conditions.and(DrivingLicenseSpecification.hasExamMinutes(formSearchDrivingLicense.getExamMinutes()));
+                conditions = conditions
+                        .and(DrivingLicenseSpecification.hasExamMinutes(formSearchDrivingLicense.getExamMinutes()));
             }
             if (StringUtils.isNotBlank(formSearchDrivingLicense.getNumberYearExpires())) {
-                conditions = conditions.and(DrivingLicenseSpecification.hasNumberYearExpires(formSearchDrivingLicense.getNumberYearExpires()));
+                conditions = conditions.and(DrivingLicenseSpecification
+                        .hasNumberYearExpires(formSearchDrivingLicense.getNumberYearExpires()));
             }
         }
         Pageable pageable = PageRequest.of(formSearchDrivingLicense.getPageNumber(), Constant.RECORD_PER_PAGE);

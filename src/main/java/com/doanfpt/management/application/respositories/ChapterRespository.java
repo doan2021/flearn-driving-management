@@ -11,12 +11,13 @@ import org.springframework.stereotype.Repository;
 import com.doanfpt.management.application.entities.Chapter;
 
 @Repository
-public interface ChapterRespository  extends JpaRepository<Chapter, Long>, PagingAndSortingRepository<Chapter, Long>, JpaSpecificationExecutor<Chapter> {
+public interface ChapterRespository extends JpaRepository<Chapter, Long>, PagingAndSortingRepository<Chapter, Long>,
+        JpaSpecificationExecutor<Chapter> {
 
     public Chapter findByChapterIdAndIsDelete(Long chapterId, Boolean isDelete);
-    
-    public List<Chapter> findByIsDeleteOrderByName(Boolean isDelete);
-    
+
+    public List<Chapter> findByIsDeleteOrderByIndex(Boolean isDelete);
+
     @Query("SELECT count(c) FROM Chapter c WHERE c.isDelete = false")
-	Integer countChapter();
+    Integer countChapter();
 }

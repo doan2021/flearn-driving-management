@@ -2,7 +2,8 @@ package com.doanfpt.management.application.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.doanfpt.management.application.responsitories.DrivingLicenseInfoRespository;
+
+import com.doanfpt.management.application.respositories.DrivingLicenseInfoRespository;
 
 @Service
 
