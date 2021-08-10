@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ChapterForm {
     private Long chapterId;
+    private String index;
     private String name;
-    private String content;
     private String description;
     private String createBy;
     private String createAt;
@@ -29,12 +29,12 @@ public class ChapterForm {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getIndex() {
+        return index;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public String getDescription() {

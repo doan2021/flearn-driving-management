@@ -79,12 +79,12 @@ public class ChapterManagementController {
         return "create-chapter";
     }
 
-    @PostMapping(value = { "/save-chapter" })
+    @PostMapping(value = { "/create-chapter" })
     public String saveChapter(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "create-chapter";
         }
-        chapterServices.saveChapter(chapterForm);
+        chapterServices.createChapter(chapterForm);
         model.addAttribute(Constant.STATUS_SUCCESS, "Tạo chương mới thành công!");
         model.addAttribute("chapterForm", new ChapterForm());
         return "create-chapter";

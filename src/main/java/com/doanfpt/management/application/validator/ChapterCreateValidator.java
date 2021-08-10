@@ -20,17 +20,17 @@ public class ChapterCreateValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ChapterForm chapterForm = (ChapterForm) target;
         // Kiểm tra các field của chapterForm.
+        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "index", "NotEmpty.chapterForm.index");
         ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.chapterForm.name");
-        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "content", "NotEmpty.chapterForm.content");
 
         // Validate name
-        if (!errors.hasFieldErrors("name") && Common.isInvalidMaxLengthString(chapterForm.getName(), 36)) {
-            errors.rejectValue("name", "Maxlength.chapterForm.name");
+        if (!errors.hasFieldErrors("index") && Common.isInvalidMaxLengthString(chapterForm.getIndex(), 36)) {
+            errors.rejectValue("index", "Maxlength.chapterForm.index");
         }
 
         // Validate content
-        if (!errors.hasFieldErrors("content") && Common.isInvalidMaxLengthString(chapterForm.getContent(), 255)) {
-            errors.rejectValue("content", "Maxlength.chapterForm.content");
+        if (!errors.hasFieldErrors("name") && Common.isInvalidMaxLengthString(chapterForm.getName(), 255)) {
+            errors.rejectValue("name", "Maxlength.chapterForm.name");
         }
 
         // Validate description

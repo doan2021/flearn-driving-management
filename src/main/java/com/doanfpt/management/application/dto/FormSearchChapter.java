@@ -2,11 +2,19 @@ package com.doanfpt.management.application.dto;
 
 public class FormSearchChapter {
 
+    private String index;
     private String name;
-    private String content;
     private String updateAtFrom;
     private String updateAtTo;
     private Integer pageNumber;
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
 
     public String getName() {
         return name;
@@ -14,14 +22,6 @@ public class FormSearchChapter {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public String getUpdateAtFrom() {

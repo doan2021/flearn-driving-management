@@ -46,8 +46,8 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
+                                                <p class="m-0" th:if="${#fields.hasErrors('index')}" th:errors="*{index}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-                                                <p class="m-0" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
                                             </div>
                                         </div>
                                         <div class="col-12" th:if="${success != null}">
@@ -64,14 +64,14 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <input type="hidden" th:field="*{chapterId}">
-                                                <label class="form-control-label" for="input-name">Tên chương <span class="text-danger">*</span></label>
-                                                <input th:field="*{name}" type="text" id="input-name" class="form-control" placeholder="1">
+                                                <label class="form-control-label" for="input-name">Chỉ mục <span class="text-danger">*</span></label>
+                                                <input th:field="*{index}" type="text" id="input-name" class="form-control" placeholder="1">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="input-content">Nội dung <span class="text-danger">*</span></label>
-                                                <input th:field="*{content}" type="text" id="input-content" class="form-control" placeholder="asd">
+                                                <label class="form-control-label" for="name">Tên chương <span class="text-danger">*</span></label>
+                                                <input th:field="*{name}" type="text" id="name" class="form-control" placeholder="Tên chương">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">

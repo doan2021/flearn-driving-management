@@ -23,7 +23,7 @@ public class Chapter {
     @Column(name = "chapter_id")
     private Long chapterId;
 
-    @Column(name = "index")
+    @Column(name = "indexs")
     private String index;
 
     @Column(name = "name")
