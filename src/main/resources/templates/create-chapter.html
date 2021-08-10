@@ -40,13 +40,13 @@
                                 </div>
                             </div>
                             <div class="card-body px-4">
-                                <form th:action="@{/management/save-chapter}" th:object="${chapterForm}" method="POST" id="create-chapter-form" enctype="multipart/form-data">
+                                <form th:action="@{/management/create-chapter}" th:object="${chapterForm}" method="POST" id="create-chapter-form" enctype="multipart/form-data">
                                     <input type="file" onchange="readURL(this);" class="d-none" id="fileImage" name="image">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
+                                                <p class="m-0" th:if="${#fields.hasErrors('index')}" th:errors="*{index}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-                                                <p class="m-0" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
                                             </div>
                                         </div>
                                         <div class="col-12" th:if="${success != null}">
@@ -62,29 +62,29 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group" id="name-place">
-                                                <label class="form-control-label" for="input-chapter-name">Tên chương <span class="text-danger">*</span></label>
-                                                <input th:field="*{name}" type="text" id="input-chapter-name" placeholder="Nhập tên chương" class="form-control" name="name">
+                                                <label class="form-control-label" for="chapterIndex">Tên chương <span class="text-danger">*</span></label>
+                                                <input th:field="*{index}" type="text" id="chapterIndex" placeholder="Nhập tên chương" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group" id="content-place">
-                                                <label class="form-control-label" for="input-chapter-content">Nội dung <span class="text-danger">*</span></label>
-                                                <input th:field="*{content}" id="input-chapter-content" class="form-control" name="content" placeholder="Nhập nội dung"></input>
+                                                <label class="form-control-label" for="chapterName">Nội dung <span class="text-danger">*</span></label>
+                                                <input th:field="*{name}" id="chapterName" class="form-control" placeholder="Nhập nội dung"></input>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group" id="description-place">
-                                                <label class="form-control-label" for="input-chapter-description">Mô tả</label>
-                                                <textarea th:field="*{description}" id="input-chapter-description" placeholder="Nhập mô tả" class="form-control" name="description"></textarea>
+                                                <label class="form-control-label" for="chapterDescription">Mô tả</label>
+                                                <textarea th:field="*{description}" id="chapterDescription" placeholder="Nhập mô tả" class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label class="form-control-label">Hình ảnh</label>
-                                            <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
+                                            <input id="imageChapter" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
                                         </div>
                                     </div>
                                     <div class="row mt-3">

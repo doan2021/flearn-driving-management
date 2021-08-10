@@ -57,14 +57,14 @@ public class ChapterServices {
     }
 
     @Transactional
-    public void saveChapter(ChapterForm chapterForm) {
+    public void createChapter(ChapterForm chapterForm) {
         if (chapterForm == null) {
         	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Chapter chapter = new Chapter();
-        chapter.setIndex(chapterForm.getName());
+        chapter.setIndex(chapterForm.getIndex());
+        chapter.setName(chapterForm.getName());
         chapter.setDescription(chapterForm.getDescription());
-        chapter.setName(chapterForm.getContent());
         chapter.setCreateBy(Common.getUsernameLogin());
         chapter.setCreateAt(Common.getSystemDate());
         chapter.setUpdateBy(Common.getUsernameLogin());
@@ -97,8 +97,8 @@ public class ChapterServices {
     public void updateChapter(ChapterForm chapterForm) {
         Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(),
                 Constant.IS_NOT_DELETE);
-        chapter.setIndex(chapterForm.getName());
-        chapter.setName(chapterForm.getContent());
+        chapter.setIndex(chapterForm.getIndex());
+        chapter.setName(chapterForm.getName());
         chapter.setDescription(chapterForm.getDescription());
         chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
@@ -138,11 +138,11 @@ public class ChapterServices {
         // Init condition with is_delete
         Specification<Chapter> conditions = Specification.where(ChapterSpecification.isDelete(false));
         if (formSearchChapter != null) {
-            if (StringUtils.isNotBlank(formSearchChapter.getName())) {
-                conditions = conditions.and(ChapterSpecification.hasName(formSearchChapter.getName()));
+            if (StringUtils.isNotBlank(formSearchChapter.getIndex())) {
+                conditions = conditions.and(ChapterSpecification.hasIndex(formSearchChapter.getName()));
             }
-            if (StringUtils.isNotBlank(formSearchChapter.getContent())) {
-                conditions = conditions.and(ChapterSpecification.likeContent(formSearchChapter.getContent()));
+            if (StringUtils.isNotBlank(formSearchChapter.getName())) {
+                conditions = conditions.and(ChapterSpecification.likeName(formSearchChapter.getName()));
             }
 
             if (StringUtils.isNotBlank(formSearchChapter.getUpdateAtFrom())) {
@@ -161,17 +161,13 @@ public class ChapterServices {
     public Object getObjectUpdate(Long chapterId) {
         ChapterForm chapterForm = new ChapterForm();
         Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
-        chapterForm.setName(chapter.getIndex());
         chapterForm.setChapterId(chapter.getChapterId());
+        chapterForm.setIndex(chapter.getIndex());
+        chapterForm.setName(chapter.getName());
         chapterForm.setDescription(chapter.getDescription());
-        chapterForm.setContent(chapter.getName());
         chapterForm.setUpdateAt(DateFormatUtils.format(chapter.getUpdateAt(), Constant.FORMAT_DATE_TIME));
         chapterForm.setUpdateBy(Common.getUsernameLogin());
         return chapterForm;
-    }
-
-    public List<Chapter> getListChapterForExamQuestion(String listChapterName) {
-        return null;
     }
 
     public Integer countChapter() {
