@@ -86,9 +86,6 @@ public class Account {
     @Column(name = "update_at")
     private Date updateAt;
 
-    @Column(name = "is_nable", columnDefinition = "boolean default false")
-    private boolean isEnable;
-
     @Column(name = "auth_provider", length = 15)
     private String authProvider;
 
@@ -166,14 +163,6 @@ public class Account {
 
     public void setListImages(List<Document> listImages) {
         this.listImages = listImages;
-    }
-
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean isEnable) {
-        this.isEnable = isEnable;
     }
 
     public String getAuthProvider() {
