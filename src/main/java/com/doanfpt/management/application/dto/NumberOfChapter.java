@@ -1,4 +1,4 @@
-package com.doanfpt.management.application.model;
+package com.doanfpt.management.application.dto;
 
 public class NumberOfChapter {
     private Long chapterId;

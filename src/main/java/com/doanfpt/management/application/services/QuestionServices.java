@@ -94,30 +94,27 @@ public class QuestionServices {
     }
 
     public List<Question> getQuestionInChapter(Long chapterId) {
-        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, false);
-        return questionsRespository.findByChapterAndIsDelete(chapter, Constant.IS_NOT_DELETE);
+        Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
+        return questionsRespository.findByChapter(chapter);
     }
 
     public Question getOneQuestion(Long questionId) {
         return questionsRespository.getOne(questionId);
     }
     
-	public Integer countQuestion() {
-		return questionsRespository.countQuestion();
-	}
+    public Integer countQuestion() {
+        return questionsRespository.countQuestion();
+    }
 
-	public Object getQuestionDetail(Long questionId) {
-		return questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
-	}
+    public Object getQuestionDetail(Long questionId) {
+        return questionsRespository.findByQuestionId(questionId);
+    }
 
-	public void deleteQuestion(Long questionId) {
-		Question question = questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
-		if (question == null) {
+    public void deleteQuestion(Long questionId) {
+        Question question = questionsRespository.findByQuestionId(questionId);
+        if (question == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi không tồn tại!");
         }
-		question.setDelete(Constant.IS_DELETE);
-		question.setUpdateBy(Common.getUsernameLogin());
-		question.setUpdateAt(Common.getSystemDate());
-		questionsRespository.save(question);
-	}
+        questionsRespository.delete(question);
+    }
 }

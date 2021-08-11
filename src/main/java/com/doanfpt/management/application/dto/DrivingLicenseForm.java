@@ -2,8 +2,6 @@ package com.doanfpt.management.application.dto;
 
 import java.util.List;
 
-import com.doanfpt.management.application.model.NumberOfChapter;
-
 public class DrivingLicenseForm {
 	private Long drivingLicenseId;
 	private String name;

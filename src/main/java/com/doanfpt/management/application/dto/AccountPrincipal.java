@@ -1,4 +1,4 @@
-package com.doanfpt.management.application.model;
+package com.doanfpt.management.application.dto;
 
 import java.util.Collection;
 import java.util.Collections;

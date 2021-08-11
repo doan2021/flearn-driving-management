@@ -32,9 +32,6 @@ public class ExamQuestionsDetail {
     @JoinColumn(name = "exam_questions_id")
     private ExamQuestions examQuestions;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -46,14 +43,6 @@ public class ExamQuestionsDetail {
 
     @Column(name = "update_at")
     private Date updateAt;
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
-    }
 
     public Long getExamQuestionsDetailId() {
         return examQuestionsDetailId;

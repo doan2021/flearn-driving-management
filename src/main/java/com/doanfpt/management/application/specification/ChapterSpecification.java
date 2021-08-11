@@ -15,10 +15,6 @@ public class ChapterSpecification {
         return (root, query, cb) -> cb.like(root.get(Chapter_.NAME), "%" + name + "%");
     }
     
-    public static Specification<Chapter> isDelete(boolean isDelete) {
-        return (root, query, cb) -> cb.equal(root.get(Chapter_.IS_DELETE), isDelete);
-    }
-    
     public static Specification<Chapter> hasUpdateAtFrom(String updateAtFrom) {
         return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(Chapter_.UPDATE_AT), Common.stringToDate(updateAtFrom));
     }

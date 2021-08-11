@@ -15,10 +15,6 @@ public class ExamQuestionsSpecification {
 		return (root, query, cb) -> cb.like(root.get(ExamQuestions_.DESCRIPTION), "%" + content + "%");
 	}
 
-	public static Specification<ExamQuestions> isDelete(boolean isDelete) {
-		return (root, query, cb) -> cb.equal(root.get(ExamQuestions_.IS_DELETE), isDelete);
-	}
-
 	public static Specification<ExamQuestions> hasUpdateAtFrom(String updateAtFrom) {
 		return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(ExamQuestions_.UPDATE_AT),
 				Common.stringToDate(updateAtFrom));

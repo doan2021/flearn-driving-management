@@ -1,20 +1,16 @@
 package com.doanfpt.management.application.common;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.doanfpt.management.application.dto.AccountPrincipal;
 import com.doanfpt.management.application.entities.Document;
-import com.doanfpt.management.application.model.AccountPrincipal;
 
 public class Common {
 
@@ -110,7 +106,7 @@ public class Common {
         // Init extension new
         String extension = MimeTypes.lookupExt(multipartFile.getContentType());
         // Remove extension old
-        String fileName = FilenameUtils.removeExtension(multipartFile.getOriginalFilename());
+        String fileName = multipartFile.getOriginalFilename().substring(0, multipartFile.getOriginalFilename().lastIndexOf("."));
         return Common.dateToString(Common.getSystemDate(), Constant.PATTERN_FORMAT_DATE_TIME) + "_" + label + "_"
                 + fileName.replace(" ", "_") + "." + extension;
     }
@@ -122,12 +118,6 @@ public class Common {
         cal.add(Calendar.MINUTE, 59);
         cal.add(Calendar.SECOND, 59);
         return cal.getTime();
-    }
-
-    public static File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-        File convFile = new File(multipartFile.getOriginalFilename());
-        FileUtils.writeByteArrayToFile(convFile, multipartFile.getBytes());
-        return convFile;
     }
 
     public static Boolean isInvalidMaxLengthString(String field, Integer maxLength) {

@@ -5,7 +5,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.doanfpt.management.application.model.DataSettingId;
+import com.doanfpt.management.application.dto.DataSettingId;
 
 @Entity
 @Table(name = "data_setting")

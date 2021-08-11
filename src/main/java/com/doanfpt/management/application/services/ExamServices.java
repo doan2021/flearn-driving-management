@@ -61,11 +61,11 @@ public class ExamServices {
     }
 
     public ExamUpdateForm getObjectUpdate(Long examId) {
-        if (!existsById(examId)) {
-            throw new BusinessException(404, "Kỳ thi không tồn tại.");
+        Exam exam = examRepository.findByExamId(examId);
+        if (exam == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         ExamUpdateForm examUpdateForm = new ExamUpdateForm();
-        Exam exam = examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
         examUpdateForm.setExamId(exam.getExamId());
         examUpdateForm.setName(exam.getName());
         examUpdateForm.setDescription(exam.getDescription());
@@ -84,7 +84,7 @@ public class ExamServices {
         	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Exam exam = new Exam();
-        exam = examRepository.findByExamIdAndIsDelete(examUpdateForm.getExamId(), Constant.IS_NOT_DELETE);
+        exam = examRepository.findByExamId(examUpdateForm.getExamId());
         if (exam == null) {
         	throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
 		}
@@ -102,8 +102,7 @@ public class ExamServices {
         if (formSearchExam.getPageNumber() == null) {
             formSearchExam.setPageNumber(0);
         }
-        // Init condition with is_delete
-        Specification<Exam> conditions = Specification.where(ExamSpecification.isDelete(false));
+        Specification<Exam> conditions = Specification.where(null);
         if (formSearchExam != null) {
             if (StringUtils.isNotBlank(formSearchExam.getName())) {
                 conditions = conditions.and(ExamSpecification.hasName(formSearchExam.getName()));
@@ -134,36 +133,30 @@ public class ExamServices {
 
     @Transactional
     public void deleteExam(Long examId) {
-        if (!existsById(examId)) {
+        Exam exam = examRepository.findByExamId(examId);
+        if (exam == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
-        Exam exam = examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
-        exam.setDelete(true);
-        exam.setUpdateBy(Common.getUsernameLogin());
-        exam.setUpdateAt(Common.getSystemDate());
-        examRepository.save(exam);
+        examRepository.delete(exam);
     }
     
     public Exam getOne(Long examId) {
-        if (!existsById(examId)) {
+        Exam exam = examRepository.findByExamId(examId);
+        if (exam == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
-        return examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
+        return examRepository.findByExamId(examId);
     }
     
     @Transactional
     public Exam cancelExam(Long examId) {
-        if (!existsById(examId)) {
+        Exam exam = examRepository.findByExamId(examId);
+        if (exam == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
-        Exam exam = examRepository.findByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
         exam.setStatus(Constant.STS_EXAM_CANCEL);
         exam.setUpdateBy(Common.getUsernameLogin());
         exam.setUpdateAt(Common.getSystemDate());
         return examRepository.save(exam);
-    }
-    
-    public Boolean existsById(Long examId) {
-        return examRepository.existsByExamIdAndIsDelete(examId, Constant.IS_NOT_DELETE);
     }
 }

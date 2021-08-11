@@ -26,10 +26,6 @@ public class Constant {
 
     public static final Long ROLE_ID_ADMIN = 1L;
 
-    public static final boolean IS_NOT_DELETE = false;
-    
-    public static final boolean IS_DELETE = true;
-
     /** Rule format date */
     public static final String FORMAT_DATE = "dd/MM/yyyy";
 

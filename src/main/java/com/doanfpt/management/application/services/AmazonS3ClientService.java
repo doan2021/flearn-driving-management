@@ -40,7 +40,7 @@ public class AmazonS3ClientService {
             fos.write(multipartFile.getBytes());
             fos.close();
             PutObjectRequest putObjectRequest = new PutObjectRequest(awsS3AudioBucket, fileName, file)
-                    .withCannedAcl(CannedAccessControlList.PublicRead);
+                    .withCannedAcl(CannedAccessControlList.PublicReadWrite);
             amazonS3.putObject(putObjectRequest);
             // Removing the file created in the server
             file.delete();

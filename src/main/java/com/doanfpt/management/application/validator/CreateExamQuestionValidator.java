@@ -12,7 +12,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.doanfpt.management.application.common.Common;
-import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.ExamQuestionsForm;
 import com.doanfpt.management.application.entities.DrivingLicense;
 import com.doanfpt.management.application.entities.ExamStructure;
@@ -57,8 +56,7 @@ public class CreateExamQuestionValidator implements Validator {
         }
 
         if (!errors.hasFieldErrors("drivingLicenseId")) {
-            DrivingLicense drivingLicense = drivingLicenseRespository
-                    .findByDrivingLicenseIdAndIsDelete(examQuestionsForm.getDrivingLicenseId(), Constant.IS_NOT_DELETE);
+            DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(examQuestionsForm.getDrivingLicenseId());
             if (drivingLicense == null) {
                 errors.rejectValue("drivingLicenseId", "Notfound.examQuestionsForm.drivingLicenseId");
                 return;
@@ -92,7 +90,7 @@ public class CreateExamQuestionValidator implements Validator {
             List<Question> listQuestion = examStructure.getChapter().getListQuestion();
             int count = 0;
             for (Question question : listQuestion) {
-                if ((!question.isDelete()) && listIdQuestion.contains(question.getQuestionId())) {
+                if (listIdQuestion.contains(question.getQuestionId())) {
                     count++;
                 }
             }

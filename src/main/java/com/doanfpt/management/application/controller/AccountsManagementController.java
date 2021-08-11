@@ -78,22 +78,13 @@ public class AccountsManagementController {
 
     @PostMapping(value = { "/update-account-view" })
     public String updateAccountView(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                return "view-profile";
-            }
-            boolean updateSuccess = accountsServices.updateAccount(accountUpdateForm);
-            if (updateSuccess) {
-                model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
-            } else {
-                model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
-            }
-            model.addAttribute("accountUpdateForm", accountUpdateForm);
+        if (result.hasErrors()) {
             return "view-profile";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "403";
         }
+        accountsServices.updateAccount(accountUpdateForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
+        model.addAttribute("accountUpdateForm", accountUpdateForm);
+        return "view-profile";
     }
 
     @GetMapping(value = { "/create-account" })
@@ -118,12 +109,8 @@ public class AccountsManagementController {
 
     @PostMapping(value = { "/update-account" })
     public String updateAccount(AccountUpdateForm accountUpdateForm, Model model) {
-        boolean updateSuccess = accountsServices.updateAccount(accountUpdateForm);
-        if (updateSuccess) {
-            model.addAttribute("messageSuccess", "Cập nhật thông tin thành công!");
-        } else {
-            model.addAttribute("messageError", "Quá trình cập nhật thất bại!");
-        }
+        accountsServices.updateAccount(accountUpdateForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
         model.addAttribute("accountUpdateForm", accountUpdateForm);
         return "update-account";
     }

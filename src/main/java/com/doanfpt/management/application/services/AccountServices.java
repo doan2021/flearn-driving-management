@@ -1,6 +1,5 @@
 package com.doanfpt.management.application.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,11 +17,12 @@ import org.springframework.stereotype.Service;
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.common.Constant;
 import com.doanfpt.management.application.dto.AccountForm;
+import com.doanfpt.management.application.dto.AccountPrincipal;
 import com.doanfpt.management.application.dto.AccountUpdateForm;
 import com.doanfpt.management.application.dto.FormSearchAccount;
 import com.doanfpt.management.application.entities.Account;
 import com.doanfpt.management.application.entities.Role;
-import com.doanfpt.management.application.model.AccountPrincipal;
+import com.doanfpt.management.application.exception.BusinessException;
 import com.doanfpt.management.application.respositories.AccountsRespository;
 import com.doanfpt.management.application.respositories.RoleRespository;
 import com.doanfpt.management.application.specification.AccountSpecification;
@@ -38,12 +38,7 @@ public class AccountServices {
     private RoleRespository roleRespository;
 
     public List<Account> findAllAccount() {
-        Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
-        List<Account> listAccount = accountsRespository.findAll(conditions);
-        if (listAccount != null) {
-            return listAccount;
-        }
-        return new ArrayList<Account>();
+        return accountsRespository.findAll();
     }
 
     public Account findByEmail(String email) {
@@ -82,7 +77,7 @@ public class AccountServices {
         if (formSearchAccount.getPageNumber() == null) {
             formSearchAccount.setPageNumber(0);
         }
-        Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false));
+        Specification<Account> conditions = Specification.where(null);
         if (formSearchAccount != null) {
             if (StringUtils.isNotBlank(formSearchAccount.getEmail())) {
                 conditions = conditions.and(AccountSpecification.hasEmail(formSearchAccount.getEmail()));
@@ -106,16 +101,16 @@ public class AccountServices {
 
     @Transactional
     public void deleteAccount(Long accountId) {
-        Account account = accountsRespository.getOne(accountId);
-        account.setDelete(true);
-        account.setUpdateBy(Common.getUsernameLogin());
-        account.setUpdateAt(Common.getSystemDate());
-        accountsRespository.save(account);
+        Account account = accountsRespository.findByAccountId(accountId);
+        if (account == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Người dùng không tồn tại!");
+        }
+        accountsRespository.delete(account);
     }
 
     public Object getObjectUpdate(Long accountId) {
         AccountForm accountForm = new AccountForm();
-        Account account = accountsRespository.findByAccountIdAndIsDelete(accountId, Constant.IS_NOT_DELETE);
+        Account account = accountsRespository.findByAccountId(accountId);
         accountForm.setAccountId(account.getAccountId());
         accountForm.setFirstName(account.getFirstName());
         accountForm.setMiddleName(account.getMiddleName());
@@ -132,14 +127,13 @@ public class AccountServices {
     }
 
     @Transactional
-    public boolean updateAccount(AccountUpdateForm accountUpdateForm) {
+    public void updateAccount(AccountUpdateForm accountUpdateForm) {
         if (accountUpdateForm == null) {
-            return false;
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Dữ liệu truyền vào không đúng!");
         }
-        Account account = accountsRespository.findByAccountIdAndIsDelete(accountUpdateForm.getAccountId(),
-                Constant.IS_NOT_DELETE);
+        Account account = accountsRespository.findByAccountId(accountUpdateForm.getAccountId());
         if (account == null) {
-            return false;
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Người dùng không tồn tại!");
         }
         account.setFirstName(accountUpdateForm.getFirstName());
         account.setMiddleName(accountUpdateForm.getMiddleName());
@@ -151,11 +145,7 @@ public class AccountServices {
         account.setUpdateBy(Common.getUsernameLogin());
         account.setUpdateAt(Common.getSystemDate());
         account.setDescription(accountUpdateForm.getDescription());
-        if (accountsRespository.save(account) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        accountsRespository.save(account);
     }
 
     public Object getAccountLoginInfo() {

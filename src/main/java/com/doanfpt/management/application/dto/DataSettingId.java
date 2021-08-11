@@ -1,4 +1,4 @@
-package com.doanfpt.management.application.model;
+package com.doanfpt.management.application.dto;
 
 import java.io.Serializable;
 

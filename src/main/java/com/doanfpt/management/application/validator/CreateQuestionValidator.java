@@ -35,7 +35,7 @@ public class CreateQuestionValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "NotEmpty.questionForm.content");
 
         if (!errors.hasErrors()) {
-            if (questionsRespository.findByNumberAndIsDelete(questionForm.getNumber(), false) != null) {
+            if (questionsRespository.existsByNumber(questionForm.getNumber())) {
                 errors.rejectValue("number", "Duplicate.questionForm.number");
             }
 

@@ -19,6 +19,7 @@ import com.doanfpt.management.application.dto.FormSearchDrivingLicense;
 import com.doanfpt.management.application.services.ChapterServices;
 import com.doanfpt.management.application.services.DrivingLicenseServices;
 import com.doanfpt.management.application.services.ExamQuestionsServices;
+import com.doanfpt.management.application.services.QuestionServices;
 import com.doanfpt.management.application.validator.CreateDrivingLicenseValidator;
 import com.doanfpt.management.application.validator.CreateExamQuestionValidator;
 
@@ -37,6 +38,9 @@ public class DrivingLicenseManagementController {
 
     @Autowired
     ExamQuestionsServices examQuestionsServices;
+    
+    @Autowired
+    QuestionServices questionServices;
 
     @Autowired
     CreateExamQuestionValidator createExamQuestionValidator;
@@ -117,6 +121,7 @@ public class DrivingLicenseManagementController {
     @GetMapping(value = { "/update-driving-license" })
     public String updateDrivingLicense(Model model, Long drivingLicenseId) {
         model.addAttribute("listChapter", chapterServices.findAllChapter());
+        model.addAttribute("listQuestion", questionServices.getQuestionInChapter(drivingLicenseId));
         model.addAttribute("drivingLicenseForm", drivingLicenseServices.getObjectUpdate(drivingLicenseId));
         return "update-driving-license";
     }
@@ -137,14 +142,14 @@ public class DrivingLicenseManagementController {
     }
 
     @PostMapping(value = { "/create-exam-questions" })
-    public String createExamQuestion(@Validated ExamQuestionsForm examQuestionsForm, BindingResult result, Model model,
-            RedirectAttributes redirAttrs) {
+    public String createExamQuestion(@Validated ExamQuestionsForm examQuestionsForm, BindingResult result, Model model) {
         model.addAttribute("drivingLicense", drivingLicenseServices.findById(examQuestionsForm.getDrivingLicenseId()));
         if (result.hasErrors()) {
             return "create-exam-questions";
         }
         examQuestionsServices.createExamQuestions(examQuestionsForm);
-        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Tạo đề thi thành công!");
-        return "redirect:create-exam-questions?drivingLicenseId=" + examQuestionsForm.getDrivingLicenseId();
+        model.addAttribute(Constant.STATUS_SUCCESS, "Tạo đề thi thành công!");
+        model.addAttribute("examQuestionsForm", new ExamQuestionsForm());
+        return "create-exam-questions";
     }
 }

@@ -1,7 +1,5 @@
 package com.doanfpt.management.application.respositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -14,10 +12,8 @@ import com.doanfpt.management.application.entities.Chapter;
 public interface ChapterRespository extends JpaRepository<Chapter, Long>, PagingAndSortingRepository<Chapter, Long>,
         JpaSpecificationExecutor<Chapter> {
 
-    public Chapter findByChapterIdAndIsDelete(Long chapterId, Boolean isDelete);
+    public Chapter findByChapterId(Long chapterId);
 
-    public List<Chapter> findByIsDeleteOrderByIndex(Boolean isDelete);
-
-    @Query("SELECT count(c) FROM Chapter c WHERE c.isDelete = false")
+    @Query("SELECT count(c) FROM Chapter c")
     Integer countChapter();
 }

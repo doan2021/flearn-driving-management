@@ -11,10 +11,6 @@ public class ExamSpecification {
 		return (root, query, cb) -> cb.equal(root.get(Exam_.NAME), name);
 	}
 
-	public static Specification<Exam> isDelete(boolean isDelete) {
-		return (root, query, cb) -> cb.equal(root.get(Exam_.IS_DELETE), isDelete);
-	}
-
 	public static Specification<Exam> likeContent(String description) {
 		return (root, query, cb) -> cb.like(root.get(Exam_.DESCRIPTION), "%" + description + "%");
 	}

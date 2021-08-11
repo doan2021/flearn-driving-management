@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +22,8 @@ import com.doanfpt.management.application.common.MimeTypes;
 import com.doanfpt.management.application.dto.ChapterForm;
 import com.doanfpt.management.application.dto.FormSearchChapter;
 import com.doanfpt.management.application.entities.Chapter;
+import com.doanfpt.management.application.entities.Chapter_;
 import com.doanfpt.management.application.entities.Document;
-import com.doanfpt.management.application.entities.Question;
 import com.doanfpt.management.application.exception.BusinessException;
 import com.doanfpt.management.application.respositories.ChapterRespository;
 import com.doanfpt.management.application.respositories.DocumentRespository;
@@ -45,21 +46,22 @@ public class ChapterServices {
     DocumentRespository documentRespository;
 
     public Chapter getChapterDetail(Long chapterId) {
-        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+        Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
         if (chapter == null) {
-        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
         }
         return chapter;
     }
 
     public List<Chapter> findAllChapter() {
-        return chapterResponsitory.findByIsDeleteOrderByIndex(Constant.IS_NOT_DELETE);
+        return chapterResponsitory.findAll(
+                Sort.by(Sort.Direction.ASC, Chapter_.INDEX).and(Sort.by(Sort.Direction.ASC, Chapter_.UPDATE_AT)));
     }
 
     @Transactional
     public void createChapter(ChapterForm chapterForm) {
         if (chapterForm == null) {
-        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Chapter chapter = new Chapter();
         chapter.setIndex(chapterForm.getIndex());
@@ -95,8 +97,7 @@ public class ChapterServices {
 
     @Transactional
     public void updateChapter(ChapterForm chapterForm) {
-        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterForm.getChapterId(),
-                Constant.IS_NOT_DELETE);
+        Chapter chapter = chapterResponsitory.findByChapterId(chapterForm.getChapterId());
         chapter.setIndex(chapterForm.getIndex());
         chapter.setName(chapterForm.getName());
         chapter.setDescription(chapterForm.getDescription());
@@ -104,6 +105,9 @@ public class ChapterServices {
         chapter.setUpdateAt(Common.getSystemDate());
         // Handle document
         if (chapterForm.getImages() != null && !chapterForm.getImages()[0].isEmpty()) {
+            for (Document doc : chapter.getListImages()) {
+                amazonS3ClientService.deleteFileFromS3Bucket(doc.getFileName());
+            }
             documentRespository.deleteAll(chapter.getListImages());
             List<Document> listDocuments = new ArrayList<>();
             // Delete list old image
@@ -122,21 +126,16 @@ public class ChapterServices {
                 document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
             }
-            documentRespository.saveAll(listDocuments);
             chapter.setListImages(listDocuments);
         }
         chapterResponsitory.save(chapter);
-        for (Document doc : chapter.getListImages()) {
-            amazonS3ClientService.deleteFileFromS3Bucket(doc.getPath());
-        }
     }
 
     public Page<Chapter> searchChapter(FormSearchChapter formSearchChapter) {
         if (formSearchChapter.getPageNumber() == null) {
             formSearchChapter.setPageNumber(0);
         }
-        // Init condition with is_delete
-        Specification<Chapter> conditions = Specification.where(ChapterSpecification.isDelete(false));
+        Specification<Chapter> conditions = Specification.where(null);
         if (formSearchChapter != null) {
             if (StringUtils.isNotBlank(formSearchChapter.getIndex())) {
                 conditions = conditions.and(ChapterSpecification.hasIndex(formSearchChapter.getName()));
@@ -160,7 +159,7 @@ public class ChapterServices {
 
     public Object getObjectUpdate(Long chapterId) {
         ChapterForm chapterForm = new ChapterForm();
-        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+        Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
         chapterForm.setChapterId(chapter.getChapterId());
         chapterForm.setIndex(chapter.getIndex());
         chapterForm.setName(chapter.getName());
@@ -176,21 +175,10 @@ public class ChapterServices {
 
     @Transactional
     public void deleteChapter(Long chapterId) {
-        Chapter chapter = chapterResponsitory.findByChapterIdAndIsDelete(chapterId, Constant.IS_NOT_DELETE);
+        Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
         if (chapter == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
         }
-        chapter.setDelete(Constant.IS_DELETE);
-        chapter.setUpdateBy(Common.getUsernameLogin());
-        chapter.setUpdateAt(Common.getSystemDate());
-        List<Question> listQuestion = new ArrayList<>();
-        for (Question question : chapter.getListQuestion()) {
-            question.setDelete(Constant.IS_DELETE);
-            question.setUpdateBy(Common.getUsernameLogin());
-            question.setUpdateAt(Common.getSystemDate());
-            listQuestion.add(question);
-        }
-        chapter.setListQuestion(listQuestion);
-        chapterResponsitory.save(chapter);
+        chapterResponsitory.delete(chapter);
     }
 }
