@@ -8,7 +8,7 @@
     </head>
     <body>
         <th:block layout:fragment="content">
-            <div class="header bg-primary pb-6">
+            <div class="header bg-primary pb-4">
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="row align- items-center py-4">
@@ -22,118 +22,20 @@
                                     </ol>
                                 </nav>
                             </div>
-                            <div class="col-12">
-                                <div class="card card-stats">
-                                    <!-- Card body -->
-                                    <div class="card-body">
-                                        <form class="row mt-3" method="POST" id="formSearch">
-                                            <div class="col-12">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <input type="text" class="form-control" placeholder="Tên kỳ thi">
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <input type="text" class="form-control" placeholder="Người cập nhật">
-                                            </div>
-                                            <div class="col-12 mt-3">
-                                                <textarea class="form-control" placeholder="Mô tả"></textarea>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="input-daterange datepicker row align-items-center">
-                                                    <div class="col">
-                                                        <div class="form-group m-0">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"> <i
-                                                                        class="ni ni-calendar-grid-58"></i></span>
-                                                                </div>
-                                                                <input class="form-control" placeholder="Kết thúc đăng ký từ ngày" type="text" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group m-0">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"> 
-                                                                        <i class="ni ni-calendar-grid-58"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <input class="form-control" placeholder="Đến ngày" type="text" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="input-daterange datepicker row align-items-center">
-                                                    <div class="col">
-                                                        <div class="form-group m-0">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"> 
-                                                                        <i class="ni ni-calendar-grid-58"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <input class="form-control" placeholder="Cập nhật từ ngày" type="text" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group m-0">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"> 
-                                                                        <i class="ni ni-calendar-grid-58"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <input class="form-control" placeholder="Đến ngày" type="text" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mt-3">
-                                                <button class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
-                                                <a th:href="@{../management/exam}" class="btn btn-info"><i class="fas fa-eraser"></i> Xóa</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="container-fluid mt--6">
-                <div class="row justify-content-center">
+                <div class="row">
                     <div class=" col">
-                        <div class="card">
-                            <div class="card-header bg-transparent">
+                        <div class="card" >
+                            <div class="card-body">
                                 <div class="row">
-                                    <h3 class="mb-0 col-10">Danh sách đăng ký thi</h3>
+                                    <div class="col-12">
+                                        <h1 class="text-warning">Chức năng này hiện chưa có!</h1>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-items-center">
-                                    <thead class="thead-light">
-                                        <tr class="text-center">
-                                            <th scope="col" class="sort" data-sort="status">ID</th>
-                                            <th scope="col" class="sort" data-sort="budget">Tên kỳ thi</th>
-                                            <th scope="col" class="sort" data-sort="status">Mô tả kỳ thi</th>
-                                            <th scope="col" class="sort" data-sort="status">Ngày KT đăng ký</th>
-                                            <th scope="col" class="sort" data-sort="status">Ngày thi chính thức</th>
-                                            <th scope="col" class="sort" data-sort="status">Cập nhật lần cuối</th>
-                                            <th scope="col" class="sort" data-sort="status">Người cập nhật</th>
-                                            <th scope="col" class="sort" data-sort="status"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="list">
-                                        <tr>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

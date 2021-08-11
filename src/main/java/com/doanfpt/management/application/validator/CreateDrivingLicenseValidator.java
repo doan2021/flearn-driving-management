@@ -14,7 +14,7 @@ import org.springframework.validation.Validator;
 
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.dto.DrivingLicenseForm;
-import com.doanfpt.management.application.model.NumberOfChapter;
+import com.doanfpt.management.application.dto.NumberOfChapter;
 
 /**
  * @author tamdu

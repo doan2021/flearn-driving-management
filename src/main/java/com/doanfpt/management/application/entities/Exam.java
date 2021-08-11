@@ -40,9 +40,6 @@ public class Exam {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -101,14 +98,6 @@ public class Exam {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public String getCreateBy() {

@@ -1,10 +1,10 @@
 $("#update-chapter-form").validate({
 	rules: {
-		name: {
+		index: {
 			required: true,
 			maxlength: 5
 		},
-		content: {
+		name: {
 			required: true,
 			maxlength: 255
 		},
@@ -13,14 +13,14 @@ $("#update-chapter-form").validate({
 		}
 	},
 	messages: {
-		name: {
+		index: {
 			required: "Chưa điền tên chương, vui lòng kiểm tra lại!",
 			maxlength: "Tên chương không được nhập quá 5 ký tự, vui lòng kiểm tra lại!"
 		},
 		description: {
 			maxlength: "Mô tả chương không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
 		},
-		content: {
+		name: {
 			required: "Chưa điền nội dung chương, vui lòng kiểm tra lại!",
 			maxlength: "Nội dung chương không được nhập quá 255 ký tự, vui lòng kiểm tra lại!"
 		}

@@ -27,9 +27,6 @@ public class Answer {
     @Column(name = "is_true", columnDefinition = "boolean default false")
     private boolean isTrue;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -69,14 +66,6 @@ public class Answer {
 
     public void setTrue(boolean isTrue) {
         this.isTrue = isTrue;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public Question getQuestion() {

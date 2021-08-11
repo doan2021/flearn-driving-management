@@ -31,8 +31,4 @@ public class DrivingLicenseSpecification {
 		return (root, query, cb) -> cb.equal(root.get(DrivingLicense_.NUMBER_YEAR_EXPIRES), numberYearExpires);
 	}
 
-	public static Specification<DrivingLicense> isDelete(boolean isDelete) {
-		return (root, query, cb) -> cb.equal(root.get(DrivingLicense_.IS_DELETE), isDelete);
-	}
-
 }

@@ -74,9 +74,6 @@ public class Account {
     @JoinColumn(name = "ward_id", nullable = true)
     private Ward ward;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -161,14 +158,6 @@ public class Account {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public List<Document> getListImages() {

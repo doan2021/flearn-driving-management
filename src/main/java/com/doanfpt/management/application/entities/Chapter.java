@@ -32,9 +32,6 @@ public class Chapter {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -77,14 +74,6 @@ public class Chapter {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public List<Question> getListQuestion() {

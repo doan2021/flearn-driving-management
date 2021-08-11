@@ -36,9 +36,6 @@ public class ExamQuestions {
     @OneToMany(mappedBy = "examQuestions", cascade = CascadeType.ALL)
     private List<ExamQuestionsDetail> listExamQuestionsDetail;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -78,14 +75,6 @@ public class ExamQuestions {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public List<ExamQuestionsDetail> getListExamQuestionsDetail() {

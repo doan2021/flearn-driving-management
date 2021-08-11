@@ -28,11 +28,20 @@ public class StatusLearn {
     @Column(name = "incorrect_number_of_times")
     private Integer incorrectNumberOfTimes;
 
-    @Column(name = "update_at")
-    private Date updateAt;
-
     @Column(name = "status_question")
     private int statusQuestion;
+
+    @Column(name = "create_by")
+    private String createBy;
+
+    @Column(name = "create_at")
+    private Date createAt;
+
+    @Column(name = "update_by")
+    private String updateBy;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 
     @JsonBackReference
     @ManyToOne
@@ -98,6 +107,30 @@ public class StatusLearn {
 
     public void setStatusQuestion(int statusQuestion) {
         this.statusQuestion = statusQuestion;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 
 }

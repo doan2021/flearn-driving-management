@@ -36,9 +36,6 @@ public class Question {
     @Column(name = "is_paralysis", columnDefinition = "Boolean default false")
     private boolean isParalysis;
 
-    @Column(name = "is_delete", columnDefinition = "boolean default false")
-    private boolean isDelete;
-
     @Column(name = "create_by")
     private String createBy;
 
@@ -86,14 +83,6 @@ public class Question {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean isDelete) {
-        this.isDelete = isDelete;
     }
 
     public void setParalysis(boolean isParalysis) {

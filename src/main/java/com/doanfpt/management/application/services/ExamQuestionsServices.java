@@ -40,19 +40,18 @@ public class ExamQuestionsServices {
     QuestionsRespository questionsRespository;
     
     public List<ExamQuestions> findExamQuestionByDrivingLicenseId(Long drivingLicenseId) {
-        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(drivingLicenseId, Constant.IS_NOT_DELETE);
+        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(drivingLicenseId);
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
-        return examQuestionsRepository.findByDrivingLicenseAndIsDelete(drivingLicense, Constant.IS_NOT_DELETE);
+        return examQuestionsRepository.findByDrivingLicense(drivingLicense);
     }
 
     public Page<ExamQuestions> searchExamQuestions(FormSearchExamQuestions formSearchExamQuestions) {
         if (formSearchExamQuestions.getPageNumber() == null) {
             formSearchExamQuestions.setPageNumber(0);
         }
-        // Init condition with is_delete
-        Specification<ExamQuestions> conditions = Specification.where(ExamQuestionsSpecification.isDelete(false));
+        Specification<ExamQuestions> conditions = Specification.where(null);
         if (formSearchExamQuestions != null) {
             if (StringUtils.isNotBlank(formSearchExamQuestions.getName())) {
                 conditions = conditions.and(ExamQuestionsSpecification.hasName(formSearchExamQuestions.getName()));
@@ -82,7 +81,7 @@ public class ExamQuestionsServices {
         if (examQuestionsForm == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không hợp lệ!");
         }
-        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseIdAndIsDelete(examQuestionsForm.getDrivingLicenseId(), Constant.IS_NOT_DELETE);
+        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(examQuestionsForm.getDrivingLicenseId());
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
@@ -97,7 +96,7 @@ public class ExamQuestionsServices {
         List<ExamQuestionsDetail> listExamQuestionDetail = new ArrayList<>();
         for (Long questionId : examQuestionsForm.getListIdQuestion()) {
             ExamQuestionsDetail examQuestionsDetail = new ExamQuestionsDetail();
-            Question question = questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
+            Question question = questionsRespository.findByQuestionId(questionId);
             if (question == null) {
                 throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi số " + questionId + " không tồn tại!");
             } else {
@@ -113,7 +112,7 @@ public class ExamQuestionsServices {
         
         for (Long questionId : examQuestionsForm.getListIdQuestionParalysis()) {
             ExamQuestionsDetail examQuestionsDetail = new ExamQuestionsDetail();
-            Question question = questionsRespository.findByQuestionIdAndIsDelete(questionId, Constant.IS_NOT_DELETE);
+            Question question = questionsRespository.findByQuestionId(questionId);
             if (question == null) {
                 throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi số " + questionId + " không tồn tại!");
             } else {

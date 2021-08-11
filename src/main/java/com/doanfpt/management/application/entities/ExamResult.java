@@ -31,9 +31,6 @@ public class ExamResult {
 	@Column(name = "is_pass")
 	private boolean isPass;
 
-	@Column(name = "is_delete", columnDefinition = "boolean default false")
-	private boolean isDelete;
-
 	@Column(name = "time_exam_start")
 	private String timeExamStart;
 
@@ -55,14 +52,6 @@ public class ExamResult {
 
 	public void setExamResultId(Long examResultId) {
 		this.examResultId = examResultId;
-	}
-
-	public boolean isDelete() {
-		return isDelete;
-	}
-
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
 	}
 
 	public double getPoint() {
