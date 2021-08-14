@@ -62,7 +62,7 @@ public class QuestionServices {
             ans.setUpdateAt(Common.getSystemDate());
             listAnswers.add(ans);
         }
-        question.setListAnswer(listAnswers);
+        question.setListAnswers(listAnswers);
         question.setCreateBy(Common.getUsernameLogin());
         question.setCreateAt(Common.getSystemDate());
         question.setUpdateBy(Common.getUsernameLogin());

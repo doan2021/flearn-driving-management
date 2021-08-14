@@ -54,7 +54,7 @@ public class Question {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Answer> listAnswer;
+    private List<Answer> listAnswers;
 
     @JsonBackReference
     @ManyToOne
@@ -145,12 +145,12 @@ public class Question {
         this.updateAt = updateAt;
     }
 
-    public List<Answer> getListAnswer() {
-        return listAnswer;
+    public List<Answer> getListAnswers() {
+        return listAnswers;
     }
 
-    public void setListAnswer(List<Answer> listAnswer) {
-        this.listAnswer = listAnswer;
+    public void setListAnswers(List<Answer> listAnswers) {
+        this.listAnswers = listAnswers;
     }
 
 }
