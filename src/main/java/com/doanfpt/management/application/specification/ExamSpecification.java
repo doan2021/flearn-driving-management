@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.entities.Exam;
 import com.doanfpt.management.application.entities.Exam_;
+import com.doanfpt.management.application.utils.DateTimeUtils;
 
 public class ExamSpecification {
 	public static Specification<Exam> hasName(String name) {
@@ -20,14 +21,14 @@ public class ExamSpecification {
 	}
 
 	public static Specification<Exam> hasDateRegisExamEndTo(String dateRegisExamEndTo) {
-		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_END), Common.getLastOfTheDate(Common.stringToDate(dateRegisExamEndTo)));
+		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.DATE_REGIS_EXAM_END), DateTimeUtils.atEndOfDay(Common.stringToDate(dateRegisExamEndTo)));
 	}
 
 	public static Specification<Exam> hasUpdateFrom(String updateAtFrom) {
 		return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(Exam_.UPDATE_AT), Common.stringToDate(updateAtFrom));
 	}
 	public static Specification<Exam> hasUpdateTo(String updateAtTo) {
-		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.UPDATE_AT), Common.getLastOfTheDate(Common.stringToDate(updateAtTo)));
+		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Exam_.UPDATE_AT), DateTimeUtils.atEndOfDay(Common.stringToDate(updateAtTo)));
 	}
 
 	public static Specification<Exam> hasDescription(String description) {

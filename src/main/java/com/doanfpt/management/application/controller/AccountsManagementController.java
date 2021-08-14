@@ -128,4 +128,5 @@ public class AccountsManagementController {
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa tài khoản thành công!");
         return "redirect:account";
     }
+
 }

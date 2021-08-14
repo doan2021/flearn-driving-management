@@ -21,13 +21,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "driving_license_info")
-public class DrivingLicenseInfo {
+@Table(name = "exam_profile")
+public class ExamProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "driving_license_info_id")
-    private Long drivingLicenseInfoId;
+    @Column(name = "exam_profile_id")
+    private Long examProfileId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -71,6 +71,18 @@ public class DrivingLicenseInfo {
     @Column(name = "create_at")
     private Date createAt;
 
+    @Column(name = "point")
+    private double point;
+
+    @Column(name = "is_pass")
+    private boolean isPass;
+
+    @Column(name = "time_exam_start")
+    private String timeExamStart;
+
+    @Column(name = "time_exam_end")
+    private String timeExamEnd;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -91,22 +103,13 @@ public class DrivingLicenseInfo {
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "driving_license_id")
-    private DrivingLicense drivingLicense;
-
     @JsonManagedReference
-    @OneToMany(mappedBy = "drivingLicenseInfo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "examProfile", cascade = CascadeType.ALL)
     private List<Document> listDocuments;
 
-    public Long getDrivingLicenseInfoId() {
-        return drivingLicenseInfoId;
-    }
-
-    public void setDrivingLicenseInfoId(Long drivingLicenseInfoId) {
-        this.drivingLicenseInfoId = drivingLicenseInfoId;
-    }
+    @JsonManagedReference
+    @OneToMany(mappedBy = "examProfile", cascade = CascadeType.ALL)
+    private List<HistoryAnswer> listHistoryAnswer;
 
     public String getFirstName() {
         return firstName;
@@ -244,14 +247,6 @@ public class DrivingLicenseInfo {
         this.exam = exam;
     }
 
-    public DrivingLicense getDrivingLicense() {
-        return drivingLicense;
-    }
-
-    public void setDrivingLicense(DrivingLicense drivingLicense) {
-        this.drivingLicense = drivingLicense;
-    }
-
     public Date getIssueDate() {
         return issueDate;
     }
@@ -266,6 +261,54 @@ public class DrivingLicenseInfo {
 
     public void setListDocuments(List<Document> listDocuments) {
         this.listDocuments = listDocuments;
+    }
+
+    public Long getExamProfileId() {
+        return examProfileId;
+    }
+
+    public void setExamProfileId(Long examProfileId) {
+        this.examProfileId = examProfileId;
+    }
+
+    public double getPoint() {
+        return point;
+    }
+
+    public void setPoint(double point) {
+        this.point = point;
+    }
+
+    public boolean isPass() {
+        return isPass;
+    }
+
+    public void setPass(boolean isPass) {
+        this.isPass = isPass;
+    }
+
+    public String getTimeExamStart() {
+        return timeExamStart;
+    }
+
+    public void setTimeExamStart(String timeExamStart) {
+        this.timeExamStart = timeExamStart;
+    }
+
+    public String getTimeExamEnd() {
+        return timeExamEnd;
+    }
+
+    public void setTimeExamEnd(String timeExamEnd) {
+        this.timeExamEnd = timeExamEnd;
+    }
+
+    public List<HistoryAnswer> getListHistoryAnswer() {
+        return listHistoryAnswer;
+    }
+
+    public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
+        this.listHistoryAnswer = listHistoryAnswer;
     }
 
 }

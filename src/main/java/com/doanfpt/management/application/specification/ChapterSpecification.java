@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.entities.Chapter;
 import com.doanfpt.management.application.entities.Chapter_;
+import com.doanfpt.management.application.utils.DateTimeUtils;
 
 public class ChapterSpecification {
     public static Specification<Chapter> hasIndex(String index) {
@@ -20,6 +21,6 @@ public class ChapterSpecification {
     }
     
     public static Specification<Chapter> hasUpdateAtTo(String updateAtTo) {
-        return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Chapter_.UPDATE_AT), Common.getLastOfTheDate(Common.stringToDate(updateAtTo)));
+        return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(Chapter_.UPDATE_AT), DateTimeUtils.atEndOfDay(Common.stringToDate(updateAtTo)));
     }
 }

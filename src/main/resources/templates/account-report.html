@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Flearn driving Company</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" th:href="@{../assets/css/bootstrap/bootstrap.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{../css/account-report.css}" type="text/css">
+    </head>
+    <body>
+        <div class="container content-report">
+            <div class="row">
+                <div class="col-12">
+                    <h1 style="text-decoration: underline;">FLEARN DRIVING</h1>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <table class="w-100">
+                        <tbody>
+                            <tr>
+                                <th width="20%">Tên dự án:</th>
+                                <td width="30%">Flearn driving</td>
+                            </tr>
+                            <tr>
+                                <th>Năm:</th>
+                                <td>2021</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-5 offset-1">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <span class="font-weight-bold">Ngày xuất báo cáo:</span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <span th:text="${#dates.format(#dates.createNow(),'dd/MM/yyyy')}"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <span class="font-weight-bold">Người thực hiện:</span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <span th:text="|${owner.lastName == null ? '' : owner.lastName} ${owner.middleName == null ? '' : owner.middleName} ${owner.firstName == null ? '' : owner.firstName}|"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <h3>THỐNG KÊ NGƯỜI DÙNG MỚI</h3>
+                    <p class="font-weight-bold text-danger">Từ 7/2021 đến 8/2021</p>
+                    <table class="w-100 mt-3">
+                        <thead>
+                            <tr>
+                                <th width="5%">STT</th>
+                                <th>Họ và tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Ngày đăng ký</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="acc,stat : ${listAccount}">
+                                <td th:text="${stat.index + 1}">STT</td>
+                                <td th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
+                                <td th:text="${acc.email}"></td>
+                                <td th:text="${acc.numberPhone}"></td>
+                                <td class="text-center" th:if="${acc.gender == 1}">Nam</td>
+                                <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
+                                <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
+                                <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
+                                <td th:text="${acc.email}"></td>
+                                <td th:text="${#dates.format(acc.createAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="5">Tổng số</th>
+                                <td colspan="2" class="font-weight-bold">[[${listAccount.size}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-print" onclick="window.print()">Xuất báo cáo</button>
+    </body>
+</html>

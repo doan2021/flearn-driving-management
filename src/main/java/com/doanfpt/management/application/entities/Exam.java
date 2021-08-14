@@ -1,9 +1,7 @@
 package com.doanfpt.management.application.entities;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,10 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "exam")
@@ -51,10 +46,6 @@ public class Exam {
 
     @Column(name = "update_at")
     private Date updateAt;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-    private List<ExamResult> listExamResult;
 
     @ManyToOne
     @JoinColumn(name = "driving_license_id")
@@ -130,14 +121,6 @@ public class Exam {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public List<ExamResult> getListExamResult() {
-        return listExamResult;
-    }
-
-    public void setListExamResult(List<ExamResult> listExamResult) {
-        this.listExamResult = listExamResult;
     }
 
     public DrivingLicense getDrivingLicense() {
