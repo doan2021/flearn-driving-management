@@ -93,6 +93,10 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Document> listImages;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<ExamProfile> listExamProfile;
+
     public Long getAccountId() {
         return accountId;
     }

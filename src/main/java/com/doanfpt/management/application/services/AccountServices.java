@@ -1,5 +1,6 @@
 package com.doanfpt.management.application.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -26,6 +27,7 @@ import com.doanfpt.management.application.exception.BusinessException;
 import com.doanfpt.management.application.respositories.AccountsRespository;
 import com.doanfpt.management.application.respositories.RoleRespository;
 import com.doanfpt.management.application.specification.AccountSpecification;
+import com.doanfpt.management.application.utils.DateTimeUtils;
 import com.doanfpt.management.application.utils.EncrytedPasswordUtils;
 
 @Service
@@ -170,4 +172,10 @@ public class AccountServices {
         return accountsRespository.countAccount();
     }
 
+    public List<Account> getDataReportAccountMonth() {
+        Date today = new Date();
+        Date firstDayOfMonthAgo = DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.getDateOfMonthAgo(today));
+        Date lastDayOfMonth = DateTimeUtils.getLastDateOfMonth(today);
+        return accountsRespository.findReportByCreateDate(firstDayOfMonthAgo, lastDayOfMonth);
+    }
 }

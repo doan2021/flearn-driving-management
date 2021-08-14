@@ -71,14 +71,13 @@ public class ChapterServices {
         chapter.setCreateAt(Common.getSystemDate());
         chapter.setUpdateBy(Common.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
-        chapterResponsitory.save(chapter);
+        
         // Handle document
         List<Document> listDocuments = new ArrayList<>();
         if (chapterForm.getImages() != null && !chapterForm.getImages()[0].isEmpty()) {
             // Get file to client
             for (MultipartFile multipartFile : chapterForm.getImages()) {
                 Document document = new Document();
-                document.setChapter(chapter);
                 document.setFileName(Common.generateFileName(multipartFile, Constant.DOCUMENT_ORTHER_LABEL));
                 document.setOriginFileName(multipartFile.getOriginalFilename());
                 document.setExtension(MimeTypes.lookupExt(multipartFile.getContentType()));
@@ -91,8 +90,9 @@ public class ChapterServices {
                 document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
             }
-            documentRespository.saveAll(listDocuments);
+            chapter.setListImages(listDocuments);
         }
+        chapterResponsitory.save(chapter);
     }
 
     @Transactional
@@ -113,7 +113,6 @@ public class ChapterServices {
             // Delete list old image
             for (MultipartFile multipartFile : chapterForm.getImages()) {
                 Document document = new Document();
-                document.setChapter(chapter);
                 document.setFileName(Common.generateFileName(multipartFile, Constant.DOCUMENT_ORTHER_LABEL));
                 document.setOriginFileName(multipartFile.getOriginalFilename());
                 document.setExtension(MimeTypes.lookupExt(multipartFile.getContentType()));

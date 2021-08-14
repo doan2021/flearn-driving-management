@@ -25,6 +25,7 @@ import com.doanfpt.management.application.exception.BusinessException;
 import com.doanfpt.management.application.respositories.DrivingLicenseRespository;
 import com.doanfpt.management.application.respositories.ExamRepository;
 import com.doanfpt.management.application.specification.ExamSpecification;
+import com.doanfpt.management.application.utils.DateTimeUtils;
 
 @Service
 public class ExamServices {
@@ -46,7 +47,7 @@ public class ExamServices {
         Exam exam = new Exam();
         exam.setName(examForm.getName());
         exam.setDescription(examForm.getDescription());
-        exam.setDateRegisExamEnd(Common.getLastOfTheDate(Common.stringToDate(examForm.getDateRegisExamEnd())));
+        exam.setDateRegisExamEnd(DateTimeUtils.atEndOfDay(Common.stringToDate(examForm.getDateRegisExamEnd())));
         // Get số ngày từ data setting
         Date dateExam = Common.addDays(exam.getDateRegisExamEnd(), Integer.parseInt(dataSetting.getDataSettingExamDate().getValue()));
         exam.setDateExam(dateExam);

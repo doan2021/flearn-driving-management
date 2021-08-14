@@ -67,7 +67,7 @@ public class QuestionServices {
         question.setCreateAt(Common.getSystemDate());
         question.setUpdateBy(Common.getUsernameLogin());
         question.setUpdateAt(Common.getSystemDate());
-        questionsRespository.save(question);
+
         // Handle document
         List<Document> listDocuments = new ArrayList<>();
         // Upload file CMND mặt trước
@@ -75,7 +75,6 @@ public class QuestionServices {
             // Get file to client
             for(MultipartFile multipartFile : questionForm.getImages()) {
                 Document document = new Document();
-                document.setQuestion(question);
                 document.setFileName(Common.generateFileName(multipartFile, Constant.DOCUMENT_QUESTION_IMAGE));
                 document.setOriginFileName(multipartFile.getOriginalFilename());
                 document.setExtension(MimeTypes.lookupExt(multipartFile.getContentType()));
@@ -88,9 +87,9 @@ public class QuestionServices {
                 document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
             }
-            documentRespository.saveAll(listDocuments);
+            question.setListImage(listDocuments);
         }
-        // Handle image
+        questionsRespository.save(question);
     }
 
     public List<Question> getQuestionInChapter(Long chapterId) {

@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.doanfpt.management.application.entities.DrivingLicenseInfo;
+import com.doanfpt.management.application.entities.ExamProfile;
 
 @Repository
-public interface DrivingLicenseInfoRespository extends JpaRepository<DrivingLicenseInfo, Long> {
-	@Query("SELECT count(d) FROM DrivingLicenseInfo d WHERE d.status = 3")
+public interface DrivingLicenseInfoRespository extends JpaRepository<ExamProfile, Long> {
+	@Query("SELECT count(d) FROM ExamProfile d WHERE d.status = 3")
 	Integer countDrivingLicenseInfo();
 }

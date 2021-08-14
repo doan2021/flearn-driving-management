@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.doanfpt.management.application.common.Common;
 import com.doanfpt.management.application.entities.ExamQuestions;
 import com.doanfpt.management.application.entities.ExamQuestions_;
+import com.doanfpt.management.application.utils.DateTimeUtils;
 
 public class ExamQuestionsSpecification {
 	public static Specification<ExamQuestions> hasName(String name) {
@@ -22,6 +23,6 @@ public class ExamQuestionsSpecification {
 
 	public static Specification<ExamQuestions> hasUpdateAtTo(String updateAtTo) {
 		return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(ExamQuestions_.UPDATE_AT),
-				Common.getLastOfTheDate(Common.stringToDate(updateAtTo)));
+				DateTimeUtils.atEndOfDay(Common.stringToDate(updateAtTo)));
 	}
 }

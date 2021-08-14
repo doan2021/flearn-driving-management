@@ -40,11 +40,16 @@ public class HistoryAnswer {
     @ManyToOne
     @JoinColumn(name = "answer_id")
     private Answer answer;
-    
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "exam_result_id")
-    private ExamResult examResult;
+    private TrailExamResult trailExamResult;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "exam_profile_id")
+    private ExamProfile examProfile;
 
     public Long getHistoryAnswerId() {
         return historyAnswerId;
@@ -94,12 +99,20 @@ public class HistoryAnswer {
         this.answer = answer;
     }
 
-    public ExamResult getExamResult() {
-        return examResult;
+    public TrailExamResult getTrailExamResult() {
+        return trailExamResult;
     }
 
-    public void setExamResult(ExamResult examResult) {
-        this.examResult = examResult;
+    public void setTrailExamResult(TrailExamResult trailExamResult) {
+        this.trailExamResult = trailExamResult;
+    }
+
+    public ExamProfile getExamProfile() {
+        return examProfile;
+    }
+
+    public void setExamProfile(ExamProfile examProfile) {
+        this.examProfile = examProfile;
     }
 
 }

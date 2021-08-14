@@ -1,0 +1,51 @@
+body {
+	background-color: #cad2da;
+}
+
+.content-report {
+	padding: 5mm;
+	margin-top: 50px;
+	background-color: #FFF;
+	box-shadow: 0 4px 6px rgb(50 50 93/ 11%), 0 1px 3px rgb(0 0 0/ 8%);
+}
+
+.btn-print {
+	position: fixed;
+	top: 90%;
+	left: 85%;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+th {
+	background-color: #e7e5e5;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+td {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+@media print {
+	@page {
+		size: A4 portrait;
+	}
+	
+	body {
+		background-color: transparent;
+	}
+	
+	.btn-print {
+		display: none;
+	}
+	
+	.content-report {
+		padding: 0;
+		margin-top: 10mm;
+		box-shadow: rgb();
+	}
+}

@@ -15,25 +15,32 @@ import com.doanfpt.management.application.services.QuestionServices;
 @RequestMapping("/management")
 public class DashboardManagementController {
 
-	@Autowired
-	AccountServices accountServices;
+    @Autowired
+    AccountServices accountServices;
 
-	@Autowired
-	ChapterServices chapterServices;
+    @Autowired
+    ChapterServices chapterServices;
 
-	@Autowired
-	QuestionServices questionServices;
+    @Autowired
+    QuestionServices questionServices;
 
-	@Autowired
-	DrivingLicenseInfoServices drivingLicenseInfoServices;
-	@GetMapping(value = { "/dashboard" })
-	public String visitDashboardPage(Model model) {
+    @Autowired
+    DrivingLicenseInfoServices drivingLicenseInfoServices;
 
-		model.addAttribute("numberOfChapter", chapterServices.countChapter());
-		model.addAttribute("numberOfAccount", accountServices.countAccount());
-		model.addAttribute("numberOfQuestion", questionServices.countQuestion());
-		model.addAttribute("numberOfDrivingLicenseInfo", drivingLicenseInfoServices.countDrivingLicenseInfo());
-		 
-		return "dashboard";
-	}
+    @GetMapping(value = { "/dashboard" })
+    public String visitDashboardPage(Model model) {
+        model.addAttribute("numberOfChapter", chapterServices.countChapter());
+        model.addAttribute("numberOfAccount", accountServices.countAccount());
+        model.addAttribute("numberOfQuestion", questionServices.countQuestion());
+        model.addAttribute("numberOfDrivingLicenseInfo", drivingLicenseInfoServices.countDrivingLicenseInfo());
+        model.addAttribute("listAccount", accountServices.getDataReportAccountMonth());
+        return "dashboard";
+    }
+
+    @GetMapping("/export-report-account")
+    public String visitReportAccount(Model model) {
+        model.addAttribute("listAccount", accountServices.getDataReportAccountMonth());
+        model.addAttribute("owner", accountServices.getAccountLoginInfo());
+        return "account-report";
+    }
 }

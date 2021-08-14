@@ -64,8 +64,8 @@ public class Document {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "driving_license_info_id")
-    private DrivingLicenseInfo drivingLicenseInfo;
+    @JoinColumn(name = "exam_profile_id")
+    private ExamProfile examProfile;
 
     @JsonBackReference
     @ManyToOne
@@ -144,14 +144,6 @@ public class Document {
         this.account = account;
     }
 
-    public DrivingLicenseInfo getDrivingLicenseInfo() {
-        return drivingLicenseInfo;
-    }
-
-    public void setDrivingLicenseInfo(DrivingLicenseInfo drivingLicenseInfo) {
-        this.drivingLicenseInfo = drivingLicenseInfo;
-    }
-
     public String getOriginFileName() {
         return originFileName;
     }
@@ -198,6 +190,14 @@ public class Document {
 
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
+    }
+
+    public ExamProfile getExamProfile() {
+        return examProfile;
+    }
+
+    public void setExamProfile(ExamProfile examProfile) {
+        this.examProfile = examProfile;
     }
 
 }
