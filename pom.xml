@@ -9,11 +9,11 @@
 		<version>2.4.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.doanfpt.management</groupId>
-	<artifactId>doanfpt2021management</artifactId>
+	<groupId>com.flearndriving.management</groupId>
+	<artifactId>flearndrivingmanagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>doanfpt2021management</name>
-	<description>doanfpt2021management</description>
+	<name>flearndrivingmanagement</name>
+	<description>flearndrivingmanagement</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
