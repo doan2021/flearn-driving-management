@@ -36,7 +36,7 @@ public class TrialExamResult {
 	private Integer timeExam;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "trailExamResult", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "trialExamResult", cascade = CascadeType.ALL)
 	private List<HistoryAnswer> listHistoryAnswer;
 
 	@JsonBackReference
