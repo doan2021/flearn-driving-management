@@ -32,7 +32,7 @@ public class TrialExamResult {
 	@Column(name = "is_pass")
 	private boolean isPass;
 
-	@Column(name = "time_exam_start")
+	@Column(name = "time_exam")
 	private Integer timeExam;
 
 	@JsonManagedReference
