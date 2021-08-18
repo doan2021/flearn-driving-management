@@ -17,102 +17,102 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "history_answer")
 public class HistoryAnswer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "history_answer_id")
-    private Long historyAnswerId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "history_answer_id")
+	private Long historyAnswerId;
 
-    @Column(name = "note")
-    private String note;
+	@Column(name = "note")
+	private String note;
 
-    @Column(name = "date_answer")
-    private Date dateAnswer;
+	@Column(name = "date_answer")
+	private Date dateAnswer;
 
-    @Column(name = "is_correct")
-    private boolean isCorrect;
+	@Column(name = "is_correct")
+	private boolean isCorrect;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "answer_id")
-    private Answer answer;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "answer_id")
+	private Answer answer;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "exam_result_id")
-    private TrailExamResult trailExamResult;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "trial_exam_result_id")
+	private TrialExamResult trialExamResult;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "exam_profile_id")
-    private ExamProfile examProfile;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "exam_profile_id")
+	private ExamProfile examProfile;
 
-    public Long getHistoryAnswerId() {
-        return historyAnswerId;
-    }
+	public Long getHistoryAnswerId() {
+		return historyAnswerId;
+	}
 
-    public void setHistoryAnswerId(Long historyAnswerId) {
-        this.historyAnswerId = historyAnswerId;
-    }
+	public void setHistoryAnswerId(Long historyAnswerId) {
+		this.historyAnswerId = historyAnswerId;
+	}
 
-    public String getNote() {
-        return note;
-    }
+	public String getNote() {
+		return note;
+	}
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-    public Date getDateAnswer() {
-        return dateAnswer;
-    }
+	public Date getDateAnswer() {
+		return dateAnswer;
+	}
 
-    public void setDateAnswer(Date dateAnswer) {
-        this.dateAnswer = dateAnswer;
-    }
+	public void setDateAnswer(Date dateAnswer) {
+		this.dateAnswer = dateAnswer;
+	}
 
-    public boolean isCorrect() {
-        return isCorrect;
-    }
+	public boolean isCorrect() {
+		return isCorrect;
+	}
 
-    public void setCorrect(boolean isCorrect) {
-        this.isCorrect = isCorrect;
-    }
+	public void setCorrect(boolean isCorrect) {
+		this.isCorrect = isCorrect;
+	}
 
-    public Account getAccount() {
-        return account;
-    }
+	public Account getAccount() {
+		return account;
+	}
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
-    public Answer getAnswer() {
-        return answer;
-    }
+	public Answer getAnswer() {
+		return answer;
+	}
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
+	public void setAnswer(Answer answer) {
+		this.answer = answer;
+	}
 
-    public TrailExamResult getTrailExamResult() {
-        return trailExamResult;
-    }
+	public TrialExamResult getTrialExamResult() {
+		return trialExamResult;
+	}
 
-    public void setTrailExamResult(TrailExamResult trailExamResult) {
-        this.trailExamResult = trailExamResult;
-    }
+	public void setTrialExamResult(TrialExamResult trialExamResult) {
+		this.trialExamResult = trialExamResult;
+	}
 
-    public ExamProfile getExamProfile() {
-        return examProfile;
-    }
+	public ExamProfile getExamProfile() {
+		return examProfile;
+	}
 
-    public void setExamProfile(ExamProfile examProfile) {
-        this.examProfile = examProfile;
-    }
+	public void setExamProfile(ExamProfile examProfile) {
+		this.examProfile = examProfile;
+	}
 
 }
