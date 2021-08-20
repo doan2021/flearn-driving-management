@@ -97,6 +97,14 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<ExamProfile> listExamProfile;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<TrialExamResult> listTrialExamResult;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<StatusLearn> listStatusLearn;
+
     public Long getAccountId() {
         return accountId;
     }
@@ -255,6 +263,30 @@ public class Account {
 
     public void setWard(Ward ward) {
         this.ward = ward;
+    }
+
+    public List<ExamProfile> getListExamProfile() {
+        return listExamProfile;
+    }
+
+    public void setListExamProfile(List<ExamProfile> listExamProfile) {
+        this.listExamProfile = listExamProfile;
+    }
+
+    public List<TrialExamResult> getListTrialExamResult() {
+        return listTrialExamResult;
+    }
+
+    public void setListTrialExamResult(List<TrialExamResult> listTrialExamResult) {
+        this.listTrialExamResult = listTrialExamResult;
+    }
+
+    public List<StatusLearn> getListStatusLearn() {
+        return listStatusLearn;
+    }
+
+    public void setListStatusLearn(List<StatusLearn> listStatusLearn) {
+        this.listStatusLearn = listStatusLearn;
     }
 
 }

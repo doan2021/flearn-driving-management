@@ -33,23 +33,23 @@ public class HistoryAnswer {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    @JsonBackReference
-    @ManyToOne
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "exam_result_id")
-    private TrailExamResult trailExamResult;
+    @JoinColumn(name = "trial_exam_result_id")
+    private TrialExamResult trialExamResult;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "exam_profile_id")
     private ExamProfile examProfile;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "status_learn_id")
+    private StatusLearn statusLearn;
 
     public Long getHistoryAnswerId() {
         return historyAnswerId;
@@ -83,14 +83,6 @@ public class HistoryAnswer {
         this.isCorrect = isCorrect;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
     public Answer getAnswer() {
         return answer;
     }
@@ -99,12 +91,12 @@ public class HistoryAnswer {
         this.answer = answer;
     }
 
-    public TrailExamResult getTrailExamResult() {
-        return trailExamResult;
+    public TrialExamResult getTrialExamResult() {
+        return trialExamResult;
     }
 
-    public void setTrailExamResult(TrailExamResult trailExamResult) {
-        this.trailExamResult = trailExamResult;
+    public void setTrialExamResult(TrialExamResult trialExamResult) {
+        this.trialExamResult = trialExamResult;
     }
 
     public ExamProfile getExamProfile() {
@@ -113,6 +105,14 @@ public class HistoryAnswer {
 
     public void setExamProfile(ExamProfile examProfile) {
         this.examProfile = examProfile;
+    }
+
+    public StatusLearn getStatusLearn() {
+        return statusLearn;
+    }
+
+    public void setStatusLearn(StatusLearn statusLearn) {
+        this.statusLearn = statusLearn;
     }
 
 }

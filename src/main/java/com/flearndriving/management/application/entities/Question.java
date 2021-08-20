@@ -61,6 +61,10 @@ public class Question {
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<ExamQuestionsDetail> listExamQuestionsDetail;
+
     public Long getQuestionId() {
         return questionId;
     }
@@ -151,6 +155,14 @@ public class Question {
 
     public void setListAnswers(List<Answer> listAnswers) {
         this.listAnswers = listAnswers;
+    }
+
+    public List<ExamQuestionsDetail> getListExamQuestionsDetail() {
+        return listExamQuestionsDetail;
+    }
+
+    public void setListExamQuestionsDetail(List<ExamQuestionsDetail> listExamQuestionsDetail) {
+        this.listExamQuestionsDetail = listExamQuestionsDetail;
     }
 
 }

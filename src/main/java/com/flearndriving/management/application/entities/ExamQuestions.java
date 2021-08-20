@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -51,7 +50,6 @@ public class ExamQuestions {
     @Column(name = "update_at")
     private Date updateAt;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;
