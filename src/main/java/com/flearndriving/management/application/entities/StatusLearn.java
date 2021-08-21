@@ -1,7 +1,9 @@
 package com.flearndriving.management.application.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "status_learn")
@@ -52,6 +56,10 @@ public class StatusLearn {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "statusLearn", cascade = CascadeType.ALL)
+    private List<HistoryAnswer> listHistoryAnswer;
 
     public Long getStatusLearnId() {
         return statusLearnId;
@@ -131,6 +139,14 @@ public class StatusLearn {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public List<HistoryAnswer> getListHistoryAnswer() {
+        return listHistoryAnswer;
+    }
+
+    public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
+        this.listHistoryAnswer = listHistoryAnswer;
     }
 
 }

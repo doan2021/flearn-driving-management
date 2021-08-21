@@ -21,132 +21,165 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "trial_exam_result")
 public class TrialExamResult {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "trial_exam_result_id")
-	private Long trialExamResultId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "trial_exam_result_id")
+    private Long trialExamResultId;
 
-	@Column(name = "point")
-	private double point;
+    @Column(name = "point")
+    private double point;
 
-	@Column(name = "is_pass")
-	private boolean isPass;
+    @Column(name = "is_pass")
+    private boolean isPass;
 
-	@Column(name = "time_exam")
-	private Integer timeExam;
+    @Column(name = "number_correct")
+    private Integer numberCorrect;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "trialExamResult", cascade = CascadeType.ALL)
-	private List<HistoryAnswer> listHistoryAnswer;
+    @Column(name = "number_incorrect")
+    private Integer numberIncorrect;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "account_id")
-	private Account account;
+    @Column(name = "time_exam")
+    private Integer timeExam;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "exam_questions_id")
-	private ExamQuestions examQuestions;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
-	@Column(name = "create_by")
-	private String createBy;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "trialExamResult", cascade = CascadeType.ALL)
+    private List<HistoryAnswer> listHistoryAnswer;
 
-	@Column(name = "create_at")
-	private Date createAt;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
-	@Column(name = "update_by")
-	private String updateBy;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "exam_questions_id")
+    private ExamQuestions examQuestions;
 
-	@Column(name = "update_at")
-	private Date updateAt;
+    @Column(name = "create_by")
+    private String createBy;
 
-	public double getPoint() {
-		return point;
-	}
+    @Column(name = "create_at")
+    private Date createAt;
 
-	public void setPoint(double point) {
-		this.point = point;
-	}
+    @Column(name = "update_by")
+    private String updateBy;
 
-	public boolean isPass() {
-		return isPass;
-	}
+    @Column(name = "update_at")
+    private Date updateAt;
 
-	public void setPass(boolean isPass) {
-		this.isPass = isPass;
-	}
+    public double getPoint() {
+        return point;
+    }
 
-	public List<HistoryAnswer> getListHistoryAnswer() {
-		return listHistoryAnswer;
-	}
+    public void setPoint(double point) {
+        this.point = point;
+    }
 
-	public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
-		this.listHistoryAnswer = listHistoryAnswer;
-	}
+    public boolean isPass() {
+        return isPass;
+    }
 
-	public Account getAccount() {
-		return account;
-	}
+    public void setPass(boolean isPass) {
+        this.isPass = isPass;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public List<HistoryAnswer> getListHistoryAnswer() {
+        return listHistoryAnswer;
+    }
 
-	public ExamQuestions getExamQuestions() {
-		return examQuestions;
-	}
+    public void setListHistoryAnswer(List<HistoryAnswer> listHistoryAnswer) {
+        this.listHistoryAnswer = listHistoryAnswer;
+    }
 
-	public void setExamQuestions(ExamQuestions examQuestions) {
-		this.examQuestions = examQuestions;
-	}
+    public Account getAccount() {
+        return account;
+    }
 
-	public Long getTrialExamResultId() {
-		return trialExamResultId;
-	}
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	public void setTrialExamResultId(Long trialExamResultId) {
-		this.trialExamResultId = trialExamResultId;
-	}
+    public ExamQuestions getExamQuestions() {
+        return examQuestions;
+    }
 
-	public Integer getTimeExam() {
-		return timeExam;
-	}
+    public void setExamQuestions(ExamQuestions examQuestions) {
+        this.examQuestions = examQuestions;
+    }
 
-	public void setTimeExam(Integer timeExam) {
-		this.timeExam = timeExam;
-	}
+    public Long getTrialExamResultId() {
+        return trialExamResultId;
+    }
 
-	public String getCreateBy() {
-		return createBy;
-	}
+    public void setTrialExamResultId(Long trialExamResultId) {
+        this.trialExamResultId = trialExamResultId;
+    }
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
+    public Integer getTimeExam() {
+        return timeExam;
+    }
 
-	public Date getCreateAt() {
-		return createAt;
-	}
+    public void setTimeExam(Integer timeExam) {
+        this.timeExam = timeExam;
+    }
 
-	public void setCreateAt(Date createAt) {
-		this.createAt = createAt;
-	}
+    public String getCreateBy() {
+        return createBy;
+    }
 
-	public String getUpdateBy() {
-		return updateBy;
-	}
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
+    public Date getCreateAt() {
+        return createAt;
+    }
 
-	public Date getUpdateAt() {
-		return updateAt;
-	}
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
 
-	public void setUpdateAt(Date updateAt) {
-		this.updateAt = updateAt;
-	}
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Integer getNumberCorrect() {
+        return numberCorrect;
+    }
+
+    public void setNumberCorrect(Integer numberCorrect) {
+        this.numberCorrect = numberCorrect;
+    }
+
+    public Integer getNumberIncorrect() {
+        return numberIncorrect;
+    }
+
+    public void setNumberIncorrect(Integer numberIncorrect) {
+        this.numberIncorrect = numberIncorrect;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

@@ -72,14 +72,6 @@ public class Document {
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 
-    public Long getImageId() {
-        return documentId;
-    }
-
-    public void setImageId(Long imageId) {
-        this.documentId = imageId;
-    }
-
     public String getFileName() {
         return fileName;
     }
