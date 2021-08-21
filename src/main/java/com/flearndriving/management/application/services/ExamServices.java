@@ -91,8 +91,8 @@ public class ExamServices {
 		}
         exam.setName(examUpdateForm.getName());
         exam.setDescription(examUpdateForm.getDescription());
-        exam.setDateRegisExamEnd(Common.stringToDate(examUpdateForm.getStrDateRegisExamEnd()));
-        Date dateExam = Common.addDays(Common.stringToDate(examUpdateForm.getStrDateRegisExamEnd()), 15);
+        exam.setDateRegisExamEnd(examUpdateForm.getDateRegisExamEnd());
+        Date dateExam = Common.addDays(examUpdateForm.getDateRegisExamEnd(), 15);
         exam.setDateExam(dateExam);
         exam.setUpdateBy(Common.getUsernameLogin());
         exam.setUpdateAt(Common.getSystemDate());

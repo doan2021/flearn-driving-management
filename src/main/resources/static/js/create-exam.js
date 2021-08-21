@@ -1,4 +1,4 @@
-$("#create-exam-form").validate({
+/*$("#create-exam-form").validate({
     rules: {
         name: {
             required: true,
@@ -55,3 +55,4 @@ $("#create-exam-form").validate({
         }
     }
 });
+*/

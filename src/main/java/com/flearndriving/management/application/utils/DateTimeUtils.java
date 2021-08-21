@@ -55,4 +55,11 @@ public class DateTimeUtils {
     public static String dateToString(Date date, String format) {
         return DateFormatUtils.format(date, format);
     }
+
+	public static Date getLastDateOfMonthAgo(Date date) {
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+        return atStartOfDay(cal.getTime());
+	}
 }

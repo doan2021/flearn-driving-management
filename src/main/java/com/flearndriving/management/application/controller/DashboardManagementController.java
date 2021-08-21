@@ -43,4 +43,11 @@ public class DashboardManagementController {
         model.addAttribute("owner", accountServices.getAccountLoginInfo());
         return "account-report";
     }
+    
+    @GetMapping("/export-report-account-one-month")
+    public String visitReportAccountOneMonth(Model model) {
+        model.addAttribute("listAccount", accountServices.getDataReportAccountOneMonth());
+        model.addAttribute("owner", accountServices.getAccountLoginInfo());
+        return "account-report";
+    }
 }

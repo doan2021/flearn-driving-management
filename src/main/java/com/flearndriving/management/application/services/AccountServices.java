@@ -178,4 +178,11 @@ public class AccountServices {
         Date lastDayOfMonth = DateTimeUtils.getLastDateOfMonth(today);
         return accountsRespository.findReportByCreateDate(firstDayOfMonthAgo, lastDayOfMonth);
     }
+    
+    public List<Account> getDataReportAccountOneMonth() {
+        Date today = new Date();
+        Date firstDayOfMonthAgo = DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.getDateOfMonthAgo(today));
+        Date lastDayOfMonthAgo = DateTimeUtils.getLastDateOfMonthAgo(today);
+        return accountsRespository.findReportByCreateDate(firstDayOfMonthAgo, lastDayOfMonthAgo);
+    }
 }
