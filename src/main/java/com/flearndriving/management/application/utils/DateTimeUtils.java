@@ -45,10 +45,11 @@ public class DateTimeUtils {
         return atStartOfDay(cal.getTime());
     }
 
-    public static Date getDateOfMonthAgo(Date date) {
+    
+    public static Date plusMonthToDate(Date date, int monthNumber) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.MONTH, -1);
+        cal.add(Calendar.MONTH, monthNumber);
         return cal.getTime();
     }
 
