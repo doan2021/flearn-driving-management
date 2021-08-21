@@ -174,7 +174,7 @@ public class AccountServices {
 
     public List<Account> getDataReportAccountMonth() {
         Date today = new Date();
-        Date firstDayOfMonthAgo = DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.getDateOfMonthAgo(today));
+        Date firstDayOfMonthAgo = DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.plusMonthToDate(today, -1));
         Date lastDayOfMonth = DateTimeUtils.getLastDateOfMonth(today);
         return accountsRespository.findReportByCreateDate(firstDayOfMonthAgo, lastDayOfMonth);
     }
