@@ -33,5 +33,6 @@ public class AccountUpdateValidator implements Validator {
         ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "birthDay", "NotEmpty.accountForm.birthDay");
         ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.accountForm.email");
         ValidationApplicationUtils.rejectEmailIncorrectFormat(errors, "email", "Pattern.accountForm.email");
+        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.accountForm.gender");
     }
 }
