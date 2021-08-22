@@ -53,6 +53,7 @@
                 <div class="col-xl-8 order-xl-1">
                     <div class="card">
                         <form id="update-account-form" th:action="@{/management/update-account}" th:object="${accountUpdateForm}" method="POST">
+                            <input type="hidden" th:field="*{accountId}"/>
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-8">
@@ -78,15 +79,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pl-lg-4">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${messageSuccess}">
-                                            </div>
-                                            <div class="alert alert-danger" th:if="${messageError != null}" th:text="${messageError}">
-                                            </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
+                                            <p class="m-0" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('numberPhone')}" th:errors="*{numberPhone}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                                            <p class="m-0" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+                                    </div>
+                                </div>
+                                <div class="pl-lg-4">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
