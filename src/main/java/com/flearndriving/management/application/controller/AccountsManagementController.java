@@ -78,14 +78,13 @@ public class AccountsManagementController {
     }
 
     @PostMapping(value = { "/update-account-view" })
-    public String updateAccountView(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, Model model) {
+    public String updateAccountView(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             return "view-profile";
         }
         accountsServices.updateAccount(accountUpdateForm);
-        model.addAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
-        model.addAttribute("accountUpdateForm", accountUpdateForm);
-        return "view-profile";
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
+        return "redirect:view-profile";
     }
 
     @GetMapping(value = { "/create-account" })
@@ -115,10 +114,12 @@ public class AccountsManagementController {
     }
 
     @PostMapping(value = { "/update-account" })
-    public String updateAccount(AccountUpdateForm accountUpdateForm, Model model) {
+    public String updateAccount(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
+    	if (result.hasErrors()) {
+            return "update-account";
+        }
         accountsServices.updateAccount(accountUpdateForm);
-        model.addAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
-        model.addAttribute("accountUpdateForm", accountUpdateForm);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
         return "redirect:update-account?accountId=" + accountUpdateForm.getAccountId();
     }
 

@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,6 +19,7 @@ import com.flearndriving.management.application.dto.FormSearchExam;
 import com.flearndriving.management.application.services.DrivingLicenseServices;
 import com.flearndriving.management.application.services.ExamServices;
 import com.flearndriving.management.application.validator.ExamCreateValidator;
+import com.flearndriving.management.application.validator.ExamUpdateValidator;
 
 @Controller
 @RequestMapping("/management")
@@ -32,6 +33,9 @@ public class ExamManagementController {
 
     @Autowired
     private ExamCreateValidator examCreateValidator;
+    
+    @Autowired
+    private ExamUpdateValidator examUpdateValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
@@ -41,6 +45,9 @@ public class ExamManagementController {
         }
         if (target.getClass() == ExamForm.class) {
             dataBinder.setValidator(examCreateValidator);
+        }
+        if (target.getClass() == ExamUpdateForm.class) {
+            dataBinder.setValidator(examUpdateValidator);
         }
     }
 
@@ -61,13 +68,14 @@ public class ExamManagementController {
     }
 
     @PostMapping(value = { "/create-exam" })
-    public String createExam(@ModelAttribute("examForm") ExamForm examForm, Model model, BindingResult result) {
+    public String createExam(@Validated ExamForm examForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "create-exam";
         }
-        examService.createExam(examForm);
+        model.addAttribute("listDrivingLicense", drivingLicenseServices.findAllDrivingLicense());
         model.addAttribute(Constant.STATUS_SUCCESS, "Thêm kỳ thi mới thành công!");
         model.addAttribute("examForm", new ExamForm());
+        examService.createExam(examForm);
         return "create-exam";
     }
 
@@ -91,8 +99,12 @@ public class ExamManagementController {
     }
 
     @PostMapping(value = { "/update-exam" })
-    public String saveExam(@ModelAttribute("examForm") ExamUpdateForm examUpdateForm, RedirectAttributes redirAttrs) {
-        examService.updateExam(examUpdateForm);
+    public String saveExam(@Validated ExamUpdateForm examUpdateForm, BindingResult result, RedirectAttributes redirAttrs, Model model) {
+    	if (result.hasErrors()) {
+            return "update-exam";
+        }
+    	model.addAttribute("examUpdateForm", examUpdateForm);
+    	examService.updateExam(examUpdateForm);
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa kỳ thi thành công!");
         return "redirect:detail-exam?examId=" + examUpdateForm.getExamId();
     }

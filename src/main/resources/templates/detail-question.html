@@ -94,7 +94,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 mt-3 text-center">
-                                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</button>
                                         <form th:action="@{/management/delete-question}" method="POST" id="formDeleteQuestion" class="d-none">
                                             <input type="hidden" name="questionId" th:value="${question.questionId}">
                                             <input type="hidden" name="chapterId" th:value="${question.chapter.chapterId}">

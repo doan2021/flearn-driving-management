@@ -62,7 +62,7 @@
                                         <div class="col-12">
                                             <label for="name" class="form-control-label">Tên kỳ thi</label>
                                             <span class="text-danger">*</span>
-                                            <input id="name" type="text" class="form-control" placeholder="Tên kỳ thi" th:field="*{name}" maxlength="255"/>
+                                            <input id="name" type="text" class="form-control" placeholder="Tên kỳ thi" th:field="*{name}" maxlength="255" name="name"/>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -79,7 +79,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                     </div>
-                                                    <input class="form-control datepicker" id="dateRegisExamEnd" placeholder="Hạn đăng ký" type="text" th:field="*{dateRegisExamEnd}">
+                                                    <input name="dateRegisExamEnd" class="form-control datepicker" id="dateRegisExamEnd" placeholder="Hạn đăng ký" type="text" th:field="*{dateRegisExamEnd}">
                                                 </div>
                                             </div>
                                         </div>

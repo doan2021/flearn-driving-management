@@ -134,7 +134,7 @@ public class ChapterServices {
         if (formSearchChapter.getPageNumber() == null) {
             formSearchChapter.setPageNumber(0);
         }
-        Specification<Chapter> conditions = Specification.where(null);
+        Specification<Chapter> conditions = Specification.where(ChapterSpecification.isDelete(false));
         if (formSearchChapter != null) {
             if (StringUtils.isNotBlank(formSearchChapter.getIndex())) {
                 conditions = conditions.and(ChapterSpecification.hasIndex(formSearchChapter.getName()));
@@ -178,6 +178,9 @@ public class ChapterServices {
         if (chapter == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
         }
-        chapterResponsitory.delete(chapter);
+        chapter.setDelete(true);
+        chapter.setUpdateAt(Common.getSystemDate());
+        chapter.setUpdateBy(Common.getUsernameLogin());
+        chapterResponsitory.save(chapter);
     }
 }

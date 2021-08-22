@@ -46,6 +46,14 @@ public class ExamQuestionsServices {
         }
         return examQuestionsRepository.findByDrivingLicense(drivingLicense);
     }
+    
+    public ExamQuestions findByExamQuestionId(Long examQuestionId) {
+        ExamQuestions examQuestions = examQuestionsRepository.findByExamQuestionsId(examQuestionId);
+        if (examQuestions == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Đề thi không tồn tại!");
+        }
+        return examQuestions;
+    }
 
     public Page<ExamQuestions> searchExamQuestions(FormSearchExamQuestions formSearchExamQuestions) {
         if (formSearchExamQuestions.getPageNumber() == null) {
@@ -127,5 +135,9 @@ public class ExamQuestionsServices {
         }
         examQuestions.setListExamQuestionsDetail(listExamQuestionDetail);
         examQuestionsRepository.save(examQuestions);
+    }
+    
+    public List<Question> findQuestionInExamQuestions(Long examQuestionsId) {
+        return examQuestionsRepository.findQuestionInExamQuestionId(examQuestionsId);
     }
 }
