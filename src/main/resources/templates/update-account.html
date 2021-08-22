@@ -34,17 +34,26 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
-                                    <label for="fileImage">
-                                        <img src="../assets/img/theme/team-4.jpg" class="rounded-circle" id="image-preview">
+                                    <label for="avatar">
+                                        <img class="rounded-circle" th:src="${accountUpdateForm.urlAvatar}" th:if="${accountUpdateForm.urlAvatar != null}">
+                                        <img class="rounded-circle" th:src="@{../assets/img/default-avartar.jpg}" th:if="${accountUpdateForm.urlAvatar == null}">
                                     </label>
                                 </div>
+                                <form th:action="@{/management/upload-avatar-account}" method="POST" enctype="multipart/form-data" id="formUploadAvatar">
+                                    <input type="file" name="data" class="d-none" id="avatar" onchange="changeAvatar()">
+                                    <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
+                                </form>
                             </div>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body pt-0 mt-4">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h3 th:text="${accountUpdateForm.userName}"></h3>
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col">
-                                    <div class="card-profile-stats d-flex justify-content-center">
-                                    </div>
+                                <div class="col-12 text-center">
+                                    <a href="#!" class="btn btn-sm btn-primary">Đổi mật khẩu</a>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +69,7 @@
                                         <h2 class="mb-0">Sửa thông tin người dùng</h2>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <a href="#!" class="btn btn-sm btn-primary">Đổi mật khẩu</a>
+                                        
                                         <button type="button" class="btn btn-sm btn-danger" onclick="deleteAccount()"><i class="fas fa-trash-alt"></i> Xóa</button>
                                         <a th:href="@{../management/account}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
                                     </div>
@@ -70,7 +79,7 @@
                                 <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
                                 <div class="row">
                                     <div class="col-6">
-                                        <h6 class="heading-small text-muted mb-4">THÔNG TIN CƠ BẢN</h6>
+                                        <h6 class="heading-small text-muted mb-3">THÔNG TIN CƠ BẢN</h6>
                                     </div>
                                     <div class="col-lg-6 text-right">
                                         <div class="form-group">
@@ -79,51 +88,49 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
-                                            <p class="m-0" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                                            <p class="m-0" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-                                            <p class="m-0" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></p>
-                                            <p class="m-0" th:if="${#fields.hasErrors('numberPhone')}" th:errors="*{numberPhone}"></p>
-                                            <p class="m-0" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                                            <p class="m-0" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-                                    </div>
-                                </div>
                                 <div class="pl-lg-4">
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-username">Tài khoản: </label>
-                                                <span th:text="*{userName}"></span>
+                                        <div class="col-12" th:if="${success != null}">
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                <span class="alert-text" th:text="${success}"></span>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
+	                                <div class="row">
+	                                    <div class="col-12">
+	                                        <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
+	                                            <p class="m-0" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+	                                            <p class="m-0" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+	                                            <p class="m-0" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></p>
+	                                            <p class="m-0" th:if="${#fields.hasErrors('numberPhone')}" th:errors="*{numberPhone}"></p>
+	                                            <p class="m-0" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+	                                            <p class="m-0" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
+	                                        </div>
+	                                    </div>
+	                                </div>
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group mb-0" id="lastName-place">
                                                 <label class="form-control-label" for="input-last-name">Họ</label>
                                                 <span class="text-danger">*</span>
-                                                <input th:field="*{lastName}" type="text" id="input-last-name" class="form-control" placeholder="Võ">
+                                                <input th:field="*{lastName}" type="text" id="input-last-name" class="form-control" placeholder="Họ">
                                             </div>
                                         </div>
                                         <div class="col-lg-4"  id="middleName-place">
                                             <div class="form-group mb-0">
                                                 <label class="form-control-label" for="input-middle-name">Tên đệm</label>
-                                                <input th:field="*{middleName}" type="text" id="input-middle-name" class="form-control" placeholder="Văn">
+                                                <input th:field="*{middleName}" type="text" id="input-middle-name" class="form-control" placeholder="Tên đệm">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group mb-0" id="firstName-place">
                                                 <label class="form-control-label" for="input-first-name">Tên</label>
                                                 <span class="text-danger">*</span>
-                                                <input th:field="*{firstName}" type="text" id="input-first-name" class="form-control" placeholder="A">
+                                                <input th:field="*{firstName}" type="text" id="input-first-name" class="form-control" placeholder="Tên">
                                             </div>
                                         </div>
                                     </div>
@@ -170,60 +177,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="my-4" />
-                                <h6 class="heading-small text-muted mb-4">THÔNG TIN LIÊN LẠC</h6>
-                                <div class="pl-lg-4">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-address">Địa chỉ 1</label>
-                                                <input id="input-address" class="form-control" placeholder="262 Lê Thanh Nghị">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-address">Địa chỉ 2</label>
-                                                <input id="input-address" class="form-control" placeholder="Quán nhậu Bé Mặn">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-country">Tỉnh/Thành phố</label>
-                                                <select class="form-control">
-                                                    <option value="">----- Chọn Tỉnh/Thành phố -----</option>
-                                                    <option th:each="province : ${listProvince}" th:value="${province.provinceId}" th:text="${province.provinceName}"></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-country">Quận/Huyện</label>
-                                                <select class="form-control" disabled="disabled">
-                                                    <option value="">----- Chọn Quận/Huyện -----</option>
-                                                    <option>1</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-city">Phường/Xã</label>
-                                                <select class="form-control" disabled="disabled">
-                                                    <option value="">----- Chọn Phường/Xã    -----</option>
-                                                    <option>1</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-4" />
                                 <!-- Description -->
-                                <h6 class="heading-small text-muted mb-4">Thông tin khác</h6>
+                                <h6 class="heading-small text-muted mt-5 mb-3">Thông tin khác</h6>
                                 <div class="pl-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Mô tả về tôi</label>
-                                        <textarea rows="4" class="form-control" placeholder="Mô tả về tôi"></textarea>
+                                        <label class="form-control-label">Mô tả</label>
+                                        <textarea rows="4" class="form-control" placeholder="Mô tả về tôi" th:field="*{description}"></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -245,5 +204,4 @@
         <script th:src="@{../js/update-account.js}"></script>
     </th:block>
 </body>
-
 </html>

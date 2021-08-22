@@ -43,8 +43,10 @@ public class QuestionServices {
         if (questionForm == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền lên không đúng!");
         }
-        Chapter chapter = new Chapter();
-        chapter = chapterResponsitory.getOne(questionForm.getChapterId());
+        Chapter chapter = chapterResponsitory.findByChapterId(questionForm.getChapterId());
+        if (chapter == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Chương không tồn tại!");
+        }
         Question question = new Question();
         question.setContent(questionForm.getContent());
         question.setNumber(questionForm.getNumber());
@@ -93,8 +95,7 @@ public class QuestionServices {
     }
 
     public List<Question> getQuestionInChapter(Long chapterId) {
-        Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
-        return questionsRespository.findByChapter(chapter);
+        return questionsRespository.findQuestionByChapterId(chapterId);
     }
 
     public Question getOneQuestion(Long questionId) {
@@ -114,6 +115,9 @@ public class QuestionServices {
         if (question == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi không tồn tại!");
         }
-        questionsRespository.delete(question);
+        question.setDelete(true);
+        question.setUpdateAt(Common.getSystemDate());
+        question.setUpdateBy(Common.getUsernameLogin());
+        questionsRespository.save(question);
     }
 }

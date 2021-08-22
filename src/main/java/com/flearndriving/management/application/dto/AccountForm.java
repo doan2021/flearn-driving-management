@@ -1,7 +1,5 @@
 package com.flearndriving.management.application.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class AccountForm {
 	private Long accountId;
 	private String userName;
@@ -15,8 +13,6 @@ public class AccountForm {
 	private String birthDay;
 	private String numberPhone;
 	private Long roleId;
-	private MultipartFile image;
-	private Boolean isUpdate;
 	private String description;
 
 	public String getUserName() {
@@ -119,28 +115,12 @@ public class AccountForm {
 		this.middleName = middleName;
 	}
 
-	public MultipartFile getImage() {
-		return image;
-	}
-
-	public void setImage(MultipartFile image) {
-		this.image = image;
-	}
-
 	public Long getAccountId() {
 		return accountId;
 	}
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
-	}
-
-	public Boolean getIsUpdate() {
-		return isUpdate;
-	}
-
-	public void setIsUpdate(Boolean isUpdate) {
-		this.isUpdate = isUpdate;
 	}
 
 }

@@ -1,22 +1,17 @@
 package com.flearndriving.management.application.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class AccountUpdateForm {
     private Long accountId;
     private String userName;
     private String firstName;
     private String middleName;
     private String lastName;
-    private String password;
-    private String confirmPassword;
     private Integer gender;
     private String email;
     private String birthDay;
     private String numberPhone;
     private Long roleId;
-    private MultipartFile[] images;
-    private Boolean isUpdate;
+    private String urlAvatar;
     private String description;
 
     public String getUserName() {
@@ -41,22 +36,6 @@ public class AccountUpdateForm {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public Integer getGender() {
@@ -119,14 +98,6 @@ public class AccountUpdateForm {
         this.middleName = middleName;
     }
 
-    public MultipartFile[] getImages() {
-        return images;
-    }
-
-    public void setImages(MultipartFile[] images) {
-        this.images = images;
-    }
-
     public Long getAccountId() {
         return accountId;
     }
@@ -135,12 +106,12 @@ public class AccountUpdateForm {
         this.accountId = accountId;
     }
 
-    public Boolean getIsUpdate() {
-        return isUpdate;
+    public String getUrlAvatar() {
+        return urlAvatar;
     }
 
-    public void setIsUpdate(Boolean isUpdate) {
-        this.isUpdate = isUpdate;
+    public void setUrlAvatar(String urlAvatar) {
+        this.urlAvatar = urlAvatar;
     }
 
 }

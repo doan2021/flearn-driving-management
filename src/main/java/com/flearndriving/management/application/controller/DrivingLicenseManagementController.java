@@ -152,4 +152,11 @@ public class DrivingLicenseManagementController {
         model.addAttribute("examQuestionsForm", new ExamQuestionsForm());
         return "create-exam-questions";
     }
+    
+    @GetMapping(value = { "/detail-exam-questions" })
+    public String visitDetailExamQuestionPage(Long examQuestionsId, Model model) {
+        model.addAttribute("examQuestions", examQuestionsServices.findByExamQuestionId(examQuestionsId));
+        model.addAttribute("listQuestions", examQuestionsServices.findQuestionInExamQuestions(examQuestionsId));
+        return "detail-exam-questions";
+    }
 }

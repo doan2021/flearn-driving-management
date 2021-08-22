@@ -273,6 +273,10 @@
 	margin: 18px
 }
 
+.error-code {
+	font-size: 150px;
+}
+
 @media ( max-width : 420px) {
 	.sidebar li .tooltip {
 		display: none;

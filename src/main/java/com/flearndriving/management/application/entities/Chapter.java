@@ -29,6 +29,9 @@ public class Chapter {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "is_delete", columnDefinition = "Boolean default false")
+    private boolean isDelete;
+
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
@@ -130,6 +133,14 @@ public class Chapter {
 
     public void setListImages(List<Document> listImages) {
         this.listImages = listImages;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
 }

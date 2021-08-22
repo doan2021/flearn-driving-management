@@ -68,7 +68,7 @@ public class ChapterManagementController {
     @GetMapping(value = { "/chapter-detail" })
     public String visitChapterDetailPage(Long chapterId, Model model) {
         model.addAttribute("chapter", chapterServices.getChapterDetail(chapterId));
-        model.addAttribute("listQuestion", questionServices.getQuestionInChapter(chapterId));
+        model.addAttribute("listQuestions", questionServices.getQuestionInChapter(chapterId));
         return "chapter-detail";
     }
 

@@ -12,6 +12,10 @@ public class ChapterSpecification {
         return (root, query, cb) -> cb.equal(root.get(Chapter_.INDEX), index);
     }
     
+    public static Specification<Chapter> isDelete(boolean isDelete) {
+        return (root, query, cb) -> cb.equal(root.get(Chapter_.IS_DELETE), isDelete);
+    }
+    
     public static Specification<Chapter> likeName(String name) {
         return (root, query, cb) -> cb.like(root.get(Chapter_.NAME), "%" + name + "%");
     }
