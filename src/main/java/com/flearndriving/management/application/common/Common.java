@@ -4,11 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.flearndriving.management.application.dto.AccountPrincipal;
 import com.flearndriving.management.application.utils.DateTimeUtils;
 
 public class Common {
@@ -64,9 +62,7 @@ public class Common {
     }
 
     public static String getUsernameLogin() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AccountPrincipal loginedUser = (AccountPrincipal) auth.getPrincipal();
-        return loginedUser.getUsername();
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public static Date getSystemDate() {

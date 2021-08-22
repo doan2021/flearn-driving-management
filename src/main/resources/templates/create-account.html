@@ -27,33 +27,7 @@
             </div>
             <div class="container-fluid mt--6">
                 <div class="row">
-                    <div class="col-xl-4 order-xl-2">
-                        <div class="card card-profile">
-                            <img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-3 order-lg-2">
-                                    <div class="card-profile-image">
-                                        <label for="fileImage">
-                                            <img src="../assets/img/theme/team-4.jpg" class="rounded-circle" id="image-preview">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                                <div class="d-flex justify-content-between">
-                                </div>
-                            </div>
-                            <div class="card-body pt-0">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="card-profile-stats d-flex justify-content-center">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-8 order-xl-1">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <div class="row align-items-center">
@@ -69,15 +43,15 @@
                                 <form th:action="@{/management/create-account}" th:object="${accountForm}" method="POST" enctype="multipart/form-data" id="create-account-form">
                                     <input type='file' onchange="readURL(this);" class="d-none" th:field="*{image}" id="fileImage"/>
                                     <div class="row">
-                                    	<div class="col-12" th:if="${success != null}">
-						                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-						                        <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
-						                        <span class="alert-text" th:text="${success}"></span>
-						                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						                            <span aria-hidden="true">&times;</span>
-						                        </button>
-						                    </div>
-                        				</div>
+                                        <div class="col-12" th:if="${success != null}">
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                <span class="alert-text" th:text="${success}"></span>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">

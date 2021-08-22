@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.flearndriving.management.application.dto.AccountLogin;
 import com.flearndriving.management.application.entities.Account;
 
 @Repository
@@ -26,4 +27,16 @@ public interface AccountsRespository extends JpaRepository<Account, Long>, JpaSp
 
     @Query("SELECT a FROM Account a WHERE a.role.roleId = 2 AND a.createAt >= :startDate AND a.createAt <= :endDate")
     List<Account> findReportByCreateDate(Date startDate, Date endDate);
+    
+    @Query(value="SELECT new com.flearndriving.management.application.dto.AccountLogin(a.accountId, "
+            + "a.userName, "
+            + "a.firstName, "
+            + "a.middleName, "
+            + "a.lastName, "
+            + "a.email, "
+            + "a.description) "
+            + "FROM Account a "
+            + "WHERE a.role.roleId = 1 "
+            + "AND a.userName = :userName")
+    AccountLogin findBasicInfoByUserName(String userName);
 }

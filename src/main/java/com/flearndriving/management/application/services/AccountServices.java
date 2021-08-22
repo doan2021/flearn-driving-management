@@ -11,20 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.common.Constant;
+import com.flearndriving.management.application.common.MimeTypes;
 import com.flearndriving.management.application.dto.AccountForm;
-import com.flearndriving.management.application.dto.AccountPrincipal;
+import com.flearndriving.management.application.dto.AccountLogin;
 import com.flearndriving.management.application.dto.AccountUpdateForm;
 import com.flearndriving.management.application.dto.FormSearchAccount;
 import com.flearndriving.management.application.entities.Account;
+import com.flearndriving.management.application.entities.Document;
 import com.flearndriving.management.application.entities.Role;
 import com.flearndriving.management.application.exception.BusinessException;
 import com.flearndriving.management.application.respositories.AccountsRespository;
+import com.flearndriving.management.application.respositories.DocumentRespository;
 import com.flearndriving.management.application.respositories.RoleRespository;
 import com.flearndriving.management.application.specification.AccountSpecification;
 import com.flearndriving.management.application.utils.DateTimeUtils;
@@ -37,15 +39,13 @@ public class AccountServices {
     private AccountsRespository accountsRespository;
 
     @Autowired
+    private DocumentRespository documentRespository;
+
+    @Autowired
     private RoleRespository roleRespository;
-
-    public List<Account> findAllAccount() {
-        return accountsRespository.findAll();
-    }
-
-    public Account findByEmail(String email) {
-        return accountsRespository.findByEmail(email);
-    }
+    
+    @Autowired
+    AmazonS3ClientService amazonS3ClientService;
 
     @Transactional
     public void createAccount(AccountForm accountForm) {
@@ -70,9 +70,18 @@ public class AccountServices {
     }
 
     public Account getAccountLogin() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AccountPrincipal loginedUser = (AccountPrincipal) auth.getPrincipal();
-        return accountsRespository.findByEmail(loginedUser.getEmail());
+        return accountsRespository.findByUserName(Common.getUsernameLogin());
+    }
+
+    public AccountLogin getBasicInfoAccountLogin() {
+        String userName = Common.getUsernameLogin();
+        AccountLogin accountLogin = accountsRespository.findBasicInfoByUserName(userName);
+        if (accountLogin != null) {
+
+            accountLogin.setUrlAvatar(documentRespository
+                    .findUrlDocumentByTypeAndAccountId(Constant.TYPE_DOCUMENT_AVATAR, accountLogin.getAccountId()));
+        }
+        return accountLogin;
     }
 
     public Page<Account> searchAccount(FormSearchAccount formSearchAccount) {
@@ -97,8 +106,7 @@ public class AccountServices {
             }
         }
         PageRequest pageable = PageRequest.of(formSearchAccount.getPageNumber(), Constant.RECORD_PER_PAGE);
-        Page<Account> listAccount = accountsRespository.findAll(conditions, pageable);
-        return listAccount;
+        return accountsRespository.findAll(conditions, pageable);
     }
 
     @Transactional
@@ -110,22 +118,23 @@ public class AccountServices {
         accountsRespository.delete(account);
     }
 
-    public Object getObjectUpdate(Long accountId) {
-        AccountForm accountForm = new AccountForm();
+    public AccountUpdateForm getObjectUpdate(Long accountId) {
+        AccountUpdateForm accountUpdateForm = new AccountUpdateForm();
         Account account = accountsRespository.findByAccountId(accountId);
-        accountForm.setAccountId(account.getAccountId());
-        accountForm.setFirstName(account.getFirstName());
-        accountForm.setMiddleName(account.getMiddleName());
-        accountForm.setLastName(account.getLastName());
-        accountForm.setUserName(account.getUserName());
-        accountForm.setBirthDay(account.getBirthDay() == null ? StringUtils.EMPTY
-                : DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
-        accountForm.setNumberPhone(account.getNumberPhone());
-        accountForm.setEmail(account.getEmail());
-        accountForm.setGender(account.getGender());
-        accountForm.setDescription(account.getDescription());
-        accountForm.setRoleId(account.getRole().getRoleId());
-        return accountForm;
+        accountUpdateForm.setAccountId(account.getAccountId());
+        accountUpdateForm.setFirstName(account.getFirstName());
+        accountUpdateForm.setMiddleName(account.getMiddleName());
+        accountUpdateForm.setLastName(account.getLastName());
+        accountUpdateForm.setUserName(account.getUserName());
+        accountUpdateForm.setBirthDay(account.getBirthDay() == null ? StringUtils.EMPTY : DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+        accountUpdateForm.setNumberPhone(account.getNumberPhone());
+        accountUpdateForm.setEmail(account.getEmail());
+        accountUpdateForm.setGender(account.getGender());
+        accountUpdateForm.setDescription(account.getDescription());
+        accountUpdateForm.setRoleId(account.getRole().getRoleId());
+        accountUpdateForm.setUrlAvatar(documentRespository
+                .findUrlDocumentByTypeAndAccountId(Constant.TYPE_DOCUMENT_AVATAR, account.getAccountId()));
+        return accountUpdateForm;
     }
 
     @Transactional
@@ -150,11 +159,9 @@ public class AccountServices {
         accountsRespository.save(account);
     }
 
-    public Object getAccountLoginInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AccountPrincipal loginedUser = (AccountPrincipal) auth.getPrincipal();
+    public AccountForm getAccountLoginInfo() {
         AccountForm accountForm = new AccountForm();
-        Account account = accountsRespository.findByEmail(loginedUser.getEmail());
+        Account account = getAccountLogin();
         accountForm.setAccountId(account.getAccountId());
         accountForm.setFirstName(account.getFirstName());
         accountForm.setMiddleName(account.getMiddleName());
@@ -177,5 +184,46 @@ public class AccountServices {
         Date firstDayOfMonthAgo = DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.plusMonthToDate(today, -1));
         Date lastDayOfMonth = DateTimeUtils.getLastDateOfMonth(today);
         return accountsRespository.findReportByCreateDate(firstDayOfMonthAgo, lastDayOfMonth);
+    }
+
+    @Transactional
+    public void uploadAvatar(MultipartFile file, Long accountId) {
+        Account account = accountsRespository.findByAccountId(accountId);
+        if (account == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Người dùng không tồn tại!");
+        }
+        if (file.isEmpty()) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "File không hợp lệ!");
+        }
+        Document document = documentRespository.findByTypeAndAccountId(Constant.TYPE_DOCUMENT_AVATAR,
+                account.getAccountId());
+        if (document != null) {
+            document.setFileName(Common.generateFileName(file, Constant.DOCUMENT_ORTHER_LABEL));
+            document.setOriginFileName(file.getOriginalFilename());
+            document.setExtension(MimeTypes.lookupExt(file.getContentType()));
+            document.setContentType(file.getContentType());
+            document.setSize(file.getSize());
+            document.setType(Constant.TYPE_DOCUMENT_AVATAR);
+            document.setDescription("Ảnh đại diện");
+            document.setCreateAt(Common.getSystemDate());
+            document.setCreateBy(Common.getUsernameLogin());
+            amazonS3ClientService.deleteFileFromS3Bucket(document.getPath());
+            document.setPath(amazonS3ClientService.uploadFileToS3Bucket(file, document.getFileName()));
+            documentRespository.save(document);
+        } else {
+            document = new Document();
+            document.setFileName(Common.generateFileName(file, Constant.DOCUMENT_ORTHER_LABEL));
+            document.setOriginFileName(file.getOriginalFilename());
+            document.setExtension(MimeTypes.lookupExt(file.getContentType()));
+            document.setContentType(file.getContentType());
+            document.setSize(file.getSize());
+            document.setType(Constant.TYPE_DOCUMENT_AVATAR);
+            document.setDescription("Ảnh mô tả chương");
+            document.setCreateAt(Common.getSystemDate());
+            document.setCreateBy(Common.getUsernameLogin());
+            document.setPath(amazonS3ClientService.uploadFileToS3Bucket(file, document.getFileName()));
+            document.setAccount(account);
+        }
+        documentRespository.save(document);
     }
 }
