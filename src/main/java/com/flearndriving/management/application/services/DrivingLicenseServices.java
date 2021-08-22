@@ -21,10 +21,12 @@ import com.flearndriving.management.application.dto.FormSearchDrivingLicense;
 import com.flearndriving.management.application.dto.NumberOfChapter;
 import com.flearndriving.management.application.entities.Chapter;
 import com.flearndriving.management.application.entities.DrivingLicense;
+import com.flearndriving.management.application.entities.ExamQuestions;
 import com.flearndriving.management.application.entities.ExamStructure;
 import com.flearndriving.management.application.exception.BusinessException;
 import com.flearndriving.management.application.respositories.ChapterRespository;
 import com.flearndriving.management.application.respositories.DrivingLicenseRespository;
+import com.flearndriving.management.application.respositories.ExamQuestionsRepository;
 import com.flearndriving.management.application.specification.DrivingLicenseSpecification;
 
 @Service
@@ -32,6 +34,8 @@ public class DrivingLicenseServices {
 
     @Autowired
     private DrivingLicenseRespository drivingLicenseRespository;
+    @Autowired
+    private ExamQuestionsRepository examQuestionsRepository;
 
     @Autowired
     private ChapterRespository chapterRespository;
@@ -80,9 +84,11 @@ public class DrivingLicenseServices {
     @Transactional
     public void deleteDrivingLicense(Long drivingLicenseId){
         DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(drivingLicenseId);
+        List<ExamQuestions> examQuestions = examQuestionsRepository.findByDrivingLicense(drivingLicense);
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
+        examQuestionsRepository.deleteAll(examQuestions);
         drivingLicenseRespository.delete(drivingLicense);
     }
 

@@ -55,7 +55,7 @@ public class AccountsManagementController {
             dataBinder.setValidator(accountUpdateValidator);
         }
     }
-
+    //list account
     @GetMapping(value = { "/account" })
     public String visitAccountPage(FormSearchAccount formSearchAccount, Model model) {
         model.addAttribute(Constant.PAGE_CONTENT_NAME, accountsServices.searchAccount(formSearchAccount));
