@@ -78,6 +78,7 @@ public class QuestionServices {
             for(MultipartFile multipartFile : questionForm.getImages()) {
                 Document document = new Document();
                 document.setFileName(Common.generateFileName(multipartFile, Constant.DOCUMENT_QUESTION_IMAGE));
+                document.setQuestion(question);
                 document.setOriginFileName(multipartFile.getOriginalFilename());
                 document.setExtension(MimeTypes.lookupExt(multipartFile.getContentType()));
                 document.setContentType(multipartFile.getContentType());
