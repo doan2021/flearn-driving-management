@@ -90,7 +90,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" th:if="${chapter.listImages != null && chapter.listImages.size != 0}">Đổi ảnh</label>
                                                 <label class="form-control-label" th:unless="${chapter.listImages != null && chapter.listImages.size != 0}">Thêm ảnh</label>
-                                                <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
+                                                <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/png, image/gif, image/jpeg" multiple>
                                             </div>
                                         </div>
                                         <div class="col-12 text-center">

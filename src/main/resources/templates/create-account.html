@@ -67,26 +67,25 @@
                                                 <p class="m-0" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}"></p>
                                             </div>
-                                            <div class="alert alert-success" th:if="${messageSuccess != null}" th:text="${messageSuccess}"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group mb-0" id="lastName-place">
                                                 <label class="form-control-label" for="input-first-name">Họ <span class="text-danger">*</span></label>
-                                                <input type="text" id="input-first-name" placeholder="Họ" class="form-control" th:field="*{lastName}" name="lastName">
+                                                <input type="text" id="input-first-name" placeholder="Họ" class="form-control" th:field="*{lastName}">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group mb-0">
                                                 <label class="form-control-label" for="input-middle-name">Tên đệm</label>
-                                                <input type="text" id="input-middle-name" placeholder="Tên đệm" class="form-control" th:field="*{middleName}" name="middleName">
+                                                <input type="text" id="input-middle-name" placeholder="Tên đệm" class="form-control" th:field="*{middleName}">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group mb-0" id="firstName-place">
                                                 <label class="form-control-label" for="input-last-name">Tên <span class="text-danger">*</span></label>
-                                                <input type="text" id="input-last-name" placeholder="Tên" class="form-control" th:field="*{firstName}" name="firstName">
+                                                <input type="text" id="input-last-name" placeholder="Tên" class="form-control" th:field="*{firstName}">
                                             </div>
                                         </div>
                                     </div>
@@ -98,14 +97,14 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                     </div>
-                                                    <input class="form-control datepicker" id="input-birthday" placeholder="Ngày sinh" type="text" th:field="*{birthDay}" name="birthDay">
+                                                    <input class="form-control datepicker" id="input-birthday" placeholder="Ngày sinh" type="text" th:field="*{birthDay}" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group mb-0 mt-4" id="numberPhone-place">
                                                 <label class="form-control-label" for="input-number-phone">Số điện thoại <span class="text-danger">*</span></label>
-                                                <input type="text" id="input-number-phone" placeholder="Số điện thoại" class="form-control" th:field="*{numberPhone}" name="numberPhone">
+                                                <input type="text" id="input-number-phone" placeholder="Số điện thoại" class="form-control" th:field="*{numberPhone}">
                                             </div>
                                         </div>
                                     </div>
@@ -113,13 +112,13 @@
                                         <div class="col-lg-7">
                                             <div class="form-group mb-0 mt-4" id="email-place">
                                                 <label class="form-control-label" for="input-email">Email <span class="text-danger">*</span></label>
-                                                <input type="email" id="input-email" class="form-control" placeholder="anh@example.com" th:field="*{email}" name="email">
+                                                <input type="email" id="input-email" class="form-control" placeholder="anh@example.com" th:field="*{email}">
                                             </div>
                                         </div>
                                         <div class="col-lg-5">
                                             <div class="form-group mb-0 mt-4" id="username-place">
                                                 <label class="form-control-label" for="input-user-name">Tên đăng nhập <span class="text-danger">*</span></label>
-                                                <input type="text" id="input-user-name" class="form-control" placeholder="Tên đăng nhập" th:field="*{userName}" autocomplete="off" name="userName">
+                                                <input type="text" id="input-user-name" class="form-control" placeholder="Tên đăng nhập" th:field="*{userName}" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -127,13 +126,13 @@
                                         <div class="col-lg-6">
                                             <div class="form-group mb-0 mt-4" id="password-place">
                                                 <label class="form-control-label" for="input-password">Mật khẩu <span class="text-danger">*</span></label>
-                                                <input type="password" placeholder="Mật khẩu" id="input-password" class="form-control" th:field="*{password}" autocomplete="off" name="password">
+                                                <input type="password" placeholder="Mật khẩu" id="input-password" class="form-control" th:field="*{password}" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group mb-0 mt-4" id="cPassword-place">
                                                 <label class="form-control-label" for="input-confirm-password">Xác nhận mật khẩu <span class="text-danger">*</span></label>
-                                                <input type="password" placeholder="Xác nhận mật khẩu" id="input-confirm-password" class="form-control" th:field="*{confirmPassword}" autocomplete="off" name="cPassword">
+                                                <input type="password" placeholder="Xác nhận mật khẩu" id="input-confirm-password" class="form-control" th:field="*{confirmPassword}" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +140,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group mb-0 mt-4" id="gender-place">
                                                 <label class="form-control-label" for="input-gender">Giới tính <span class="text-danger">*</span></label>
-                                                <select class="form-control" id="input-gender" th:field="*{gender}" name="gender">
+                                                <select class="form-control" id="input-gender" th:field="*{gender}">
                                                     <option value="">--------Chọn giới tính----------</option>
                                                     <option value="1">Nam</option>
                                                     <option value="0">Nữ</option>
@@ -152,7 +151,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group mb-0 mt-4" id="role-place">
                                                 <label class="form-control-label" for="role">Quyền <span class="text-danger">*</span></label>
-                                                <select class="form-control" id="role" th:field="*{roleId}" name="roles">
+                                                <select class="form-control" id="role" th:field="*{roleId}">
                                                     <option value="">--------Chọn quyền----------</option>
                                                     <option th:each="role : ${listRole}" th:value="${role.roleId}" th:text="${role.content}"></option>
                                                 </select>

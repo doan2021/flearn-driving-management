@@ -47,6 +47,7 @@ public class DrivingLicenseManagementController {
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
+        // Init validate
         Object target = dataBinder.getTarget();
         if (target == null) {
             return;

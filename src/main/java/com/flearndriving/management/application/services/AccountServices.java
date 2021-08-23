@@ -43,7 +43,7 @@ public class AccountServices {
 
     @Autowired
     private RoleRespository roleRespository;
-    
+
     @Autowired
     AmazonS3ClientService amazonS3ClientService;
 
@@ -70,12 +70,12 @@ public class AccountServices {
     }
 
     public Account getAccountLogin() {
-        return accountsRespository.findByUserName(Common.getUsernameLogin());
+        return accountsRespository.findByUserNameAdmin(Common.getUsernameLogin());
     }
 
     public AccountLogin getBasicInfoAccountLogin() {
         String userName = Common.getUsernameLogin();
-        AccountLogin accountLogin = accountsRespository.findBasicInfoByUserName(userName);
+        AccountLogin accountLogin = accountsRespository.findBasicInfoByUserNameAdmin(userName);
         if (accountLogin != null) {
 
             accountLogin.setUrlAvatar(documentRespository
@@ -85,10 +85,12 @@ public class AccountServices {
     }
 
     public Page<Account> searchAccount(FormSearchAccount formSearchAccount) {
+        // Init pageNum
         if (formSearchAccount.getPageNumber() == null) {
             formSearchAccount.setPageNumber(0);
         }
-        Specification<Account> conditions = Specification.where(null);
+        Specification<Account> conditions = Specification.where(AccountSpecification.isDelete(false)
+                .and(AccountSpecification.notEqualUserName(Common.getUsernameLogin())));
         if (formSearchAccount != null) {
             if (StringUtils.isNotBlank(formSearchAccount.getEmail())) {
                 conditions = conditions.and(AccountSpecification.hasEmail(formSearchAccount.getEmail()));
@@ -115,7 +117,10 @@ public class AccountServices {
         if (account == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Người dùng không tồn tại!");
         }
-        accountsRespository.delete(account);
+        account.setDelete(true);
+        account.setUpdateBy(Common.getUsernameLogin());
+        account.setUpdateAt(Common.getSystemDate());
+        accountsRespository.save(account);
     }
 
     public AccountUpdateForm getObjectUpdate(Long accountId) {
@@ -126,7 +131,8 @@ public class AccountServices {
         accountUpdateForm.setMiddleName(account.getMiddleName());
         accountUpdateForm.setLastName(account.getLastName());
         accountUpdateForm.setUserName(account.getUserName());
-        accountUpdateForm.setBirthDay(account.getBirthDay() == null ? StringUtils.EMPTY : DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
+        accountUpdateForm.setBirthDay(account.getBirthDay() == null ? StringUtils.EMPTY
+                : DateFormatUtils.format(account.getBirthDay(), Constant.FORMAT_DATE));
         accountUpdateForm.setNumberPhone(account.getNumberPhone());
         accountUpdateForm.setEmail(account.getEmail());
         accountUpdateForm.setGender(account.getGender());
@@ -176,7 +182,7 @@ public class AccountServices {
     }
 
     public Integer countAccount() {
-        return accountsRespository.countAccount();
+        return accountsRespository.countAccountUser();
     }
 
     public List<Account> getDataReportAccountMonth() {

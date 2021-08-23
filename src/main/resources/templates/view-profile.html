@@ -35,7 +35,7 @@
                                         </label>
                                     </div>
 	                                <form th:action="@{/management/upload-avatar}" method="POST" enctype="multipart/form-data" id="formUploadAvatar">
-	                                    <input type="file" name="data" class="d-none" id="avatar" onchange="changeAvatar()">
+	                                    <input type="file" name="data" class="d-none" id="avatar" onchange="changeAvatar()" accept="image/png, image/gif, image/jpeg">
 	                                    <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
 	                                </form>
                                 </div>

@@ -44,13 +44,13 @@ $("#create-account-form").validate({
 			minlength: 8,
 			maxlength: 36
 		},
-		cPassword: {
+		confirmPassword: {
 			equalTo: "#password"
 		},
 		gender: {
 			required: true
 		},
-		roles: {
+		roleId: {
 			required: true
 		}
 	},
@@ -94,7 +94,7 @@ $("#create-account-form").validate({
 		gender: {
 			required: "Vui lòng chọn giới tính!"
 		},
-		roles: {
+		roleId: {
 			required: "Vui lòng chọn quyền"
 		}
 	},
