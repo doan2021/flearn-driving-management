@@ -8,7 +8,7 @@
 			description: {
 				maxlength: 4000
 			},
-			strDateRegisExamEnd: {
+			dateRegisExamEnd: {
 				required: true,
 				maxlength: 10
 			}
@@ -21,7 +21,7 @@
 			description: {
 				maxlength: "Mô tả không được nhập quá 4000 ký tự, vui lòng kiểm tra lại"
 			},
-			strDateRegisExamEnd: {
+			dateRegisExamEnd: {
 				required: "Vui lòng chọn ngày hết hạn đăng ký!"
 			}
 		},
@@ -34,7 +34,7 @@
 		},
 		errorPlacement: function (error, element) {
 			switch (element.attr("name")) {
-			case 'strDateRegisExamEnd':
+			case 'dateRegisExamEnd':
 				error.insertAfter($("#dateRegisExamEndArea"));
 				break;
 			default:

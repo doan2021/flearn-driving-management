@@ -107,6 +107,17 @@ public class AccountsManagementController {
         return "create-account";
     }
 
+    @PostMapping(value = { "/update-account" })
+    public String updateAccount(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, Model model) {
+    	if (result.hasErrors()) {
+            return "update-account";
+        }
+        accountsServices.updateAccount(accountUpdateForm);
+        model.addAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
+        model.addAttribute("accountUpdateForm", accountUpdateForm);
+        return "update-account";
+    }
+
     @GetMapping("/update-account")
     public String showEditAccountForm(Long accountId, Model model) {
         model.addAttribute("accountUpdateForm", accountsServices.getObjectUpdate(accountId));
