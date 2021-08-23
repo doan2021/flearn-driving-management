@@ -41,7 +41,6 @@
                             </div>
                             <div class="card-body px-4">
                                 <form th:action="@{/management/create-account}" th:object="${accountForm}" method="POST" enctype="multipart/form-data" id="create-account-form">
-                                    <input type='file' onchange="readURL(this);" class="d-none" th:field="*{image}" id="fileImage"/>
                                     <div class="row">
                                         <div class="col-12" th:if="${success != null}">
                                             <div class="alert alert-success alert-dismissible fade show" role="alert">
