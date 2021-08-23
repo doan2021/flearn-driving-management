@@ -26,7 +26,7 @@ $( document ).ready(function() {
             $(element).removeClass('is-invalid');
         },
         submitHandler: function(form) {
-            if (!isInvalidNumberQuestionForChapter()) {
+            if (!isInvalidNumberQuestionForChapter() & isInvalidTotalNumberQuestion()) {
                 if (confirm("Xác nhận tạo mới đề thi!")) {
                     form.submit();
                 }
@@ -47,6 +47,7 @@ $( document ).ready(function() {
             $('#labelNumberQuestionInChapter'+chapterIndex).addClass('text-danger');
             $('#labelNumberQuestionInChapter'+chapterIndex).removeClass('text-success');
         }
+        checkTotalNumberQuestion();
     });
     
     $('.question-paralysis-check').change(function(){
@@ -61,8 +62,21 @@ $( document ).ready(function() {
             $('#labelNumberQuestionParalysis').addClass('text-danger');
             $('#labelNumberQuestionParalysis').removeClass('text-success');
         }
+        checkTotalNumberQuestion();
     });
 });
+function checkTotalNumberQuestion() {
+	var totalNumberQuestion = $('#numberQuestion').val();
+	var totalNumberQuestionCheck = $('.question-check').filter(':checked').length + $('.question-paralysis-check').filter(':checked').length;
+	$('#totalNumberQuestionCheck').text(totalNumberQuestionCheck);
+	if(totalNumberQuestion == totalNumberQuestionCheck) {
+        $('#totalNumberQuestion').addClass('text-success');
+        $('#totalNumberQuestion').removeClass('text-danger');
+	} else {
+        $('#totalNumberQuestion').addClass('text-danger');
+        $('#totalNumberQuestion').removeClass('text-success');
+	}
+}
 
 function isInvalidNumberQuestionForChapter() {
     var isError = false;
@@ -89,4 +103,10 @@ function isInvalidNumberQuestionForChapter() {
         isError = false;
     }
     return isError;
+}
+
+function isInvalidTotalNumberQuestion() {
+	var totalNumberQuestion = $('#numberQuestion').val();
+	var totalNumberQuestionCheck = $('.question-check').filter(':checked').length + $('.question-paralysis-check').filter(':checked').length;
+	return !(totalNumberQuestion == totalNumberQuestionCheck);
 }
