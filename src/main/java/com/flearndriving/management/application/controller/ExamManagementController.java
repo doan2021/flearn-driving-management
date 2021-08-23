@@ -99,10 +99,11 @@ public class ExamManagementController {
     }
 
     @PostMapping(value = { "/update-exam" })
-    public String saveExam(@Validated ExamUpdateForm examUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
+    public String saveExam(@Validated ExamUpdateForm examUpdateForm, BindingResult result, RedirectAttributes redirAttrs, Model model) {
     	if (result.hasErrors()) {
             return "update-exam";
         }
+    	model.addAttribute("examUpdateForm", examUpdateForm);
     	examService.updateExam(examUpdateForm);
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa kỳ thi thành công!");
         return "redirect:detail-exam?examId=" + examUpdateForm.getExamId();

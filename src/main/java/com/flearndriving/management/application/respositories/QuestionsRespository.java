@@ -7,19 +7,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.flearndriving.management.application.entities.Chapter;
 import com.flearndriving.management.application.entities.Question;
 
 @Repository
 public interface QuestionsRespository
         extends JpaRepository<Question, Long>, PagingAndSortingRepository<Question, Long> {
 
-    public boolean existsByNumber(Integer number);
+    @Query("SELECT count(q) > 0 FROM Question q WHERE q.isDelete = false AND q.number = :number")
+    boolean existsByNumber(Integer number);
 
-    public List<Question> findByChapter(Chapter chapter);
+    @Query("SELECT q FROM Question q WHERE q.isDelete = false AND q.chapter.chapterId = :chapterId")
+    List<Question> findQuestionByChapterId(Long chapterId);
 
-    public Question findByQuestionId(Long questionId);
+    @Query("SELECT q FROM Question q WHERE q.isDelete = false AND q.questionId = :questionId")
+    Question findByQuestionId(Long questionId);
 
-    @Query("SELECT count(q) FROM Question q")
+    @Query("SELECT count(q) FROM Question q WHERE q.isDelete = false")
     Integer countQuestion();
+
+    @Query("SELECT q FROM Question q WHERE q.isDelete = false AND q.chapter.isDelete = false AND isParalysis = true")
+    List<Question> findQuestionParalysis();
 }

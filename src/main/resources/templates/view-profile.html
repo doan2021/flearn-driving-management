@@ -29,21 +29,26 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-3 order-lg-2">
                                     <div class="card-profile-image">
-                                        <label for="fileImage">
-                                            <img src="../assets/img/theme/team-4.jpg" class="rounded-circle" id="image-preview">
+                                        <label for="avatar">
+                                            <img class="rounded-circle" th:src="${accountLogin.urlAvatar}" th:if="${accountLogin.urlAvatar != null}">
+                                            <img class="rounded-circle" th:src="@{../assets/img/default-avartar.jpg}" th:if="${accountLogin.urlAvatar == null}">
                                         </label>
                                     </div>
+	                                <form th:action="@{/management/upload-avatar}" method="POST" enctype="multipart/form-data" id="formUploadAvatar">
+	                                    <input type="file" name="data" class="d-none" id="avatar" onchange="changeAvatar()">
+	                                    <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
+	                                </form>
                                 </div>
                             </div>
-                            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                                <div class="d-flex justify-content-between">
+                            <div class="card-body pt-0 mt-4">
+                                <div class="row mt-5">
+                                    <div class="col-12 text-center">
+                                        <h3 th:text="${accountLogin.userName}"></h3>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body pt-0">
                                 <div class="row">
-                                    <div class="col">
-                                        <div class="card-profile-stats d-flex justify-content-center">
-                                        </div>
+                                    <div class="col-12 text-center">
+                                        <a href="#" class="btn btn-sm btn-primary">Đổi mật khẩu</a>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +61,7 @@
                                     <input type="hidden" th:field="*{accountId}"/>
                                     <div class="row">
                                         <div class="col-6">
-                                            <h6 class="heading-small text-muted mb-4">THÔNG TIN CƠ BẢN</h6>
+                                            <h6 class="heading-small text-muted mb-3">THÔNG TIN CƠ BẢN</h6>
                                         </div>
                                         <div class="col-lg-6 text-right">
                                             <div class="form-group">
@@ -76,12 +81,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-                                        </div>
-                                    </div>
                                     <div class="pl-lg-4">
+	                                    <div class="row">
+	                                        <div class="col-12" th:if="${success != null}">
+	                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+	                                                <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+	                                                <span class="alert-text" th:text="${success}"></span>
+	                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                                                    <span aria-hidden="true">&times;</span>
+	                                                </button>
+	                                            </div>
+	                                        </div>
+	                                    </div>
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group mb-0" id="lastName-place">
@@ -122,61 +133,31 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-6">
                                                 <div class="form-group mb-0 mt-4" id="email-place">
                                                     <label class="form-control-label" for="input-email">Email</label><span class="text-danger">*</span>
                                                     <input type="text" id="input-email" class="form-control" th:field="*{email}">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group mb-0 mt-4" id="gender-place">
-                                                    <label class="form-control-label" for="input-gender">Giới tính: </label><span class="text-danger">*</span>
-                                                    <span th:if="${accountUpdateForm.gender == 1}" class="form-control">Nam</span>
-                                                    <span th:if="${accountUpdateForm.gender == 0}" class="form-control">Nữ</span>
-                                                    <span th:if="${accountUpdateForm.gender == 2}" class="form-control">Khác</span>
-                                                </div>
-                                            </div>    
-                                        </div>
-                                    </div>
-                                    <!-- Address -->
-                                    <h6 class="heading-small text-muted mb-4">THÔNG TIN KHÁC</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-address">Địa chỉ</label>
-                                                    <input type="text" id="input-address" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city">Phường / Xã</label>
-                                                    <input type="text" id="input-address" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Quận / Huyện</label>
-                                                    <input type="text" id="input-address" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Tỉnh / Thành phố</label>
-                                                    <input type="text" id="input-address" class="form-control">
-                                                </div>
-                                            </div>
+	                                        <div class="col-lg-6">
+	                                            <div class="form-group mb-0 mt-4" id="gender-place">
+	                                                <label class="form-control-label" for="input-gender">Giới tính</label>
+	                                                <span class="text-danger">*</span>
+	                                                <select th:field="*{gender}" class="form-control" id="input-gender" name="gender">
+	                                                    <option value="">--------Chọn giới tính----------</option>
+	                                                    <option value="1">Nam</option>
+	                                                    <option value="0">Nữ</option>
+	                                                    <option value="2">Khác</option>
+	                                                </select>
+	                                            </div>
+	                                        </div>
                                         </div>
                                     </div>
                                     <!-- Description -->
-                                    <h6 class="heading-small text-muted mb-4">Miêu tả về tôi</h6>
+                                    <h6 class="heading-small text-muted mt-5 mb-3">Mô tả về tôi</h6>
                                     <div class="pl-lg-4">
                                         <div class="form-group">
-                                            <textarea rows="4" class="form-control" th:value="${accountUpdateForm.description}"></textarea>
+                                            <textarea rows="4" class="form-control" th:field="*{description}"></textarea>
                                         </div>
                                     </div>
                                     <div class="row">

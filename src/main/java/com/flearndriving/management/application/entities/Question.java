@@ -13,13 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "question", uniqueConstraints = { @UniqueConstraint(name = "QUESTIONS_UK", columnNames = "number") })
+@Table(name = "question")
 public class Question {
 
     @Id
@@ -35,6 +34,9 @@ public class Question {
 
     @Column(name = "is_paralysis", columnDefinition = "Boolean default false")
     private boolean isParalysis;
+
+    @Column(name = "is_delete", columnDefinition = "Boolean default false")
+    private boolean isDelete;
 
     @Column(name = "create_by")
     private String createBy;
@@ -165,4 +167,11 @@ public class Question {
         this.listExamQuestionsDetail = listExamQuestionsDetail;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
 }

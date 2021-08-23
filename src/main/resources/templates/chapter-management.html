@@ -115,7 +115,7 @@
                                                 <span th:text="${chapter.description}"></span>
                                             </td>
                                             <td class="text-center">
-                                                <span th:text="${chapter.listQuestion.size}"></span>
+                                                <span th:text="${chapter.listQuestion.?[!delete].size}"></span>
                                             </td>
                                             <td class="text-center">
                                                 <span th:text="${#dates.format(chapter.updateAt, 'dd/MM/yyyy HH:mm')}"></span>

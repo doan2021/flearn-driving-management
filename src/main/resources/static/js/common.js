@@ -24,3 +24,6 @@ $('#btnOpenSideBar').click(function() {
 	$('.sidebar').toggleClass("open");
 	$('.main-content').toggleClass("open-sidebar");
 });
+function changeAvatar() {
+	document.getElementById("formUploadAvatar").submit();
+}

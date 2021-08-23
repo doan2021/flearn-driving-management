@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flearndriving.management.application.common.Constant;
@@ -77,14 +78,13 @@ public class AccountsManagementController {
     }
 
     @PostMapping(value = { "/update-account-view" })
-    public String updateAccountView(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, Model model) {
+    public String updateAccountView(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             return "view-profile";
         }
         accountsServices.updateAccount(accountUpdateForm);
-        model.addAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
-        model.addAttribute("accountUpdateForm", accountUpdateForm);
-        return "view-profile";
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
+        return "redirect:view-profile";
     }
 
     @GetMapping(value = { "/create-account" })
@@ -121,8 +121,17 @@ public class AccountsManagementController {
     @GetMapping("/update-account")
     public String showEditAccountForm(Long accountId, Model model) {
         model.addAttribute("accountUpdateForm", accountsServices.getObjectUpdate(accountId));
-        model.addAttribute("listProvince", addressServices.getAllProvince());
         return "update-account";
+    }
+
+    @PostMapping(value = { "/update-account" })
+    public String updateAccount(@Validated AccountUpdateForm accountUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
+    	if (result.hasErrors()) {
+            return "update-account";
+        }
+        accountsServices.updateAccount(accountUpdateForm);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Cập nhật thông tin thành công!");
+        return "redirect:update-account?accountId=" + accountUpdateForm.getAccountId();
     }
 
     @PostMapping(value = { "/delete-account" })
@@ -132,4 +141,17 @@ public class AccountsManagementController {
         return "redirect:account";
     }
 
+    @PostMapping(value = { "/upload-avatar" })
+    public String uploadAvatar(MultipartFile data, Long accountId, RedirectAttributes redirAttrs) {
+        accountsServices.uploadAvatar(data, accountId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Sửa ảnh đại diện thành công!");
+        return "redirect:view-profile";
+    }
+    
+    @PostMapping(value = { "/upload-avatar-account" })
+    public String uploadAvatarAccount(MultipartFile data, Long accountId, RedirectAttributes redirAttrs) {
+        accountsServices.uploadAvatar(data, accountId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Sửa ảnh đại diện thành công!");
+        return "redirect:update-account?accountId=" + accountId;
+    }
 }

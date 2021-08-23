@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$("#update-exam-form").validate({
 		rules: {
 			name: {
@@ -48,3 +48,4 @@ $(document).ready(function() {
 		}
 	});
 });
+*/

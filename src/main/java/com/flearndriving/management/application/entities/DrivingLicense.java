@@ -47,6 +47,9 @@ public class DrivingLicense {
     @Column(name = "number_year_expires")
     private Integer numberYearExpires;
 
+    @Column(name = "is_delete", columnDefinition = "Boolean default false")
+    private boolean isDelete;
+
     @Column(name = "create_by")
     private String createBy;
 
@@ -173,6 +176,14 @@ public class DrivingLicense {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
 }

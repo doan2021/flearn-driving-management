@@ -38,6 +38,17 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
+                                    <div class="col-12" th:if="${success != null}">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                            <span class="alert-text" th:text="${success}"></span>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-12">
                                         <label for="name" class="form-control-label">Tên</label>
                                         <div class="alert alert-secondary border" th:text="${drivingLicense.name}"></div>
@@ -88,7 +99,7 @@
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-6">
-                                                                <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${examStructure.chapter.index}|"></h5>
+                                                                <!-- <h5 class="card-title text-uppercase text-muted mb-0" th:text="|Chương ${examStructure.chapter.index}|"></h5> -->
                                                             </div>
                                                             <div class="col-6 text-right">
                                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:data-target="|#modalDetailChapter${examStructure.chapter.chapterId}|">Chi tiết</button>
@@ -137,7 +148,7 @@
                                         </a>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <div class="table-responsive border rounded shadow">
+                                        <div class="table-responsive border rounded shadow" style="max-height:616px">
                                             <table class="table align-items-center table-flush">
                                                 <thead class="thead-light">
                                                     <tr>
@@ -151,7 +162,7 @@
                                                 <tbody class="list" th:if="${listExamQuestions.size != 0}">
                                                     <tr th:each="examQuestions : ${listExamQuestions}">
                                                         <td class="text-center">
-                                                            <a th:text="${examQuestions.name}" href="#" class="font-weight-bold"></a>
+                                                            <a th:text="${examQuestions.name}" th:href="@{${'/management/detail-exam-questions?examQuestionsId='} + ${examQuestions.examQuestionsId}}" class="font-weight-bold"></a>
                                                         </td>
                                                         <td class="text-center">
                                                             <span th:text="${examQuestions.description}"></span>
@@ -178,7 +189,6 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12 mt-3 text-center">
-                                    	<a th:href="@{${'/management/update-driving-license?drivingLicenseId='} + ${drivingLicense.drivingLicenseId}}" class="btn btn-primary"><i class="fas fa-edit"></i> Chỉnh sửa</a>
                                         <button type="button" class="btn btn-danger" onclick="deleteDrivingLicense()"><i class="fas fa-trash"></i> Xóa</button>
                                         <form th:action="@{/management/delete-driving-license}" method="POST" id="formDeleteDrivingLicense" class="d-none">
                                             <input type="hidden" name="drivingLicenseId" th:value="${drivingLicense.drivingLicenseId}">

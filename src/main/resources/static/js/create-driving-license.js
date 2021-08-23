@@ -14,7 +14,6 @@ $(document).ready(function(){
 });
 
 function deleteDrivingLicense() {
-	formDeleteDrivingLicense
 	if(confirm("Xác nhận xóa hạng bằng?")){
 		$('#formDeleteDrivingLicense').submit();
 	}

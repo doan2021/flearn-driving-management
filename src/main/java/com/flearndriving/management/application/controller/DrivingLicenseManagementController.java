@@ -99,8 +99,7 @@ public class DrivingLicenseManagementController {
     @GetMapping(value = { "/detail-driving-license" })
     public String visitDetailDrivingLicenseManagementPage(Long drivingLicenseId, Model model) {
         model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId));
-        model.addAttribute("listExamQuestions",
-                examQuestionsServices.findExamQuestionByDrivingLicenseId(drivingLicenseId));
+        model.addAttribute("listExamQuestions", examQuestionsServices.findExamQuestionByDrivingLicenseId(drivingLicenseId));
         return "detail-driving-license";
     }
 
@@ -111,7 +110,7 @@ public class DrivingLicenseManagementController {
         if (result.hasErrors()) {
             return "update-driving-license";
         }
-        drivingLicenseServices.updateDrivingLicense(drivingLicenseForm);
+//        drivingLicenseServices.updateDrivingLicense(drivingLicenseForm);
         model.addAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa hạng bằng lái thành công!");
         model.addAttribute("drivingLicenseForm",
                 drivingLicenseServices.getObjectUpdate(drivingLicenseForm.getDrivingLicenseId()));
@@ -138,6 +137,7 @@ public class DrivingLicenseManagementController {
         ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
         model.addAttribute("examQuestionsForm", examQuestionsForm);
         model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId));
+        model.addAttribute("listQuestionParalysis", examQuestionsServices.findQuestionParalysis());
         return "create-exam-questions";
     }
 
@@ -151,5 +151,19 @@ public class DrivingLicenseManagementController {
         model.addAttribute(Constant.STATUS_SUCCESS, "Tạo đề thi thành công!");
         model.addAttribute("examQuestionsForm", new ExamQuestionsForm());
         return "create-exam-questions";
+    }
+    
+    @GetMapping(value = { "/detail-exam-questions" })
+    public String visitDetailExamQuestionPage(Long examQuestionsId, Model model) {
+        model.addAttribute("examQuestions", examQuestionsServices.findByExamQuestionId(examQuestionsId));
+        model.addAttribute("listQuestions", examQuestionsServices.findQuestionInExamQuestions(examQuestionsId));
+        return "detail-exam-questions";
+    }
+    
+    @PostMapping(value = { "/delete-exam-question" })
+    public String deleteDrivingLicense(Long examQuestionsId, RedirectAttributes redirAttrs) {
+        Long drivingLicenseId = examQuestionsServices.deleteExamQuestions(examQuestionsId);
+        redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa đề thi công!");
+        return "redirect:detail-driving-license?drivingLicenseId=" + drivingLicenseId;
     }
 }
