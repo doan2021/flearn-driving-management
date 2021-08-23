@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Flearn driving Company</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" th:href="@{../assets/css/bootstrap/bootstrap.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{../css/account-report.css}" type="text/css">
+    </head>
+    <body>
+        <div class="container content-report">
+            <div class="row">
+                <div class="col-12">
+                    <img th:src="@{../assets/img/slogofinal.png}" width="150px">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <table class="w-100">
+                        <tbody>
+                            <tr>
+                                <th width="20%">Tên dự án:</th>
+                                <td width="30%" class="font-weight-bold">FLEARN DRIVING</td>
+                            </tr>
+                            <tr>
+                                <th>Năm:</th>
+                                <td>2021</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-5 offset-1">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <span class="font-weight-bold">Ngày xuất báo cáo:</span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <span th:text="${#dates.format(#dates.createNow(),'dd/MM/yyyy')}"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <span class="font-weight-bold">Người thực hiện:</span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <span th:text="|${owner.lastName == null ? '' : owner.lastName} ${owner.middleName == null ? '' : owner.middleName} ${owner.firstName == null ? '' : owner.firstName}|"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <h3>THỐNG KÊ LƯỢT THI THỬ</h3>
+                    <p class="font-weight-bold text-danger">Từ [[${#dates.format(dateStart, 'MM/yyyy')}]] đến [[${#dates.format(dateEnd, 'MM/yyyy')}]]</p>
+                    <table class="w-100 mt-3">
+                        <thead>
+                            <tr>
+                                <th width="5%">STT</th>
+                                <th>Họ và tên</th>
+                                <th>Hạng bằng</th>
+                                <th>Tên đề thi</th>
+                                <th>Thời gian thi</th>
+                                <th>Kết quả</th>
+                                <th>Ngày thi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="trialExam,stat : ${listTrialExam}">
+                                <td th:text="${stat.index + 1}">STT</td>
+                                <td th:text="|${trialExam.account.lastName == null ? '' : trialExam.account.lastName} ${trialExam.account.middleName == null ? '' : trialExam.account.middleName} ${trialExam.account.firstName == null ? '' : trialExam.account.firstName}|"></td>
+                                <td th:text="${trialExam.examQuestions.drivingLicense.name}"></td>
+                                <td th:text="${trialExam.examQuestions.name}"></td>
+                                <td th:unless="${trialExam.timeExam < 60}">
+                                    <span class="me-2">[[${trialExam.timeExam/60}]] Phút</span><span>[[${trialExam.timeExam%60}]] Giây</span>
+                                </td>
+                                <td th:if="${trialExam.timeExam < 60}">
+                                    <span>[[${trialExam.timeExam%60}]] Giây</span>
+                                </td>
+                                <td>
+                                    <span th:if="${trialExam.pass}" class="text-success font-weight-bold">Đạt</span>
+                                    <span th:unless="${trialExam.pass}" class="text-danger font-weight-bold">Không đạt</span>
+                                </td>
+                                <td th:text="${#dates.format(trialExam.createAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="5">Tổng số</th>
+                                <td colspan="2" class="font-weight-bold">[[${listTrialExam.size}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-print" onclick="window.print()">Xuất báo cáo</button>
+    </body>
+</html>
