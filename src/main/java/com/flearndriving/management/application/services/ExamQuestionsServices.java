@@ -140,4 +140,8 @@ public class ExamQuestionsServices {
     public List<Question> findQuestionInExamQuestions(Long examQuestionsId) {
         return examQuestionsRepository.findQuestionInExamQuestionId(examQuestionsId);
     }
+
+    public List<Question> findQuestionParalysis() {
+        return questionsRespository.findQuestionParalysis();
+    }
 }

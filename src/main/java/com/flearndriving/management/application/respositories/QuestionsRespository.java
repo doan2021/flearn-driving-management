@@ -24,4 +24,7 @@ public interface QuestionsRespository
 
     @Query("SELECT count(q) FROM Question q WHERE q.isDelete = false")
     Integer countQuestion();
+
+    @Query("SELECT q FROM Question q WHERE q.isDelete = false AND q.chapter.isDelete = false AND isParalysis = true")
+    List<Question> findQuestionParalysis();
 }

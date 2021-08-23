@@ -114,8 +114,8 @@
                                                             <th class="text-center">Câu liệt</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="list" th:if="${examStructure.chapter.listQuestion.size != 0}">
-                                                        <tr th:each="question : ${examStructure.chapter.listQuestion}" th:if="${!question.paralysis}">
+                                                    <tbody class="list" th:if="${examStructure.chapter.listQuestion.?[!isDelete].size != 0}">
+                                                        <tr th:each="question : ${examStructure.chapter.listQuestion.?[!isDelete]}" th:if="${!question.paralysis}">
                                                             <th class="text-center p-1">
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input question-check"
@@ -137,7 +137,7 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                    <tbody th:unless="${examStructure.chapter.listQuestion.size != 0}">
+                                                    <tbody th:unless="${examStructure.chapter.listQuestion.?[!isDelete].size != 0}">
                                                         <tr>
                                                             <td class="text-center" colspan="4">
                                                                 <span class="text-danger">Không có câu hỏi nào trong chương này!</span>
@@ -178,29 +178,27 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="list">
-                                                        <th:block th:each="examStructure : ${drivingLicense.listExamStructure}">
-                                                            <tr th:each="question : ${examStructure.chapter.listQuestion}" th:if="${question.paralysis}">
-                                                                <th class="text-center p-1">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input question-paralysis-check" th:field="*{listIdQuestionParalysis}" name="listIdQuestionParalysis" th:id="|question${question.questionId}|" th:value="${question.questionId}">
-                                                                        <label class="custom-control-label" th:for="|question${question.questionId}|"></label>
-                                                                    </div>
-                                                                </th>
-                                                                <th class="text-center p-1">
-                                                                    <span class="name mb-0 text-sm" th:text="|Câu ${question.number}|"></span>
-                                                                </th>
-                                                                <td class="text-center p-1">
-                                                                    <span th:text="${question.content}"></span>
-                                                                </td>
-                                                                <td class="text-center p-1">
-                                                                    <span class="font-weight-bold text-primary" th:text="|Chương ${examStructure.chapter.index}|"></span>
-                                                                </td>
-                                                                <td class="text-center p-1">
-                                                                    <span class="text-success h2" th:if="${question.paralysis}"><i class="fas fa-check-circle"></i></span>
-                                                                    <span class="text-danger h2" th:unless="${question.paralysis}"><i class="fas fa-times-circle"></i></span>
-                                                                </td>
-                                                            </tr>
-                                                        </th:block>
+                                                        <tr th:each="question : ${listQuestionParalysis}">
+                                                            <th class="text-center p-1">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input question-paralysis-check" th:field="*{listIdQuestionParalysis}" name="listIdQuestionParalysis" th:id="|question${question.questionId}|" th:value="${question.questionId}">
+                                                                    <label class="custom-control-label" th:for="|question${question.questionId}|"></label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="text-center p-1">
+                                                                <span class="name mb-0 text-sm" th:text="|Câu ${question.number}|"></span>
+                                                            </th>
+                                                            <td class="text-center p-1">
+                                                                <span th:text="${question.content}"></span>
+                                                            </td>
+                                                            <td class="text-center p-1">
+                                                                <span class="font-weight-bold text-primary" th:text="|Chương ${question.chapter.index}|"></span>
+                                                            </td>
+                                                            <td class="text-center p-1">
+                                                                <span class="text-success h2" th:if="${question.paralysis}"><i class="fas fa-check-circle"></i></span>
+                                                                <span class="text-danger h2" th:unless="${question.paralysis}"><i class="fas fa-times-circle"></i></span>
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>

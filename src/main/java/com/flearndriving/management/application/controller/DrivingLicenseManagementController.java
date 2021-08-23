@@ -138,6 +138,7 @@ public class DrivingLicenseManagementController {
         ExamQuestionsForm examQuestionsForm = new ExamQuestionsForm();
         model.addAttribute("examQuestionsForm", examQuestionsForm);
         model.addAttribute("drivingLicense", drivingLicenseServices.findById(drivingLicenseId));
+        model.addAttribute("listQuestionParalysis", examQuestionsServices.findQuestionParalysis());
         return "create-exam-questions";
     }
 
