@@ -22,7 +22,7 @@
                   </div>
                   <!-- Card stats -->
                   <div class="row">
-                    <div class="col-xl-4 col-md-6">
+                    <div class="col-xl-3 col-md-6">
                       <div class="card card-stats">
                         <!-- Card body -->
                         <div class="card-body">
@@ -40,7 +40,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xl-4 col-md-6">
+                    <div class="col-xl-3 col-md-6">
                       <div class="card card-stats">
                         <!-- Card body -->
                         <div class="card-body">
@@ -58,18 +58,36 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xl-4 col-md-6">
+                    <div class="col-xl-3 col-md-6">
                       <div class="card card-stats">
                         <!-- Card body -->
                         <div class="card-body">
                           <div class="row">
                             <div class="col">
-                              <h5 class="card-title text-uppercase text-muted mb-0">Lượt thi thử</h5>
+                              <h5 class="card-title text-uppercase text-muted mb-0">Tổng số câu hỏi</h5>
                               <span class="h2 font-weight-bold mb-0" th:text="${numberOfQuestion}"></span>
                             </div>
                             <div class="col-auto">
+                              <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
+                                <i class="fas fa-question-circle"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">Tổng lượt thi thử</h5>
+                              <span class="h2 font-weight-bold mb-0" th:text="${numberOfTrialExamResult}"></span>
+                            </div>
+                            <div class="col-auto">
                               <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                <i class="fas fa-question"></i>
+                                <i class="fas fa-diagnoses"></i>
                               </div>
                             </div>
                           </div>
@@ -88,7 +106,7 @@
                     <div class="card-header border-0">
                       <div class="row align-items-center">
                         <div class="col">
-                          <h3 class="mb-0">Người dùng mới 2 tháng gần nhất</h3>
+                          <h3 class="mb-0">Người dùng mới 2 tháng gần đây</h3>
                         </div>
                         <div class="col text-right">
                           <a th:href="@{/management/export-report-account}" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-file-export"></i> Xem báo cáo</a>
@@ -110,73 +128,80 @@
                         </thead>
                         <tbody>
                             <tr th:each="acc,stat : ${listAccount}">
-                                <td th:text="${stat.index + 1}">STT</td>
-                                <td th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
-                                <td th:text="${acc.email}"></td>
-                                <td th:text="${acc.numberPhone}"></td>
+                                <td class="text-center" th:text="${stat.index + 1}">STT</td>
+                                <td class="text-center" th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
+                                <td class="text-center" th:text="${acc.email}"></td>
+                                <td class="text-center" th:text="${acc.numberPhone}"></td>
                                 <td class="text-center" th:if="${acc.gender == 1}">Nam</td>
                                 <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
                                 <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
                                 <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
-                                <td th:text="${acc.email}"></td>
-                                <td th:text="${#dates.format(acc.createAt, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td class="text-center" th:text="${acc.email}"></td>
+                                <td class="text-center" th:text="${#dates.format(acc.createAt, 'dd/MM/yyyy HH:mm')}"></td>
                             </tr>
                          </tbody>
                       </table>
                     </div>
                     <div class="card-footer py-4">
                         <span>Tổng số: </span>
-                        <span class="font-weight-bold">[[${listAccount.size}]]</span>
+                        <span class="font-weight-bold text-primary">[[${listAccount.size}]]</span>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-xl-5">
-                  <div class="card">
-                    <div class="card-header border-0">
-                      <div class="row align-items-center">
-                        <div class="col">
-                          <h4 class="mb-0">Người dùng mới trong 1 tháng gần nhất</h4>
+                <div class="col-12 mt-4">
+                    <div class="card">
+                        <div class="card-header border-0">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h3 class="mb-0">Lượt thi thử trong 2 tháng gần đây</h3>
+                            </div>
+                            <div class="col text-right">
+                              <a th:href="@{/management/export-report-trial-exam}" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-file-export"></i> Xem báo cáo</a>
+                            </div>
+                          </div>
                         </div>
-                        <div class="col text-right">
-                        	<a>a</a>
+                        <div class="table-responsive">
+                          <!-- Projects table -->
+                          <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                              <tr>
+                                <th width="5%">STT</th>
+                                <th>Họ và tên</th>
+                                <th>Hạng bằng</th>
+                                <th>Tên đề thi</th>
+                                <th>Thời gian thi</th>
+                                <th>Kết quả</th>
+                                <th>Ngày thi</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="trialExam,stat : ${listTrialExam}">
+                                    <td class="text-center" th:text="${stat.index + 1}">STT</td>
+                                    <td class="text-center" th:text="|${trialExam.account.lastName == null ? '' : trialExam.account.lastName} ${trialExam.account.middleName == null ? '' : trialExam.account.middleName} ${trialExam.account.firstName == null ? '' : trialExam.account.firstName}|"></td>
+                                    <td class="text-center" th:text="${trialExam.examQuestions.drivingLicense.name}"></td>
+                                    <td class="text-center" th:text="${trialExam.examQuestions.name}"></td>
+                                    <td class="text-center" th:unless="${trialExam.timeExam < 60}">
+                                        <span class="me-2">[[${trialExam.timeExam/60}]] Phút</span><span>[[${trialExam.timeExam%60}]] Giây</span>
+                                    </td>
+                                    <td class="text-center" th:if="${trialExam.timeExam < 60}">
+                                        <span>[[${trialExam.timeExam%60}]] Giây</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span th:if="${trialExam.pass}" class="text-success font-weight-bold">Đạt</span>
+                                        <span th:unless="${trialExam.pass}" class="text-danger font-weight-bold">Không đạt</span>
+                                    </td>
+                                    <td class="text-center" th:text="${#dates.format(trialExam.createAt, 'dd/MM/yyyy HH:mm')}"></td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="card-footer py-4">
+                            <span>Tổng số: </span>
+                            <span class="font-weight-bold text-primary">[[${listTrialExam.size}]]</span>
                         </div>
                       </div>
                     </div>
-                    <div class="table-responsive">
-                      <!-- Projects table -->
-                      <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                          <tr>
-                            <th width="5%">STT</th>
-                            <th>Họ và tên</th>
-                            <th>Email</th>
-                            <th>Số điện thoại</th>
-                            <th>Giới tính</th>
-                            <th>Ngày sinh</th>
-                            <th>Ngày đăng ký</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        	<tr th:each="acc,stat : ${listAccount}">
-                                <td th:text="${stat.index + 1}">STT</td>
-                                <td th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
-                                <td th:text="${acc.email}"></td>
-                                <td th:text="${acc.numberPhone}"></td>
-                                <td class="text-center" th:if="${acc.gender == 1}">Nam</td>
-                                <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
-                                <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
-                                <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
-                                <td th:text="${acc.email}"></td>
-                                <td th:text="${#dates.format(acc.createAt, 'dd/MM/yyyy HH:mm')}"></td>
-                            </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="card-footer py-4">
-                    </div>
-                  </div>
                 </div>
-              </div>
             </div>
         </th:block>
     </body>

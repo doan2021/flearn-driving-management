@@ -22,7 +22,7 @@ public interface QuestionsRespository
     @Query("SELECT q FROM Question q WHERE q.isDelete = false AND q.questionId = :questionId")
     Question findByQuestionId(Long questionId);
 
-    @Query("SELECT count(q) FROM Question q WHERE q.isDelete = false")
+    @Query("SELECT count(q) FROM Question q WHERE q.isDelete = false AND q.chapter.isDelete = false")
     Integer countQuestion();
 
     @Query("SELECT q FROM Question q WHERE q.isDelete = false AND q.chapter.isDelete = false AND isParalysis = true")

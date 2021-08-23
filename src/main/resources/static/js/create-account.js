@@ -1,14 +1,3 @@
-function readURL(input) {
-	if (input.files && input.files[0]) {
-		var reader = new FileReader();
-
-		reader.onload = function(e) {
-			$('#image-preview').attr('src', e.target.result);
-		};
-
-		reader.readAsDataURL(input.files[0]);
-	}
-}
 $("#create-account-form").validate({
 	rules: {
 		firstName: {
@@ -45,7 +34,7 @@ $("#create-account-form").validate({
 			maxlength: 36
 		},
 		confirmPassword: {
-			equalTo: "#password"
+			equalTo: '#input-password'
 		},
 		gender: {
 			required: true
@@ -107,32 +96,8 @@ $("#create-account-form").validate({
 	},
 	errorPlacement: function (error, element) {
         switch (element.attr("name")) {
-		case 'lastName':
-            error.insertAfter($("#lastName-place"));
-            break;
-        case 'firstName':
-            error.insertAfter($("#firstName-place"));
-            break;
         case 'birthDay':
             error.insertAfter($("#birthday-place"));
-            break;
-		case 'numberPhone':
-			error.insertAfter($("#numberPhone-place"));
-			break;
-		case 'email':
-            error.insertAfter($("#email-place"));
-            break;
-        case 'userName':
-            error.insertAfter($("#username-place"));
-            break;
-        case 'password':
-            error.insertAfter($("#password-place"));
-            break;
-        case 'confirmPassword':
-            error.insertAfter($("#cPassword-place"));
-            break;
-        case 'roles':
-            error.insertAfter($("#role-place"));
             break;
         default:
             error.insertAfter(element);
