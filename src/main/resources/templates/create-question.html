@@ -106,7 +106,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label class="form-control-label">Hình ảnh</label>
-                                            <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
+                                            <input id="images-question" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/png, image/gif, image/jpeg" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="col-3 d-flex align-items-center justify-content-center">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" th:id="|answer${stat.index}|" th:field="*{listAnswers[__${stat.index}__].true}">
+                                            <input type="checkbox" class="custom-control-input question-check" th:id="|answer${stat.index}|" th:field="*{listAnswers[__${stat.index}__].true}">
                                             <label class="custom-control-label" th:for="|answer${stat.index}|">Đáp án đúng</label>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                     </div>
                                     <div class="col-3 d-flex align-items-center justify-content-center">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="answer0" th:field="*{listAnswers[0].true}">
+                                            <input type="checkbox" class="custom-control-input question-check" id="answer0" th:field="*{listAnswers[0].true}">
                                             <label class="custom-control-label" for="answer0">Đáp án đúng</label>
                                         </div>
                                     </div>
@@ -166,7 +166,7 @@
                                     </div>
                                     <div class="col-3 d-flex align-items-center justify-content-center">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="answer1" th:field="*{listAnswers[1].true}">
+                                            <input type="checkbox" class="custom-control-input question-check" id="answer1" th:field="*{listAnswers[1].true}">
                                             <label class="custom-control-label" for="answer1">Đáp án đúng</label>
                                         </div>
                                     </div>

@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Account account = accountsRespository.findByUserName(userName);
+        Account account = accountsRespository.findByUserNameAdmin(userName);
         if (account == null) {
             throw new UsernameNotFoundException("Tên đăng nhập hoặc mật khẩu không đúng!");
         }

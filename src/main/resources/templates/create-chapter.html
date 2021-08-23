@@ -41,7 +41,7 @@
                             </div>
                             <div class="card-body px-4">
                                 <form th:action="@{/management/create-chapter}" th:object="${chapterForm}" method="POST" id="create-chapter-form" enctype="multipart/form-data">
-                                    <input type="file" onchange="readURL(this);" class="d-none" id="fileImage" name="image">
+                                    <input type="file" onchange="readURL(this);" class="d-none" id="fileImage" name="image" accept="image/png, image/gif, image/jpeg">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
@@ -84,7 +84,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label class="form-control-label">Hình ảnh</label>
-                                            <input id="imageChapter" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/*" multiple>
+                                            <input id="imageChapter" type="file" class="file image-input" data-preview-file-type="Kéo và thả ảnh vào đây" th:field="*{images}" accept="image/png, image/gif, image/jpeg" multiple>
                                         </div>
                                     </div>
                                     <div class="row mt-3">

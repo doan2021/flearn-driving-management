@@ -119,7 +119,7 @@ public class DrivingLicenseServices {
         if (formSearchDrivingLicense.getPageNumber() == null) {
             formSearchDrivingLicense.setPageNumber(0);
         }
-        Specification<DrivingLicense> conditions = Specification.where(null);
+        Specification<DrivingLicense> conditions = Specification.where(DrivingLicenseSpecification.isDelete(false));
         if (formSearchDrivingLicense != null) {
             if (StringUtils.isNotBlank(formSearchDrivingLicense.getName())) {
                 conditions = conditions.and(DrivingLicenseSpecification.hasName(formSearchDrivingLicense.getName()));

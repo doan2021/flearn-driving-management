@@ -13,7 +13,7 @@ $(document).ready(function() {
                                 '</div>'+
                                 '<div class="col-3 d-flex align-items-center justify-content-center">'+
                                     '<div class="custom-control custom-checkbox">'+
-                                        '<input type="checkbox" class="custom-control-input" id="answer' + numAnswers + '" name="listAnswers[' + numAnswers + '].true">'+
+                                        '<input type="checkbox" class="custom-control-input question-check" id="answer' + numAnswers + '" name="listAnswers[' + numAnswers + '].true">'+
                                         '<label class="custom-control-label" for="answer' + numAnswers + '">Đáp án đúng</label>'+
                                     '</div>'+
                                 '</div>'+
@@ -157,6 +157,9 @@ $(document).ready(function() {
             }
         }
     });
+});
+$(document).on('change', '.question-check', function() {
+	$('.question-check').not(this).prop('checked', false);
 });
 // Delete answer
 $(document).on('click', '#deleteAnswer',function() {

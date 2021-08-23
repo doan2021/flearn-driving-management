@@ -10,7 +10,7 @@
         <div class="container content-report">
             <div class="row">
                 <div class="col-12">
-                    <h1 style="text-decoration: underline;">FLEARN DRIVING</h1>
+                    <img th:src="@{../assets/img/slogofinal.png}" width="150px">
                 </div>
             </div>
             <div class="row mt-4">
@@ -50,7 +50,7 @@
             <div class="row mt-5">
                 <div class="col-12 text-center">
                     <h3>THỐNG KÊ NGƯỜI DÙNG MỚI</h3>
-                    <p class="font-weight-bold text-danger">Từ 7/2021 đến 8/2021</p>
+                    <p class="font-weight-bold text-danger">Từ [[${#dates.format(dateStart, 'MM/yyyy')}]] đến [[${#dates.format(dateEnd, 'MM/yyyy')}]]</p>
                     <table class="w-100 mt-3">
                         <thead>
                             <tr>
@@ -73,7 +73,7 @@
                                 <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
                                 <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
                                 <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
-                                <td th:text="${acc.email}"></td>
+                                <td th:text="${#dates.format(acc.birthDay, 'dd/MM/yyyy')}"></td>
                                 <td th:text="${#dates.format(acc.createAt, 'dd/MM/yyyy HH:mm')}"></td>
                             </tr>
                             <tr>

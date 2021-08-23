@@ -22,4 +22,8 @@ public class TrialExamResultService {
 		Date lastDayOfMonth = DateTimeUtils.getLastDateOfMonth(DateTimeUtils.plusMonthToDate(today, -1));
 		return trialExamResultRepository.findReportByCreateDate(firstDayOfMonthAgo, lastDayOfMonth);
 	}
+	
+	public Long countTrialExamResult() {
+	    return trialExamResultRepository.count();
+	}
 }

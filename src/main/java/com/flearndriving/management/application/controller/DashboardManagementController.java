@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.services.AccountServices;
 import com.flearndriving.management.application.services.ChapterServices;
-import com.flearndriving.management.application.services.DrivingLicenseInfoServices;
 import com.flearndriving.management.application.services.QuestionServices;
 import com.flearndriving.management.application.services.TrialExamResultService;
 import com.flearndriving.management.application.utils.DateTimeUtils;
@@ -26,9 +25,6 @@ public class DashboardManagementController {
 
     @Autowired
     QuestionServices questionServices;
-
-    @Autowired
-    DrivingLicenseInfoServices drivingLicenseInfoServices;
     
     @Autowired
     TrialExamResultService trialExamResultService;
@@ -38,7 +34,7 @@ public class DashboardManagementController {
         model.addAttribute("numberOfChapter", chapterServices.countChapter());
         model.addAttribute("numberOfAccount", accountServices.countAccount());
         model.addAttribute("numberOfQuestion", questionServices.countQuestion());
-        model.addAttribute("numberOfDrivingLicenseInfo", drivingLicenseInfoServices.countDrivingLicenseInfo());
+        model.addAttribute("numberOfTrialExamResult", trialExamResultService.countTrialExamResult());
         model.addAttribute("listTrialExam", trialExamResultService.getDataReportTrialExamMonth());
         model.addAttribute("listAccount", accountServices.getDataReportAccountMonth());
         return "dashboard";
@@ -48,6 +44,8 @@ public class DashboardManagementController {
     public String visitReportAccount(Model model) {
         model.addAttribute("listAccount", accountServices.getDataReportAccountMonth());
         model.addAttribute("owner", accountServices.getAccountLoginInfo());
+        model.addAttribute("dateStart", DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.plusMonthToDate(Common.getSystemDate(), -2)));
+        model.addAttribute("dateEnd", DateTimeUtils.getLastDateOfMonth(DateTimeUtils.plusMonthToDate(Common.getSystemDate(), -1)));
         return "account-report";
     }
     

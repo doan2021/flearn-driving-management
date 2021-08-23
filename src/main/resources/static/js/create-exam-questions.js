@@ -26,7 +26,7 @@ $( document ).ready(function() {
             $(element).removeClass('is-invalid');
         },
         submitHandler: function(form) {
-            if (!isInvalidNumberQuestionForChapter() & isInvalidTotalNumberQuestion()) {
+            if (!isInvalidNumberQuestionForChapter() && !isInvalidTotalNumberQuestion()) {
                 if (confirm("Xác nhận tạo mới đề thi!")) {
                     form.submit();
                 }
@@ -89,8 +89,8 @@ function isInvalidNumberQuestionForChapter() {
             isError = true;
         } else {
             $('#errorNumberQuestionInChapter' + i).text('');
-            isError = false;
         }
+        return isError;
     }
     
     var numberQuestionParalysisCheck = $('.question-paralysis-check').filter(':checked').length;
