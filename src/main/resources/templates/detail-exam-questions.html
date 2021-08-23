@@ -56,6 +56,12 @@
                                             <div class="alert alert-secondary border" th:text="${examQuestions.description}"></div>
                                         </div>
                                     </div>
+                                    <div class="col-12 text-center">
+                                        <button type="button" class="btn btn-danger" onclick="deleteExamQuestions()"><i class="fas fa-trash"></i> Xóa</button>
+                                        <form th:action="@{/management/delete-exam-question}" method="POST" id="formDeleteExamQuestions" class="d-none">
+                                            <input type="hidden" name="examQuestionsId" th:value="${examQuestions.examQuestionsId}">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +116,7 @@
             </div>
         </th:block>
         <th:block layout:fragment="script">
-            <script th:src="@{../js/create-exam-questions.js}"></script>
+            <script th:src="@{../js/detail-exam-questions.js}"></script>
         </th:block>
     </body>
 </html>

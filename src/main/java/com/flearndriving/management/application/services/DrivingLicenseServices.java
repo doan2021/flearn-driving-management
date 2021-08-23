@@ -83,7 +83,10 @@ public class DrivingLicenseServices {
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
-        drivingLicenseRespository.delete(drivingLicense);
+        drivingLicense.setDelete(true);
+        drivingLicense.setUpdateAt(Common.getSystemDate());
+        drivingLicense.setUpdateBy(Common.getUsernameLogin());
+        drivingLicenseRespository.save(drivingLicense);
     }
 
     public DrivingLicenseForm getObjectUpdate(Long drivingLicenseId) {
@@ -110,9 +113,6 @@ public class DrivingLicenseServices {
         drivingLicenseForm.setListNumberOfChapter(listNumberOfChapter);
         return drivingLicenseForm;
 
-    }
-
-    public void updateDrivingLicense(DrivingLicenseForm drivingLicenseForm) {
     }
 
     public Page<DrivingLicense> searchDrivingLicense(FormSearchDrivingLicense formSearchDrivingLicense) {

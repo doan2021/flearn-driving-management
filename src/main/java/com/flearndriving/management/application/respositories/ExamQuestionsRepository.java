@@ -15,13 +15,16 @@ import com.flearndriving.management.application.entities.Question;
 @Repository
 public interface ExamQuestionsRepository extends JpaRepository<ExamQuestions, Long>,
         PagingAndSortingRepository<ExamQuestions, Long>, JpaSpecificationExecutor<ExamQuestions> {
-    public ExamQuestions findByExamQuestionsId(Long examQuestionId);
+    
+    @Query("SELECT eq FROM ExamQuestions eq WHERE eq.examQuestionsId = :examQuestionsId AND eq.isDelete = false")
+    public ExamQuestions findByExamQuestionsId(Long examQuestionsId);
 
+    @Query("SELECT eq FROM ExamQuestions eq WHERE eq.drivingLicense = :drivingLicense AND eq.isDelete = false")
     public List<ExamQuestions> findByDrivingLicense(DrivingLicense drivingLicense);
     
     
     @Query(value="SELECT eqd.question"
             + " FROM ExamQuestionsDetail eqd"
             + " WHERE eqd.examQuestions.examQuestionsId = :examQuestionsId")
-    public List<Question> findQuestionInExamQuestionId(Long examQuestionsId);
+    public List<Question> findQuestionInExamQuestionsId(Long examQuestionsId);
 }

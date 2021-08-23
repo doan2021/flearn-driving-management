@@ -138,10 +138,23 @@ public class ExamQuestionsServices {
     }
     
     public List<Question> findQuestionInExamQuestions(Long examQuestionsId) {
-        return examQuestionsRepository.findQuestionInExamQuestionId(examQuestionsId);
+        return examQuestionsRepository.findQuestionInExamQuestionsId(examQuestionsId);
     }
 
     public List<Question> findQuestionParalysis() {
         return questionsRespository.findQuestionParalysis();
+    }
+    
+    @Transactional
+    public Long deleteExamQuestions(Long examQuestionsId){
+        ExamQuestions examQuestions = examQuestionsRepository.findByExamQuestionsId(examQuestionsId);
+        if (examQuestions == null) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Đề thi không tồn tại!");
+        }
+        examQuestions.setDelete(true);
+        examQuestions.setUpdateAt(Common.getSystemDate());
+        examQuestions.setUpdateBy(Common.getUsernameLogin());
+        examQuestionsRepository.save(examQuestions);
+        return examQuestions.getDrivingLicense().getDrivingLicenseId();
     }
 }
