@@ -82,9 +82,9 @@
                                     </div>
                                     <div class="col-4 text-right">
                                         <label class="form-control-label" for="input-first-name">Đã chọn</label>
-                                        <span class="mb-0 h3">0</span>
+                                        <span class="mb-0 h3" id="totalNumberQuestionCheck">0</span>
                                         <span class="mb-0 h3">/</span>
-                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestion}"></span>
+                                        <span class="mb-0 h3 text-danger" th:text="${drivingLicense.numberQuestion}" id="totalNumberQuestion"></span>
                                     </div>
                                     <div class="col-12 col-lg-6 col-xl-4 mt-3" th:each="examStructure,stat : ${drivingLicense.listExamStructure}">
                                         <div class="card border">
