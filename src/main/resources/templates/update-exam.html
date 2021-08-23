@@ -33,7 +33,7 @@
 	                                            <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
 	                                                <p class="m-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 	                                                <p class="m-0" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-	                                                <!--<p class="m-0" th:if="${#fields.hasErrors('dateRegisExamEnd')}" th:errors="*{dateRegisExamEnd}"></p>-->
+	                                                <p class="m-0" th:if="${#fields.hasErrors('dateRegisExamEnd')}" th:errors="*{dateRegisExamEnd}"></p>
 	                                            </div>
 	                                        </div>
 	                                        <div class="col-12" th:if="${success != null}">
@@ -75,19 +75,19 @@
                                                                 <i class="ni ni-calendar-grid-58"></i>
                                                             </span>
                                                         </div>
-                                                        <input class="form-control datepicker" placeholder="Hạn đăng ký" type="text" autocomplete="off" th:field="*{strDateRegisExamEnd}" id="dateRegisExamEnd" maxlength="10">
+                                                        <input class="form-control datepicker" name="dateRegisExamEnd" placeholder="Hạn đăng ký" type="text" autocomplete="off" th:value="${#dates.format(examUpdateForm.dateRegisExamEnd, 'dd/MM/yyyy')}" id="dateRegisExamEnd" maxlength="10">
                                                     </div>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label class="form-control-label">Ngày thi chính thức</label>
-                                                    <span class="alert-secondary border form-control" th:text="${#dates.format(examUpdateForm.dateExam, 'dd/MM/yyyy')}"></span>
+                                                    <input class="alert-secondary border form-control" name="dateExam" th:value="${#dates.format(examUpdateForm.dateExam, 'dd/MM/yyyy')}" readonly></input>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <div class="form-group">
                                                         <label class="form-control-label">Trạng thái</label>
                                                         <div class="alert alert-success rounded-pill w-25 text-center" th:if="${examUpdateForm.status == 1 && examUpdateForm.dateRegisExamEnd.after(#dates.createNow())}"><strong>ĐANG MỞ</strong></div>
                                                         <div class="alert alert-danger rounded-pill w-25 text-center" th:if="${examUpdateForm.status == 2}"><strong>ĐÃ HỦY</strong></div>
-                                                        <div class="alert alert-warning rounded-pill w-25 text-center" th:if="${examUpdateForm.dateRegisExamEnd.before(#dates.createNow())}"><strong>HẾT HẠN</strong></div>
+                                                        <div class="alert alert-warning rounded-pill w-25 text-center" th:if="${examUpdateForm.dateRegisExamEnd != null && examUpdateForm.dateRegisExamEnd.before(#dates.createNow()) }"><strong>HẾT HẠN</strong></div>
                                                         <div class="alert alert-default rounded-pill w-25 text-center" th:if="${examUpdateForm.status == null}"><strong>KHÔNG XÁC ĐỊNH</strong></div>
                                                     </div>
                                                 </div>

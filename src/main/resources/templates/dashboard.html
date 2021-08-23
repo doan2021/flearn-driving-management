@@ -135,10 +135,10 @@
                     <div class="card-header border-0">
                       <div class="row align-items-center">
                         <div class="col">
-                          <h3 class="mb-0">Kỳ thi đang mở</h3>
+                          <h4 class="mb-0">Người dùng mới trong 1 tháng gần nhất</h4>
                         </div>
                         <div class="col text-right">
-                          <a href="#!" class="btn btn-sm btn-primary"> Xem báo cáo</a>
+                        	<a>a</a>
                         </div>
                       </div>
                     </div>
@@ -147,11 +147,29 @@
                       <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                           <tr>
-                            <th scope="col">Referral</th>
-                            <th scope="col">Visitors</th>
-                            <th scope="col"></th>
+                            <th width="5%">STT</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Ngày đăng ký</th>
                           </tr>
                         </thead>
+                        <tbody>
+                        	<tr th:each="acc,stat : ${listAccount}">
+                                <td th:text="${stat.index + 1}">STT</td>
+                                <td th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
+                                <td th:text="${acc.email}"></td>
+                                <td th:text="${acc.numberPhone}"></td>
+                                <td class="text-center" th:if="${acc.gender == 1}">Nam</td>
+                                <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
+                                <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
+                                <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
+                                <td th:text="${acc.email}"></td>
+                                <td th:text="${#dates.format(acc.createAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            </tr>
+                        </tbody>
                       </table>
                     </div>
                     <div class="card-footer py-4">
