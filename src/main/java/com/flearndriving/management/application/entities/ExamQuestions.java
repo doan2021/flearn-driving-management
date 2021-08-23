@@ -30,13 +30,16 @@ public class ExamQuestions {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-    
+
     @Column(name = "status")
     private Integer status;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "examQuestions", cascade = CascadeType.ALL)
     private List<ExamQuestionsDetail> listExamQuestionsDetail;
+
+    @Column(name = "is_delete", columnDefinition = "Boolean default false")
+    private boolean isDelete;
 
     @Column(name = "create_by")
     private String createBy;
@@ -132,6 +135,14 @@ public class ExamQuestions {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
 }
