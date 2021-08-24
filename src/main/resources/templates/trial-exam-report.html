@@ -61,6 +61,7 @@
                                 <th>Thời gian thi</th>
                                 <th>Kết quả</th>
                                 <th>Ngày thi</th>
+                                <th>Kết luận</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,6 +81,7 @@
                                     <span th:unless="${trialExam.pass}" class="text-danger font-weight-bold">Không đạt</span>
                                 </td>
                                 <td th:text="${#dates.format(trialExam.createAt, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td class="text-center" th:text="${trialExam.description}"></td>
                             </tr>
                             <tr>
                                 <th colspan="5">Tổng số</th>
