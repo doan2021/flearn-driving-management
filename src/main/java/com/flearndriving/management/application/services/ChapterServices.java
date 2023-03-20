@@ -1,10 +1,19 @@
 package com.flearndriving.management.application.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.flearndriving.management.application.common.Common;
+import com.flearndriving.management.application.common.Constant;
+import com.flearndriving.management.application.common.MimeTypes;
+import com.flearndriving.management.application.dto.ChapterForm;
+import com.flearndriving.management.application.dto.FormSearchChapter;
+import com.flearndriving.management.application.entities.Chapter;
+import com.flearndriving.management.application.entities.Chapter_;
+import com.flearndriving.management.application.entities.Document;
+import com.flearndriving.management.application.exception.BusinessException;
+import com.flearndriving.management.application.respositories.ChapterRepository;
+import com.flearndriving.management.application.respositories.DocumentRepository;
+import com.flearndriving.management.application.respositories.QuestionsRepository;
+import com.flearndriving.management.application.specification.ChapterSpecification;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +25,25 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.common.MimeTypes;
-import com.flearndriving.management.application.dto.ChapterForm;
-import com.flearndriving.management.application.dto.FormSearchChapter;
-import com.flearndriving.management.application.entities.Chapter;
-import com.flearndriving.management.application.entities.Chapter_;
-import com.flearndriving.management.application.entities.Document;
-import com.flearndriving.management.application.exception.BusinessException;
-import com.flearndriving.management.application.respositories.ChapterRespository;
-import com.flearndriving.management.application.respositories.DocumentRespository;
-import com.flearndriving.management.application.respositories.QuestionsRespository;
-import com.flearndriving.management.application.specification.ChapterSpecification;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ChapterServices {
 
     @Autowired
-    ChapterRespository chapterResponsitory;
+    ChapterRepository chapterResponsitory;
 
     @Autowired
-    QuestionsRespository questionsRespository;
+    QuestionsRepository questionsRepository;
 
     @Autowired
-    AmazonS3ClientService amazonS3ClientService;
+    DocumentRepository documentRepository;
 
     @Autowired
-    DocumentRespository documentRespository;
+    private final CommonServices commonServices;
 
     public Chapter getChapterDetail(Long chapterId) {
         Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
@@ -55,7 +55,7 @@ public class ChapterServices {
 
     public List<Chapter> findAllChapter() {
         return chapterResponsitory.findAll(
-                Sort.by(Sort.Direction.ASC, Chapter_.INDEX).and(Sort.by(Sort.Direction.ASC, Chapter_.UPDATE_AT)));
+                Sort.by(Sort.Direction.ASC, Chapter_.NAME).and(Sort.by(Sort.Direction.ASC, Chapter_.UPDATE_AT)));
     }
 
     @Transactional
@@ -64,14 +64,14 @@ public class ChapterServices {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
         Chapter chapter = new Chapter();
-        chapter.setIndex(chapterForm.getIndex());
         chapter.setName(chapterForm.getName());
+        chapter.setContent(chapterForm.getContent());
         chapter.setDescription(chapterForm.getDescription());
-        chapter.setCreateBy(Common.getUsernameLogin());
+        chapter.setCreateBy(commonServices.getUsernameLogin());
         chapter.setCreateAt(Common.getSystemDate());
-        chapter.setUpdateBy(Common.getUsernameLogin());
+        chapter.setUpdateBy(commonServices.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
-        
+
         // Handle document
         List<Document> listDocuments = new ArrayList<>();
         if (chapterForm.getImages() != null && !chapterForm.getImages()[0].isEmpty()) {
@@ -86,8 +86,9 @@ public class ChapterServices {
                 document.setType(Constant.TYPE_DOCUMENT_ORTHER);
                 document.setDescription("Ảnh mô tả chương");
                 document.setCreateAt(Common.getSystemDate());
-                document.setCreateBy(Common.getUsernameLogin());
-                document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
+                document.setCreateBy(commonServices.getUsernameLogin());
+                // TODO Upload Image
+                //document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
             }
             chapter.setListImages(listDocuments);
@@ -98,17 +99,18 @@ public class ChapterServices {
     @Transactional
     public void updateChapter(ChapterForm chapterForm) {
         Chapter chapter = chapterResponsitory.findByChapterId(chapterForm.getChapterId());
-        chapter.setIndex(chapterForm.getIndex());
+        chapter.setName(chapterForm.getName());
         chapter.setName(chapterForm.getName());
         chapter.setDescription(chapterForm.getDescription());
-        chapter.setUpdateBy(Common.getUsernameLogin());
+        chapter.setUpdateBy(commonServices.getUsernameLogin());
         chapter.setUpdateAt(Common.getSystemDate());
         // Handle document
         if (chapterForm.getImages() != null && !chapterForm.getImages()[0].isEmpty()) {
             for (Document doc : chapter.getListImages()) {
-                amazonS3ClientService.deleteFileFromS3Bucket(doc.getFileName());
+                // TODO Upload Image
+                //amazonS3ClientService.deleteFileFromS3Bucket(doc.getFileName());
             }
-            documentRespository.deleteAll(chapter.getListImages());
+            documentRepository.deleteAll(chapter.getListImages());
             List<Document> listDocuments = new ArrayList<>();
             // Delete list old image
             for (MultipartFile multipartFile : chapterForm.getImages()) {
@@ -121,8 +123,9 @@ public class ChapterServices {
                 document.setType(Constant.TYPE_DOCUMENT_ORTHER);
                 document.setDescription("Ảnh mô tả chương");
                 document.setCreateAt(Common.getSystemDate());
-                document.setCreateBy(Common.getUsernameLogin());
-                document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
+                document.setCreateBy(commonServices.getUsernameLogin());
+                // TODO Upload Image
+                //document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
             }
             chapter.setListImages(listDocuments);
@@ -159,12 +162,12 @@ public class ChapterServices {
     public Object getObjectUpdate(Long chapterId) {
         ChapterForm chapterForm = new ChapterForm();
         Chapter chapter = chapterResponsitory.findByChapterId(chapterId);
-        chapterForm.setChapterId(chapter.getChapterId());
-        chapterForm.setIndex(chapter.getIndex());
+        chapterForm.setChapterId(chapter.getId());
+        chapterForm.setName(chapter.getName());
         chapterForm.setName(chapter.getName());
         chapterForm.setDescription(chapter.getDescription());
         chapterForm.setUpdateAt(DateFormatUtils.format(chapter.getUpdateAt(), Constant.FORMAT_DATE_TIME));
-        chapterForm.setUpdateBy(Common.getUsernameLogin());
+        chapterForm.setUpdateBy(commonServices.getUsernameLogin());
         return chapterForm;
     }
 
@@ -178,9 +181,9 @@ public class ChapterServices {
         if (chapter == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Chương không tồn tại!");
         }
-        chapter.setDelete(true);
+        chapter.setIsDelete(true);
         chapter.setUpdateAt(Common.getSystemDate());
-        chapter.setUpdateBy(Common.getUsernameLogin());
+        chapter.setUpdateBy(commonServices.getUsernameLogin());
         chapterResponsitory.save(chapter);
     }
 }

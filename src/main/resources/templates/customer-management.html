@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout-management}">
+    <head>
+        <meta charset="utf-8">
+        <title>Quản lý người dùng</title>
+    </head>
+    <body>
+        <th:block layout:fragment="content">
+            <div class="header bg-primary pb-6">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row align-items-center py-4">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                        <li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Quản lý người dùng</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col-12">
+                                <div class="card card-stats">
+                                    <!-- Card body -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Tìm kiếm</h5>
+                                                <form class="row mt-3" th:action="@{/management/search-customer}" th:object="${formSearchcustomer}" method="POST" id="formSearch">
+                                                    <input type="hidden" th:field="*{pageNumber}" id="pageNumber">
+                                                    <div class="col-12" th:if="${success != null}">
+                                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                            <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                                                            <span class="alert-text" th:text="${success}"></span>
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class=" col-3">
+                                                        <input type="text" class="form-control" placeholder="Tài khoản"th:field="*{userName}">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="text" class="form-control" placeholder="Họ và tên" th:field="*{fullName}">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="text" class="form-control" placeholder="Email"
+                                                            th:field="*{email}">
+                                                    </div>
+                                                    <div class="col-3">
+                                                    
+                                                        <select class="form-control" id="exampleFormControlSelect1" th:field="*{gender}">
+                                                            <option value="">----Giới tính----</option>
+                                                            <option value="1">Nam</option>
+                                                            <option value="0">Nữ</option>
+                                                            <option value="2">Khác</option>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+                                                        <button class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
+                                                        <a th:href="@{/management/customer}" class="btn btn-secondary"><i class="fas fa-eraser"></i> Làm mới</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt--6">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h3 class="m-0">Quản lý người dùng</h3>
+                                    </div>
+                                    <div class="col-2">
+                                       <a th:href="@{/management/create-customer}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Tạo người dùng</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Tài khoản</th>
+                                            <th>Họ và tên</th>
+                                            <th>Email</th>
+                                            <th>Giới tính</th>
+                                            <th>Số điện thoại</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="acc : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
+                                        <tr>
+                                            <td class="text-center" th:text="${acc.userName}"></td>
+                                            <td class="text-center" th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
+                                            <td class="text-center" th:text="${acc.email}"></td>
+                                            <td class="text-center" th:if="${acc.gender == 1}">Nam</td>
+                                            <td class="text-center" th:if="${acc.gender == 0}">Nữ</td>
+                                            <td class="text-center" th:if="${acc.gender == 2}">Khác</td>
+                                            <td class="text-center" th:if="${acc.gender == null || acc.gender == ''}">Chưa cập nhật</td>
+                                            <td class="text-center" th:text="${acc.numberPhone}"></td>
+                                            <td class="text-center">
+                                                <a th:href="@{${'/management/update-customer?customerId='} + ${acc.customerId}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <thbody th:if="${pageContent.totalElements == 0}">
+                                        <tr>
+                                            <td colspan="6"><span class="text-danger">Không có dữ liệu!</span></td>
+                                        </tr>
+                                    </thbody>
+                                </table>
+                            </div>
+                            <div class="card-footer py-4">
+                                <div th:insert="fragment-common/pagination :: pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </body>
+</html>

@@ -10,10 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.flearndriving.management.application.utils.DateTimeUtils;
 
 public class Common {
-    
-    private Common() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static float percentQuestion(int correctNumber, int incorrectNumber) {
         return (correctNumber * 100.0f) / (correctNumber + incorrectNumber);
@@ -59,10 +55,6 @@ public class Common {
         cal.setTime(date);
         cal.add(Calendar.DATE, days); // minus number would decrement the days
         return cal.getTime();
-    }
-
-    public static String getUsernameLogin() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public static Date getSystemDate() {

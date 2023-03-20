@@ -17,7 +17,7 @@
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                     <li class="breadcrumb-item"><a th:href="@{/management/dashboard}"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{/management/account}">Quản lý người dùng</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{/management/customer}">Quản lý người dùng</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Sửa thông tin người dùng</li>
                                 </ol>
                             </nav>
@@ -35,20 +35,20 @@
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
                                     <label for="avatar">
-                                        <img class="rounded-circle" th:src="${accountUpdateForm.urlAvatar}" th:if="${accountUpdateForm.urlAvatar != null}">
-                                        <img class="rounded-circle" th:src="@{../assets/img/default-avartar.jpg}" th:if="${accountUpdateForm.urlAvatar == null}">
+                                        <img class="rounded-circle" th:src="${customerUpdateForm.urlAvatar}" th:if="${customerUpdateForm.urlAvatar != null}">
+                                        <img class="rounded-circle" th:src="@{../assets/img/default-avartar.jpg}" th:if="${customerUpdateForm.urlAvatar == null}">
                                     </label>
                                 </div>
-                                <form th:action="@{/management/upload-avatar-account}" method="POST" enctype="multipart/form-data" id="formUploadAvatar">
+                                <form th:action="@{/management/upload-avatar-customer}" method="POST" enctype="multipart/form-data" id="formUploadAvatar">
                                     <input type="file" name="data" class="d-none" id="avatar" onchange="changeAvatar()" accept="image/png, image/gif, image/jpeg">
-                                    <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
+                                    <input type="hidden" name="customerId" th:value="${customerUpdateForm.customerId}">
                                 </form>
                             </div>
                         </div>
                         <div class="card-body pt-0 mt-4">
                             <div class="row mt-5">
                                 <div class="col-12 text-center">
-                                    <h3 th:text="${accountUpdateForm.userName}"></h3>
+                                    <h3 th:text="${customerUpdateForm.userName}"></h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -61,8 +61,8 @@
                 </div>
                 <div class="col-xl-8 order-xl-1">
                     <div class="card">
-                        <form id="update-account-form" th:action="@{/management/update-account}" th:object="${accountUpdateForm}" method="POST">
-                            <input type="hidden" th:field="*{accountId}"/>
+                        <form id="update-customer-form" th:action="@{/management/update-customer}" th:object="${customerUpdateForm}" method="POST">
+                            <input type="hidden" th:field="*{customerId}"/>
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-8">
@@ -70,21 +70,21 @@
                                     </div>
                                     <div class="col-4 text-right">
                                         
-                                        <button type="button" class="btn btn-sm btn-danger" onclick="deleteAccount()"><i class="fas fa-trash-alt"></i> Xóa</button>
-                                        <a th:href="@{../management/account}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="deletecustomer()"><i class="fas fa-trash-alt"></i> Xóa</button>
+                                        <a th:href="@{../management/customer}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
+                                <input type="hidden" name="customerId" th:value="${customerUpdateForm.customerId}">
                                 <div class="row">
                                     <div class="col-6">
                                         <h6 class="heading-small text-muted mb-3">THÔNG TIN CƠ BẢN</h6>
                                     </div>
                                     <div class="col-lg-6 text-right">
                                         <div class="form-group">
-                                            <span class="badge badge-pill badge-success badge-lg" th:if="${accountUpdateForm.roleId == 1}">Quản trị viên</span>
-                                            <span class="badge badge-pill badge-warning badge-lg" th:if="${accountUpdateForm.roleId == 2}">Người dùng</span>
+                                            <span class="badge badge-pill badge-success badge-lg" th:if="${customerUpdateForm.roleId == 1}">Quản trị viên</span>
+                                            <span class="badge badge-pill badge-warning badge-lg" th:if="${customerUpdateForm.roleId == 2}">Người dùng</span>
                                         </div>
                                     </div>
                                 </div>
@@ -196,12 +196,12 @@
                 </div>
             </div>
         </div>
-        <form th:action="@{/management/delete-account}" method="POST" id="delete-account-form">
-            <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
+        <form th:action="@{/management/delete-customer}" method="POST" id="delete-customer-form">
+            <input type="hidden" name="customerId" th:value="${customerUpdateForm.customerId}">
         </form>
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{../js/update-account.js}"></script>
+        <script th:src="@{../js/update-customer.js}"></script>
     </th:block>
 </body>
 </html>

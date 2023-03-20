@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,25 +23,29 @@ import com.flearndriving.management.application.entities.ExamQuestions;
 import com.flearndriving.management.application.entities.ExamQuestionsDetail;
 import com.flearndriving.management.application.entities.Question;
 import com.flearndriving.management.application.exception.BusinessException;
-import com.flearndriving.management.application.respositories.DrivingLicenseRespository;
+import com.flearndriving.management.application.respositories.DrivingLicenseRepository;
 import com.flearndriving.management.application.respositories.ExamQuestionsRepository;
-import com.flearndriving.management.application.respositories.QuestionsRespository;
+import com.flearndriving.management.application.respositories.QuestionsRepository;
 import com.flearndriving.management.application.specification.ExamQuestionsSpecification;
 
 @Service
+@RequiredArgsConstructor
 public class ExamQuestionsServices {
 
     @Autowired
     ExamQuestionsRepository examQuestionsRepository;
     
     @Autowired
-    DrivingLicenseRespository drivingLicenseRespository;
+    DrivingLicenseRepository drivingLicenseRepository;
     
     @Autowired
-    QuestionsRespository questionsRespository;
+    QuestionsRepository questionsRepository;
+
+    @Autowired
+    private final CommonServices commonServices;
     
     public List<ExamQuestions> findExamQuestionByDrivingLicenseId(Long drivingLicenseId) {
-        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(drivingLicenseId);
+        DrivingLicense drivingLicense = drivingLicenseRepository.findByDrivingLicenseId(drivingLicenseId);
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
@@ -89,7 +94,7 @@ public class ExamQuestionsServices {
         if (examQuestionsForm == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không hợp lệ!");
         }
-        DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(examQuestionsForm.getDrivingLicenseId());
+        DrivingLicense drivingLicense = drivingLicenseRepository.findByDrivingLicenseId(examQuestionsForm.getDrivingLicenseId());
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
@@ -97,39 +102,39 @@ public class ExamQuestionsServices {
         examQuestions.setName(examQuestionsForm.getName());
         examQuestions.setDescription(examQuestionsForm.getDescription());
         examQuestions.setDrivingLicense(drivingLicense);
-        examQuestions.setCreateBy(Common.getUsernameLogin());
+        examQuestions.setCreateBy(commonServices.getUsernameLogin());
         examQuestions.setCreateAt(Common.getSystemDate());
-        examQuestions.setUpdateBy(Common.getUsernameLogin());
+        examQuestions.setUpdateBy(commonServices.getUsernameLogin());
         examQuestions.setUpdateAt(Common.getSystemDate());
         List<ExamQuestionsDetail> listExamQuestionDetail = new ArrayList<>();
         for (Long questionId : examQuestionsForm.getListIdQuestion()) {
             ExamQuestionsDetail examQuestionsDetail = new ExamQuestionsDetail();
-            Question question = questionsRespository.findByQuestionId(questionId);
+            Question question = questionsRepository.findByQuestionId(questionId);
             if (question == null) {
                 throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi số " + questionId + " không tồn tại!");
             } else {
                 examQuestionsDetail.setQuestion(question);
             }
             examQuestionsDetail.setExamQuestions(examQuestions);
-            examQuestionsDetail.setCreateBy(Common.getUsernameLogin());
+            examQuestionsDetail.setCreateBy(commonServices.getUsernameLogin());
             examQuestionsDetail.setCreateAt(Common.getSystemDate());
-            examQuestionsDetail.setUpdateBy(Common.getUsernameLogin());
+            examQuestionsDetail.setUpdateBy(commonServices.getUsernameLogin());
             examQuestionsDetail.setUpdateAt(Common.getSystemDate());
             listExamQuestionDetail.add(examQuestionsDetail);
         }
         
         for (Long questionId : examQuestionsForm.getListIdQuestionParalysis()) {
             ExamQuestionsDetail examQuestionsDetail = new ExamQuestionsDetail();
-            Question question = questionsRespository.findByQuestionId(questionId);
+            Question question = questionsRepository.findByQuestionId(questionId);
             if (question == null) {
                 throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi số " + questionId + " không tồn tại!");
             } else {
                 examQuestionsDetail.setQuestion(question);
             }
             examQuestionsDetail.setExamQuestions(examQuestions);
-            examQuestionsDetail.setCreateBy(Common.getUsernameLogin());
+            examQuestionsDetail.setCreateBy(commonServices.getUsernameLogin());
             examQuestionsDetail.setCreateAt(Common.getSystemDate());
-            examQuestionsDetail.setUpdateBy(Common.getUsernameLogin());
+            examQuestionsDetail.setUpdateBy(commonServices.getUsernameLogin());
             examQuestionsDetail.setUpdateAt(Common.getSystemDate());
             listExamQuestionDetail.add(examQuestionsDetail);
         }
@@ -142,7 +147,7 @@ public class ExamQuestionsServices {
     }
 
     public List<Question> findQuestionParalysis() {
-        return questionsRespository.findQuestionParalysis();
+        return questionsRepository.findQuestionParalysis();
     }
     
     @Transactional
@@ -153,8 +158,8 @@ public class ExamQuestionsServices {
         }
         examQuestions.setDelete(true);
         examQuestions.setUpdateAt(Common.getSystemDate());
-        examQuestions.setUpdateBy(Common.getUsernameLogin());
+        examQuestions.setUpdateBy(commonServices.getUsernameLogin());
         examQuestionsRepository.save(examQuestions);
-        return examQuestions.getDrivingLicense().getDrivingLicenseId();
+        return examQuestions.getDrivingLicense().getId();
     }
 }

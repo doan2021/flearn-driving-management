@@ -16,17 +16,13 @@ import com.flearndriving.management.application.dto.ExamQuestionsForm;
 import com.flearndriving.management.application.entities.DrivingLicense;
 import com.flearndriving.management.application.entities.ExamStructure;
 import com.flearndriving.management.application.entities.Question;
-import com.flearndriving.management.application.respositories.DrivingLicenseRespository;
+import com.flearndriving.management.application.respositories.DrivingLicenseRepository;
 
-/**
- * @author tamdu
- *
- */
 @Component
 public class CreateExamQuestionValidator implements Validator {
 
     @Autowired
-    DrivingLicenseRespository drivingLicenseRespository;
+    DrivingLicenseRepository drivingLicenseRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -56,7 +52,7 @@ public class CreateExamQuestionValidator implements Validator {
         }
 
         if (!errors.hasFieldErrors("drivingLicenseId")) {
-            DrivingLicense drivingLicense = drivingLicenseRespository.findByDrivingLicenseId(examQuestionsForm.getDrivingLicenseId());
+            DrivingLicense drivingLicense = drivingLicenseRepository.findByDrivingLicenseId(examQuestionsForm.getDrivingLicenseId());
             if (drivingLicense == null) {
                 errors.rejectValue("drivingLicenseId", "Notfound.examQuestionsForm.drivingLicenseId");
                 return;
@@ -90,7 +86,7 @@ public class CreateExamQuestionValidator implements Validator {
             List<Question> listQuestion = examStructure.getChapter().getListQuestion();
             int count = 0;
             for (Question question : listQuestion) {
-                if (listIdQuestion.contains(question.getQuestionId())) {
+                if (listIdQuestion.contains(question.getId())) {
                     count++;
                 }
             }

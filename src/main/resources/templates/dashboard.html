@@ -29,7 +29,7 @@
                           <div class="row">
                             <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0">Người dùng mới trong tháng</h5>
-                              <span class="h2 font-weight-bold mb-0" th:text="${numberOfAccount}"></span>
+                              <span class="h2 font-weight-bold mb-0" th:text="${numberOfcustomer}"></span>
                             </div>
                             <div class="col-auto">
                               <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -109,7 +109,7 @@
                           <h3 class="mb-0">Người dùng mới 2 tháng gần đây</h3>
                         </div>
                         <div class="col text-right">
-                          <a th:href="@{/management/export-report-account}" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-file-export"></i> Xem báo cáo</a>
+                          <a th:href="@{/management/export-report-customer}" class="btn btn-sm btn-primary" target="_blank"><i class="fas fa-file-export"></i> Xem báo cáo</a>
                         </div>
                       </div>
                     </div>
@@ -127,7 +127,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="acc,stat : ${listAccount}">
+                            <tr th:each="acc,stat : ${listcustomer}">
                                 <td class="text-center" th:text="${stat.index + 1}">STT</td>
                                 <td class="text-center" th:text="|${acc.lastName == null ? '' : acc.lastName} ${acc.middleName == null ? '' : acc.middleName} ${acc.firstName == null ? '' : acc.firstName}|"></td>
                                 <td class="text-center" th:text="${acc.email}"></td>
@@ -144,7 +144,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <span>Tổng số: </span>
-                        <span class="font-weight-bold text-primary">[[${listAccount.size}]]</span>
+                        <span class="font-weight-bold text-primary">[[${listcustomer.size}]]</span>
                     </div>
                   </div>
                 </div>
@@ -177,7 +177,7 @@
                             <tbody>
                                 <tr th:each="trialExam,stat : ${listTrialExam}">
                                     <td class="text-center" th:text="${stat.index + 1}">STT</td>
-                                    <td class="text-center" th:text="|${trialExam.account.lastName == null ? '' : trialExam.account.lastName} ${trialExam.account.middleName == null ? '' : trialExam.account.middleName} ${trialExam.account.firstName == null ? '' : trialExam.account.firstName}|"></td>
+                                    <td class="text-center" th:text="|${trialExam.customer.lastName == null ? '' : trialExam.customer.lastName} ${trialExam.customer.middleName == null ? '' : trialExam.customer.middleName} ${trialExam.customer.firstName == null ? '' : trialExam.customer.firstName}|"></td>
                                     <td class="text-center" th:text="${trialExam.examQuestions.drivingLicense.name}"></td>
                                     <td class="text-center" th:text="${trialExam.examQuestions.name}"></td>
                                     <td class="text-center" th:unless="${trialExam.timeExam < 60}">

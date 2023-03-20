@@ -16,10 +16,6 @@ import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.dto.DrivingLicenseForm;
 import com.flearndriving.management.application.dto.NumberOfChapter;
 
-/**
- * @author tamdu
- *
- */
 @Component
 public class CreateDrivingLicenseValidator implements Validator {
 
@@ -82,9 +78,9 @@ public class CreateDrivingLicenseValidator implements Validator {
 
         // Validate numberQuestionCorect
         if (!errors.hasFieldErrors("numberQuestionCorect") && !errors.hasFieldErrors("numberQuestion")) {
-            if (!StringUtils.isNumeric(drivingLicenseForm.getNumberQuestionCorect())) {
+            if (!StringUtils.isNumeric(drivingLicenseForm.getNumberQuestionCorrect())) {
                 errors.rejectValue("numberQuestionCorect", "WrongNumber.drivingLicenseForm.numberQuestionCorect");
-            } else if (NumberUtils.toInt(drivingLicenseForm.getNumberQuestionCorect()) > NumberUtils
+            } else if (NumberUtils.toInt(drivingLicenseForm.getNumberQuestionCorrect()) > NumberUtils
                     .toInt(drivingLicenseForm.getNumberQuestion())) {
                 errors.rejectValue("numberQuestionCorect", "Maxlength.drivingLicenseForm.numberQuestionCorect");
             }

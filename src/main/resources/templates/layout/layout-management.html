@@ -28,7 +28,7 @@
                     <span class="tooltip">Thống kê</span>
                 </li>
                 <li>
-                    <a th:classappend="${classActiveAccountTab}" th:href="@{../management/account}">
+                    <a th:classappend="${classActivecustomerTab}" th:href="@{../management/customer}">
                         <i class="fas fa-users"></i>
                         <span class="links_name">Quản lý người dùng</span>
                     </a>
@@ -91,13 +91,13 @@
                   <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
                     <li class="nav-item dropdown">
                       <div class="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="media align-items-center" th:if="${accountLogin != null}">
+                        <div class="media align-items-center" th:if="${customerLogin != null}">
                           <span class="avatar avatar-sm rounded-circle border border-2">
-                            <img alt="Image placeholder" th:src="${accountLogin.urlAvatar}" th:if="${accountLogin.urlAvatar != null}" height="100%" width="100%">
-                            <img alt="Image placeholder" th:src="@{../assets/img/default-avartar.jpg}" th:if="${accountLogin.urlAvatar == null}" height="100%" width="100%">
+                            <img alt="Image placeholder" th:src="${customerLogin.urlAvatar}" th:if="${customerLogin.urlAvatar != null}" height="100%" width="100%">
+                            <img alt="Image placeholder" th:src="@{../assets/img/default-avartar.jpg}" th:if="${customerLogin.urlAvatar == null}" height="100%" width="100%">
                           </span>
                           <div class="media-body  ml-2  d-none d-lg-block">
-                            <span class="mb-0 text-sm  font-weight-bold" th:text="|${accountLogin.lastName == null ? '' : accountLogin.lastName} ${accountLogin.middleName == null ? '' : accountLogin.middleName} ${accountLogin.firstName == null ? '' : accountLogin.firstName}|"></span>
+                            <span class="mb-0 text-sm  font-weight-bold" th:text="|${customerLogin.lastName == null ? '' : customerLogin.lastName} ${customerLogin.middleName == null ? '' : customerLogin.middleName} ${customerLogin.firstName == null ? '' : customerLogin.firstName}|"></span>
                           </div>
                         </div>
                       </div>

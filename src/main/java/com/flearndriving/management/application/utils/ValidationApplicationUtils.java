@@ -10,12 +10,8 @@ import org.springframework.validation.ValidationUtils;
 
 import com.flearndriving.management.application.common.Common;
 
-/**
- * @author tamdu
- *
- */
 public class ValidationApplicationUtils extends ValidationUtils {
-	/* validation email - Account*/
+	/* validation email - customer*/
 	public static void rejectEmailIncorrectFormat(Errors errors, String field, String errorCode) {
 		rejectEmailIncorrectFormat(errors, field, errorCode, null, null);
 	}
@@ -29,7 +25,7 @@ public class ValidationApplicationUtils extends ValidationUtils {
 		}
 	}
 	
-	/* validation phonenumber - Account*/
+	/* validation phonenumber - customer*/
 	public static void rejectPhoneNumberIncorrectFormat(Errors errors, String field, String errorCode) {
 		rejectPhoneNumberIncorrectFormat(errors, field, errorCode, null, null);
 	}

@@ -1,22 +1,21 @@
 package com.flearndriving.management.application.controller.advice;
 
+import com.flearndriving.management.application.dto.CustomerLogin;
+import com.flearndriving.management.application.services.CustomerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.flearndriving.management.application.dto.AccountLogin;
-import com.flearndriving.management.application.services.AccountServices;
-
 @ControllerAdvice(annotations = {Controller.class})
 public class CommonManagementControllerAdvice {
     
     @Autowired
-    AccountServices accountServices;
+    CustomerServices customerServices;
 
-    @ModelAttribute("accountLogin")
-    public AccountLogin loadAccountLogin() {
-        return accountServices.getBasicInfoAccountLogin();
+    @ModelAttribute("customerLogin")
+    public CustomerLogin loadCustomerLogin() {
+        return customerServices.getBasicInfocustomerLogin();
     }
 }
  

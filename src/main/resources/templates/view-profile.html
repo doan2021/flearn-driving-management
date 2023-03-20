@@ -15,7 +15,7 @@
                 <div class="container-fluid d-flex align-items-center">
                     <div class="row">
                         <div class="col-lg-10 col-md-10">
-                            <h1 class="display-2 text-white">Hi [[${accountUpdateForm.lastName}]] [[${accountUpdateForm.middleName}]] [[${accountUpdateForm.firstName}]]</h1>
+                            <h1 class="display-2 text-white">Hi [[${customerUpdateForm.lastName}]] [[${customerUpdateForm.middleName}]] [[${customerUpdateForm.firstName}]]</h1>
                             <p class="text-white mt-0 mb-5">Đây là trang cá nhân của bạn. Tại đây bạn có thể xem thông tin cơ bản và những thông tin liên quan khác về bạn.</p>
                         </div>
                     </div>
@@ -30,20 +30,20 @@
                                 <div class="col-lg-3 order-lg-2">
                                     <div class="card-profile-image">
                                         <label for="avatar">
-                                            <img class="rounded-circle" th:src="${accountLogin.urlAvatar}" th:if="${accountLogin.urlAvatar != null}">
-                                            <img class="rounded-circle" th:src="@{../assets/img/default-avartar.jpg}" th:if="${accountLogin.urlAvatar == null}">
+                                            <img class="rounded-circle" th:src="${customerLogin.urlAvatar}" th:if="${customerLogin.urlAvatar != null}">
+                                            <img class="rounded-circle" th:src="@{../assets/img/default-avartar.jpg}" th:if="${customerLogin.urlAvatar == null}">
                                         </label>
                                     </div>
 	                                <form th:action="@{/management/upload-avatar}" method="POST" enctype="multipart/form-data" id="formUploadAvatar">
 	                                    <input type="file" name="data" class="d-none" id="avatar" onchange="changeAvatar()" accept="image/png, image/gif, image/jpeg">
-	                                    <input type="hidden" name="accountId" th:value="${accountUpdateForm.accountId}">
+	                                    <input type="hidden" name="customerId" th:value="${customerUpdateForm.customerId}">
 	                                </form>
                                 </div>
                             </div>
                             <div class="card-body pt-0 mt-4">
                                 <div class="row mt-5">
                                     <div class="col-12 text-center">
-                                        <h3 th:text="${accountLogin.userName}"></h3>
+                                        <h3 th:text="${customerLogin.userName}"></h3>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -57,16 +57,16 @@
                     <div class="col-xl-8 order-xl-1">
                         <div class="card">
                             <div class="card-body">
-                                <form id="update-profile-form" th:action="@{/management/update-account-view}" th:object="${accountUpdateForm}" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" th:field="*{accountId}"/>
+                                <form id="update-profile-form" th:action="@{/management/update-customer-view}" th:object="${customerUpdateForm}" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" th:field="*{customerId}"/>
                                     <div class="row">
                                         <div class="col-6">
                                             <h6 class="heading-small text-muted mb-3">THÔNG TIN CƠ BẢN</h6>
                                         </div>
                                         <div class="col-lg-6 text-right">
                                             <div class="form-group">
-                                                <span class="badge badge-pill badge-success badge-lg" th:if="${accountUpdateForm.roleId == 1}">Quản trị viên</span>
-                                                <span class="badge badge-pill badge-warning badge-lg" th:if="${accountUpdateForm.roleId == 2}">Người dùng</span>
+                                                <span class="badge badge-pill badge-success badge-lg" th:if="${customerUpdateForm.roleId == 1}">Quản trị viên</span>
+                                                <span class="badge badge-pill badge-warning badge-lg" th:if="${customerUpdateForm.roleId == 2}">Người dùng</span>
                                             </div>
                                         </div>
                                     </div>

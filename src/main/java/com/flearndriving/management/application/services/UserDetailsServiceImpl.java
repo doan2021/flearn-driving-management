@@ -1,8 +1,7 @@
 package com.flearndriving.management.application.services;
 
-import java.util.Collections;
-import java.util.List;
-
+import com.flearndriving.management.application.entities.Customer;
+import com.flearndriving.management.application.respositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,28 +11,28 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.flearndriving.management.application.entities.Account;
-import com.flearndriving.management.application.respositories.AccountsRespository;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AccountsRespository accountsRespository;
+    private CustomerRepository customerRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Account account = accountsRespository.findByUserNameAdmin(userName);
-        if (account == null) {
+        Customer customer = customerRepository.findByUserNameAdmin(userName);
+        if (customer == null) {
             throw new UsernameNotFoundException("Tên đăng nhập hoặc mật khẩu không đúng!");
         }
-        String roleName = account.getRole().getRoleName();
+        String roleName = customer.getRole().getRoleName();
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(roleName));
         boolean enabled = true;
-        boolean accountNonExpired = true;
+        boolean customerNonExpired = true;
         boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-        UserDetails userDetails = (UserDetails) new User(account.getUserName(), account.getEncrytedPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        boolean customerNonLocked = true;
+        UserDetails userDetails = (UserDetails) new User(customer.getUserName(), customer.getEncrytedPassword(), enabled, customerNonExpired, credentialsNonExpired, customerNonLocked, authorities);
         return userDetails;
     }
 }

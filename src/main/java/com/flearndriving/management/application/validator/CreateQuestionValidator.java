@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.flearndriving.management.application.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +8,13 @@ import org.springframework.validation.Validator;
 
 import com.flearndriving.management.application.dto.AnswerForm;
 import com.flearndriving.management.application.dto.QuestionForm;
-import com.flearndriving.management.application.respositories.QuestionsRespository;
+import com.flearndriving.management.application.respositories.QuestionsRepository;
 
-/**
- * @author tamdu
- *
- */
 @Component
 public class CreateQuestionValidator implements Validator {
 
     @Autowired
-    private QuestionsRespository questionsRespository;
+    private QuestionsRepository questionsRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -35,7 +28,7 @@ public class CreateQuestionValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "NotEmpty.questionForm.content");
 
         if (!errors.hasErrors()) {
-            if (questionsRespository.existsByNumber(questionForm.getNumber())) {
+            if (questionsRepository.countByNumber(questionForm.getNumber()) > 0) {
                 errors.rejectValue("number", "Duplicate.questionForm.number");
             }
 
@@ -44,7 +37,7 @@ public class CreateQuestionValidator implements Validator {
             } else {
                 Integer numberTrue = 0;
                 for (AnswerForm answerForm : questionForm.getListAnswers()) {
-                    if (answerForm.isTrue()) {
+                    if (answerForm.getIsTrue()) {
                         numberTrue++;
                     }
                 }
