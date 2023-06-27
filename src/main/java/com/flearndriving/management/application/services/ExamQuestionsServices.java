@@ -1,10 +1,15 @@
 package com.flearndriving.management.application.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.flearndriving.management.application.common.Constant;
+import com.flearndriving.management.application.dto.request.ExamQuestionsForm;
+import com.flearndriving.management.application.dto.request.FormSearchExamQuestions;
+import com.flearndriving.management.application.entities.DrivingLicense;
+import com.flearndriving.management.application.entities.Question;
+import com.flearndriving.management.application.exception.BusinessException;
+import com.flearndriving.management.application.respositories.DrivingLicenseRepository;
+import com.flearndriving.management.application.respositories.ExamQuestionsRepository;
+import com.flearndriving.management.application.respositories.QuestionsRepository;
+import com.flearndriving.management.application.specification.ExamQuestionsSpecification;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.dto.ExamQuestionsForm;
-import com.flearndriving.management.application.dto.FormSearchExamQuestions;
-import com.flearndriving.management.application.entities.DrivingLicense;
-import com.flearndriving.management.application.entities.ExamQuestions;
-import com.flearndriving.management.application.entities.ExamQuestionsDetail;
-import com.flearndriving.management.application.entities.Question;
-import com.flearndriving.management.application.exception.BusinessException;
-import com.flearndriving.management.application.respositories.DrivingLicenseRepository;
-import com.flearndriving.management.application.respositories.ExamQuestionsRepository;
-import com.flearndriving.management.application.respositories.QuestionsRepository;
-import com.flearndriving.management.application.specification.ExamQuestionsSpecification;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,16 +29,16 @@ public class ExamQuestionsServices {
 
     @Autowired
     ExamQuestionsRepository examQuestionsRepository;
-    
+
     @Autowired
     DrivingLicenseRepository drivingLicenseRepository;
-    
+
     @Autowired
     QuestionsRepository questionsRepository;
 
     @Autowired
     private final CommonServices commonServices;
-    
+
     public List<ExamQuestions> findExamQuestionByDrivingLicenseId(Long drivingLicenseId) {
         DrivingLicense drivingLicense = drivingLicenseRepository.findByDrivingLicenseId(drivingLicenseId);
         if (drivingLicense == null) {
@@ -51,7 +46,7 @@ public class ExamQuestionsServices {
         }
         return examQuestionsRepository.findByDrivingLicense(drivingLicense);
     }
-    
+
     public ExamQuestions findByExamQuestionId(Long examQuestionId) {
         ExamQuestions examQuestions = examQuestionsRepository.findByExamQuestionsId(examQuestionId);
         if (examQuestions == null) {
@@ -102,10 +97,6 @@ public class ExamQuestionsServices {
         examQuestions.setName(examQuestionsForm.getName());
         examQuestions.setDescription(examQuestionsForm.getDescription());
         examQuestions.setDrivingLicense(drivingLicense);
-        examQuestions.setCreateBy(commonServices.getUsernameLogin());
-        examQuestions.setCreateAt(Common.getSystemDate());
-        examQuestions.setUpdateBy(commonServices.getUsernameLogin());
-        examQuestions.setUpdateAt(Common.getSystemDate());
         List<ExamQuestionsDetail> listExamQuestionDetail = new ArrayList<>();
         for (Long questionId : examQuestionsForm.getListIdQuestion()) {
             ExamQuestionsDetail examQuestionsDetail = new ExamQuestionsDetail();
@@ -116,13 +107,9 @@ public class ExamQuestionsServices {
                 examQuestionsDetail.setQuestion(question);
             }
             examQuestionsDetail.setExamQuestions(examQuestions);
-            examQuestionsDetail.setCreateBy(commonServices.getUsernameLogin());
-            examQuestionsDetail.setCreateAt(Common.getSystemDate());
-            examQuestionsDetail.setUpdateBy(commonServices.getUsernameLogin());
-            examQuestionsDetail.setUpdateAt(Common.getSystemDate());
             listExamQuestionDetail.add(examQuestionsDetail);
         }
-        
+
         for (Long questionId : examQuestionsForm.getListIdQuestionParalysis()) {
             ExamQuestionsDetail examQuestionsDetail = new ExamQuestionsDetail();
             Question question = questionsRepository.findByQuestionId(questionId);
@@ -132,16 +119,12 @@ public class ExamQuestionsServices {
                 examQuestionsDetail.setQuestion(question);
             }
             examQuestionsDetail.setExamQuestions(examQuestions);
-            examQuestionsDetail.setCreateBy(commonServices.getUsernameLogin());
-            examQuestionsDetail.setCreateAt(Common.getSystemDate());
-            examQuestionsDetail.setUpdateBy(commonServices.getUsernameLogin());
-            examQuestionsDetail.setUpdateAt(Common.getSystemDate());
             listExamQuestionDetail.add(examQuestionsDetail);
         }
         examQuestions.setListExamQuestionsDetail(listExamQuestionDetail);
         examQuestionsRepository.save(examQuestions);
     }
-    
+
     public List<Question> findQuestionInExamQuestions(Long examQuestionsId) {
         return examQuestionsRepository.findQuestionInExamQuestionsId(examQuestionsId);
     }
@@ -149,16 +132,13 @@ public class ExamQuestionsServices {
     public List<Question> findQuestionParalysis() {
         return questionsRepository.findQuestionParalysis();
     }
-    
+
     @Transactional
-    public Long deleteExamQuestions(Long examQuestionsId){
+    public Long deleteExamQuestions(Long examQuestionsId) {
         ExamQuestions examQuestions = examQuestionsRepository.findByExamQuestionsId(examQuestionsId);
         if (examQuestions == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Đề thi không tồn tại!");
         }
-        examQuestions.setDelete(true);
-        examQuestions.setUpdateAt(Common.getSystemDate());
-        examQuestions.setUpdateBy(commonServices.getUsernameLogin());
         examQuestionsRepository.save(examQuestions);
         return examQuestions.getDrivingLicense().getId();
     }

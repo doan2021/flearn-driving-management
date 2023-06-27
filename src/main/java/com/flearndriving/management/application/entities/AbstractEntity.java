@@ -1,29 +1,55 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
+
+@EntityListeners(AuditingEntityListener.class)
+@Getter
+@Setter
 @MappedSuperclass
+@FieldNameConstants
 public class AbstractEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private String createBy;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column
-    private Date createAt;
+	@Column(columnDefinition = "boolean default false")
+	private boolean isDelete;
 
-    @Column
-    private String updateBy;
+	@CreatedBy
+	@Column(length = 36)
+	private String createdBy;
 
-    @Column
-    private Date updateAt;
+	@CreatedDate
+	private Date createdDate;
 
+	@LastModifiedBy
+	@Column(length = 36)
+	private String lastModifiedBy;
+
+	@LastModifiedDate
+	private Date lastModifiedDate;
 }

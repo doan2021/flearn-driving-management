@@ -6,7 +6,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.dto.ExamForm;
+import com.flearndriving.management.application.dto.request.ExamForm;
 
 @Component
 public class ExamCreateValidator implements Validator {

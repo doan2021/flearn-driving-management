@@ -1,4 +1,4 @@
-package com.flearndriving.management.application.dto;
+package com.flearndriving.management.application.dto.request;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class QuestionForm {
+public class QuestionUpdateForm {
 
     private Integer number;
 

@@ -2,9 +2,9 @@ package com.flearndriving.management.application.services;
 
 import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.dto.ExamForm;
-import com.flearndriving.management.application.dto.ExamUpdateForm;
-import com.flearndriving.management.application.dto.FormSearchExam;
+import com.flearndriving.management.application.dto.request.ExamForm;
+import com.flearndriving.management.application.dto.request.ExamUpdateForm;
+import com.flearndriving.management.application.dto.request.FormSearchExam;
 import com.flearndriving.management.application.entities.DrivingLicense;
 import com.flearndriving.management.application.entities.Exam;
 import com.flearndriving.management.application.exception.BusinessException;
@@ -22,7 +22,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.Objects;
 
 @Service
@@ -34,9 +33,6 @@ public class ExamServices {
 
     @Autowired
     private DrivingLicenseRepository drivingLicenseRepository;
-
-    @Autowired
-    private final CommonServices commonServices;
 
     @Transactional
     public void createExam(ExamForm examForm) {
@@ -53,16 +49,12 @@ public class ExamServices {
         DrivingLicense drivingLicense = drivingLicenseRepository.getOne(examForm.getDrivingLicenseId());
         exam.setDrivingLicense(drivingLicense);
         exam.setStatus(Constant.STS_EXAM_OPENING);
-        exam.setCreateBy(commonServices.getUsernameLogin());
-        exam.setCreateAt(Common.getSystemDate());
-        exam.setUpdateBy(commonServices.getUsernameLogin());
-        exam.setUpdateAt(Common.getSystemDate());
         examRepository.save(exam);
     }
 
     public ExamUpdateForm getObjectUpdate(Long examId) {
         Exam exam = examRepository.getOne(examId);
-        if (exam == null) {
+        if (Objects.nonNull(exam)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         ExamUpdateForm examUpdateForm = new ExamUpdateForm();
@@ -80,21 +72,17 @@ public class ExamServices {
 
     @Transactional
     public void updateExam(ExamUpdateForm examUpdateForm) {
-        if (examUpdateForm == null) {
-        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
+        if (Objects.nonNull(examUpdateForm)) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền vào không đúng!");
         }
-        Exam exam = new Exam();
-        exam = examRepository.getOne(examUpdateForm.getExamId());
-        if (exam == null) {
-        	throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
-		}
+        Exam exam = examRepository.getOne(examUpdateForm.getExamId());
+        if (Objects.nonNull(exam)) {
+            throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
+        }
         exam.setName(examUpdateForm.getName());
         exam.setDescription(examUpdateForm.getDescription());
         exam.setDateRegisExamEnd(examUpdateForm.getDateRegisExamEnd());
-        Date dateExam = Common.addDays(examUpdateForm.getDateRegisExamEnd(), 15);
-        exam.setDateExam(dateExam);
-        exam.setUpdateBy(commonServices.getUsernameLogin());
-        exam.setUpdateAt(Common.getSystemDate());
+        exam.setDateExam(Common.addDays(examUpdateForm.getDateRegisExamEnd(), 15));
         examRepository.save(exam);
     }
 
@@ -103,7 +91,7 @@ public class ExamServices {
             formSearchExam.setPageNumber(0);
         }
         Specification<Exam> conditions = Specification.where(null);
-        if (formSearchExam != null) {
+        if (Objects.nonNull(formSearchExam)) {
             if (StringUtils.isNotBlank(formSearchExam.getName())) {
                 conditions = conditions.and(ExamSpecification.hasName(formSearchExam.getName()));
             }
@@ -134,29 +122,27 @@ public class ExamServices {
     @Transactional
     public void deleteExam(Long examId) {
         Exam exam = examRepository.getOne(examId);
-        if (exam == null) {
+        if (Objects.nonNull(exam)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         examRepository.delete(exam);
     }
-    
+
     public Exam getOne(Long examId) {
         Exam exam = examRepository.getOne(examId);
-        if (exam == null) {
+        if (Objects.nonNull(exam)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         return examRepository.getOne(examId);
     }
-    
+
     @Transactional
     public Exam cancelExam(Long examId) {
         Exam exam = examRepository.getOne(examId);
-        if (exam == null) {
+        if (Objects.nonNull(exam)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Kỳ thi không tồn tại!");
         }
         exam.setStatus(Constant.STS_EXAM_CANCEL);
-        exam.setUpdateBy(commonServices.getUsernameLogin());
-        exam.setUpdateAt(Common.getSystemDate());
         return examRepository.save(exam);
     }
 }

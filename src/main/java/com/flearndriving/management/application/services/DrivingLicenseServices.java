@@ -1,10 +1,9 @@
 package com.flearndriving.management.application.services;
 
-import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.dto.DrivingLicenseForm;
-import com.flearndriving.management.application.dto.FormSearchDrivingLicense;
-import com.flearndriving.management.application.dto.NumberOfChapter;
+import com.flearndriving.management.application.dto.request.DrivingLicenseForm;
+import com.flearndriving.management.application.dto.request.FormSearchDrivingLicense;
+import com.flearndriving.management.application.dto.request.NumberOfChapter;
 import com.flearndriving.management.application.entities.Chapter;
 import com.flearndriving.management.application.entities.DrivingLicense;
 import com.flearndriving.management.application.entities.ExamStructure;
@@ -73,10 +72,6 @@ public class DrivingLicenseServices {
             }
         }
         drivingLicense.setListExamStructure(listExamStructures);
-        drivingLicense.setCreateBy(commonServices.getUsernameLogin());
-        drivingLicense.setCreateAt(Common.getSystemDate());
-        drivingLicense.setUpdateBy(commonServices.getUsernameLogin());
-        drivingLicense.setUpdateAt(Common.getSystemDate());
         drivingLicenseRepository.save(drivingLicense);
     }
 
@@ -86,9 +81,7 @@ public class DrivingLicenseServices {
         if (drivingLicense == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Hạng bằng không tồn tại!");
         }
-        drivingLicense.setIsDelete(true);
-        drivingLicense.setUpdateAt(Common.getSystemDate());
-        drivingLicense.setUpdateBy(commonServices.getUsernameLogin());
+        drivingLicense.setDelete(true);
         drivingLicenseRepository.save(drivingLicense);
     }
 

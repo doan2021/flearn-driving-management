@@ -1,7 +1,7 @@
 package com.flearndriving.management.application.controller;
 
 import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.services.ChapterServices;
+import com.flearndriving.management.application.services.impl.ChapterServicesImpl;
 import com.flearndriving.management.application.services.CustomerServices;
 import com.flearndriving.management.application.services.QuestionServices;
 import com.flearndriving.management.application.services.TrialExamResultService;
@@ -20,7 +20,7 @@ public class DashboardManagementController {
     CustomerServices customerServices;
 
     @Autowired
-    ChapterServices chapterServices;
+    ChapterServicesImpl chapterServices;
 
     @Autowired
     QuestionServices questionServices;
@@ -42,7 +42,7 @@ public class DashboardManagementController {
     @GetMapping("/export-report-customer")
     public String visitReportcustomer(Model model) {
         model.addAttribute("listcustomer", customerServices.getDataReportCustomerMonth());
-        model.addAttribute("owner", customerServices.getcustomerLoginInfo());
+        model.addAttribute("owner", customerServices.getCustomerLoginInfo());
         model.addAttribute("dateStart", DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.plusMonthToDate(Common.getSystemDate(), -2)));
         model.addAttribute("dateEnd", DateTimeUtils.getLastDateOfMonth(DateTimeUtils.plusMonthToDate(Common.getSystemDate(), -1)));
         return "customer-report";
@@ -51,7 +51,7 @@ public class DashboardManagementController {
     @GetMapping("/export-report-trial-exam")
     public String visitReportTrialExam(Model model) {
         model.addAttribute("listTrialExam", trialExamResultService.getDataReportTrialExamMonth());
-        model.addAttribute("owner", customerServices.getcustomerLoginInfo());
+        model.addAttribute("owner", customerServices.getCustomerLoginInfo());
         model.addAttribute("dateStart", DateTimeUtils.getFirstDateOfMonth(DateTimeUtils.plusMonthToDate(Common.getSystemDate(), -2)));
         model.addAttribute("dateEnd", DateTimeUtils.getLastDateOfMonth(DateTimeUtils.plusMonthToDate(Common.getSystemDate(), -1)));
         return "trial-exam-report";

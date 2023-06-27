@@ -1,4 +1,4 @@
-package com.flearndriving.management.application.dto;
+package com.flearndriving.management.application.dto.request;
 
 import lombok.*;
 

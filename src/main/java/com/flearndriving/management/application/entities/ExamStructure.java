@@ -1,24 +1,26 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class ExamStructure extends AbstractEntity {
 
-    @Column
-    private Integer numberQuestion;
-
-    @ManyToOne
-    @JoinColumn(name = "driving_license_id", referencedColumnName = "id")
-    private DrivingLicense drivingLicense;
-
-    @ManyToOne
-    @JoinColumn(name = "chapter_id", referencedColumnName = "id")
-    private Chapter chapter;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
+    @JoinColumn(name = "exam_id", referencedColumnName = Fields.id)
+    private Exam Exam;
 }

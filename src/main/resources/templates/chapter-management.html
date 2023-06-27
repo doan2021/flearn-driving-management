@@ -106,10 +106,11 @@
                                     <tbody class="list">
                                         <tr th:each="chapter : ${pageContent.content}" th:if="${pageContent.totalElements != 0}">
                                             <th class="text-center">
-                                                <span th:text="${chapter.index}" class="font-weight-bold"></span>
+                                                <span th:text="${chapter.name}" class="font-weight-bold"></span>
                                             </th>
                                             <td class="text-center">
-                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.chapterId}}" class="name mb-0 text-sm font-weight-bold" th:text="${chapter.name}"></a>
+                                                <a th:href="@{${'/management/chapter-detail?chapterId='} + ${chapter.id}}"
+                                                   class="name mb-0 text-sm font-weight-bold" th:text="${chapter.content}"></a>
                                             </td>
                                             <td class="text-center">
                                                 <span th:text="${chapter.description}"></span>
@@ -118,10 +119,10 @@
                                                 <span th:text="${chapter.listQuestion.?[!delete].size}"></span>
                                             </td>
                                             <td class="text-center">
-                                                <span th:text="${#dates.format(chapter.updateAt, 'dd/MM/yyyy HH:mm')}"></span>
+                                                <span th:text="${#dates.format(chapter.lastModifiedDate, 'dd/MM/yyyy HH:mm')}"></span>
                                             </td>
                                             <td class="text-center">
-                                                <span th:text="${chapter.updateBy}"></span>
+                                                <span th:text="${chapter.lastModifiedBy}"></span>
                                             </td>
                                         </tr>
                                         <tr th:if="${pageContent.totalElements == 0}">

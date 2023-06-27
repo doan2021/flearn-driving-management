@@ -1,29 +1,42 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Chapter extends AbstractEntity {
 
-    @Column
-    private String name;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private String content;
+	@Column
+	private String name;
 
-    @Column(columnDefinition = "Boolean default false")
-    private Boolean isDelete;
+	@Column
+	private String content;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+	@Column(columnDefinition = "TEXT")
+	private String description;
 
-    @OneToMany(mappedBy = "chapter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Question> listQuestion;
+	@OneToMany(mappedBy = "chapter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Question> listQuestion;
 
-    @OneToMany(mappedBy = "chapter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> listImages;
+	@OneToMany(mappedBy = "chapter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Document> listImages;
 }

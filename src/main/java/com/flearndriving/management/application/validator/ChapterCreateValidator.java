@@ -1,27 +1,26 @@
 package com.flearndriving.management.application.validator;
 
+import com.flearndriving.management.application.common.Common;
+import com.flearndriving.management.application.dto.request.ChapterRequest;
+import com.flearndriving.management.application.utils.ValidationApplicationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.dto.ChapterForm;
-import com.flearndriving.management.application.utils.ValidationApplicationUtils;
 
 @Component
 public class ChapterCreateValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz == ChapterForm.class;
+        return clazz == ChapterRequest.class;
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        ChapterForm chapterForm = (ChapterForm) target;
+        ChapterRequest chapterForm = (ChapterRequest) target;
         // Kiểm tra các field của chapterForm.
-        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "index", "NotEmpty.chapterForm.index");
-        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.chapterForm.name");
+        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.chapterForm.index");
+        ValidationApplicationUtils.rejectIfEmptyOrWhitespace(errors, "content", "NotEmpty.chapterForm.name");
 
         // Validate name
         if (!errors.hasFieldErrors("name") && Common.isInvalidMaxLengthString(chapterForm.getName(), 36)) {

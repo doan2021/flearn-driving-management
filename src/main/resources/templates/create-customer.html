@@ -65,7 +65,7 @@
                                                 <p class="m-0" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
-                                                <p class="m-0" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('roleId')}" th:errors="*{id}"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -153,7 +153,8 @@
                                                 <label class="form-control-label" for="role">Quyền <span class="text-danger">*</span></label>
                                                 <select class="form-control" id="role" th:field="*{roleId}">
                                                     <option value="">--------Chọn quyền----------</option>
-                                                    <option th:each="role : ${listRole}" th:value="${role.roleId}" th:text="${role.content}"></option>
+                                                    <option th:each="role : ${listRole}" th:value="${role.id}"
+                                                            th:text="${role.content}"></option>
                                                 </select>
                                             </div>
                                         </div>

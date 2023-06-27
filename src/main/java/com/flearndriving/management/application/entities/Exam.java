@@ -1,30 +1,52 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Exam extends AbstractEntity {
 
-    @Column
-    private String name;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private Date dateRegisExamEnd;
+	@Column
+	private String name;
 
-    @Column
-    private Date dateExam;
+	@Column
+	private Date dateRegisExamEnd;
 
-    @Column
-    private Integer status;
+	@Column
+	private Date dateExam;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+	@Column
+	private Integer status;
 
-    @ManyToOne
-    @JoinColumn(name = "driving_license_id", referencedColumnName = "id")
-    private DrivingLicense drivingLicense;
+	@Column(columnDefinition = "TEXT")
+	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "driving_license_id", referencedColumnName = Fields.id)
+	private DrivingLicense drivingLicense;
+
+	@OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<ExamStructure> listExamStructures;
 }

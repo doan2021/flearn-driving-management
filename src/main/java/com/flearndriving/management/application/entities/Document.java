@@ -1,51 +1,60 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
-import java.util.Date;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Document extends AbstractEntity {
 
-    @Column
-    private String fileName;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private String originFileName;
+	@Column
+	private String fileName;
 
-    @Column
-    private Long size;
+	@Column
+	private String originFileName;
 
-    @Column
-    private String extension;
+	@Column
+	private Long size;
 
-    @Column
-    private String contentType;
+	@Column
+	private String extension;
 
-    @Column
-    private String path;
+	@Column
+	private String contentType;
 
-    @Column
-    private Integer type;
+	@Column
+	private String path;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+	@Column
+	private Integer type;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", referencedColumnName = "id")
-    private Question question;
+	@Column(columnDefinition = "TEXT")
+	private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "question_id", referencedColumnName = Fields.id)
+	private Question question;
 
-    @ManyToOne
-    @JoinColumn(name = "exam_profile_id", referencedColumnName = "id")
-    private ExamProfile examProfile;
+	@ManyToOne
+	@JoinColumn(name = "customer_id", referencedColumnName = Fields.id)
+	private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "chapter_id", referencedColumnName = "id")
-    private Chapter chapter;
+	@ManyToOne
+	@JoinColumn(name = "chapter_id", referencedColumnName = Fields.id)
+	private Chapter chapter;
 }

@@ -3,7 +3,7 @@
  */
 package com.flearndriving.management.application.validator;
 
-import com.flearndriving.management.application.dto.CustomerUpdateForm;
+import com.flearndriving.management.application.dto.request.CustomerUpdateForm;
 import com.flearndriving.management.application.utils.ValidationApplicationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

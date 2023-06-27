@@ -3,7 +3,7 @@
  */
 package com.flearndriving.management.application.validator;
 
-import com.flearndriving.management.application.dto.CustomerForm;
+import com.flearndriving.management.application.dto.request.CustomerRequest;
 import com.flearndriving.management.application.respositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,12 +19,12 @@ public class CustomerFormUpdateValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz == CustomerForm.class;
+        return clazz == CustomerRequest.class;
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        CustomerForm appUserForm = (CustomerForm) target;
+        CustomerRequest appUserForm = (CustomerRequest) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty.customerForm.userName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.customerForm.firstName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.customerForm.lastName");

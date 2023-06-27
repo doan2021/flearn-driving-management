@@ -1,20 +1,21 @@
-package com.flearndriving.management.application.dto;
+package com.flearndriving.management.application.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class ChapterForm {
+public class ExamForm {
 
-    private Long chapterId;
+    private Long examId;
 
     private String name;
 
-    private String content;
-
     private String description;
+
+    private String dateRegisExamEnd;
+
+    private String dateExam;
 
     private String createBy;
 
@@ -24,6 +25,6 @@ public class ChapterForm {
 
     private String updateAt;
 
-    private MultipartFile[] images;
+    private Long drivingLicenseId;
 
 }

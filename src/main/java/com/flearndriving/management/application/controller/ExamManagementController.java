@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.dto.ExamForm;
-import com.flearndriving.management.application.dto.ExamUpdateForm;
-import com.flearndriving.management.application.dto.FormSearchExam;
+import com.flearndriving.management.application.dto.request.ExamForm;
+import com.flearndriving.management.application.dto.request.ExamUpdateForm;
+import com.flearndriving.management.application.dto.request.FormSearchExam;
 import com.flearndriving.management.application.services.DrivingLicenseServices;
 import com.flearndriving.management.application.services.ExamServices;
 import com.flearndriving.management.application.validator.ExamCreateValidator;

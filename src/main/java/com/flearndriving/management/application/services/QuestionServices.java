@@ -3,8 +3,8 @@ package com.flearndriving.management.application.services;
 import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.common.Constant;
 import com.flearndriving.management.application.common.MimeTypes;
-import com.flearndriving.management.application.dto.AnswerForm;
-import com.flearndriving.management.application.dto.QuestionForm;
+import com.flearndriving.management.application.dto.request.AnswerForm;
+import com.flearndriving.management.application.dto.request.QuestionForm;
 import com.flearndriving.management.application.entities.Answer;
 import com.flearndriving.management.application.entities.Chapter;
 import com.flearndriving.management.application.entities.Document;
@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class QuestionServices {
 
     @Transactional
     public void createQuestion(QuestionForm questionForm) {
-        if (questionForm == null) {
+        if (Objects.nonNull(questionForm)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Dữ liệu truyền lên không đúng!");
         }
         Chapter chapter = chapterResponsitory.findByChapterId(questionForm.getChapterId());
@@ -58,17 +59,9 @@ public class QuestionServices {
             ans.setContent(answer.getContent());
             ans.setIsTrue(answer.getIsTrue());
             ans.setQuestion(question);
-            ans.setCreateBy(commonServices.getUsernameLogin());
-            ans.setCreateAt(Common.getSystemDate());
-            ans.setUpdateBy(commonServices.getUsernameLogin());
-            ans.setUpdateAt(Common.getSystemDate());
             listAnswers.add(ans);
         }
         question.setListAnswers(listAnswers);
-        question.setCreateBy(commonServices.getUsernameLogin());
-        question.setCreateAt(Common.getSystemDate());
-        question.setUpdateBy(commonServices.getUsernameLogin());
-        question.setUpdateAt(Common.getSystemDate());
 
         // Handle document
         List<Document> listDocuments = new ArrayList<>();
@@ -85,8 +78,6 @@ public class QuestionServices {
                 document.setSize(multipartFile.getSize());
                 document.setType(Constant.TYPE_DOCUMENT_IDENTITY_CARD_IMAGE_FRONT);
                 document.setDescription("Ảnh mô tả câu hỏi");
-                document.setCreateAt(Common.getSystemDate());
-                document.setCreateBy(commonServices.getUsernameLogin());
                 // TODO Upload Image
                 //document.setPath(amazonS3ClientService.uploadFileToS3Bucket(multipartFile, document.getFileName()));
                 listDocuments.add(document);
@@ -110,12 +101,10 @@ public class QuestionServices {
 
     public void deleteQuestion(Long questionId) {
         Question question = questionsRepository.findByQuestionId(questionId);
-        if (question == null) {
+        if (Objects.isNull(question)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_500, "Câu hỏi không tồn tại!");
         }
-        question.setIsDelete(true);
-        question.setUpdateAt(Common.getSystemDate());
-        question.setUpdateBy(commonServices.getUsernameLogin());
+        question.setDelete(true);
         questionsRepository.save(question);
     }
 }

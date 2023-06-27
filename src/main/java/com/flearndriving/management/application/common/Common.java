@@ -1,42 +1,17 @@
 package com.flearndriving.management.application.common;
 
+import com.flearndriving.management.application.utils.DateTimeUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.flearndriving.management.application.utils.DateTimeUtils;
+import java.util.Objects;
 
 public class Common {
 
-    public static float percentQuestion(int correctNumber, int incorrectNumber) {
-        return (correctNumber * 100.0f) / (correctNumber + incorrectNumber);
-    }
-
-    public static String getFirstName(String fullNameGoogle) {
-        if (fullNameGoogle == null || "".equals(fullNameGoogle)) {
-            return fullNameGoogle;
-        }
-        String[] name = fullNameGoogle.split(" ");
-        return name[name.length - 1];
-    }
-
-    public static String getLastName(String fullNameGoogle) {
-        if (fullNameGoogle == null || "".equals(fullNameGoogle)) {
-            return fullNameGoogle;
-        }
-        String[] name = fullNameGoogle.split(" ");
-        String lastName = "";
-        for (int i = 0; i < name.length - 1; i++) {
-            if (i == name.length - 2) {
-                lastName = lastName.concat(name[i]);
-            } else {
-                lastName = lastName.concat(name[i]).concat(" ");
-            }
-        }
-        return lastName;
+    private Common() {
+        throw new IllegalStateException("Utility class");
     }
 
     public static Date stringToDate(String dateString) {
@@ -87,7 +62,7 @@ public class Common {
 
     public static String generateFileName(MultipartFile multipartFile, String label) {
         // Init extension new
-        String extension = MimeTypes.lookupExt(multipartFile.getContentType());
+        String extension = MimeTypes.lookupExt(Objects.requireNonNull(multipartFile.getContentType()));
         // Remove extension old
         String fileName = multipartFile.getOriginalFilename().substring(0, multipartFile.getOriginalFilename().lastIndexOf("."));
         return DateTimeUtils.dateToString(Common.getSystemDate(), Constant.PATTERN_FORMAT_DATE_TIME) + "_" + label + "_"

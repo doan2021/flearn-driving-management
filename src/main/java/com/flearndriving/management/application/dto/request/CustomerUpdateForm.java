@@ -1,11 +1,11 @@
-package com.flearndriving.management.application.dto;
+package com.flearndriving.management.application.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerForm {
+public class CustomerUpdateForm {
 
     private Long customerId;
 
@@ -17,10 +17,6 @@ public class CustomerForm {
 
     private String lastName;
 
-    private String password;
-
-    private String confirmPassword;
-
     private Integer gender;
 
     private String email;
@@ -30,6 +26,8 @@ public class CustomerForm {
     private String numberPhone;
 
     private Long roleId;
+
+    private String urlAvatar;
 
     private String description;
 

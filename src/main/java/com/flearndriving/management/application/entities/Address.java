@@ -15,20 +15,24 @@ import lombok.Setter;
 @Setter
 @Builder
 @NoArgsConstructor
-public class Answer extends AbstractEntity {
+public class Address extends AbstractEntity {
 
-	/**
+    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(columnDefinition = "TEXT")
-	private String content;
+	@Column
+    private String line;
 
-	@Column(columnDefinition = "boolean default false")
-	private Boolean isTrue;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
-	@ManyToOne
-	@JoinColumn(name = "question_id", referencedColumnName = Fields.id)
-	private Question question;
+    @ManyToOne
+    @JoinColumn(name = "ward_id", referencedColumnName = Fields.id)
+    private Ward ward;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = Fields.id)
+    private Customer customer;
 }

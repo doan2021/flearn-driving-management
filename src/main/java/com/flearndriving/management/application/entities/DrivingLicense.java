@@ -1,42 +1,46 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
-import javax.persistence.*;
-import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class DrivingLicense extends AbstractEntity {
 
-    @Column
-    private String name;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private Double price;
+	@Column
+	private String name;
 
-    @Column
-    private Integer numberQuestion;
+	@Column
+	private Double price;
 
-    @Column
-    private Integer numberQuestionParalysis;
+	@Column
+	private Integer numberQuestion;
 
-    @Column
-    private Integer numberQuestionCorrect;
+	@Column
+	private Integer numberQuestionParalysis;
 
-    @Column
-    private Integer examMinutes;
+	@Column
+	private Integer numberQuestionCorrect;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+	@Column
+	private Integer examMinutes;
 
-    @Column
-    private Integer numberYearExpires;
+	@Column(columnDefinition = "TEXT")
+	private String description;
 
-    @Column(columnDefinition = "Boolean default false")
-    private Boolean isDelete;
-
-    @OneToMany(mappedBy = "drivingLicense", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExamStructure> listExamStructure;
-
+	@Column
+	private Integer numberYearExpires;
 }

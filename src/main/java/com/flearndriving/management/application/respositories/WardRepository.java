@@ -1,10 +1,7 @@
 package com.flearndriving.management.application.respositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.flearndriving.management.application.entities.Ward;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface WardRepository extends JpaRepository<Ward, Long>{
+public interface WardRepository extends JpaRepository<Ward, Long> {
 }

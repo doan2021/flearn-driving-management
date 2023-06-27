@@ -1,36 +1,48 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Question extends AbstractEntity {
 
-    @Column
-    private Integer number;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+	@Column
+	private Integer number;
 
-    @Column(columnDefinition = "Boolean default false")
-    private Boolean isParalysis;
+	@Column(columnDefinition = "TEXT")
+	private String content;
 
-    @Column(columnDefinition = "Boolean default false")
-    private Boolean isDelete;
+	@Column(columnDefinition = "Boolean default false")
+	private Boolean isParalysis;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> listImage;
+	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Document> listImage;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Answer> listAnswers;
+	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Answer> listAnswers;
 
-    @ManyToOne
-    @JoinColumn(name = "chapter_id", referencedColumnName = "id")
-    private Chapter chapter;
-
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExamQuestionsDetail> listExamQuestionsDetail;
+	@ManyToOne
+	@JoinColumn(name = "chapter_id", referencedColumnName = Fields.id)
+	private Chapter chapter;
 }

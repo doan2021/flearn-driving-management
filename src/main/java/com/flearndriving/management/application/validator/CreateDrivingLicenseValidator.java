@@ -13,8 +13,8 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.dto.DrivingLicenseForm;
-import com.flearndriving.management.application.dto.NumberOfChapter;
+import com.flearndriving.management.application.dto.request.DrivingLicenseForm;
+import com.flearndriving.management.application.dto.request.NumberOfChapter;
 
 @Component
 public class CreateDrivingLicenseValidator implements Validator {

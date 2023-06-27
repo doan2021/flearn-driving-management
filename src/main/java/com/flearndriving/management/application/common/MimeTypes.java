@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 public class MimeTypes {
 
+    private MimeTypes() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final String MIME_APPLICATION_ANDREW_INSET = "application/andrew-inset";
     public static final String MIME_APPLICATION_JSON = "application/json";
     public static final String MIME_APPLICATION_ZIP = "application/zip";
@@ -117,14 +121,14 @@ public class MimeTypes {
     public static final String MIME_VIDEO_X_SGI_MOVIE = "video/x-sgi-movie";
     public static final String MIME_X_CONFERENCE_X_COOLTALK = "x-conference/x-cooltalk";
 
-    private static HashMap<String, String> mimeTypeMapping;
-    private static HashMap<String, String> extMapping;
+    private static final HashMap<String, String> mimeTypeMapping;
+    private static final HashMap<String, String> extMapping;
 
     static {
         mimeTypeMapping = new HashMap<String, String>(200) {
 
             /**
-             * 
+             *
              */
             private static final long serialVersionUID = -2829037827954490879L;
 
@@ -314,7 +318,7 @@ public class MimeTypes {
     static {
         extMapping = new HashMap<String, String>(200) {
             /**
-             * 
+             *
              */
             private static final long serialVersionUID = -2695402046424513313L;
 

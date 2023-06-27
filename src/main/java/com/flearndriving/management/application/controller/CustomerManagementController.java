@@ -1,8 +1,9 @@
 package com.flearndriving.management.application.controller;
 
 import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.dto.*;
-import com.flearndriving.management.application.services.AddressServices;
+import com.flearndriving.management.application.dto.request.CustomerRequest;
+import com.flearndriving.management.application.dto.request.CustomerUpdateForm;
+import com.flearndriving.management.application.dto.request.FormSearchCustomer;
 import com.flearndriving.management.application.services.CustomerServices;
 import com.flearndriving.management.application.services.RoleServices;
 import com.flearndriving.management.application.validator.CustomerFormValidator;
@@ -36,9 +37,6 @@ public class CustomerManagementController {
     @Autowired
     private CustomerUpdateValidator customerUpdateValidator;
 
-    @Autowired
-    AddressServices addressServices;
-
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
         // Form mục tiêu
@@ -46,7 +44,7 @@ public class CustomerManagementController {
         if (target == null) {
             return;
         }
-        if (target.getClass() == CustomerForm.class) {
+        if (target.getClass() == CustomerRequest.class) {
             dataBinder.setValidator(customerFormValidator);
         }
         if (target.getClass() == CustomerUpdateForm.class) {
@@ -55,27 +53,27 @@ public class CustomerManagementController {
     }
 
     @GetMapping(value = {"/customer"})
-    public String visitcustomerPage(FormSearchCustomer formSearchcustomer, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME, customerServices.searchcustomer(formSearchcustomer));
+    public String visitCustomerPage(FormSearchCustomer formSearchcustomer, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, customerServices.searchCustomer(formSearchcustomer));
         model.addAttribute("formSearchcustomer", new FormSearchCustomer());
         return "customer-management";
     }
 
     @PostMapping(value = {"/search-customer"})
-    public String searchcustomer(FormSearchCustomer formSearchcustomer, Model model) {
-        model.addAttribute(Constant.PAGE_CONTENT_NAME, customerServices.searchcustomer(formSearchcustomer));
+    public String searchCustomer(FormSearchCustomer formSearchcustomer, Model model) {
+        model.addAttribute(Constant.PAGE_CONTENT_NAME, customerServices.searchCustomer(formSearchcustomer));
         model.addAttribute("formSearchcustomer", formSearchcustomer);
         return "customer-management";
     }
 
     @GetMapping(value = {"/view-profile"})
     public String viewProfile(Model model) {
-        model.addAttribute("customerUpdateForm", customerServices.getcustomerLoginInfo());
+        model.addAttribute("customerUpdateForm", customerServices.getCustomerLoginInfo());
         return "view-profile";
     }
 
     @PostMapping(value = {"/update-customer-view"})
-    public String updatecustomerView(@Validated CustomerUpdateForm customerUpdateForm, BindingResult result,
+    public String updateCustomerView(@Validated CustomerUpdateForm customerUpdateForm, BindingResult result,
                                      RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             return "view-profile";
@@ -86,33 +84,33 @@ public class CustomerManagementController {
     }
 
     @GetMapping(value = {"/create-customer"})
-    public String visitPageCreatecustomer(Model model) {
-        CustomerForm customerForm = new CustomerForm();
+    public String visitPageCreateCustomer(Model model) {
+        CustomerRequest customerForm = new CustomerRequest();
         model.addAttribute("customerForm", customerForm);
         model.addAttribute("listRole", roleServices.findAllRole());
         return "create-customer";
     }
 
     @PostMapping(value = {"/create-customer"})
-    public String savecustomer(@Validated CustomerForm customerForm, BindingResult result, Model model) {
+    public String saveCustomer(@Validated CustomerRequest customerForm, BindingResult result, Model model) {
         model.addAttribute("listRole", roleServices.findAllRole());
         if (result.hasErrors()) {
             return "create-customer";
         }
         model.addAttribute(Constant.STATUS_SUCCESS, "Tạo người dùng thành công!");
-        model.addAttribute("customerForm", new CustomerForm());
+        model.addAttribute("customerForm", new CustomerRequest());
         customerServices.createCustomer(customerForm);
         return "create-customer";
     }
 
     @GetMapping("/update-customer")
-    public String showEditcustomerForm(Long customerId, Model model) {
+    public String showEditCustomerForm(Long customerId, Model model) {
         model.addAttribute("customerUpdateForm", customerServices.getObjectUpdate(customerId));
         return "update-customer";
     }
 
     @PostMapping(value = {"/update-customer"})
-    public String updatecustomer(@Validated CustomerUpdateForm customerUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
+    public String updateCustomer(@Validated CustomerUpdateForm customerUpdateForm, BindingResult result, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             return "update-customer";
         }
@@ -123,7 +121,7 @@ public class CustomerManagementController {
 
     @PostMapping(value = {"/delete-customer"})
     public String viewProfile(Long customerId, RedirectAttributes redirAttrs) {
-        customerServices.deletecustomer(customerId);
+        customerServices.deleteCustomer(customerId);
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Xóa tài khoản thành công!");
         return "redirect:customer";
     }

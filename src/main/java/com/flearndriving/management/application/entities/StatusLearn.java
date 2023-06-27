@@ -1,32 +1,49 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class StatusLearn extends AbstractEntity {
 
-    @Column
-    private Integer correctNumberOfTimes;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private Integer incorrectNumberOfTimes;
+	@Column
+	private Integer correctNumberOfTimes;
 
-    @Column
-    private int statusQuestion;
+	@Column
+	private Integer incorrectNumberOfTimes;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", referencedColumnName = "id")
-    private Question question;
+	@Column
+	private int statusQuestion;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "question_id", referencedColumnName = Fields.id)
+	private Question question;
 
-    @OneToMany(mappedBy = "statusLearn", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<HistoryAnswer> listHistoryAnswer;
+	@ManyToOne
+	@JoinColumn(name = "customer_id", referencedColumnName = Fields.id)
+	private Customer customer;
+
+	@OneToMany(mappedBy = "statusLearn", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<HistoryAnswer> listHistoryAnswer;
 }

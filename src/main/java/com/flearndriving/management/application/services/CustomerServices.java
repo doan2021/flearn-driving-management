@@ -3,81 +3,62 @@ package com.flearndriving.management.application.services;
 import com.flearndriving.management.application.common.Common;
 import com.flearndriving.management.application.common.Constant;
 import com.flearndriving.management.application.common.MimeTypes;
-import com.flearndriving.management.application.dto.CustomerForm;
-import com.flearndriving.management.application.dto.CustomerLogin;
-import com.flearndriving.management.application.dto.CustomerUpdateForm;
-import com.flearndriving.management.application.dto.FormSearchCustomer;
+import com.flearndriving.management.application.converter.CustomerConverter;
+import com.flearndriving.management.application.dto.request.CustomerLogin;
+import com.flearndriving.management.application.dto.request.CustomerRequest;
+import com.flearndriving.management.application.dto.request.CustomerUpdateForm;
+import com.flearndriving.management.application.dto.request.FormSearchCustomer;
 import com.flearndriving.management.application.entities.Customer;
 import com.flearndriving.management.application.entities.Document;
-import com.flearndriving.management.application.entities.Role;
 import com.flearndriving.management.application.exception.BusinessException;
 import com.flearndriving.management.application.respositories.CustomerRepository;
 import com.flearndriving.management.application.respositories.DocumentRepository;
-import com.flearndriving.management.application.respositories.RoleRepository;
 import com.flearndriving.management.application.specification.CustomerSpecification;
 import com.flearndriving.management.application.utils.DateTimeUtils;
-import com.flearndriving.management.application.utils.EncrytedPasswordUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerServices {
 
-    @Autowired
+    @Resource
     private CustomerRepository customerRepository;
 
-    @Autowired
+    @Resource
     private DocumentRepository documentRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    @Resource
+    private CommonServices commonServices;
 
-    @Autowired
-    private final CommonServices commonServices;
+    @Resource
+    CustomerConverter customerConverter;
 
     @Transactional
-    public void createCustomer(CustomerForm customerForm) {
-        String encrytedPassword = EncrytedPasswordUtils.encrytePassword(customerForm.getPassword());
-        Customer customer = new Customer();
-        customer.setUserName(customerForm.getUserName());
-        customer.setFirstName(customerForm.getFirstName());
-        customer.setMiddleName(customerForm.getMiddleName());
-        customer.setLastName(customerForm.getLastName());
-        customer.setBirthDay(Common.stringToDate(customerForm.getBirthDay()));
-        customer.setEmail(customerForm.getEmail());
-        customer.setNumberPhone(customerForm.getNumberPhone());
-        customer.setEncrytedPassword(encrytedPassword);
-        customer.setGender(customerForm.getGender());
-        Role role = roleRepository.getOne(customerForm.getRoleId());
-        customer.setRole(role);
-        customer.setCreateBy(commonServices.getUsernameLogin());
-        customer.setCreateAt(Common.getSystemDate());
-        customer.setUpdateBy(commonServices.getUsernameLogin());
-        customer.setUpdateAt(Common.getSystemDate());
-        customerRepository.save(customer);
+    public void createCustomer(CustomerRequest request) {
+        customerRepository.save(customerConverter.buildCustomer(request));
     }
 
-    public Customer getcustomerLogin() {
-        return customerRepository.findByUserNameAdmin(commonServices.getUsernameLogin());
+    public Customer getCustomerLogin() {
+        return customerRepository.findByUserName(commonServices.getUsernameLogin());
     }
 
-    public CustomerLogin getBasicInfocustomerLogin() {
+    public CustomerLogin getCustomerLoginDetail() {
         String userName = commonServices.getUsernameLogin();
         Customer customer = customerRepository.findBasicInfoByUserNameAdmin(userName);
         CustomerLogin customerInfo = new CustomerLogin();
-        if (customer != null) {
+        if (Objects.nonNull(customer)) {
             customerInfo.setCustomerId(customer.getId());
             customerInfo.setUserName(customer.getUserName());
             customerInfo.setFirstName(customer.getFirstName());
@@ -91,14 +72,14 @@ public class CustomerServices {
         return customerInfo;
     }
 
-    public Page<Customer> searchcustomer(FormSearchCustomer formSearchcustomer) {
+    public Page<Customer> searchCustomer(FormSearchCustomer formSearchcustomer) {
         // Init pageNum
-        if (formSearchcustomer.getPageNumber() == null) {
+        if (Objects.isNull(formSearchcustomer.getPageNumber())) {
             formSearchcustomer.setPageNumber(0);
         }
         Specification<Customer> conditions = Specification.where(CustomerSpecification.isDelete(false)
                 .and(CustomerSpecification.notEqualUserName(commonServices.getUsernameLogin())));
-        if (formSearchcustomer != null) {
+        if (Objects.nonNull(formSearchcustomer)) {
             if (StringUtils.isNotBlank(formSearchcustomer.getEmail())) {
                 conditions = conditions.and(CustomerSpecification.hasEmail(formSearchcustomer.getEmail()));
             }
@@ -119,14 +100,12 @@ public class CustomerServices {
     }
 
     @Transactional
-    public void deletecustomer(Long customerId) {
+    public void deleteCustomer(Long customerId) {
         Customer customer = customerRepository.getOne(customerId);
         if (customer == null) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Người dùng không tồn tại!");
         }
-        customer.setIsDelete(true);
-        customer.setUpdateBy(commonServices.getUsernameLogin());
-        customer.setUpdateAt(Common.getSystemDate());
+        customer.setDelete(true);
         customerRepository.save(customer);
     }
 
@@ -166,16 +145,14 @@ public class CustomerServices {
         customer.setEmail(customerUpdateForm.getEmail());
         customer.setNumberPhone(customerUpdateForm.getNumberPhone());
         customer.setGender(customerUpdateForm.getGender());
-        customer.setUpdateBy(commonServices.getUsernameLogin());
-        customer.setUpdateAt(Common.getSystemDate());
         customer.setDescription(customerUpdateForm.getDescription());
         customerRepository.save(customer);
     }
 
-    public CustomerForm getcustomerLoginInfo() {
-        CustomerForm customerForm = new CustomerForm();
-        Customer customer = getcustomerLogin();
-        customerForm.setCustomerId(customer.getId());
+    public CustomerRequest getCustomerLoginInfo() {
+        CustomerRequest customerForm = new CustomerRequest();
+        Customer customer = getCustomerLogin();
+        customerForm.setId(customer.getId());
         customerForm.setFirstName(customer.getFirstName());
         customerForm.setMiddleName(customer.getMiddleName());
         customerForm.setLastName(customer.getLastName());
@@ -202,7 +179,7 @@ public class CustomerServices {
     @Transactional
     public void uploadAvatar(MultipartFile file, Long customerId) {
         Customer customer = customerRepository.getOne(customerId);
-        if (customer == null) {
+        if (Objects.isNull(customer)) {
             throw new BusinessException(Constant.HTTPS_STATUS_CODE_NOT_FOUND, "Người dùng không tồn tại!");
         }
         if (file.isEmpty()) {
@@ -210,35 +187,30 @@ public class CustomerServices {
         }
         Document document = documentRepository.findByTypeAndCustomerId(Constant.TYPE_DOCUMENT_AVATAR,
                 customer.getId());
-        if (document != null) {
-            document.setFileName(Common.generateFileName(file, Constant.DOCUMENT_ORTHER_LABEL));
-            document.setOriginFileName(file.getOriginalFilename());
-            document.setExtension(MimeTypes.lookupExt(file.getContentType()));
-            document.setContentType(file.getContentType());
-            document.setSize(file.getSize());
-            document.setType(Constant.TYPE_DOCUMENT_AVATAR);
+        if (Objects.isNull(document)) {
+            handleInfoFile(file, document);
             document.setDescription("Ảnh đại diện");
-            document.setCreateAt(Common.getSystemDate());
-            document.setCreateBy(commonServices.getUsernameLogin());
             // TODO Upload Image
             //amazonS3ClientService.deleteFileFromS3Bucket(document.getPath());
             //document.setPath(amazonS3ClientService.uploadFileToS3Bucket(file, document.getFileName()));
             documentRepository.save(document);
         } else {
             document = new Document();
-            document.setFileName(Common.generateFileName(file, Constant.DOCUMENT_ORTHER_LABEL));
-            document.setOriginFileName(file.getOriginalFilename());
-            document.setExtension(MimeTypes.lookupExt(file.getContentType()));
-            document.setContentType(file.getContentType());
-            document.setSize(file.getSize());
-            document.setType(Constant.TYPE_DOCUMENT_AVATAR);
+            handleInfoFile(file, document);
             document.setDescription("Ảnh mô tả chương");
-            document.setCreateAt(Common.getSystemDate());
-            document.setCreateBy(commonServices.getUsernameLogin());
             // TODO Upload Image
             //document.setPath(amazonS3ClientService.uploadFileToS3Bucket(file, document.getFileName()));
             document.setCustomer(customer);
         }
         documentRepository.save(document);
+    }
+
+    private void handleInfoFile(MultipartFile file, Document document) {
+        document.setFileName(Common.generateFileName(file, Constant.DOCUMENT_ORTHER_LABEL));
+        document.setOriginFileName(file.getOriginalFilename());
+        document.setExtension(MimeTypes.lookupExt(file.getContentType()));
+        document.setContentType(file.getContentType());
+        document.setSize(file.getSize());
+        document.setType(Constant.TYPE_DOCUMENT_AVATAR);
     }
 }

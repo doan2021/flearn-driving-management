@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.flearndriving.management.application.validator;
 
 import java.util.List;
@@ -12,7 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.dto.ExamQuestionsForm;
+import com.flearndriving.management.application.dto.request.ExamQuestionsForm;
 import com.flearndriving.management.application.entities.DrivingLicense;
 import com.flearndriving.management.application.entities.ExamStructure;
 import com.flearndriving.management.application.entities.Question;

@@ -1,17 +1,31 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class District extends AbstractEntity {
 
-    @Column
-    private String districtName;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @ManyToOne
-    @JoinColumn(name = "province_id", referencedColumnName = "id")
-    private Province province;
+	@Column
+	private String districtName;
+
+	@ManyToOne
+	@JoinColumn(name = "province_id", referencedColumnName = Fields.id)
+	private Province province;
 }

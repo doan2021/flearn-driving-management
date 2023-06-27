@@ -4,7 +4,7 @@
 package com.flearndriving.management.application.validator;
 
 import com.flearndriving.management.application.common.Common;
-import com.flearndriving.management.application.dto.CustomerForm;
+import com.flearndriving.management.application.dto.request.CustomerRequest;
 import com.flearndriving.management.application.respositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,12 +20,12 @@ public class CustomerFormValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz == CustomerForm.class;
+        return clazz == CustomerRequest.class;
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        CustomerForm customerForm = (CustomerForm) target;
+        CustomerRequest customerForm = (CustomerRequest) target;
         // Kiểm tra các field của customerForm
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.customerForm.lastName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.customerForm.firstName");

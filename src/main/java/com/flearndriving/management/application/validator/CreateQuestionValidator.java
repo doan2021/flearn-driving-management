@@ -6,8 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.flearndriving.management.application.dto.AnswerForm;
-import com.flearndriving.management.application.dto.QuestionForm;
+import com.flearndriving.management.application.dto.request.AnswerForm;
+import com.flearndriving.management.application.dto.request.QuestionForm;
 import com.flearndriving.management.application.respositories.QuestionsRepository;
 
 @Component

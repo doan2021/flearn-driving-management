@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flearndriving.management.application.common.Constant;
-import com.flearndriving.management.application.dto.ChapterForm;
-import com.flearndriving.management.application.dto.FormSearchChapter;
-import com.flearndriving.management.application.dto.QuestionForm;
-import com.flearndriving.management.application.services.ChapterServices;
+import com.flearndriving.management.application.dto.request.ChapterRequest;
+import com.flearndriving.management.application.dto.request.FormSearchChapter;
+import com.flearndriving.management.application.dto.request.QuestionForm;
+import com.flearndriving.management.application.services.impl.ChapterServicesImpl;
 import com.flearndriving.management.application.services.QuestionServices;
 import com.flearndriving.management.application.validator.ChapterCreateValidator;
 import com.flearndriving.management.application.validator.CreateQuestionValidator;
@@ -26,7 +26,7 @@ import com.flearndriving.management.application.validator.CreateQuestionValidato
 public class ChapterManagementController {
 
     @Autowired
-    ChapterServices chapterServices;
+    ChapterServicesImpl chapterServices;
 
     @Autowired
     QuestionServices questionServices;
@@ -43,7 +43,7 @@ public class ChapterManagementController {
         if (target == null) {
             return;
         }
-        if (target.getClass() == ChapterForm.class) {
+        if (target.getClass() == ChapterRequest.class) {
             dataBinder.setValidator(chapterCreateValidator);
         }
         if (target.getClass() == QuestionForm.class) {
@@ -74,19 +74,18 @@ public class ChapterManagementController {
 
     @GetMapping(value = { "/create-chapter" })
     public String createChapter(Model model) {
-        ChapterForm chapterForm = new ChapterForm();
-        model.addAttribute("chapterForm", chapterForm);
+        model.addAttribute("chapterForm", new ChapterRequest());
         return "create-chapter";
     }
 
     @PostMapping(value = { "/create-chapter" })
-    public String saveChapter(@Validated ChapterForm chapterForm, BindingResult result, Model model) {
+    public String saveChapter(@Validated ChapterRequest chapterForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "create-chapter";
         }
         chapterServices.createChapter(chapterForm);
         model.addAttribute(Constant.STATUS_SUCCESS, "Tạo chương mới thành công!");
-        model.addAttribute("chapterForm", new ChapterForm());
+        model.addAttribute("chapterForm", new ChapterRequest());
         return "create-chapter";
     }
 
@@ -98,13 +97,13 @@ public class ChapterManagementController {
     }
 
     @PostMapping(value = { "/update-chapter" })
-    public String editChapterDetail(@Validated ChapterForm chapterForm, BindingResult result, RedirectAttributes redirAttrs) {
+    public String editChapterDetail(@Validated ChapterRequest chapterForm, BindingResult result, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             return "update-chapter";
         }
         chapterServices.updateChapter(chapterForm);
         redirAttrs.addFlashAttribute(Constant.STATUS_SUCCESS, "Chỉnh sửa chương thành công!");
-        return "redirect:chapter-detail?chapterId=" + chapterForm.getChapterId();
+        return "redirect:chapter-detail?chapterId=" + chapterForm.getId();
     }
 
     @PostMapping(value = { "/delete-chapter" })

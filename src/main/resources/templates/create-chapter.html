@@ -45,8 +45,8 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors()}"> 
-                                                <p class="m-0" th:if="${#fields.hasErrors('index')}" th:errors="*{index}"></p>
                                                 <p class="m-0" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                                                <p class="m-0" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
                                             </div>
                                         </div>
                                         <div class="col-12" th:if="${success != null}">
@@ -63,13 +63,15 @@
                                         <div class="col-lg-6">
                                             <div class="form-group" id="name-place">
                                                 <label class="form-control-label" for="chapterIndex">Chỉ mục <span class="text-danger">*</span></label>
-                                                <input th:field="*{index}" type="text" id="chapterIndex" placeholder="Nhập tên chương" class="form-control">
+                                                <input th:field="*{name}" type="text" id="chapterIndex" placeholder="Nhập tên chương"
+                                                       class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group" id="content-place">
                                                 <label class="form-control-label" for="chapterName">Tên chương <span class="text-danger">*</span></label>
-                                                <input th:field="*{name}" id="chapterName" class="form-control" placeholder="Nhập nội dung"></input>
+                                                <input th:field="*{content}" id="chapterName" class="form-control"
+                                                       placeholder="Nhập nội dung"></input>
                                             </div>
                                         </div>
                                     </div>

@@ -1,71 +1,76 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Customer extends AbstractEntity {
 
-    @Column(length = 36)
-    private String userName;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column(length = 128, nullable = false)
-    private String encrytedPassword;
+	@Column(unique = true, length = 36)
+	private String userName;
 
-    @Column
-    private String firstName;
+	@Column(length = 128, nullable = false)
+	private String password;
 
-    @Column
-    private String middleName;
+	@Column
+	private String firstName;
 
-    @Column
-    private String lastName;
+	@Column
+	private String middleName;
 
-    @Column
-    private Date birthDay;
+	@Column
+	private String lastName;
 
-    @Column
-    private Integer gender;
+	@Column
+	private Date birthDay;
 
-    @Column
-    private String email;
+	@Column
+	private Integer gender;
 
-    @Column(length = 10)
-    private String numberPhone;
+	@Column
+	private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Role role;
+	@Column(length = 10)
+	private String numberPhone;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+	@ManyToOne
+	@JoinColumn(name = "role_id", referencedColumnName = Fields.id)
+	private Role role;
 
-    @Column
-    private String address;
+	@Column(columnDefinition = "TEXT")
+	private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "ward_id", referencedColumnName = "id")
-    private Ward ward;
+	@Column(length = 15)
+	private String authProvider;
 
-    @Column(columnDefinition = "Boolean default false")
-    private Boolean isDelete;
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Document> listImages;
 
-    @Column(length = 15)
-    private String authProvider;
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<StatusLearn> listStatusLearn;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> listImages;
-
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExamProfile> listExamProfile;
-
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<TrialExamResult> listTrialExamResult;
-
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StatusLearn> listStatusLearn;
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Address> listAddess;
 }

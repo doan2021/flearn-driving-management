@@ -43,11 +43,12 @@
                                         <h2 class="m-0">Chi tiết chương</h2>
                                     </div>
                                     <div class="col text-right">
-                                        <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.chapterId}}" class="btn btn-sm btn-default">
+                                        <a th:href="@{${'/management/update-chapter?chapterId='} + ${chapter.id}}"
+                                           class="btn btn-sm btn-default">
                                             <i class="fas fa-edit"></i> Chỉnh sửa
                                         </a>
                                         <form th:action="@{/management/delete-chapter}" method="POST" id="formDeleteChapter" class="d-none">
-                                            <input type="hidden" name="chapterId" th:value="${chapter.chapterId}">
+                                            <input type="hidden" name="chapterId" th:value="${chapter.id}">
                                         </form>
                                         <button type="button" class="btn btn-sm btn-danger" onclick="deleteChapter()"><i class="fas fa-trash-alt"></i> Xóa</button>
                                         <a th:href="@{/management/chapter}" class="btn btn-warning btn-sm"><i class="fas fa-backspace"></i> Trở về</a>
@@ -57,10 +58,11 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight: bold; font-size: xx-large;" th:text="${chapter.index}"></span>
+                                        <span style="font-weight: bold; font-size: xx-large;">Chương </span><span style="font-weight:
+                                        bold; font-size: xx-large;" th:text="${chapter.name}"></span>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <span th:text="${chapter.name}"></span>
+                                        <span th:text="${chapter.content}"></span>
                                     </div>
                                     <div class="col-12 mt-4">
                                         <strong>Mô Tả: </strong><span th:text="${chapter.description}"></span>

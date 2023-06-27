@@ -1,14 +1,25 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Province extends AbstractEntity {
 
-    @Column
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Column
     private String provinceName;
 }

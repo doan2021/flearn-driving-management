@@ -1,16 +1,28 @@
 package com.flearndriving.management.application.entities;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
-import javax.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class Role extends AbstractEntity {
 
-    @Column
-    private String roleName;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private String content;
+	@Column
+	private String roleName;
+
+	@Column
+	private String content;
 }
